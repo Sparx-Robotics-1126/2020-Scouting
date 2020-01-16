@@ -14,7 +14,14 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONStringer;
+
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -30,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private Button bugReport;
     private Button color;
     private Button admin;
+    private Map<String, BlueAllianceEvent> events;
     String url ="http://www.thebluealliance.com/api/v3/team/frc1126/events/2019";
     String authKeyHeader="X-TBA-Auth-Key";
     String authKey="4EFyOEdszrGNcCJuibGSr6W92SjET2cfhx2QU9Agxv3LNASra77KcsCEv5GnoSIq";
@@ -48,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
+        events = new HashMap<>();
         benchmarking = findViewById(R.id.benchmarking);
         scouting = findViewById(R.id.scouting);
         checklist = findViewById(R.id.checklist);
@@ -70,7 +79,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Log.d("HELLO2", "HEllo");
+                Log.d("response", response.body().string());
             if(response.isSuccessful()){
+                events.clear();
+                try{
+                    JSONArray array = new JSONArray(response.body().string());
+                    for(int i = 0; i < array.length(); i++){
+                        JSONObject obj = array.getJSONObject(i);
+                        BlueAllianceEvent item = new BlueAllianceEvent(obj);
+                        events.put(item.getKey(), item);
+                    }
+
+                    for (Map.Entry<String, BlueAllianceEvent> entry : events.entrySet()) {
+                        Log.e("obj at", entry.getKey());
+                        BlueAllianceEvent tmpEvent = entry.getValue();
+                        Log.e("blue alliance", getData(tmpEvent));
+                    }
+
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+
                 final String responseBody=response.body().string();
                 Log.d("TESTING OK", responseBody);
                 MainActivity.this.runOnUiThread(new Runnable() {
@@ -84,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
+
 //        benchmarking.setOnClickListener(new android.view.View.OnClickListener(){
 //            @Override
 //            public void OnClick(android.view.View v){
@@ -92,5 +123,18 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //
 //;}
+    }
+
+    private String getData(BlueAllianceEvent entry) {
+        String str = "";
+        str += entry.getKey()+ " ";
+        str += entry.getLocation() + " ";
+        str += entry.getName() + " ";
+        str += entry.getLocation() + " ";
+        str += entry.getStartDate() + " ";
+        str  = entry.getEndDate() + " ";
+        str += entry.getWeek();
+
+        return str;
     }
 }
