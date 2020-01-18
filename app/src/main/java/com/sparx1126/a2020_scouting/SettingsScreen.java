@@ -9,17 +9,29 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 public class SettingsScreen extends AppCompatActivity {
     private SharedPreferences settings;
     private SharedPreferences.Editor editor;
+    private static BlueAllianceNetworking blueAlliance;
+    private static DataCollection dataCollection;
+    private static FileIO fileIO;
+    private View adminLayout;
     private TextView email;
     private TextView teamNum;
     private Button reconfigure;
+    private Button saveConfiguration;
+    private Spinner eventSpinner;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +42,72 @@ public class SettingsScreen extends AppCompatActivity {
         reconfigure = findViewById(R.id.reconfigure);
         email = findViewById(R.id.emailInput);
         teamNum = findViewById(R.id.teamInput);
+        saveConfiguration = findViewById(R.id.configure);
+        eventSpinner = findViewById(R.id.eventSpinner);
+        adminLayout = findViewById(R.id.adminLayout);
+
+
+        adminLayout.setVisibility(View.INVISIBLE);
 
         reconfigure.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 reconfigure();
+            }
+        });
+        eventSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                final String selectedItem = eventSpinner.getSelectedItem().toString();
+                if (!selectedItem.contentEquals(getResources().getString(R.string.selectEvent))) {
+                    String previousSelectedEvent = settings.getString(getResources().getString(R.string.pref_SelectedEvent), "");
+                    if (!previousSelectedEvent.equals(selectedItem)) {
+                        reset();
+                        blueAlliance.downloadEventMatches(selectedItem, new BlueAllianceNetworking.Callback() {
+
+                            @Override
+                            public void handleFinishDownload(final String _data) {
+                                // this needs to run on the ui thread because of ui components in it
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (isValidJsonArray(_data)) {
+                                            dataCollection.setEventMatches(_data);
+                                            fileIO.storeEventMatches(_data);
+                                            blueAlliance.downloadEventTeams(selectedItem, new BlueAllianceNetworking.Callback() {
+
+                                                @Override
+                                                public void handleFinishDownload(final String _data) {
+                                                    // this needs to run on the ui thread because of ui components in it
+                                                    runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            if (isValidJsonArray(_data)) {
+                                                                dataCollection.setEventTeams(_data);
+                                                                fileIO.storeEventTeams(_data);
+                                                                adminLayout.setVisibility(View.VISIBLE);
+                                                            } else {
+                                                                Toast.makeText(SettingsScreen.this, "Internet returned BAD DATA for Teams, try another wifi!", Toast.LENGTH_LONG).show();
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        } else {
+                                            Toast.makeText(SettingsScreen .this, "Internet returned BAD DATA for Matches, try another wifi!", Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        adminLayout.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
             }
         });
 
@@ -85,5 +158,22 @@ public class SettingsScreen extends AppCompatActivity {
         });
         builder.create().show();
 
+    }
+
+    private void reset() {
+        editor.putBoolean(getResources().getString(R.string.pref_BlueAlliance), false);
+        editor.putInt(getResources().getString(R.string.pref_TeamPosition), 0);
+        editor.putBoolean(getResources().getString(R.string.tablet_Configured), false);
+        editor.apply();
+        adminLayout.setVisibility(View.INVISIBLE);
+    }
+
+    private boolean isValidJsonArray(String _data) {
+        try {
+            new JSONArray(_data);
+        } catch (JSONException jsExcp) {
+            return false;
+        }
+        return true;
     }
 }

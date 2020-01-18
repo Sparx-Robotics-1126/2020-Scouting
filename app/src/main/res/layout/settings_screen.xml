@@ -7,6 +7,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,14 +43,34 @@
             android:textSize="30sp" />
     </LinearLayout>
 
+
+    <Spinner
+        android:id="@+id/eventSpinner"
+        android:layout_height="25dp"
+        style="@style/J_spinner" />
+
+    <LinearLayout
+        android:id="@+id/adminLayout"
+        style="@style/VerticalLinearLayout">
+
     <Button
         android:id="@+id/reconfigure"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="100dp"
         android:shadowColor="#673AB7"
         android:text="Reconfigure"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#2196F3" />
 
+    <Button
+        android:id="@+id/configure"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginTop="25dp"
+        android:shadowColor="#673AB7"
+        android:text="Save Configuration"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#2196F3" />
+    </LinearLayout>
 </LinearLayout>
