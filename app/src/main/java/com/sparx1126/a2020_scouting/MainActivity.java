@@ -38,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
     private Button color;
     private Button admin;
     private Map<String, BlueAllianceEvent> events;
-    String url ="http://www.thebluealliance.com/api/v3/team/frc1126/events/2019";
-    String authKeyHeader="X-TBA-Auth-Key";
-    String authKey="4EFyOEdszrGNcCJuibGSr6W92SjET2cfhx2QU9Agxv3LNASra77KcsCEv5GnoSIq";
+    String url = "http://www.thebluealliance.com/api/v3/team/frc1126/events/2019";
+    String authKeyHeader = "X-TBA-Auth-Key";
+    String authKey = "4EFyOEdszrGNcCJuibGSr6W92SjET2cfhx2QU9Agxv3LNASra77KcsCEv5GnoSIq";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,53 +66,57 @@ public class MainActivity extends AppCompatActivity {
         color = findViewById(R.id.color);
         admin = findViewById(R.id.color);
         OkHttpClient client = new OkHttpClient();
-        Request sohail=new Request.Builder()
-                .addHeader(authKeyHeader,authKey)
+        Request sohail = new Request.Builder()
+                .addHeader(authKeyHeader, authKey)
                 .url(url)
                 .build();
         client.newCall(sohail).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                 e.printStackTrace();
+                e.printStackTrace();
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Log.d("HELLO2", "HEllo");
-                Log.d("response", response.body().string());
-            if(response.isSuccessful()){
-                events.clear();
-                try{
-                    JSONArray array = new JSONArray(response.body().string());
-                    for(int i = 0; i < array.length(); i++){
-                        JSONObject obj = array.getJSONObject(i);
-                        BlueAllianceEvent item = new BlueAllianceEvent(obj);
-                        events.put(item.getKey(), item);
+                final String responseBody = response.body().string();
+                Log.d("response", responseBody);
+                if (response.isSuccessful()) {
+                    events.clear();
+                    try {
+                        JSONArray array = new JSONArray(responseBody);
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject obj = array.getJSONObject(i);
+                            BlueAllianceEvent item = new BlueAllianceEvent(obj);
+                            events.put(item.getKey(), item);
+                        }
+
+                        for (Map.Entry<String, BlueAllianceEvent> entry : events.entrySet()) {
+                            Log.e("obj at", entry.getKey());
+                            final BlueAllianceEvent tmpEvent = entry.getValue();
+                            Log.e("key", tmpEvent.getKey());
+                            Log.e("location", tmpEvent.getLocation());
+                            Log.e("name", tmpEvent.getName());
+                            Log.e("start date", tmpEvent.getStartDate());
+                            Log.e("end date", tmpEvent.getEndDate());
+                            Log.e("week", tmpEvent.getWeek());
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
 
-                    for (Map.Entry<String, BlueAllianceEvent> entry : events.entrySet()) {
-                        Log.e("obj at", entry.getKey());
-                        BlueAllianceEvent tmpEvent = entry.getValue();
-                        Log.e("blue alliance", getData(tmpEvent));
-                    }
 
-                }catch (JSONException e){
-                    e.printStackTrace();
+                    Log.d("TESTING OK", responseBody);
+                    MainActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.d("TESTING OK", "reponseBody");
+                        }
+                    });
                 }
-
-                final String responseBody=response.body().string();
-                Log.d("TESTING OK", responseBody);
-                MainActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.d("TESTING OK", "reponseBody");
-                    }
-                });
-            }
             }
         });
-
-
 
 
 //        benchmarking.setOnClickListener(new android.view.View.OnClickListener(){
@@ -123,18 +127,5 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //
 //;}
-    }
-
-    private String getData(BlueAllianceEvent entry) {
-        String str = "";
-        str += entry.getKey()+ " ";
-        str += entry.getLocation() + " ";
-        str += entry.getName() + " ";
-        str += entry.getLocation() + " ";
-        str += entry.getStartDate() + " ";
-        str  = entry.getEndDate() + " ";
-        str += entry.getWeek();
-
-        return str;
     }
 }
