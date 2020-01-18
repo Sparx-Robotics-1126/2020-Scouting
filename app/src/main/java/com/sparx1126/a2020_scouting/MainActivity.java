@@ -7,6 +7,7 @@ import android.widget.Button;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -37,10 +38,11 @@ public class MainActivity extends AppCompatActivity {
     private Button bugReport;
     private Button color;
     private Button admin;
+    private BlueAllianceNetwork network = BlueAllianceNetwork.getInstance();
     private Map<String, BlueAllianceEvent> events;
-    String url ="http://www.thebluealliance.com/api/v3/team/frc1126/events/2019";
-    String authKeyHeader="X-TBA-Auth-Key";
-    String authKey="4EFyOEdszrGNcCJuibGSr6W92SjET2cfhx2QU9Agxv3LNASra77KcsCEv5GnoSIq";
+    String url = "http://www.thebluealliance.com/api/v3/team/frc1126/events/2019";
+    String authKeyHeader = "X-TBA-Auth-Key";
+    String authKey = "4EFyOEdszrGNcCJuibGSr6W92SjET2cfhx2QU9Agxv3LNASra77KcsCEv5GnoSIq";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,86 +57,25 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-
-        events = new HashMap<>();
-        benchmarking = findViewById(R.id.benchmarking);
-        scouting = findViewById(R.id.scouting);
-        checklist = findViewById(R.id.checklist);
-        view = findViewById(R.id.view);
-        Log.d("HELLO", "HEllo");
-        bugReport = findViewById(R.id.bugReport);
-        color = findViewById(R.id.color);
-        admin = findViewById(R.id.color);
-        OkHttpClient client = new OkHttpClient();
-        Request sohail=new Request.Builder()
-                .addHeader(authKeyHeader,authKey)
-                .url(url)
-                .build();
-        client.newCall(sohail).enqueue(new Callback() {
+        //BLUE ALLIACNE TESTING
+        network.downloadEvents(new BlueAllianceNetwork.Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                 e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Log.d("HELLO2", "HEllo");
-                Log.d("response", response.body().string());
-            if(response.isSuccessful()){
-                events.clear();
-                try{
-                    JSONArray array = new JSONArray(response.body().string());
-                    for(int i = 0; i < array.length(); i++){
-                        JSONObject obj = array.getJSONObject(i);
-                        BlueAllianceEvent item = new BlueAllianceEvent(obj);
-                        events.put(item.getKey(), item);
-                    }
-
-                    for (Map.Entry<String, BlueAllianceEvent> entry : events.entrySet()) {
-                        Log.e("obj at", entry.getKey());
-                        BlueAllianceEvent tmpEvent = entry.getValue();
-                        Log.e("blue alliance", getData(tmpEvent));
-                    }
-
-                }catch (JSONException e){
-                    e.printStackTrace();
-                }
-
-                final String responseBody=response.body().string();
-                Log.d("TESTING OK", responseBody);
-                MainActivity.this.runOnUiThread(new Runnable() {
+            public void handleFinishDownload(final String _data) {
+                runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.d("TESTING OK", "reponseBody");
+                        Log.e("JT" , _data);
                     }
                 });
-            }
+
             }
         });
 
 
 
 
-//        benchmarking.setOnClickListener(new android.view.View.OnClickListener(){
-//            @Override
-//            public void OnClick(android.view.View v){
-//            }
-//
-//            }
-//
-//;}
+
+
     }
 
-    private String getData(BlueAllianceEvent entry) {
-        String str = "";
-        str += entry.getKey()+ " ";
-        str += entry.getLocation() + " ";
-        str += entry.getName() + " ";
-        str += entry.getLocation() + " ";
-        str += entry.getStartDate() + " ";
-        str  = entry.getEndDate() + " ";
-        str += entry.getWeek();
-
-        return str;
-    }
 }
