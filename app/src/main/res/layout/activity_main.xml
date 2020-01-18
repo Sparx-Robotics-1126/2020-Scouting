@@ -23,8 +23,8 @@
     <fragment
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@id/nav_view"
         app:layout_constraintHorizontal_bias="0.0"
@@ -38,7 +38,7 @@
         android:id="@+id/scouting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="25dp"
         android:shadowColor="#673AB7"
         android:text="Scouting"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -57,28 +57,30 @@
         android:textColor="#2196F3"
         app:layout_constraintBottom_toTopOf="@+id/nav_view"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.011" />
 
     <Button
         android:id="@+id/checklist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
         android:shadowColor="#673AB7"
         android:text="Checklist"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#2196F3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-        //app:layout_constraintTop_toBottomOf="@+id/Scouting" />
+        app:layout_constraintTop_toBottomOf="@id/scouting" />
+
     <Button
     android:id="@+id/view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="50dp"
+    android:layout_marginTop="25dp"
     android:shadowColor="#673AB7"
     android:text="View"
     android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -92,7 +94,7 @@
     android:id="@+id/bugReport"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="50dp"
+    android:layout_marginTop="25dp"
     android:shadowColor="#673AB7"
     android:text="Bug Report"
     android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -106,7 +108,7 @@
         android:id="@+id/color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="25dp"
         android:shadowColor="#673AB7"
         android:text="Color"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -120,7 +122,7 @@
         android:id="@+id/admin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="25dp"
         android:shadowColor="#673AB7"
         android:text="Admin"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"

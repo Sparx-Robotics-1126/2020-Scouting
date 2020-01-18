@@ -2,6 +2,7 @@ package com.sparx1126.a2020_scouting;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,13 +51,16 @@ public class Welcome extends AppCompatActivity {
         editor = loginData.edit();
 
         editor.putString("email", email);
-        editor.putString("password", email);
-        editor.putString("team", email);
+        editor.putString("password", password);
+        editor.putString("team", team);
         editor.apply();
 
         Log.i("email", loginData.getString("email", "email not found"));
         Log.i("password", loginData.getString("password", "password not found"));
         Log.i("team", loginData.getString("team", "team number not found"));
+
+        Intent switchToSettings = new Intent(Welcome.this, SettingsScreen.class);
+        startActivity(switchToSettings);
 
 
     }
