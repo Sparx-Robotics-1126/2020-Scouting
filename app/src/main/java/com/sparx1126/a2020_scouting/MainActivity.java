@@ -31,18 +31,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
-    private Button benchmarking;
-    private Button scouting;
-    private Button checklist;
-    private Button view;
-    private Button bugReport;
-    private Button color;
-    private Button admin;
     private BlueAllianceNetwork network = BlueAllianceNetwork.getInstance();
     private Map<String, BlueAllianceEvent> events;
-    String url = "http://www.thebluealliance.com/api/v3/team/frc1126/events/2019";
-    String authKeyHeader = "X-TBA-Auth-Key";
-    String authKey = "4EFyOEdszrGNcCJuibGSr6W92SjET2cfhx2QU9Agxv3LNASra77KcsCEv5GnoSIq";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,15 +57,8 @@ public class MainActivity extends AppCompatActivity {
                         Log.e("JT" , _data);
                     }
                 });
-
             }
         });
-
-
-
-
-
-
     }
 
 }
