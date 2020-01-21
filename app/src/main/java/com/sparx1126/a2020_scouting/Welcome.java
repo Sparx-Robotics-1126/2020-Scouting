@@ -2,6 +2,7 @@ package com.sparx1126.a2020_scouting;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -92,6 +93,7 @@ public class Welcome extends AppCompatActivity {
 
     public void switchScreen(){
         Log.e("switchScreen", "unknown");
+        startActivity(new Intent(Welcome.this, MainActivity.class));
     }
 
 
