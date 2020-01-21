@@ -38,10 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private Button color;
     private Button admin;
     private Map<String, BlueAllianceEvent> events;
-    String url = "http://www.thebluealliance.com/api/v3/team/frc1126/events/2019";
-    String authKeyHeader = "X-TBA-Auth-Key";
-    String authKey = "4EFyOEdszrGNcCJuibGSr6W92SjET2cfhx2QU9Agxv3LNASra77KcsCEv5GnoSIq";
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
