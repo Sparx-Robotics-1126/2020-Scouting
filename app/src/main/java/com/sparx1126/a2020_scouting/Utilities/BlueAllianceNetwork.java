@@ -15,10 +15,10 @@ public class BlueAllianceNetwork {
         void handleFinishDownload(String _data);
     }
 
-    public static BlueAllianceNetwork instance;
+    private static BlueAllianceNetwork instance;
     private static OkHttpClient client;
     //The basic url to be, on which will be appened the correct tails in each method
-    private final String BASE_URL="https://www.thebluealliance.com/api/v3";
+    private final String BASE_URL="https://www.thebluealliance.com/api/v3/";
     private final String TAG = "BlueAllianceNetwork";
     private final String AUTH_TAG="X-TBA-Auth-Key";
     private static final String BLUE_ALLIANCE_KEY = "4EFyOEdszrGNcCJuibGSr6W92SjET2cfhx2QU9Agxv3LNASra77KcsCEv5GnoSIq";
@@ -34,7 +34,7 @@ public class BlueAllianceNetwork {
  //Private constructor> only one instance per app instance
     private BlueAllianceNetwork(){client=new OkHttpClient();}
 
-    private  static synchronized BlueAllianceNetwork getInstance(){
+    public  static synchronized BlueAllianceNetwork getInstance(){
         if (instance==null){
             instance=new BlueAllianceNetwork();
         }
@@ -48,7 +48,7 @@ public class BlueAllianceNetwork {
     }
 
     public void downloadEvents( final Callback callback){
-        String url = BASE_URL + TEAM_EVENTS_URL_TAIL.replace("{team key}",teamKey );
+        String url = BASE_URL + TEAM_EVENTS_URL_TAIL.replace("{team_key}",teamKey );
         fetchBlueAllianceData(url, new okhttp3.Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -60,6 +60,7 @@ public class BlueAllianceNetwork {
             public void onResponse(Call call, Response response) throws IOException {
                 if(response.isSuccessful()){
                     String rtrn = response.body().string();
+                    //Log.e("YEE", rtrn);
                     assert rtrn != null;
                     callback.handleFinishDownload(rtrn);
 
@@ -73,7 +74,7 @@ public class BlueAllianceNetwork {
     }
 
     public void downloadEventTeams(String eventKey, final Callback callback){
-        String url= BASE_URL+EVENT_TEAMS_URL_TAIL.replace("{event key}",eventKey );
+        String url= BASE_URL+EVENT_TEAMS_URL_TAIL.replace("{event_key}",eventKey );
         fetchBlueAllianceData(url, new okhttp3.Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -97,7 +98,7 @@ public class BlueAllianceNetwork {
     }
 
     public void downloadEventMatches(String eventKey,final Callback callback){
-        String url = BASE_URL+TEAM_EVENTS_URL_TAIL.replace("{event key}", eventKey);
+        String url = BASE_URL+TEAM_EVENTS_URL_TAIL.replace("{event_key}", eventKey);
         fetchBlueAllianceData(url, new okhttp3.Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -120,7 +121,7 @@ public class BlueAllianceNetwork {
     }
 
     public void downloadEventRanks(String eventKey,final Callback callback){
-        String url = BASE_URL+EVENT_RANKS_URL_TAIL.replace("{event key}", eventKey);
+        String url = BASE_URL+EVENT_RANKS_URL_TAIL.replace("{event_key}", eventKey);
         fetchBlueAllianceData(url, new okhttp3.Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -143,13 +144,16 @@ public class BlueAllianceNetwork {
     }
 
 
-    private void fetchBlueAllianceData(String _url_tail, okhttp3.Callback _callback) {
-        String url = BASE_URL + _url_tail;
-        Log.d(TAG, url);
+    private void fetchBlueAllianceData(String _url, okhttp3.Callback _callback) {
         Request requestEvents = new Request.Builder()
                 .addHeader(AUTH_TAG, BLUE_ALLIANCE_KEY)
-                .url(url)
+                .url(_url)
                 .build();
+        Log.e("JT",_url);
+        Log.e("JT",AUTH_TAG);
+        Log.e("JT",BLUE_ALLIANCE_KEY);
+
+
 
         client.newCall(requestEvents).enqueue(_callback);
     }
