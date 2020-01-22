@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="Email:"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/emailInput"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Team #:"
+            android:layout_weight="0"
+            android:textSize="30sp"/>
+
+        <TextView
+            android:id="@+id/teamInput"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/reconfigure"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginTop="25dp"
+        android:shadowColor="#673AB7"
+        android:text="Reconfigure"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#2196F3" />
+
+</LinearLayout>
