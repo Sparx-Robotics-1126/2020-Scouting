@@ -42,12 +42,8 @@ public class Welcome extends AppCompatActivity {
 
     }
 
-    /**
-     * checks if sharedPreferences password is correct then switches screen
-     * Note: assumes other data is valid
-     */
     public void checkPreferences(){
-        if(checkPassword(loginData.getString("password", "no password preference")))
+        if(!loginData.getString("password", "").isEmpty())
             switchScreen();
     }
 
@@ -57,37 +53,19 @@ public class Welcome extends AppCompatActivity {
         password = passwordInput.getText().toString();
         team = teamInput.getText().toString();
 
-        if(checkPassword(password)) {
-            SharedPreferences.Editor editor;
-            editor = loginData.edit();
-            editor.putString("email", email);
-            editor.putString("password", password);
-            editor.putString("team", team);
-            editor.apply();
+        SharedPreferences.Editor editor;
+        editor = loginData.edit();
+        editor.putString("email", email);
+        editor.putString("password", password);
+        editor.putString("team", team);
+        editor.apply();
 
-            Log.i("loginSave", "email: " + loginData.getString("email", "email not found"));
-            Log.i("loginSave", "password: " + loginData.getString("password", "password not found"));
-            Log.i("loginSave", "team: " + loginData.getString("team", "team number not found"));
+        Log.i("loginSave", "email: " + loginData.getString("email", "email not found"));
+        Log.i("loginSave", "password: " + loginData.getString("password", "password not found"));
+        Log.i("loginSave", "team: " + loginData.getString("team", "team number not found"));
 
-            switchScreen();
-        }
-        else{
-            Toast.makeText(Welcome.this, "Incorrect Password", Toast.LENGTH_LONG).show();
-            passwordInput.setText("");
-        }
+        switchScreen();
 
-
-    }
-
-    public boolean checkPassword(String password){
-        boolean correct = password.toLowerCase().equals(getResources().getString(R.string.password));
-        if(correct) {
-            Log.e("Password", "correct: " + password);
-        }
-        else {
-            Log.e("Password", "incorrect: " + password);
-        }
-        return correct;
 
     }
 
