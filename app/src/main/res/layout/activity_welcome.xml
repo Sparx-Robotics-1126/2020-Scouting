@@ -14,7 +14,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email:"
+        android:text="Set Email:"
         android:layout_weight="0"
         android:textSize="30sp"/>
     <EditText
@@ -31,7 +31,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Password:"
+            android:text="Set Password:"
             android:layout_weight="0"
             android:textSize="30sp"/>
         <EditText
@@ -49,7 +49,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Team #:"
+            android:text="Set Team #:"
             android:layout_weight="0"
             android:textSize="30sp"/>
         <EditText
