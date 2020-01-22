@@ -9,26 +9,27 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class Welcome extends AppCompatActivity {
-    private Button login;
-    private EditText emailInput;
-    private EditText passwordInput;
-    private EditText teamInput;
+
+    private EditText emailInput,  passwordInput, teamInput;
     private SharedPreferences loginData;
-    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        needsAName();
         setContentView(R.layout.activity_welcome);
+
+        loginData = getSharedPreferences("Sparx_prefs", 0);
+
+        checkPreferences();
 
         emailInput = findViewById(R.id.emailInput);
         passwordInput = findViewById(R.id.passwordInput);
         teamInput = findViewById(R.id.teamInput);
 
-        login = findViewById(R.id.login);
+        Button login = findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -41,32 +42,59 @@ public class Welcome extends AppCompatActivity {
 
     }
 
-    public void login(){
+    /**
+     * checks if sharedPreferences password is correct then switches screen
+     * Note: assumes other data is valid
+     */
+    public void checkPreferences(){
+        if(checkPassword(loginData.getString("password", "no password preference")))
+            switchScreen();
+    }
+
+    public void login() {
         String email, password, team;
         email = emailInput.getText().toString();
         password = passwordInput.getText().toString();
         team = teamInput.getText().toString();
 
-        loginData = getSharedPreferences("Sparx_prefs", 0);
-        editor = loginData.edit();
+        if(checkPassword(password)) {
+            SharedPreferences.Editor editor;
+            editor = loginData.edit();
+            editor.putString("email", email);
+            editor.putString("password", password);
+            editor.putString("team", team);
+            editor.apply();
 
-        editor.putString("email", email);
-        editor.putString("password", password);
-        editor.putString("team", team);
-        editor.apply();
+            Log.i("loginSave", "email: " + loginData.getString("email", "email not found"));
+            Log.i("loginSave", "password: " + loginData.getString("password", "password not found"));
+            Log.i("loginSave", "team: " + loginData.getString("team", "team number not found"));
 
-        Log.i("email", loginData.getString("email", "email not found"));
-        Log.i("password", loginData.getString("password", "password not found"));
-        Log.i("team", loginData.getString("team", "team number not found"));
-
-        Intent switchToSettings = new Intent(Welcome.this, SettingsScreen.class);
-        startActivity(switchToSettings);
+            switchScreen();
+        }
+        else{
+            Toast.makeText(Welcome.this, "Incorrect Password", Toast.LENGTH_LONG).show();
+            passwordInput.setText("");
+        }
 
 
     }
 
-    public void needsAName(){
+    public boolean checkPassword(String password){
+        boolean correct = password.toLowerCase().equals(getResources().getString(R.string.password));
+        if(correct) {
+            Log.e("Password", "correct: " + password);
+        }
+        else {
+            Log.e("Password", "incorrect: " + password);
+        }
+        return correct;
 
     }
+
+    public void switchScreen(){
+        Log.e("switchScreen", "unknown");
+        startActivity(new Intent(Welcome.this, MainActivity.class));
+    }
+
 
 }
