@@ -1,45 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Welcome"
-    android:orientation="vertical">
-
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Email:"
-        android:layout_weight="0"
-        android:textSize="30sp"/>
-    <EditText
-        android:id="@+id/emailInput"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Password:"
             android:layout_weight="0"
-            android:textSize="30sp"/>
-        <EditText
-            android:id="@+id/passwordInput"
+            android:text="Email:"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/emailInput"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:inputType="textPassword"/>
+            android:textSize="30sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -52,17 +32,23 @@
             android:text="Team #:"
             android:layout_weight="0"
             android:textSize="30sp"/>
-        <EditText
+
+        <TextView
             android:id="@+id/teamInput"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textSize="30sp" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/reconfigure"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Login"/>
+        android:layout_height="75dp"
+        android:layout_marginTop="25dp"
+        android:shadowColor="#673AB7"
+        android:text="Reconfigure"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#2196F3" />
 
 </LinearLayout>

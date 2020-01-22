@@ -12,6 +12,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,17 +37,43 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
         //BLUE ALLIACNE TESTING
+        events = new HashMap<>();
         network.downloadEvents(new BlueAllianceNetwork.Callback() {
             @Override
             public void handleFinishDownload(final String _data) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.e("JT" , _data);
+                        Log.e("JT", _data);
+                        if (_data.length() > 0) {
+                            events.clear();
+                            try {
+                                JSONArray array = new JSONArray(_data);
+                                for (int i = 0; i < array.length(); i++) {
+                                    JSONObject obj = array.getJSONObject(i);
+                                    BlueAllianceEvent item = new BlueAllianceEvent(obj);
+                                    events.put(item.getKey(), item);
+                                }
+
+                                for (Map.Entry<String, BlueAllianceEvent> entry : events.entrySet()) {
+                                    Log.e("obj at", entry.getKey());
+                                    final BlueAllianceEvent tmpEvent = entry.getValue();
+                                    Log.e("key", tmpEvent.getKey());
+                                    Log.e("location", tmpEvent.getLocation());
+                                    Log.e("name", tmpEvent.getName());
+                                    Log.e("start date", tmpEvent.getStartDate());
+                                    Log.e("end date", tmpEvent.getEndDate());
+                                    Log.e("week", tmpEvent.getWeek());
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
                 });
-
             }
+
         });
     }
 }
