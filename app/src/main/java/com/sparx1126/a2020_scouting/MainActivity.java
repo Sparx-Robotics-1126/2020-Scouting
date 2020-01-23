@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
+import com.sparx1126.a2020_scouting.Utilities.SendMail;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -22,6 +24,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     private BlueAllianceNetwork network = BlueAllianceNetwork.getInstance();
     private Map<String, BlueAllianceEvent> events;
+    private SendMail smail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,12 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+        //SendMail Testing
+        smail = new SendMail();
+        smail.sendMail();
+
+
+
         //BLUE ALLIACNE TESTING
         events = new HashMap<>();
         network.downloadEvents(new BlueAllianceNetwork.Callback() {
