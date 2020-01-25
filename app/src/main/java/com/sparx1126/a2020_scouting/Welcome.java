@@ -10,18 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.Properties;
-
-import javax.mail.Folder;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.NoSuchProviderException;
-import javax.mail.Session;
-import javax.mail.Store;
-
 public class Welcome extends AppCompatActivity {
 
-    private EditText emailInput,  passwordInput, teamInput;
+    private EditText emailInput, passwordInput, teamInput;
     private SharedPreferences loginData;
 
     @Override
@@ -29,9 +20,7 @@ public class Welcome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        loginData = getSharedPreferences("Sparx_prefs", 0);
-
-        checkPreferences();
+        loginData = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
 
         emailInput = findViewById(R.id.emailInput);
         passwordInput = findViewById(R.id.passwordInput);
@@ -45,20 +34,19 @@ public class Welcome extends AppCompatActivity {
             }
         });
 
-        //test code
-        //Set mail properties and configure accordingly
-        String hostval = "pop.gmail.com";
-        String mailStrProt = "pop3";
-        String uname = "sparxsscouts1126@gmail.com";
-        String pwd = "sparx";
-        // Calling checkMail method to check received emails
-        checkMail(hostval, mailStrProt, uname, pwd);
-
+        checkPreferences();
     }
 
     public void checkPreferences(){
-        if(!loginData.getString("password", "").isEmpty())
+        // Jaren: Please check all fields: email, password, team
+        // I found that for email u can use -> test if not empty and
+        // Patterns.EMAIL_ADDRESS.matcher(loginData.getString("email", ""))
+        // For the team test -> not empty and Integer.parseInt(loginData.getString("team", ""))
+        if(!loginData.getString("password", "").isEmpty()) {
             switchScreen();
+        }
+        // Jaren: Please add an else with a Toast that says something is wrong...
+        // Tell on a dialog exactly what went wrong
     }
 
     public void login() {
@@ -69,63 +57,22 @@ public class Welcome extends AppCompatActivity {
 
         SharedPreferences.Editor editor;
         editor = loginData.edit();
-        editor.putString("email", email);
-        editor.putString("password", password);
-        editor.putString("team", team);
+
+        editor.putString(getString(R.string.EMAIL), email);
+        editor.putString(getString(R.string.PASSWORD), password);
+        editor.putString(getString(R.string.TEAM), team);
         editor.apply();
 
-        Log.i("loginSave", "email: " + loginData.getString("email", "email not found"));
-        Log.i("loginSave", "password: " + loginData.getString("password", "password not found"));
-        Log.i("loginSave", "team: " + loginData.getString("team", "team number not found"));
+        Log.i("loginSave", "email: " + loginData.getString(getString(R.string.EMAIL), "email not found"));
+        Log.i("loginSave", "password: " + loginData.getString(getString(R.string.PASSWORD), "password not found"));
+        Log.i("loginSave", "team: " + loginData.getString(getString(R.string.TEAM), "team number not found"));
 
+        // Jaren: I suggest that instead of switching you call checkPreferences
         switchScreen();
-
-
     }
 
     public void switchScreen(){
-        Log.e("switchScreen", "unknown");
-        startActivity(new Intent(Welcome.this, MainActivity.class));
+        Log.i("switchScreen", "unknown");
+        startActivity(new Intent(Welcome.this, SettingsScreen.class));
     }
-
-    public static void checkMail(String hostval, String mailStrProt, String uname,String pwd)
-    {
-        try {
-            //Set property values
-            Properties propvals = new Properties();
-            propvals.put("mail.pop3.host", hostval);
-            propvals.put("mail.pop3.port", "995");
-            propvals.put("mail.pop3.starttls.enable", "true");
-            Session emailSessionObj = Session.getDefaultInstance(propvals);
-            //Create POP3 store object and connect with the server
-            Store storeObj = emailSessionObj.getStore("pop3s");
-            storeObj.connect(hostval, uname, pwd);
-            //Create folder object and open it in read-only mode
-            Folder emailFolderObj = storeObj.getFolder("INBOX");
-            emailFolderObj.open(Folder.READ_ONLY);
-            //Fetch messages from the folder and print in a loop
-            Message[] messageobjs = emailFolderObj.getMessages();
-
-            for (int i = 0, n = messageobjs.length; i < n; i++) {
-                Message indvidualmsg = messageobjs[i];
-                System.out.println("Printing individual messages");
-                System.out.println("No# " + (i + 1));
-                System.out.println("Email Subject: " + indvidualmsg.getSubject());
-                System.out.println("Sender: " + indvidualmsg.getFrom()[0]);
-                System.out.println("Content: " + indvidualmsg.getContent().toString());
-
-            }
-            //Now close all the objects
-            emailFolderObj.close(false);
-            storeObj.close();
-        } catch (NoSuchProviderException exp) {
-            exp.printStackTrace();
-        } catch (MessagingException exp) {
-            exp.printStackTrace();
-        } catch (Exception exp) {
-            exp.printStackTrace();
-        }
-    }
-
-
 }
