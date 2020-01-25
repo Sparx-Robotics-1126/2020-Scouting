@@ -10,25 +10,34 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.Properties;
+
+import javax.mail.Folder;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
+import javax.mail.Session;
+import javax.mail.Store;
+
 public class Welcome extends AppCompatActivity {
-    private Button login;
-    private EditText emailInput;
-    private EditText passwordInput;
-    private EditText teamInput;
+
+    private EditText emailInput,  passwordInput, teamInput;
     private SharedPreferences loginData;
-    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        needsAName();
         setContentView(R.layout.activity_welcome);
+
+        loginData = getSharedPreferences("Sparx_prefs", 0);
+
+        checkPreferences();
 
         emailInput = findViewById(R.id.emailInput);
         passwordInput = findViewById(R.id.passwordInput);
         teamInput = findViewById(R.id.teamInput);
 
-        login = findViewById(R.id.login);
+        Button login = findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -36,37 +45,87 @@ public class Welcome extends AppCompatActivity {
             }
         });
 
-
-
+        //test code
+        //Set mail properties and configure accordingly
+        String hostval = "pop.gmail.com";
+        String mailStrProt = "pop3";
+        String uname = "sparxsscouts1126@gmail.com";
+        String pwd = "sparx";
+        // Calling checkMail method to check received emails
+        checkMail(hostval, mailStrProt, uname, pwd);
 
     }
 
-    public void login(){
+    public void checkPreferences(){
+        if(!loginData.getString("password", "").isEmpty())
+            switchScreen();
+    }
+
+    public void login() {
         String email, password, team;
         email = emailInput.getText().toString();
         password = passwordInput.getText().toString();
         team = teamInput.getText().toString();
 
-        loginData = getSharedPreferences("Sparx_prefs", 0);
+        SharedPreferences.Editor editor;
         editor = loginData.edit();
-
         editor.putString("email", email);
         editor.putString("password", password);
         editor.putString("team", team);
         editor.apply();
 
-        Log.i("email", loginData.getString("email", "email not found"));
-        Log.i("password", loginData.getString("password", "password not found"));
-        Log.i("team", loginData.getString("team", "team number not found"));
+        Log.i("loginSave", "email: " + loginData.getString("email", "email not found"));
+        Log.i("loginSave", "password: " + loginData.getString("password", "password not found"));
+        Log.i("loginSave", "team: " + loginData.getString("team", "team number not found"));
 
-        Intent switchToSettings = new Intent(Welcome.this, SettingsScreen.class);
-        startActivity(switchToSettings);
+        switchScreen();
 
-
-    }
-
-    public void needsAName(){
 
     }
+
+    public void switchScreen(){
+        Log.e("switchScreen", "unknown");
+        startActivity(new Intent(Welcome.this, MainActivity.class));
+    }
+
+    public static void checkMail(String hostval, String mailStrProt, String uname,String pwd)
+    {
+        try {
+            //Set property values
+            Properties propvals = new Properties();
+            propvals.put("mail.pop3.host", hostval);
+            propvals.put("mail.pop3.port", "995");
+            propvals.put("mail.pop3.starttls.enable", "true");
+            Session emailSessionObj = Session.getDefaultInstance(propvals);
+            //Create POP3 store object and connect with the server
+            Store storeObj = emailSessionObj.getStore("pop3s");
+            storeObj.connect(hostval, uname, pwd);
+            //Create folder object and open it in read-only mode
+            Folder emailFolderObj = storeObj.getFolder("INBOX");
+            emailFolderObj.open(Folder.READ_ONLY);
+            //Fetch messages from the folder and print in a loop
+            Message[] messageobjs = emailFolderObj.getMessages();
+
+            for (int i = 0, n = messageobjs.length; i < n; i++) {
+                Message indvidualmsg = messageobjs[i];
+                System.out.println("Printing individual messages");
+                System.out.println("No# " + (i + 1));
+                System.out.println("Email Subject: " + indvidualmsg.getSubject());
+                System.out.println("Sender: " + indvidualmsg.getFrom()[0]);
+                System.out.println("Content: " + indvidualmsg.getContent().toString());
+
+            }
+            //Now close all the objects
+            emailFolderObj.close(false);
+            storeObj.close();
+        } catch (NoSuchProviderException exp) {
+            exp.printStackTrace();
+        } catch (MessagingException exp) {
+            exp.printStackTrace();
+        } catch (Exception exp) {
+            exp.printStackTrace();
+        }
+    }
+
 
 }
