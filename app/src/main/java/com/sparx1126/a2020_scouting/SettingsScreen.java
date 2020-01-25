@@ -16,11 +16,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sparx1126.a2020_scouting.Utilities.FileIO;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
 public class SettingsScreen extends AppCompatActivity {
-    private SharedPreferences settings;
+    /*private SharedPreferences settings;
     private SharedPreferences.Editor editor;
     private static BlueAllianceNetworking blueAlliance;
     private static DataCollection dataCollection;
@@ -30,7 +32,7 @@ public class SettingsScreen extends AppCompatActivity {
     private TextView teamNum;
     private Button reconfigure;
     private Button saveConfiguration;
-    private Spinner eventSpinner;
+    private Spinner eventSpinner;*/
 
 
     @Override
@@ -38,7 +40,7 @@ public class SettingsScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_screen);
 
-        settings = getSharedPreferences("Sparx_prefs", 0);
+        /*settings = getSharedPreferences("Sparx_prefs", 0);
         reconfigure = findViewById(R.id.reconfigure);
         email = findViewById(R.id.emailInput);
         teamNum = findViewById(R.id.teamInput);
@@ -116,11 +118,11 @@ public class SettingsScreen extends AppCompatActivity {
 
         Log.i("email", settings.getString("email", "email not found"));
         Log.i("password", settings.getString("password", "password not found"));
-        Log.i("team", settings.getString("team", "team number not found"));
+        Log.i("team", settings.getString("team", "team number not found"));*/
     }
 
     private void reconfigure(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(SettingsScreen.this);
+        /*AlertDialog.Builder builder = new AlertDialog.Builder(SettingsScreen.this);
         builder.setTitle("Reconfigure");
         builder.setMessage("Please enter Admin password to continue");
         // Set an EditText view to get user input
@@ -156,16 +158,16 @@ public class SettingsScreen extends AppCompatActivity {
                 finish();
             }
         });
-        builder.create().show();
+        builder.create().show();*/
 
     }
 
     private void reset() {
-        editor.putBoolean(getResources().getString(R.string.pref_BlueAlliance), false);
+        /*editor.putBoolean(getResources().getString(R.string.pref_BlueAlliance), false);
         editor.putInt(getResources().getString(R.string.pref_TeamPosition), 0);
         editor.putBoolean(getResources().getString(R.string.tablet_Configured), false);
         editor.apply();
-        adminLayout.setVisibility(View.INVISIBLE);
+        adminLayout.setVisibility(View.INVISIBLE);*/
     }
 
     private boolean isValidJsonArray(String _data) {

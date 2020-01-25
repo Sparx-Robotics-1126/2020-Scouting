@@ -1,4 +1,4 @@
-package com.sparx1126.a2020_scouting;
+package com.sparx1126.a2020_scouting.Utilities;
 
 import android.content.Context;
 import android.os.Environment;
@@ -12,7 +12,6 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

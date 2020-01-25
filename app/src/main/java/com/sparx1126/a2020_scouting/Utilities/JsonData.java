@@ -1,4 +1,4 @@
-package com.sparx1126.a2020_scouting;
+package com.sparx1126.a2020_scouting.Utilities;
 
 import org.json.JSONArray;
 import org.json.JSONException;
