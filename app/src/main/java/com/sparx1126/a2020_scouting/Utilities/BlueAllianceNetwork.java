@@ -30,6 +30,7 @@ public class BlueAllianceNetwork {
     private static String EVENT_RANKS_URL_TAIL = "event/{event_key}/rankings";
     // intention is for {team_key} to be substituted in the url handed to the okhttp client
     private static String TEAM_EVENTS_URL_TAIL = "team/{team_key}/events/" + YEAR;
+    private static String TEAM_SPECIFIC_EVENT_MATCHES="team/{team_key}/event/{event_key}/matches/simple";
     private static String EVENT_MATCHES_URL_TAIL = "event/{event_key}/matches/simple";
  //Private constructor> only one instance per app instance
     private BlueAllianceNetwork(){client=new OkHttpClient();}
@@ -96,9 +97,36 @@ public class BlueAllianceNetwork {
         });
 
     }
+    //Downloads only the mathes in event that the teamkey team is in
+    public void downloadTeamEventMatches(String eventKey,String teamKey,final Callback callback){
+        String url = BASE_URL+TEAM_SPECIFIC_EVENT_MATCHES.replace("{team_key}", teamKey);
+        url=url.replace("{event_key}",eventKey);
+        Log.e("EVENT MATCHES URL", url);
+        fetchBlueAllianceData(url, new okhttp3.Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.handleFinishDownload("");            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if(response.isSuccessful()){
+                    String rtrn = response.body().string();
+                    assert rtrn != null;
+                    callback.handleFinishDownload(rtrn);
+
+                } else{ throw new AssertionError(response.message()+this);
+
+                }
+
+            }
+        });
+
+    }
+
 
     public void downloadEventMatches(String eventKey,final Callback callback){
-        String url = BASE_URL+TEAM_EVENTS_URL_TAIL.replace("{event_key}", eventKey);
+        String url = BASE_URL+EVENT_MATCHES_URL_TAIL.replace("{event_key}", eventKey);
+        Log.e("EVENT MATCHES URL", url);
         fetchBlueAllianceData(url, new okhttp3.Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
