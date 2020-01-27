@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.sparx1126.a2020_scouting.Utilities.BlueAllianceEvent;
+import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
+
 import java.util.Properties;
 
 import javax.mail.Folder;
@@ -74,6 +77,8 @@ public class Welcome extends AppCompatActivity {
         editor.putString("team", team);
         editor.apply();
 
+        BlueAllianceNetwork.getInstance().seteamKey("frc" + team);
+
         Log.i("loginSave", "email: " + loginData.getString("email", "email not found"));
         Log.i("loginSave", "password: " + loginData.getString("password", "password not found"));
         Log.i("loginSave", "team: " + loginData.getString("team", "team number not found"));
@@ -85,7 +90,7 @@ public class Welcome extends AppCompatActivity {
 
     public void switchScreen(){
         Log.e("switchScreen", "unknown");
-        startActivity(new Intent(Welcome.this, MainActivity.class));
+        startActivity(new Intent(Welcome.this, SettingsScreen.class));
     }
 
     public static void checkMail(String hostval, String mailStrProt, String uname,String pwd)

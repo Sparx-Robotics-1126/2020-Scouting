@@ -9,4 +9,6 @@
     <string name="pref_TeamPosition">pref_TeamPosition</string>
     <string name="tablet_Configured">tablet_Configured</string>
     <string name="password">hiram</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_scouting">scouting</string>
 </resources>
