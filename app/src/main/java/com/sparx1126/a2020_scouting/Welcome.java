@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
+
 public class Welcome extends AppCompatActivity {
 
     private EditText emailInput, passwordInput, teamInput;
@@ -43,6 +45,7 @@ public class Welcome extends AppCompatActivity {
         // Patterns.EMAIL_ADDRESS.matcher(loginData.getString("email", ""))
         // For the team test -> not empty and Integer.parseInt(loginData.getString("team", ""))
         if(!loginData.getString("password", "").isEmpty()) {
+            BlueAllianceNetwork.getInstance().seteamKey("frc" + loginData.getString("team", "team number not found"));
             switchScreen();
         }
         // Jaren: Please add an else with a Toast that says something is wrong...

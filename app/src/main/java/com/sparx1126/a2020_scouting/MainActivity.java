@@ -4,10 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.sparx1126.a2020_scouting.Utilities.BlueAllianceEvent;
-import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
-import com.sparx1126.a2020_scouting.Utilities.SendMail;
-import com.sparx1126.a2020_scouting.Utilities.GetMail;
+import com.sparx1126.a2020_scouting.Utilities.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
