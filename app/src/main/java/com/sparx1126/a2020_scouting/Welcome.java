@@ -64,7 +64,7 @@ public class Welcome extends AppCompatActivity {
             switchScreen();
     }
 
-    public void login() {
+    public  void  login() {
         String email, password, team;
         email = emailInput.getText().toString();
         password = passwordInput.getText().toString();
@@ -90,7 +90,7 @@ public class Welcome extends AppCompatActivity {
 
     public void switchScreen(){
         Log.e("switchScreen", "unknown");
-        startActivity(new Intent(Welcome.this, SettingsScreen.class));
+        startActivity(new Intent(Welcome.this, scouting.class));
     }
 
     public static void checkMail(String hostval, String mailStrProt, String uname,String pwd)
