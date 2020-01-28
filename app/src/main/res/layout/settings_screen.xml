@@ -44,16 +44,16 @@
     </LinearLayout>
 
 
-    <Spinner
-        android:id="@+id/eventSpinner"
-        android:layout_height="25dp"
-        style="@style/J_spinner" />
-
     <LinearLayout
         android:id="@+id/adminLayout"
         style="@style/VerticalLinearLayout">
 
-    <Button
+        <Spinner
+            android:id="@+id/eventSpinner"
+            style="@style/J_spinner"
+            android:layout_height="49dp" />
+
+        <Button
         android:id="@+id/reconfigure"
         android:layout_width="match_parent"
         android:layout_height="75dp"
