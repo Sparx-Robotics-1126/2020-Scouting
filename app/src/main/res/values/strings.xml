@@ -9,6 +9,10 @@
     <string name="pref_TeamPosition">pref_TeamPosition</string>
     <string name="tablet_Configured">tablet_Configured</string>
     <string name="password">hiram</string>
+    <string name="SPARX_PREFS">Sparx_prefs</string>
+    <string name="EMAIL">email</string>
+    <string name="PASSWORD">password</string>
+    <string name="TEAM">team</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_scouting">scouting</string>
 </resources>

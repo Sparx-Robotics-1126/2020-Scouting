@@ -16,9 +16,9 @@
             android:label="@string/title_activity_scouting"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".Main2Activity"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".scouting"
+            android:label="@string/title_activity_scouting"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".SettingsScreen" />
         <activity android:name=".MainActivity" />
         <activity
