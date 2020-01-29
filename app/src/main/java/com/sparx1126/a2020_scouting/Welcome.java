@@ -4,15 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
 
 public class Welcome extends AppCompatActivity {
+    //once the tablet has been configured to a team change this value
+    public static boolean toggledBlue;
 
     private EditText emailInput, passwordInput, teamInput;
     private SharedPreferences loginData;
@@ -22,7 +27,13 @@ public class Welcome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
+        changeUi();
+
         loginData = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
+
+        //Get rid of this block once save configuration is completed
+        toggledBlue = false;
+        changeUi();
 
         emailInput = findViewById(R.id.emailInput);
         passwordInput = findViewById(R.id.passwordInput);
@@ -37,6 +48,46 @@ public class Welcome extends AppCompatActivity {
         });
 
         checkPreferences();
+    }
+
+    public  void changeUi(){
+        if(toggledBlue == true){
+            LinearLayout li = (LinearLayout)findViewById(R.id.background);
+            li.setBackgroundColor(getResources().getColor(R.color.BBackground));
+            Button log = findViewById(R.id.login);
+            log.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            log.setTextColor(getResources().getColor(R.color.BText));
+            TextView email = findViewById(R.id.email);
+            email.setTextColor(getResources().getColor(R.color.BText));
+            TextView password = findViewById(R.id.password);
+            password.setTextColor(getResources().getColor(R.color.BText));
+            TextView team = findViewById(R.id.team);
+            team.setTextColor(getResources().getColor(R.color.BText));
+            EditText emailInput = findViewById(R.id.emailInput);
+            emailInput.setTextColor(getResources().getColor(R.color.BText));
+            EditText passwordInput = findViewById(R.id.passwordInput);
+            passwordInput.setTextColor(getResources().getColor(R.color.BText));
+            EditText teamInput = findViewById(R.id.teamInput);
+            teamInput.setTextColor(getResources().getColor(R.color.BText));
+        }else{
+            LinearLayout li = (LinearLayout)findViewById(R.id.background);
+            li.setBackgroundColor(getResources().getColor(R.color.RBackground));
+            Button log = findViewById(R.id.login);
+            log.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
+            log.setTextColor(getResources().getColor(R.color.RText));
+            TextView email = findViewById(R.id.email);
+            email.setTextColor(getResources().getColor(R.color.RText));
+            TextView password = findViewById(R.id.password);
+            password.setTextColor(getResources().getColor(R.color.RText));
+            TextView team = findViewById(R.id.team);
+            team.setTextColor(getResources().getColor(R.color.RText));
+            EditText emailInput = findViewById(R.id.emailInput);
+            emailInput.setTextColor(getResources().getColor(R.color.RText));
+            EditText passwordInput = findViewById(R.id.passwordInput);
+            passwordInput.setTextColor(getResources().getColor(R.color.RText));
+            EditText teamInput = findViewById(R.id.teamInput);
+            teamInput.setTextColor(getResources().getColor(R.color.RText));
+        }
     }
 
     public void checkPreferences(){
@@ -76,6 +127,6 @@ public class Welcome extends AppCompatActivity {
 
     public void switchScreen(){
         Log.i("switchScreen", "unknown");
-        startActivity(new Intent(Welcome.this, SettingsScreen.class));
+        startActivity(new Intent(Welcome.this, scouting.class));
     }
 }

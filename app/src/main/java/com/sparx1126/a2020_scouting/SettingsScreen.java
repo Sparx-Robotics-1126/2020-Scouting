@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -41,6 +42,8 @@ public class SettingsScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_screen);
+
+        changeUi();
 
         settings = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
         editor = settings.edit();
@@ -178,6 +181,52 @@ public class SettingsScreen extends AppCompatActivity {
             }
         });
         builder.create().show();
+    }
+
+    public  void changeUi(){
+        if(Welcome.toggledBlue){
+            LinearLayout li = (LinearLayout)findViewById(R.id.background);
+            li.setBackgroundColor(getResources().getColor(R.color.BBackground));
+            Button recon = findViewById(R.id.reconfigure);
+            recon.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            recon.setTextColor(getResources().getColor(R.color.BText));
+            Button savecon = findViewById(R.id.configure);
+            savecon.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            savecon.setTextColor(getResources().getColor(R.color.BText));
+            TextView email = findViewById(R.id.email);
+            email.setTextColor(getResources().getColor(R.color.BText));
+            TextView team = findViewById(R.id.team);
+            team.setTextColor(getResources().getColor(R.color.BText));
+            TextView emailInput = findViewById(R.id.emailInput);
+            emailInput.setTextColor(getResources().getColor(R.color.BText));
+            TextView teamInput = findViewById(R.id.teamInput);
+            teamInput.setTextColor(getResources().getColor(R.color.BText));
+            LinearLayout adLi = (LinearLayout)findViewById(R.id.adminLayout);
+            adLi.setBackgroundColor(getResources().getColor(R.color.BBackground));
+            Spinner events = findViewById(R.id.eventSpinner);
+            events.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+        }else{
+            LinearLayout li = (LinearLayout)findViewById(R.id.background);
+            li.setBackgroundColor(getResources().getColor(R.color.RBackground));
+            Button recon = findViewById(R.id.reconfigure);
+            recon.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
+            recon.setTextColor(getResources().getColor(R.color.RText));
+            Button savecon = findViewById(R.id.configure);
+            savecon.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
+            savecon.setTextColor(getResources().getColor(R.color.RText));
+            TextView email = findViewById(R.id.email);
+            email.setTextColor(getResources().getColor(R.color.RText));
+            TextView team = findViewById(R.id.team);
+            team.setTextColor(getResources().getColor(R.color.RText));
+            TextView emailInput = findViewById(R.id.emailInput);
+            emailInput.setTextColor(getResources().getColor(R.color.RText));
+            TextView teamInput = findViewById(R.id.teamInput);
+            teamInput.setTextColor(getResources().getColor(R.color.RText));
+            LinearLayout adLi = (LinearLayout)findViewById(R.id.adminLayout);
+            adLi.setBackgroundColor(getResources().getColor(R.color.RBackground));
+            Spinner events = findViewById(R.id.eventSpinner);
+            events.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
+        }
     }
 
     // Sohail: We should move this to the Welcome Screen after JT is done making the BAM
