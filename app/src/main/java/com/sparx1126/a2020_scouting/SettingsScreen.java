@@ -30,7 +30,6 @@ public class SettingsScreen extends AppCompatActivity {
     private SharedPreferences settings;
     private SharedPreferences.Editor editor;
     private static BlueAllianceNetwork blueAlliance;
-    private View adminLayout;
     private TextView email;
     private TextView teamNum;
     private Button reconfigure;
@@ -56,11 +55,6 @@ public class SettingsScreen extends AppCompatActivity {
                 reconfigure();
             }
         });
-
-        // Sohail: I beleive you can remove the adminLayout. It involves removing it from the actual
-        // layout
-        adminLayout = findViewById(R.id.adminLayout);
-        adminLayout.setVisibility(View.VISIBLE);
 
         // Sohail: I beleive you can remove the saveConfiguration. It involves removing it from the actual
         // layout
@@ -201,8 +195,6 @@ public class SettingsScreen extends AppCompatActivity {
             emailInput.setTextColor(getResources().getColor(R.color.BText));
             TextView teamInput = findViewById(R.id.teamInput);
             teamInput.setTextColor(getResources().getColor(R.color.BText));
-            LinearLayout adLi = (LinearLayout)findViewById(R.id.adminLayout);
-            adLi.setBackgroundColor(getResources().getColor(R.color.BBackground));
             Spinner events = findViewById(R.id.eventSpinner);
             events.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
         }else{
@@ -222,8 +214,6 @@ public class SettingsScreen extends AppCompatActivity {
             emailInput.setTextColor(getResources().getColor(R.color.RText));
             TextView teamInput = findViewById(R.id.teamInput);
             teamInput.setTextColor(getResources().getColor(R.color.RText));
-            LinearLayout adLi = (LinearLayout)findViewById(R.id.adminLayout);
-            adLi.setBackgroundColor(getResources().getColor(R.color.RBackground));
             Spinner events = findViewById(R.id.eventSpinner);
             events.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
         }
@@ -276,15 +266,6 @@ public class SettingsScreen extends AppCompatActivity {
         System.out.println(eventSpinnerList.toString());
         SpinnerAdapter eventAdapter = new ArrayAdapter<>(SettingsScreen.this, R.layout.support_simple_spinner_dropdown_item, eventSpinnerList);
         eventSpinner.setAdapter(eventAdapter);
-    }
-
-    // Sohail: I believe you can remove this.
-    private void reset() {
-        editor.putBoolean(getResources().getString(R.string.pref_BlueAlliance), false);
-        editor.putInt(getResources().getString(R.string.pref_TeamPosition), 0);
-        editor.putBoolean(getResources().getString(R.string.tablet_Configured), false);
-        editor.apply();
-        adminLayout.setVisibility(View.INVISIBLE);
     }
 
     private boolean isValidJsonArray(String _data) {

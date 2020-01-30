@@ -47,9 +47,6 @@
     </LinearLayout>
 
 
-    <LinearLayout
-        android:id="@+id/adminLayout"
-        style="@style/VerticalLinearLayout">
 
         <Spinner
             android:id="@+id/eventSpinner"
@@ -76,4 +73,3 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#2196F3" />
     </LinearLayout>
-</LinearLayout>
