@@ -3,6 +3,7 @@ package com.sparx1126.a2020_scouting.Utilities;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import com.sparx1126.a2020_scouting.BlueAllianceData.*;
 
 import java.util.HashMap;
 import java.util.Map;

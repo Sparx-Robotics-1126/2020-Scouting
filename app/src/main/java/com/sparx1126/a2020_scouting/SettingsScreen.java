@@ -1,6 +1,9 @@
 package com.sparx1126.a2020_scouting;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceEvent;
+import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
 import com.sparx1126.a2020_scouting.Utilities.*;
 
 import android.app.AlertDialog;
@@ -25,6 +28,8 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class SettingsScreen extends AppCompatActivity {
     private SharedPreferences settings;
@@ -33,7 +38,8 @@ public class SettingsScreen extends AppCompatActivity {
     private TextView email;
     private TextView teamNum;
     private Button reconfigure;
-    private Button saveConfiguration;
+
+    private boolean configured;
     private Spinner eventSpinner;
 
 
@@ -53,16 +59,6 @@ public class SettingsScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 reconfigure();
-            }
-        });
-
-        // Sohail: I beleive you can remove the saveConfiguration. It involves removing it from the actual
-        // layout
-        saveConfiguration = findViewById(R.id.configure);
-        saveConfiguration.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                saveConfiguration();
             }
         });
 
@@ -136,11 +132,14 @@ public class SettingsScreen extends AppCompatActivity {
         Log.i("team", settings.getString(getString(R.string.TEAM), "team number not found"));
 
         downLoadEvents();
+        //get rid of this when finished
+        configured = false;
     }
 
-    // Sohail: I beleive you can remove the saveConfiguration
-    private void saveConfiguration(){
-
+    @Override
+    public void onBackPressed() {
+        if(!configured)
+            Toast.makeText(SettingsScreen.this, "You can't leave until you have configured", Toast.LENGTH_LONG).show();
     }
 
     private void reconfigure() {
@@ -156,7 +155,7 @@ public class SettingsScreen extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
                 if (!value.equals(settings.getString(getString(R.string.PASSWORD), ""))) {
-                    Toast.makeText(SettingsScreen.this, "Wrond Password", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SettingsScreen.this, "Wrong Password", Toast.LENGTH_LONG).show();
                     input.setText("");
                 } else {
                     editor.putString(getString(R.string.EMAIL), "");
@@ -171,7 +170,8 @@ public class SettingsScreen extends AppCompatActivity {
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                finish();
+                Intent stayHere = new Intent(SettingsScreen.this, SettingsScreen.class);
+                startActivity(stayHere);
             }
         });
         builder.create().show();
@@ -184,9 +184,6 @@ public class SettingsScreen extends AppCompatActivity {
             Button recon = findViewById(R.id.reconfigure);
             recon.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
             recon.setTextColor(getResources().getColor(R.color.BText));
-            Button savecon = findViewById(R.id.configure);
-            savecon.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
-            savecon.setTextColor(getResources().getColor(R.color.BText));
             TextView email = findViewById(R.id.email);
             email.setTextColor(getResources().getColor(R.color.BText));
             TextView team = findViewById(R.id.team);
@@ -203,9 +200,6 @@ public class SettingsScreen extends AppCompatActivity {
             Button recon = findViewById(R.id.reconfigure);
             recon.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
             recon.setTextColor(getResources().getColor(R.color.RText));
-            Button savecon = findViewById(R.id.configure);
-            savecon.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
-            savecon.setTextColor(getResources().getColor(R.color.RText));
             TextView email = findViewById(R.id.email);
             email.setTextColor(getResources().getColor(R.color.RText));
             TextView team = findViewById(R.id.team);
@@ -248,6 +242,9 @@ public class SettingsScreen extends AppCompatActivity {
         // Sohail: This is where you will get the events from BAE (BlueAllianceEvent) after is completed
         // following JTs format
         //        Map<String, BlueAllianceEvent> data = dataCollection.getEvents();
+
+        //if you look at this haram like this
+        //Map<String, BlueAllianceEvent> data = BlueAllianceMatch.getMatches();
         List<String> eventSpinnerList = new ArrayList<>();
 
         if (pref_SelectedEvent.isEmpty()) {
@@ -257,16 +254,15 @@ public class SettingsScreen extends AppCompatActivity {
         } else {
             eventSpinnerList.add(pref_SelectedEvent);
             // Sohail You will add the events here one by one execpt for the currently seleceted
-            /*for (String eventName : data.keySet()) {
+           /* for (String eventName : data.keySet()) {
                 if (!eventName.equals(pref_SelectedEvent)) {
                     eventSpinnerList.add(eventName);
-                }
-            }*/
-        }
+                }*/
+            }
         System.out.println(eventSpinnerList.toString());
         SpinnerAdapter eventAdapter = new ArrayAdapter<>(SettingsScreen.this, R.layout.support_simple_spinner_dropdown_item, eventSpinnerList);
         eventSpinner.setAdapter(eventAdapter);
-    }
+        }
 
     private boolean isValidJsonArray(String _data) {
         try {

@@ -1,4 +1,4 @@
-package com.sparx1126.a2020_scouting.Utilities;
+package com.sparx1126.a2020_scouting.BlueAllianceData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -104,7 +104,7 @@ public class JsonData {
         return rtnData;
     }
 
-    protected String getString(JSONObject _jsonObj, String _key) {
+    protected static String getString(JSONObject _jsonObj, String _key) {
         String rtnData = "";
 
         try {
@@ -116,7 +116,7 @@ public class JsonData {
         return rtnData;
     }
 
-    protected JSONObject getJsonObject(JSONObject _jsonObj, String _key) {
+    protected static JSONObject getJsonObject(JSONObject _jsonObj, String _key) {
         JSONObject rtnData = null;
 
         try {
@@ -128,7 +128,7 @@ public class JsonData {
         return rtnData;
     }
 
-    protected JSONArray getJsonArray(JSONObject _jsonObj, String _key) {
+    protected static JSONArray getJsonArray(JSONObject _jsonObj, String _key) {
         JSONArray rtnData = null;
 
         try {
