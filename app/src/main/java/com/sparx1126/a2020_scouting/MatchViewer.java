@@ -22,30 +22,33 @@ public class MatchViewer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.match_viewer);
-        network.downloadEventMatches(HARD_CODED_EKEY, new BlueAllianceNetwork.Callback() {
-            @Override
-            public void handleFinishDownload(final String _data) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //System.out.println(_data);
-                       BlueAllianceMatch.parseDataToBAMMap(_data);
+//        network.downloadEventMatches(HARD_CODED_EKEY, new BlueAllianceNetwork.Callback() {
+//            @Override
+//            public void handleFinishDownload(final String _data) {
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        //Log.i("TAG", _data);
+//                        System.out.println(_data);
+//                       BlueAllianceMatch.parseDataToBAMMap(_data);
+//
+//                    }
+//                });
+//
+//            }
+//        });
 
-                    }
-                });
 
-            }
-        });
-        HashMap<String,BlueAllianceMatch> map = BlueAllianceMatch.getMatches();
-        String str="tfv";
-        for(Map.Entry entry:map.entrySet()){
-            str+=(entry.getKey()+" ");
+        Log.e("SIZE",String.valueOf(BlueAllianceMatch.getMatches().size()));
+        //Log.e("TIME2",BlueAllianceMatch.getMatches().get("2").getEpochTime());
+        Log.e("TIME 1",BlueAllianceMatch.getMatches().get("1").getEpochTime());
+          Log.e("TEAM",String.valueOf(BlueAllianceMatch.getTeamMatches().get("1").getEpochTime()));
+        Log.e("TIME45",BlueAllianceMatch.getMatches().get("79").getEpochTime());
+        //Log.e("YEE",BlueAllianceMatch.getMatches().get("7").getMatchNum());
         }
-        Log.e("BAM TEST","YO");
-        Log.e("BAM TEST",String.valueOf(map.size()));
-        Log.e("BAM TEST","U");
+//
 
 
     }
 
-}
+

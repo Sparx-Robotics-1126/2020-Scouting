@@ -11,9 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SettingsScreen"/>
-        <activity android:name=".Welcome"/>
+        <activity android:name=".MatchViewer"/>
         <activity android:name=".MainActivity"/>
-        <activity android:name=".MatchViewer" >
+        <activity android:name=".Welcome" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

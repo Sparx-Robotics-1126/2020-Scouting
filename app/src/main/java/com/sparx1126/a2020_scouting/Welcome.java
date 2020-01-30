@@ -10,6 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
+import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
+
+
 import java.util.Properties;
 
 import javax.mail.Folder;
@@ -23,14 +27,32 @@ public class Welcome extends AppCompatActivity {
 
     private EditText emailInput,  passwordInput, teamInput;
     private SharedPreferences loginData;
+    private BlueAllianceNetwork network;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        network=BlueAllianceNetwork.getInstance();
+        //BAM POPULATE
+        network.downloadEventMatches("2019ohcl", new BlueAllianceNetwork.Callback() {
+            @Override
+            public void handleFinishDownload(final String _data) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Log.i("TAG", _data);
+                        //System.out.println(_data);
+                        BlueAllianceMatch.parseDataToBAMMap(_data);
+
+                    }
+                });
+
+            }
+        });
+
 
         loginData = getSharedPreferences("Sparx_prefs", 0);
-
         checkPreferences();
 
         emailInput = findViewById(R.id.emailInput);
@@ -85,7 +107,7 @@ public class Welcome extends AppCompatActivity {
 
     public void switchScreen(){
         Log.e("switchScreen", "unknown");
-        startActivity(new Intent(Welcome.this, MainActivity.class));
+        startActivity(new Intent(Welcome.this, MatchViewer.class));
     }
 
     public static void checkMail(String hostval, String mailStrProt, String uname,String pwd)

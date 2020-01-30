@@ -1,6 +1,7 @@
 package com.sparx1126.a2020_scouting.BlueAllianceData;
 
 
+import android.util.Log;
 import android.util.SparseArray;
 
 import org.json.JSONArray;
@@ -13,6 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BlueAllianceMatch extends JsonData {
+    private static final String HARD_CODED_FRC_TEAM = "frc1126";
+
     //keys to access the JSON Object
     private static final String EPOCH_TIME = "predicted_time";
     private static final String MATCH_NUMBER = "match_number";
@@ -20,6 +23,7 @@ public class BlueAllianceMatch extends JsonData {
     private static final String TEAM_KEYS = "team_keys";
     private static final String BLUE = "blue";
     private static final String RED = "red";
+    private static final String COMP_LEVEL ="comp_level";
 
     //Static Maps to hold all the BAM Objects
     private static HashMap<String,BlueAllianceMatch> matches = new HashMap<String,BlueAllianceMatch>();
@@ -49,32 +53,36 @@ public class BlueAllianceMatch extends JsonData {
 
 
     }
+
     //Parses all the matches in the JSON Object in String form(_data), to populate the static map(matches)
     public static void parseDataToBAMMap(String _data){
         matches.clear();
         try{
             JSONArray array = new JSONArray(_data);
-            for(int j=1; j<array.length();j++){
+            for(int j=0; j<array.length();j++){
                 JSONObject obj = array.getJSONObject(j);
+               // Log.e("BAM OBJ", obj.toString());
                 String epoch =  getString(obj,EPOCH_TIME);
-                String mathNum = getString(obj,MATCH_NUMBER);
+                String compLevel = getString(obj,COMP_LEVEL);
+                String matchNum = getString(obj,MATCH_NUMBER);
                 ArrayList<String> redKeys = new ArrayList<String>();
                 ArrayList<String>  blueKeys = new ArrayList<String>();
-
                 JSONObject allianceObj = getJsonObject(obj, ALLIANCES);
                 JSONObject redObj = getJsonObject(allianceObj,RED);
                 JSONArray redKeyArray = getJsonArray(redObj,TEAM_KEYS);
                 JSONObject blueObj = getJsonObject(allianceObj,BLUE);
                 JSONArray blueKeyArray = getJsonArray(blueObj,TEAM_KEYS);
                 for( int i=0;i<redKeyArray.length();i++){
+                    //Log.e("BAM", redKeyArray.getString(i));
                     redKeys.add(redKeyArray.getString(i));
                 }
                 for( int i=0;i<blueKeyArray.length();i++){
                     blueKeys.add(blueKeyArray.getString(i));
                 }
-                matches.put(String.valueOf(j),new BlueAllianceMatch(blueKeys,redKeys,epoch,mathNum));
-
-
+                if(compLevel.equals("qm")){
+                    matches.put(matchNum,new BlueAllianceMatch(blueKeys,redKeys,epoch,matchNum));
+                }
+             //  Log.e("BAM2", matches.get("1").getEpochTime());
             }
         }
         catch(JSONException e) {
@@ -82,8 +90,18 @@ public class BlueAllianceMatch extends JsonData {
         }
 
     }
+    public static HashMap<String,BlueAllianceMatch> getTeamMatches() {
+        HashMap<String, BlueAllianceMatch> rtrn = new HashMap<String, BlueAllianceMatch>();
+        for (int i = 1; i <= matches.size(); i++) {
+            BlueAllianceMatch match = matches.get(i);
+            if (match.getBlueTeamKeys().contains(HARD_CODED_FRC_TEAM) || match.getRedTeamKeys().contains(HARD_CODED_FRC_TEAM)) {
+                rtrn.put(String.valueOf(i), match);
+            }
+        }
+        return rtrn;
+    }
 
-    public static void parseDataToJSonMap(String _data){
+    public static void parseDataToJSonMap(String  _data){
 
 
 
