@@ -51,7 +51,9 @@
             android:layout_height="wrap_content"
             android:text="Set Team #:"
             android:layout_weight="0"
-            android:textSize="30sp"/>
+            android:textSize="30sp"
+            android:inputType="number"
+            android:maxLength="4"/>
         <EditText
             android:id="@+id/teamInput"
             android:layout_width="wrap_content"
