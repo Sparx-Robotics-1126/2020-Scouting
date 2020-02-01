@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.util.Patterns;
 
 import com.sparx1126.a2020_scouting.Utilities.*;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
@@ -110,16 +111,17 @@ public class Welcome extends AppCompatActivity {
     }
 
     public void checkPreferences(){
-        // Jaren: Please check all fields: email, password, team
-        // I found that for email u can use -> test if not empty and
-        // Patterns.EMAIL_ADDRESS.matcher(loginData.getString("email", ""))
-        // For the team test -> not empty and Integer.parseInt(loginData.getString("team", ""))
-        if(!loginData.getString("password", "").isEmpty()) {
-            BlueAllianceNetwork.getInstance().seteamKey("frc" + loginData.getString("team", "team number not found"));
+        if(loginData.getString("password", "").isEmpty()) {
+            Log.e("checkPreferences","No password found");
+        } else if(loginData.getString("team", "").isEmpty()) { // team can only be a number based on xml
+            Log.e("checkPreferences","No team found");
+        } else if(loginData.getString("email", "").isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(loginData.getString("email", "")).matches()) {
+            Log.e("checkPreferences","No email found");
+        } else {
+            BlueAllianceNetwork.getInstance().seteamKey("frc" + loginData.getString("team", ""));
             switchScreen();
         }
-        // Jaren: Please add an else with a Toast that says something is wrong...
-        // Tell on a dialog exactly what went wrong
+
     }
 
     public void login() {
@@ -140,8 +142,8 @@ public class Welcome extends AppCompatActivity {
         Log.i("loginSave", "password: " + loginData.getString(getString(R.string.PASSWORD), "password not found"));
         Log.i("loginSave", "team: " + loginData.getString(getString(R.string.TEAM), "team number not found"));
 
-        // Jaren: I suggest that instead of switching you call checkPreferences
-        switchScreen();
+
+        checkPreferences();
     }
 
     public void switchScreen(){
