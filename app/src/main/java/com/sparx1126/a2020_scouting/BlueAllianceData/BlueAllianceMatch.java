@@ -1,13 +1,11 @@
 package com.sparx1126.a2020_scouting.BlueAllianceData;
 
 import android.util.Log;
-import android.util.SparseArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,10 +23,10 @@ public class BlueAllianceMatch extends JsonData {
     private static final String COMP_LEVEL ="comp_level";
 
     //Static Maps to hold all the BAM Objects
-    private static HashMap<String,BlueAllianceMatch> matches = new HashMap<String,BlueAllianceMatch>();
-    private static Map<String, JSONObject> jsonMathes = new HashMap<String, JSONObject>();
-    private static Map<String, JSONObject> jsonteamMathes = new HashMap<String, JSONObject>();
-    private static Map<String, BlueAllianceMatch> teamMatches = new HashMap<String, BlueAllianceMatch>();
+    private static HashMap<String,BlueAllianceMatch> matches = new HashMap<>();
+    private static Map<String, JSONObject> jsonMathes = new HashMap<>();
+    private static Map<String, JSONObject> jsonteamMathes = new HashMap<>();
+    private static Map<String, BlueAllianceMatch> teamMatches = new HashMap<>();
     //Getters
     public static  HashMap<String,BlueAllianceMatch> getMatches(){return matches;}
     public ArrayList<String> getBlueTeamKeys() { return blueTeamKeys; }
@@ -64,8 +62,8 @@ public class BlueAllianceMatch extends JsonData {
                 String epoch =  getString(obj,EPOCH_TIME);
                 String compLevel = getString(obj,COMP_LEVEL);
                 String matchNum = getString(obj,MATCH_NUMBER);
-                ArrayList<String> redKeys = new ArrayList<String>();
-                ArrayList<String>  blueKeys = new ArrayList<String>();
+                ArrayList<String> redKeys = new ArrayList<>();
+                ArrayList<String>  blueKeys = new ArrayList<>();
                 JSONObject allianceObj = getJsonObject(obj, ALLIANCES);
                 JSONObject redObj = getJsonObject(allianceObj,RED);
                 JSONArray redKeyArray = getJsonArray(redObj,TEAM_KEYS);
@@ -90,7 +88,7 @@ public class BlueAllianceMatch extends JsonData {
 
     }
     public static HashMap<String,BlueAllianceMatch> getTeamMatches() {
-        HashMap<String, BlueAllianceMatch> rtrn = new HashMap<String, BlueAllianceMatch>();
+        HashMap<String, BlueAllianceMatch> rtrn = new HashMap<>();
         for (int i = 1; i < matches.size(); i++) {
             System.out.println("TESTING "+ i);
             BlueAllianceMatch match = BlueAllianceMatch.getMatches().get(String.valueOf(i));

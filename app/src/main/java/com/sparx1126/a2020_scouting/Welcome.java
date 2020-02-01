@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
+import com.sparx1126.a2020_scouting.Utilities.*;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
 
 public class Welcome extends AppCompatActivity {
@@ -23,8 +23,10 @@ public class Welcome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        network=BlueAllianceNetwork.getInstance();
-        //BAM POPULATE
+
+        network = BlueAllianceNetwork.getInstance();
+
+        // JT: move into  settings after event is selected and use the selected event
         network.downloadEventMatches("2019ohcl", new BlueAllianceNetwork.Callback() {
             @Override
             public void handleFinishDownload(final String _data) {
