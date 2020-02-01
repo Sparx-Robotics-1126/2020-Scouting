@@ -9,32 +9,43 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.util.Patterns;
 
-import com.sparx1126.a2020_scouting.Utilities.BlueAllianceEvent;
-import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
-
-import java.util.Properties;
-
-import javax.mail.Folder;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.NoSuchProviderException;
-import javax.mail.Session;
-import javax.mail.Store;
+import com.sparx1126.a2020_scouting.Utilities.*;
+import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
 
 public class Welcome extends AppCompatActivity {
 
-    private EditText emailInput,  passwordInput, teamInput;
+    private EditText emailInput, passwordInput, teamInput;
     private SharedPreferences loginData;
+    private BlueAllianceNetwork network;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        loginData = getSharedPreferences("Sparx_prefs", 0);
+        network = BlueAllianceNetwork.getInstance();
 
-        checkPreferences();
+        // JT: move into  settings after event is selected and use the selected event
+        network.downloadEventMatches("2019ohcl", new BlueAllianceNetwork.Callback() {
+            @Override
+            public void handleFinishDownload(final String _data) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Log.i("TAG", _data);
+                        //System.out.println(_data);
+                        BlueAllianceMatch.parseDataToBAMMap(_data);
+
+                    }
+                });
+
+            }
+        });
+
+
+        loginData = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
 
         emailInput = findViewById(R.id.emailInput);
         passwordInput = findViewById(R.id.passwordInput);
@@ -48,23 +59,24 @@ public class Welcome extends AppCompatActivity {
             }
         });
 
-        //test code
-        //Set mail properties and configure accordingly
-        String hostval = "pop.gmail.com";
-        String mailStrProt = "pop3";
-        String uname = "sparxsscouts1126@gmail.com";
-        String pwd = "sparx";
-        // Calling checkMail method to check received emails
-        checkMail(hostval, mailStrProt, uname, pwd);
-
+        checkPreferences();
     }
 
     public void checkPreferences(){
-        if(!loginData.getString("password", "").isEmpty())
+        if(loginData.getString("password", "").isEmpty()) {
+            Log.e("checkPreferences","No password found");
+        } else if(loginData.getString("team", "").isEmpty()) { // team can only be a number based on xml
+            Log.e("checkPreferences","No team found");
+        } else if(loginData.getString("email", "").isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(loginData.getString("email", "")).matches()) {
+            Log.e("checkPreferences","No email found");
+        } else {
+            BlueAllianceNetwork.getInstance().seteamKey("frc" + loginData.getString("team", ""));
             switchScreen();
+        }
+
     }
 
-    public  void  login() {
+    public void login() {
         String email, password, team;
         email = emailInput.getText().toString();
         password = passwordInput.getText().toString();
@@ -72,65 +84,22 @@ public class Welcome extends AppCompatActivity {
 
         SharedPreferences.Editor editor;
         editor = loginData.edit();
-        editor.putString("email", email);
-        editor.putString("password", password);
-        editor.putString("team", team);
+
+        editor.putString(getString(R.string.EMAIL), email);
+        editor.putString(getString(R.string.PASSWORD), password);
+        editor.putString(getString(R.string.TEAM), team);
         editor.apply();
 
-        BlueAllianceNetwork.getInstance().seteamKey("frc" + team);
-
-        Log.i("loginSave", "email: " + loginData.getString("email", "email not found"));
-        Log.i("loginSave", "password: " + loginData.getString("password", "password not found"));
-        Log.i("loginSave", "team: " + loginData.getString("team", "team number not found"));
-
-        switchScreen();
+        Log.i("loginSave", "email: " + loginData.getString(getString(R.string.EMAIL), "email not found"));
+        Log.i("loginSave", "password: " + loginData.getString(getString(R.string.PASSWORD), "password not found"));
+        Log.i("loginSave", "team: " + loginData.getString(getString(R.string.TEAM), "team number not found"));
 
 
+        checkPreferences();
     }
 
     public void switchScreen(){
-        Log.e("switchScreen", "unknown");
-        startActivity(new Intent(Welcome.this, scouting.class));
+        Log.i("switchScreen", "unknown");
+        startActivity(new Intent(Welcome.this, SettingsScreen.class));
     }
-
-    public static void checkMail(String hostval, String mailStrProt, String uname,String pwd)
-    {
-        try {
-            //Set property values
-            Properties propvals = new Properties();
-            propvals.put("mail.pop3.host", hostval);
-            propvals.put("mail.pop3.port", "995");
-            propvals.put("mail.pop3.starttls.enable", "true");
-            Session emailSessionObj = Session.getDefaultInstance(propvals);
-            //Create POP3 store object and connect with the server
-            Store storeObj = emailSessionObj.getStore("pop3s");
-            storeObj.connect(hostval, uname, pwd);
-            //Create folder object and open it in read-only mode
-            Folder emailFolderObj = storeObj.getFolder("INBOX");
-            emailFolderObj.open(Folder.READ_ONLY);
-            //Fetch messages from the folder and print in a loop
-            Message[] messageobjs = emailFolderObj.getMessages();
-
-            for (int i = 0, n = messageobjs.length; i < n; i++) {
-                Message indvidualmsg = messageobjs[i];
-                System.out.println("Printing individual messages");
-                System.out.println("No# " + (i + 1));
-                System.out.println("Email Subject: " + indvidualmsg.getSubject());
-                System.out.println("Sender: " + indvidualmsg.getFrom()[0]);
-                System.out.println("Content: " + indvidualmsg.getContent().toString());
-
-            }
-            //Now close all the objects
-            emailFolderObj.close(false);
-            storeObj.close();
-        } catch (NoSuchProviderException exp) {
-            exp.printStackTrace();
-        } catch (MessagingException exp) {
-            exp.printStackTrace();
-        } catch (Exception exp) {
-            exp.printStackTrace();
-        }
-    }
-
-
 }

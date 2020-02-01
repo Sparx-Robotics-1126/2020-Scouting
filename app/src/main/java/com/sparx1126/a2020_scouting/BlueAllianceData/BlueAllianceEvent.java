@@ -1,6 +1,9 @@
-package com.sparx1126.a2020_scouting.Utilities;
+package com.sparx1126.a2020_scouting.BlueAllianceData;
 
 import org.json.JSONObject;
+
+//Old class from 2019
+//Must be updated to new 2020 data format (Static maps in each Data class)
 
 public class BlueAllianceEvent extends JsonData {
     // keys from thebluealliance.com API
