@@ -4,7 +4,6 @@ import android.util.Log;
 import java.io.IOException;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Request;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
@@ -12,8 +11,8 @@ import okhttp3.Response;
 public class BlueAllianceNetwork {
 
     public interface Callback {
-        void handleFinishDownload(String _data);
-    }
+                void handleFinishDownload(String _data);
+            }
 
     private static BlueAllianceNetwork instance;
     private static OkHttpClient client;
@@ -35,9 +34,9 @@ public class BlueAllianceNetwork {
  //Private constructor> only one instance per app instance
     private BlueAllianceNetwork(){client=new OkHttpClient();}
 
-    public  static synchronized BlueAllianceNetwork getInstance(){
-        if (instance==null){
-            instance=new BlueAllianceNetwork();
+            public  static synchronized BlueAllianceNetwork getInstance(){
+                if (instance==null){
+                    instance=new BlueAllianceNetwork();
         }
         return instance;
     }
@@ -49,13 +48,13 @@ public class BlueAllianceNetwork {
     }
 
     public void downloadEvents( final Callback callback){
-        String url = BASE_URL + TEAM_EVENTS_URL_TAIL.replace("{team_key}",teamKey );
-        fetchBlueAllianceData(url, new okhttp3.Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                callback.handleFinishDownload("");
+                String url = BASE_URL + TEAM_EVENTS_URL_TAIL.replace("{team_key}",teamKey );
+                fetchBlueAllianceData(url, new okhttp3.Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        callback.handleFinishDownload("");
 
-            }
+                    }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
