@@ -67,7 +67,7 @@ public class Welcome extends AppCompatActivity {
             Log.e("checkPreferences","No password found");
         } else if(loginData.getString("team", "").isEmpty()) { // team can only be a number based on xml
             Log.e("checkPreferences","No team found");
-        } else if(loginData.getString("email", "").isEmpty() && Patterns.EMAIL_ADDRESS.matcher(loginData.getString("email", "")).matches()) {
+        } else if(loginData.getString("email", "").isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(loginData.getString("email", "")).matches()) {
             Log.e("checkPreferences","No email found");
         } else {
             BlueAllianceNetwork.getInstance().seteamKey("frc" + loginData.getString("team", ""));

@@ -231,11 +231,11 @@ public class SettingsScreen extends AppCompatActivity {
 
     // Sohail: I believe you can remove this.
     private void reset() {
-        editor.putBoolean(getResources().getString(R.string.pref_BlueAlliance), false);
+        /*editor.putBoolean(getResources().getString(R.string.pref_BlueAlliance), false);
         editor.putInt(getResources().getString(R.string.pref_TeamPosition), 0);
         editor.putBoolean(getResources().getString(R.string.tablet_Configured), false);
         editor.apply();
-        adminLayout.setVisibility(View.INVISIBLE);
+        adminLayout.setVisibility(View.INVISIBLE);*/
     }
 
     private boolean isValidJsonArray(String _data) {
