@@ -4,4 +4,16 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <!--Red Theme-->
+    <color name="RText">#EE454D</color>
+    <color name="RToggleButton">#801336</color>
+    <color name="RButtonBackground">#510A32</color>
+    <color name="RBackground">#2D142C</color>
+
+    <!--Blue Theme-->
+    <color name="BText">#9999FF</color>
+    <color name="BToggleButton">#0000FF</color>
+    <color name="BButtonBackground">#000080</color>
+    <color name="BBackground">#00021D</color>
 </resources>

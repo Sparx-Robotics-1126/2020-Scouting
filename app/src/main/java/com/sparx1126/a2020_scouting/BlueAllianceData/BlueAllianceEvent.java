@@ -1,6 +1,15 @@
 package com.sparx1126.a2020_scouting.BlueAllianceData;
 
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.security.Key;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.jar.JarEntry;
 
 //Old class from 2019
 //Must be updated to new 2020 data format (Static maps in each Data class)
@@ -14,23 +23,56 @@ public class BlueAllianceEvent extends JsonData {
     private static final String START_DATE = "start_date";
     private static final String END_DATE = "end_date";
 
-    public BlueAllianceEvent(JSONObject _jsonObj) {
-        // Initialize
-        stringValuesMap.put(KEY, "");
-        stringValuesMap.put(NAME, "");
-        stringValuesMap.put(WEEK, "");
-        stringValuesMap.put(LOCATION, "");
-        stringValuesMap.put(START_DATE, "");
-        stringValuesMap.put(END_DATE, "");
+    private String key;
+    private String name;
+    private String week;
+    private String Location;
+    private String startDate;
+    private String endDate;
 
-        restoreFromJsonObject(_jsonObj);
+    private static  Map<String, BlueAllianceEvent> events = new HashMap<>();
+
+    public BlueAllianceEvent(String key, String name, String week, String Location, String startDate, String endDate) {
+       this.key = key;
+       this.name = name;
+       this.week = week;
+       this.Location = Location;
+       this.startDate = startDate;
+       this.endDate = endDate;
     }
 
-    public String getKey() { return stringValuesMap.get(KEY); }
-    public String getName() { return stringValuesMap.get(NAME); }
-    public String getWeek() { return stringValuesMap.get(WEEK); }
-    public String getLocation() { return stringValuesMap.get(LOCATION); }
-    public String getStartDate() { return stringValuesMap.get(START_DATE); }
-    public String getEndDate() { return stringValuesMap.get(END_DATE); }
+    public static void pharseJson(String _data){
+        events.clear();
+        try{
+           JSONArray arr = new JSONArray(_data);
+           for(int i = 0; i < arr.length(); i++){
+               JSONObject obj = arr.getJSONObject(i);
+               String k = getString(obj, KEY);
+               String n =  getString(obj,NAME);
+               String w = getString(obj,WEEK);
+               String l = getString(obj,LOCATION);
+               String s = getString(obj, START_DATE);
+               String e = getString(obj, END_DATE);
+
+               events.put(k ,new BlueAllianceEvent(k, n, w, l ,s ,e));
+           }
+        }catch(JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getKey() {return key;}
+    public String getName() {return name;}
+    public String getWeek() {return week;}
+    public String getLocation() {return Location;}
+    public String getStartDate() {return startDate;}
+    public String getEndDate() {return endDate;}
+    public static Map<String, BlueAllianceEvent> getEvents() {return events;}
+
+    @Override
+    public String toString(){
+        return ("\n" + "Event Name: " + name + "\n" + "Event Week: " + week + "\n" + "Event Location: " + Location + "\n" +  "Event Start Date" + startDate + "\n"
+        + "Event End Date" + endDate);
+    }
 }
 
