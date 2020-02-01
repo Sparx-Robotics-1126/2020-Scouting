@@ -10,6 +10,7 @@ import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 
 public class MatchViewer extends AppCompatActivity {
@@ -37,12 +38,14 @@ public class MatchViewer extends AppCompatActivity {
 //
 //            }
 //        });
-
-
+        Set<String> keys = BlueAllianceMatch.getMatches().keySet();
+        for(String k: keys){
+            System.out.println(k);
+        }
         Log.e("SIZE",String.valueOf(BlueAllianceMatch.getMatches().size()));
         //Log.e("TIME2",BlueAllianceMatch.getMatches().get("2").getEpochTime());
         Log.e("TIME 1",BlueAllianceMatch.getMatches().get("1").getEpochTime());
-          Log.e("TEAM",String.valueOf(BlueAllianceMatch.getTeamMatches().get("1").getEpochTime()));
+        Log.e("TEAM",String.valueOf(BlueAllianceMatch.getTeamMatches().get("21").getEpochTime()));
         Log.e("TIME45",BlueAllianceMatch.getMatches().get("79").getEpochTime());
         //Log.e("YEE",BlueAllianceMatch.getMatches().get("7").getMatchNum());
         }
