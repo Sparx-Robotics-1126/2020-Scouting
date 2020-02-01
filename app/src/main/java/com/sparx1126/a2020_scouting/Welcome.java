@@ -10,17 +10,39 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
+import com.sparx1126.a2020_scouting.Utilities.*;
+import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
 
 public class Welcome extends AppCompatActivity {
 
     private EditText emailInput, passwordInput, teamInput;
     private SharedPreferences loginData;
+    private BlueAllianceNetwork network;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        network = BlueAllianceNetwork.getInstance();
+
+        // JT: move into  settings after event is selected and use the selected event
+        network.downloadEventMatches("2019ohcl", new BlueAllianceNetwork.Callback() {
+            @Override
+            public void handleFinishDownload(final String _data) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Log.i("TAG", _data);
+                        //System.out.println(_data);
+                        BlueAllianceMatch.parseDataToBAMMap(_data);
+
+                    }
+                });
+
+            }
+        });
+
 
         loginData = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
 
