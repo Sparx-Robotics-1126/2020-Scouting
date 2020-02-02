@@ -26,6 +26,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.security.AllPermission;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,7 @@ public class SettingsScreen extends AppCompatActivity {
 
     private boolean configured;
     private Spinner eventSpinner;
+    private ArrayAdapter<String> adapter;
 
 
     @Override
@@ -63,6 +65,7 @@ public class SettingsScreen extends AppCompatActivity {
         });
 
         eventSpinner = findViewById(R.id.eventSpinner);
+
         eventSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -70,49 +73,6 @@ public class SettingsScreen extends AppCompatActivity {
                 if (!selectedItem.contentEquals(getResources().getString(R.string.selectEvent))) {
                     String previousSelectedEvent = settings.getString(getResources().getString(R.string.pref_SelectedEvent), "");
                     Log.e("selected Event:", selectedItem);
-                   /* if (!previousSelectedEvent.equals(selectedItem)) {
-                        // Sohail: You will download the matches here.
-                        reset();
-                        blueAlliance.downloadEventMatches(selectedItem, new BlueAllianceNetwork.Callback() {
-
-                            @Override
-                            public void handleFinishDownload(final String _data) {
-                                // this needs to run on the ui thread because of ui components in it
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (isValidJsonArray(_data)) {
-                                            //dataCollection.setEventMatches(_data);
-                                            //fileIO.storeEventMatches(_data);
-                                            blueAlliance.downloadEventTeams(selectedItem, new BlueAllianceNetwork.Callback() {
-
-                                                @Override
-                                                public void handleFinishDownload(final String _data) {
-                                                    // this needs to run on the ui thread because of ui components in it
-                                                    runOnUiThread(new Runnable() {
-                                                        @Override
-                                                        public void run() {
-                                                            if (isValidJsonArray(_data)) {
-                                                                //dataCollection.setEventTeams(_data);
-                                                                //fileIO.storeEventTeams(_data);
-                                                                adminLayout.setVisibility(View.VISIBLE);
-                                                            } else {
-                                                                Toast.makeText(SettingsScreen.this, "Internet returned BAD DATA for Teams, try another wifi!", Toast.LENGTH_LONG).show();
-                                                            }
-                                                        }
-                                                    });
-                                                }
-                                            });
-                                        } else {
-                                            Toast.makeText(SettingsScreen .this, "Internet returned BAD DATA for Matches, try another wifi!", Toast.LENGTH_LONG).show();
-                                        }
-                                    }
-                                });
-                            }
-                        });
-                    } else {
-                        adminLayout.setVisibility(View.VISIBLE);
-                    }*/
                 }
             }
 
@@ -132,6 +92,7 @@ public class SettingsScreen extends AppCompatActivity {
         Log.i("team", settings.getString(getString(R.string.TEAM), "team number not found"));
 
         downLoadEvents();
+
         //get rid of this when finished
         configured = false;
     }
@@ -225,8 +186,6 @@ public class SettingsScreen extends AppCompatActivity {
                     public void run() {
                         System.out.println("JT " + _data);
                         if (isValidJsonArray(_data)) {
-//                            dataCollection.setTeamEvents(_data);
-//                            fileIO.storeTeamEvents(_data);
                             setSpinner();
                         } else {
                             Toast.makeText(SettingsScreen.this, "Internet returned BAD DATA for Events, try another wifi!", Toast.LENGTH_LONG).show();
@@ -239,30 +198,23 @@ public class SettingsScreen extends AppCompatActivity {
 
     private void setSpinner() {
         String pref_SelectedEvent = settings.getString(getResources().getString(R.string.pref_SelectedEvent), "");
-        // Sohail: This is where you will get the events from BAE (BlueAllianceEvent) after is completed
-        // following JTs format
-        //        Map<String, BlueAllianceEvent> data = dataCollection.getEvents();
-
-        //if you look at this haram like this
-        //Map<String, BlueAllianceEvent> data = BlueAllianceMatch.getMatches();
         List<String> eventSpinnerList = new ArrayList<>();
 
         if (pref_SelectedEvent.isEmpty()) {
             eventSpinnerList.add("Select Event");
-            // Sohail: You will use all events here
-            //            eventSpinnerList.addAll(data.keySet());
+            eventSpinnerList.addAll(BlueAllianceEvent.getEvents().keySet());
         } else {
             eventSpinnerList.add(pref_SelectedEvent);
-            // Sohail You will add the events here one by one execpt for the currently seleceted
-           /* for (String eventName : data.keySet()) {
+            for (String eventName : BlueAllianceEvent.getEvents().keySet()) {
                 if (!eventName.equals(pref_SelectedEvent)) {
                     eventSpinnerList.add(eventName);
-                }*/
+                }
             }
+        }
         System.out.println(eventSpinnerList.toString());
         SpinnerAdapter eventAdapter = new ArrayAdapter<>(SettingsScreen.this, R.layout.support_simple_spinner_dropdown_item, eventSpinnerList);
         eventSpinner.setAdapter(eventAdapter);
-        }
+    }
 
     private boolean isValidJsonArray(String _data) {
         try {

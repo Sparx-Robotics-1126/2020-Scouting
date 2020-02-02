@@ -8,6 +8,7 @@ import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceEvent;
 import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
 import com.sparx1126.a2020_scouting.Utilities.SendMail;
 import com.sparx1126.a2020_scouting.Utilities.GetMail;
+import com.sparx1126.a2020_scouting.Utilities.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -21,6 +22,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
     private BlueAllianceNetwork network = BlueAllianceNetwork.getInstance();
@@ -39,17 +41,19 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-        //SendMail Testing
-        SendMail sm = new SendMail(this, "sparx1126scouts@gmail.com", "jt", "WE GOT THIS!");
 
+
+        // To be removed: SendMail Testing
+        SendMail sm = new SendMail(this, "sparx1126scouts@gmail.com", "jt", "WE GOT THIS!");
         //Executing sendmail to send email
         //sm.execute();
 
+        // To be removed: SendMail Testing
         GetMail gm = new GetMail(this);
         //Executing sendmail to send email
         //gm.execute();
 
-        //BLUE ALLIACNE TESTING
+        // To be removed: BLUE ALLIACNE TESTING
         events = new HashMap<>();
         network.downloadEvents(new BlueAllianceNetwork.Callback() {
             @Override
@@ -59,29 +63,9 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         Log.e("JT", _data);
                         if (_data.length() > 0) {
-                            events.clear();
-                            try {
-                                JSONArray array = new JSONArray(_data);
-                                for (int i = 0; i < array.length(); i++) {
-                                    JSONObject obj = array.getJSONObject(i);
-                                    BlueAllianceEvent item = new BlueAllianceEvent(obj);
-                                    events.put(item.getKey(), item);
-                                }
-
-                                for (Map.Entry<String, BlueAllianceEvent> entry : events.entrySet()) {
-                                    Log.e("obj at", entry.getKey());
-                                    final BlueAllianceEvent tmpEvent = entry.getValue();
-                                    Log.e("key", tmpEvent.getKey());
-                                    Log.e("location", tmpEvent.getLocation());
-                                    Log.e("name", tmpEvent.getName());
-                                    Log.e("start date", tmpEvent.getStartDate());
-                                    Log.e("end date", tmpEvent.getEndDate());
-                                    Log.e("week", tmpEvent.getWeek());
-                                }
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                            BlueAllianceEvent.pharseJson(_data);
+                            Set<String> keys = BlueAllianceEvent.getEvents().keySet();
+                            Log.e("Sohail", BlueAllianceEvent.getEvents().get("2019nyro").toString());
                         }
                     }
                 });
