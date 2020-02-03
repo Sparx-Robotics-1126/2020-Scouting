@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.util.Patterns;
 
+import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceEvent;
 import com.sparx1126.a2020_scouting.Utilities.*;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
 
@@ -48,6 +49,23 @@ public class Welcome extends AppCompatActivity {
 
             }
         });
+
+        network.downloadEvents( new BlueAllianceNetwork.Callback() {
+            @Override
+            public void handleFinishDownload(final String _data) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.i("TAG", _data);
+                        //System.out.println(_data);
+                        BlueAllianceEvent.pharseJson(_data);
+
+                    }
+                });
+
+            }
+        });
+
 
         loginData = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
 
