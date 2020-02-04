@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.TestLooperManager;
+import android.util.Log;
+import android.util.Patterns;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -36,6 +38,7 @@ public class scouting extends AppCompatActivity {
     private SharedPreferences settings;
     private Button plusButton;
     private Button minusButton;
+    private Button save;
     private AutoCompleteTextView balls;
     private SendMail mail;
     private BlueAllianceNetwork ban;
@@ -47,25 +50,7 @@ public class scouting extends AppCompatActivity {
 
         changeUi();
 
-        ban = BlueAllianceNetwork.getInstance();
-        ban.downloadEventMatches("2019ohcl", new BlueAllianceNetwork.Callback() {
-            @Override
-            public void handleFinishDownload(final String _data) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        BlueAllianceMatch.parseDataToBAMMap(_data);
-                        Set<String> keys = BlueAllianceMatch.getMatches().keySet();
-                        String str = "";
-                        for(String k: keys){
-                            str  += "\n" + BlueAllianceMatch.getMatches().get(k).toString();
-                        }
-                        mail = new SendMail(scouting.this,getResources().getString(R.string.sparx_email), "name", str);
-                        mail.execute();
-                    }
-                });
-            }
-        });
+        save = findViewById(R.id.Save);
         settings = getSharedPreferences("Sparx_prefs", 0);
         logout = findViewById(R.id.logOut);
         name = findViewById(R.id.name);
@@ -73,12 +58,38 @@ public class scouting extends AppCompatActivity {
         minusButton = findViewById(R.id.Minus_balls);
         balls = findViewById(R.id.Balls);
 
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ban = BlueAllianceNetwork.getInstance();
+                ban.downloadEventMatches("2019ohcl", new BlueAllianceNetwork.Callback() {
+                    @Override
+                    public void handleFinishDownload(final String _data) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                BlueAllianceMatch.parseDataToBAMMap(_data);
+                                Set<String> keys = BlueAllianceMatch.getMatches().keySet();
+                                String str = "";
+                                for(String k: keys){
+                                    str  += "\n" + BlueAllianceMatch.getMatches().get(k).toString();
+                                }
+                                TextView name = findViewById(R.id.name);
+                                mail = new SendMail(scouting.this,getResources().getString(R.string.sparx_email), name.toString(), str);
+                                mail.execute();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
         plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int value = Integer.parseInt(balls.getText().toString());
-                    balls.setText(String.valueOf(value + 1));
-                }
+                balls.setText(String.valueOf(value + 1));
+            }
         });
 
         minusButton.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +158,9 @@ public class scouting extends AppCompatActivity {
             AutoCompleteTextView numBalls = findViewById(R.id.Balls);
             numBalls.setBackgroundColor(getResources().getColor(R.color.BBackground));
             numBalls.setTextColor(getResources().getColor(R.color.BText));
+            Button save = findViewById(R.id.Save);
+            save.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            save.setTextColor(getResources().getColor(R.color.BText));
         }else{
             LinearLayout li = (LinearLayout)findViewById(R.id.background);
             li.setBackgroundColor(getResources().getColor(R.color.RBackground));
@@ -169,6 +183,9 @@ public class scouting extends AppCompatActivity {
             AutoCompleteTextView numBalls = findViewById(R.id.Balls);
             numBalls.setBackgroundColor(getResources().getColor(R.color.RBackground));
             numBalls.setTextColor(getResources().getColor(R.color.RText));
+            Button save = findViewById(R.id.Save);
+            save.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
+            save.setTextColor(getResources().getColor(R.color.RText));
         }
     }
 
@@ -189,7 +206,6 @@ public class scouting extends AppCompatActivity {
             }
         });
         builder.setNegativeButton("Cancel" ,new DialogInterface.OnClickListener() {
-
             public void onClick(DialogInterface dialog, int whichButton) {
                 startActivity(new Intent(scouting.this, Welcome.class));
             }
@@ -197,5 +213,5 @@ public class scouting extends AppCompatActivity {
         builder.create().show();
 
     }
-    }
+}
 

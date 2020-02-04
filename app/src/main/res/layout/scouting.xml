@@ -54,10 +54,20 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/Save"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginTop="375dp"
+        android:shadowColor="#673AB7"
+        android:text="Save"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#2196F3"/>
+
+    <Button
         android:id="@+id/logOut"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="25dp"
         android:shadowColor="#673AB7"
         android:text="Log Out"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
