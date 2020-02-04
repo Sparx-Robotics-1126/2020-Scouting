@@ -2,6 +2,7 @@ package com.sparx1126.a2020_scouting;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,18 +13,22 @@ import android.widget.EditText;
 
 import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
+import com.sparx1126.a2020_scouting.Utilities.FileIO;
+
 
 public class Welcome extends AppCompatActivity {
 
     private EditText emailInput, passwordInput, teamInput;
     private SharedPreferences loginData;
     private BlueAllianceNetwork network;
+    private FileIO IO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         network=BlueAllianceNetwork.getInstance();
+        IO = FileIO.getInstance();
         //BAM POPULATE
         network.downloadEventMatches("2019ohcl", new BlueAllianceNetwork.Callback() {
             @Override
@@ -33,7 +38,13 @@ public class Welcome extends AppCompatActivity {
                     public void run() {
                         //Log.i("TAG", _data);
                         //System.out.println(_data);
-                        BlueAllianceMatch.parseDataToBAMMap(_data);
+
+                            IO.intializeStorage(Welcome.this);
+                            IO.storeEventMatches(_data,"2019ohcl");
+                            String test = IO.fetchEventMatches("2019ohcl");
+                            BlueAllianceMatch.parseDataToBAMMap(test);
+
+                        //BlueAllianceMatch.parseDataToBAMMap(_data);
 
                     }
                 });
@@ -96,6 +107,6 @@ public class Welcome extends AppCompatActivity {
 
     public void switchScreen(){
         Log.i("switchScreen", "unknown");
-        startActivity(new Intent(Welcome.this, SettingsScreen.class));
+        startActivity(new Intent(Welcome.this, MatchViewer.class));
     }
 }
