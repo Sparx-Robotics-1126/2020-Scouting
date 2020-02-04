@@ -166,6 +166,6 @@ public class Welcome extends AppCompatActivity {
 
     public void switchScreen(){
         Log.i("switchScreen", "unknown");
-        startActivity(new Intent(Welcome.this, SettingsScreen.class));
+        startActivity(new Intent(Welcome.this, scouting.class));
     }
 }
