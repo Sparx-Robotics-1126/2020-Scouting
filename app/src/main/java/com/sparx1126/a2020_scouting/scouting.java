@@ -75,7 +75,7 @@ public class scouting extends AppCompatActivity {
                                     str  += "\n" + BlueAllianceMatch.getMatches().get(k).toString();
                                 }
                                 TextView name = findViewById(R.id.name);
-                                mail = new SendMail(scouting.this,getResources().getString(R.string.sparx_email), name.toString(), str);
+                                mail = new SendMail(scouting.this,getResources().getString(R.string.sparx_email), (String)name.getText(), str);
                                 mail.execute();
                             }
                         });
