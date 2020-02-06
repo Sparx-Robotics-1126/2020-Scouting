@@ -92,23 +92,18 @@ public class BlueAllianceMatch extends JsonData {
     public static HashMap<String,BlueAllianceMatch> getTeamMatches() {
         HashMap<String, BlueAllianceMatch> rtrn = new HashMap<String, BlueAllianceMatch>();
         for (int i = 1; i < matches.size(); i++) {
-            System.out.println("TESTING "+ i);
+            //System.out.println("TESTING "+ i);
             BlueAllianceMatch match = BlueAllianceMatch.getMatches().get(String.valueOf(i));
-            Log.e("TEST KEYS NULL", match.toString());
+            //Log.e("TEST KEYS NULL", match.toString());
 
             if (match.getBlueTeamKeys().contains(HARD_CODED_FRC_TEAM) || match.getRedTeamKeys().contains(HARD_CODED_FRC_TEAM)) {
-                Log.e("TEAM TEST SAT",match.getEpochTime());
+                //Log.e("TEAM TEST SAT",match.getEpochTime());
                 rtrn.put(String.valueOf(i), match);
             }
         }
         return rtrn;
     }
-        //Impemented to store to harddrive
-    public static void parseDataToJSonMap(String  _data){
 
-
-
-    }
 
     @Override
     //Print out the state of the BAM OBJect
