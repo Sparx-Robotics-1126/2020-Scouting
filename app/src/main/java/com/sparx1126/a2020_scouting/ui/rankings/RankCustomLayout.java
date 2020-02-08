@@ -12,7 +12,7 @@ import com.sparx1126.a2020_scouting.R;
 
 public class RankCustomLayout extends LinearLayout {
 
-    private TextView number, details, record, rank, team;
+    private TextView teamNumber, details, record, rank, teamName;
 
     public RankCustomLayout(Context _context, AttributeSet _attrs) {
         super(_context, _attrs);
@@ -22,11 +22,27 @@ public class RankCustomLayout extends LinearLayout {
         View view = layoutInflater.inflate(R.layout.rank_custom_layout, this);
 
         if (view != null) {
-            number = view.findViewById(R.id.number);
+            teamNumber = view.findViewById(R.id.teamNumber);
             details = view.findViewById(R.id.details);
             record = view.findViewById(R.id.record);
             rank = view.findViewById(R.id.rank);
-            team = view.findViewById(R.id.team);
+            teamName = view.findViewById(R.id.teamName);
         }
+    }
+
+    public void setTeamNumber(Integer teamNumber){
+        this.teamNumber.setText(teamNumber.toString());
+    }
+    public void setDetails(String details){
+        this.details.setText(details);
+    }
+    public void setRecord(int wins, int losses, int ties){
+        record.setText(wins + "-" + losses + "-" + ties);
+    }
+    public void setRank(int rank){
+        this.rank.setText("Rank " + rank);
+    }
+    public void setTeamName(String teamName){
+        this.teamName.setText(teamName);
     }
 }

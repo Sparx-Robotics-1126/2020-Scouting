@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -15,37 +17,43 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.sparx1126.a2020_scouting.MainActivity;
 import com.sparx1126.a2020_scouting.R;
 
+import java.util.ArrayList;
+
 public class RankingsFragment extends Fragment {
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_rankings, container, false);
 
+        //list
+        final ListView rankList = root.findViewById(R.id.rankList);
+        String[] values = new String[]{"Hi", "bye"};
 
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.ListView, StringArray);
+        final ArrayAdapter adapter = new ArrayAdapter(getActivity(),
+                android.R.layout.simple_list_item_1, values);
+        rankList.setAdapter(adapter);
 
 
-        View rank_layout = inflater.inflate(R.layout.rank_custom_layout, container, false);
+        //ArrayAdapter adapter = new ArrayAdapter<RankCustomLayout>(this, R.layout.rank_custom_layout, );
 
-        TextView team = rank_layout.findViewById(R.id.team);
-        team.setText("1126");
+        /*
+        RankCustomLayout testRank = root.findViewById(R.id.testRank);
 
-        TextView rank = rank_layout.findViewById(R.id.rank);
-        rank.setText("1");
-
-        TextView team_name = rank_layout.findViewById(R.id.team_name);
-        team_name.setText("Sparx");
-
-        TextView record = rank_layout.findViewById(R.id.record);
-        record.setText("1-1-1");
-
-        TextView details = rank_layout.findViewById(R.id.details);
-        details.setText("Jaren was Here");
-
-        ((LinearLayout)root).addView(rank_layout);
+        testRank.setRank(5);
+        testRank.setTeamNumber(1126);
+        testRank.setRecord(1,2,3);
+        testRank.setTeamName("Sprax");
+        testRank.setDetails("Jaren was here");
+         */
 
         return root;
 

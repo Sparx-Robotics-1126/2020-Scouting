@@ -5,35 +5,26 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.TestLooperManager;
-import android.util.Log;
-import android.util.Patterns;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Button;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
 import com.sparx1126.a2020_scouting.Utilities.SendMail;
 import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
-import androidx.appcompat.widget.Toolbar;
+
 
 import android.view.View;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.Set;
 
 public class scouting extends AppCompatActivity {
     private SharedPreferences.Editor editor;
-    private Button logout;;
+    private Button logout;
     private TextView name;
     private SharedPreferences settings;
     private Button plusBalls;
