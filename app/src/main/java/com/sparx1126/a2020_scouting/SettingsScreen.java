@@ -39,8 +39,10 @@ public class SettingsScreen extends AppCompatActivity {
     private TextView email;
     private TextView teamNum;
     private Button reconfigure;
+    private Button configure;
 
     private boolean configured;
+    private String selectedEvent;
     private Spinner eventSpinner;
     private ArrayAdapter<String> adapter;
 
@@ -64,8 +66,19 @@ public class SettingsScreen extends AppCompatActivity {
             }
         });
 
-        eventSpinner = findViewById(R.id.eventSpinner);
+        configure = findViewById(R.id.configure);
+        configure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                configured = true;
+                selectedEvent = eventSpinner.getSelectedItem().toString();
+                Log.e("selectedEvent", selectedEvent);
+                Log.i("switchScreen", "unknown");
+                startActivity(new Intent(SettingsScreen.this, Welcome.class));
+            }
+        });
 
+        eventSpinner = findViewById(R.id.eventSpinner);
         eventSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -171,6 +184,10 @@ public class SettingsScreen extends AppCompatActivity {
             teamInput.setTextColor(getResources().getColor(R.color.BText));
             Spinner events = findViewById(R.id.eventSpinner);
             events.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            events.setPopupBackgroundResource(R.color.RButtonBackground);
+            Button con = findViewById(R.id.configure);
+            con.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            con.setTextColor(getResources().getColor(R.color.BText));
         }else{
             LinearLayout li = (LinearLayout)findViewById(R.id.background);
             li.setBackgroundColor(getResources().getColor(R.color.RBackground));
@@ -187,6 +204,11 @@ public class SettingsScreen extends AppCompatActivity {
             teamInput.setTextColor(getResources().getColor(R.color.RText));
             Spinner events = findViewById(R.id.eventSpinner);
             events.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
+            events.setPopupBackgroundResource(R.color.RButtonBackground);
+            Button con = findViewById(R.id.configure);
+            con.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
+            con.setTextColor(getResources().getColor(R.color.RText));
+
         }
     }
 

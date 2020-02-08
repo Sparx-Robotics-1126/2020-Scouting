@@ -71,8 +71,8 @@ public class BlueAllianceEvent extends JsonData {
 
     @Override
     public String toString(){
-        return ("\n" + "Event Name: " + name + "\n" + "Event Week: " + week + "\n" + "Event Location: " + Location + "\n" +  "Event Start Date" + startDate + "\n"
-        + "Event End Date" + endDate);
+        return ("\n" + "Event Name: " + name + "\n" + "Event Week: " + week + "\n" + "Event Location: " + Location + "\n" +  "Event Start Date " + startDate + "\n"
+        + "Event End Date " + endDate);
     }
 }
 

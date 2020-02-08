@@ -36,8 +36,11 @@ public class scouting extends AppCompatActivity {
     private Button logout;;
     private TextView name;
     private SharedPreferences settings;
-    private Button plusButton;
-    private Button minusButton;
+    private Button plusBalls;
+    private Button minusBalls;
+    private Button plusMatch;
+    private Button minusMatch;
+    private TextView match;
     private Button save;
     private AutoCompleteTextView balls;
     private SendMail mail;
@@ -54,9 +57,12 @@ public class scouting extends AppCompatActivity {
         settings = getSharedPreferences("Sparx_prefs", 0);
         logout = findViewById(R.id.logOut);
         name = findViewById(R.id.name);
-        plusButton = findViewById(R.id.Plus_balls);
-        minusButton = findViewById(R.id.Minus_balls);
+        plusBalls = findViewById(R.id.Plus_balls);
+        minusBalls = findViewById(R.id.Minus_balls);
         balls = findViewById(R.id.Balls);
+        match = findViewById(R.id.match_num);
+        plusMatch = findViewById(R.id.Plus_match);
+        minusMatch = findViewById(R.id.Minus_match);
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +78,9 @@ public class scouting extends AppCompatActivity {
                                 Set<String> keys = BlueAllianceMatch.getMatches().keySet();
                                 String str = "";
                                 for(String k: keys){
-                                    str  += "\n" + BlueAllianceMatch.getMatches().get(k).toString();
+                                    if(k.equals(match.getText().toString())) {
+                                        str += "\n" + BlueAllianceMatch.getMatches().get(k).toString();
+                                    }
                                 }
                                 TextView name = findViewById(R.id.name);
                                 mail = new SendMail(scouting.this,getResources().getString(R.string.sparx_email), (String)name.getText(), str);
@@ -84,7 +92,7 @@ public class scouting extends AppCompatActivity {
             }
         });
 
-        plusButton.setOnClickListener(new View.OnClickListener() {
+        plusBalls.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int value = Integer.parseInt(balls.getText().toString());
@@ -92,11 +100,27 @@ public class scouting extends AppCompatActivity {
             }
         });
 
-        minusButton.setOnClickListener(new View.OnClickListener() {
+        minusBalls.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int value = Integer.parseInt(match.getText().toString());
+                balls.setText(String.valueOf(value - 1));
+            }
+        });
+
+        plusMatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int value = Integer.parseInt(match.getText().toString());
+                match.setText(String.valueOf(value + 1));
+            }
+        });
+
+        minusMatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int value = Integer.parseInt(balls.getText().toString());
-                balls.setText(String.valueOf(value - 1));
+                match.setText(String.valueOf(value - 1));
             }
         });
 
@@ -161,6 +185,18 @@ public class scouting extends AppCompatActivity {
             Button save = findViewById(R.id.Save);
             save.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
             save.setTextColor(getResources().getColor(R.color.BText));
+            TextView txtnums = findViewById(R.id.match_num);
+            txtnums.setBackgroundColor(getResources().getColor(R.color.BBackground));
+            txtnums.setTextColor(getResources().getColor(R.color.BText));
+            Button plusmatch = findViewById(R.id.Plus_match);
+            plusmatch.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            plusmatch.setTextColor(getResources().getColor(R.color.BText));
+            Button minusmatch = findViewById(R.id.Minus_match);
+            minusmatch.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            minusmatch.setTextColor(getResources().getColor(R.color.BText));
+            TextView txtmatch = findViewById(R.id.txtMatch);
+            txtmatch.setBackgroundColor(getResources().getColor(R.color.BBackground));
+            txtmatch.setTextColor(getResources().getColor(R.color.BText));
         }else{
             LinearLayout li = (LinearLayout)findViewById(R.id.background);
             li.setBackgroundColor(getResources().getColor(R.color.RBackground));
@@ -186,6 +222,20 @@ public class scouting extends AppCompatActivity {
             Button save = findViewById(R.id.Save);
             save.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
             save.setTextColor(getResources().getColor(R.color.RText));
+            TextView txtnums = findViewById(R.id.match_num);
+            txtnums.setBackgroundColor(getResources().getColor(R.color.RBackground));
+            txtnums.setTextColor(getResources().getColor(R.color.RText));
+            Button plusmatch = findViewById(R.id.Plus_match);
+            plusmatch.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
+            plusmatch.setTextColor(getResources().getColor(R.color.RText));
+            Button minusmatch = findViewById(R.id.Minus_match);
+            minusmatch.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
+            minusmatch.setTextColor(getResources().getColor(R.color.RText));
+            TextView txtmatch = findViewById(R.id.txtMatch);
+            txtmatch.setBackgroundColor(getResources().getColor(R.color.RBackground));
+            txtmatch.setTextColor(getResources().getColor(R.color.RText));
+
+
         }
     }
 
