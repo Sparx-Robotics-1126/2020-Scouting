@@ -50,22 +50,6 @@ public class Welcome extends AppCompatActivity {
             }
         });
 
-        network.downloadEvents( new BlueAllianceNetwork.Callback() {
-            @Override
-            public void handleFinishDownload(final String _data) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.i("TAG", _data);
-                        //System.out.println(_data);
-                        BlueAllianceEvent.pharseJson(_data);
-
-                    }
-                });
-
-            }
-        });
-
 
         loginData = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
 
@@ -166,6 +150,6 @@ public class Welcome extends AppCompatActivity {
 
     public void switchScreen(){
         Log.i("switchScreen", "unknown");
-        startActivity(new Intent(Welcome.this, scouting.class));
+        startActivity(new Intent(Welcome.this, SettingsScreen.class));
     }
 }

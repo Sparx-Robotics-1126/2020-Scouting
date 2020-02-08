@@ -7,6 +7,35 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/txtMatch"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:textSize="30dp"
+            android:text="Match Number"/>
+        <Button
+            android:id="@+id/Plus_match"
+            style="@style/t019_plusMinusButton"
+            android:layout_weight="0"
+            android:text="+" />
+
+        <AutoCompleteTextView
+            android:id="@+id/match_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textStyle="bold"/>
+        <Button
+            android:id="@+id/Minus_match"
+            style="@style/t019_plusMinusButton"
+            android:layout_weight="0"
+            android:text="-" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
@@ -27,7 +56,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="50dp">
         <TextView
             android:id="@+id/txtBalls"
             android:layout_width="300dp"
@@ -57,7 +87,7 @@
         android:id="@+id/Save"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:layout_marginTop="375dp"
+        android:layout_marginTop="275dp"
         android:shadowColor="#673AB7"
         android:text="Save"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"

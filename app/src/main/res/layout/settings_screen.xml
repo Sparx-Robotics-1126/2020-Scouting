@@ -51,7 +51,8 @@
         <Spinner
             android:id="@+id/eventSpinner"
             style="@style/J_spinner"
-            android:layout_height="49dp" />
+            android:layout_height="49dp"
+            android:textColor="#8AFFFFFF" />
 
         <Button
         android:id="@+id/reconfigure"
@@ -62,4 +63,12 @@
         android:text="Reconfigure"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#2196F3" />
+
+    <Button
+        android:id="@+id/configure"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:text="Save Configuration"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#2196F3"/>
     </LinearLayout>
