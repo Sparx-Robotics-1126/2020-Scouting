@@ -1,6 +1,11 @@
 package com.sparx1126.a2020_scouting;
+import android.app.ActionBar;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -10,6 +15,7 @@ import androidx.constraintlayout.solver.widgets.ConstraintHorizontalLayout;
 
 import com.sparx1126.a2020_scouting.Utilities.*;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
+
 
 import java.util.HashMap;
 import java.util.Set;
@@ -46,19 +52,79 @@ public class MatchViewer extends AppCompatActivity {
         HashMap teamMatchObjs = BlueAllianceMatch.getTeamMatches();
         BlueAllianceMatch matchObj = null;
         Set<String> keys = BlueAllianceMatch.getTeamMatches().keySet();
-        for(String k: keys){
-            matchObj=(BlueAllianceMatch) teamMatchObjs.get(k);
-            TableRow matchRow = new TableRow(this);
-            TextView matchNumber = new TextView(this);
-            TextView epochTime = new TextView(this);
-            epochTime.setText(matchObj.getEpochTime());
-            matchNumber.setText(( matchObj).getMatchNum());
-
-            matchRow.addView(matchNumber);
-            //  matchRow.addView(epochTime);
-            masterTable.addView(matchRow);
 
 
+        for(int i =1; i<=BlueAllianceMatch.getMatches().size();i++){
+            if (keys.contains(String.valueOf(i))) {
+                boolean isBlue =false;
+                System.out.println("ADDING MATCH" + i);
+                matchObj=(BlueAllianceMatch) teamMatchObjs.get((String.valueOf(i)));
+                TableRow matchRow = new TableRow(this);
+
+                LinearLayout teamData = new LinearLayout(this);
+                teamData.setOrientation(LinearLayout.VERTICAL);
+                teamData.setGravity(Gravity.RIGHT);
+                teamData.setLayoutParams(new TableRow.LayoutParams(200,LinearLayout.LayoutParams.MATCH_PARENT ));
+
+                LinearLayout blueRow = new LinearLayout(this);
+                blueRow.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,40));
+                blueRow.setOrientation(LinearLayout.HORIZONTAL);
+                blueRow.setBackgroundColor(Color.BLUE);
+
+                for(int b=0;b<3;b++){
+                    TextView blueTeamText = new TextView(this);
+                    blueTeamText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                    blueTeamText.setText(" "+matchObj.getBlueTeamKeys().get(b).replace("frc","")+" ");
+                    blueTeamText.setTextColor(Color.BLACK);
+                    blueTeamText.setTextSize(30);
+                    if(matchObj.getBlueTeamKeys().get(b).equals(HARD_CODED_TKEY)){
+                        isBlue=true;
+                        System.out.println(isBlue);
+                        blueTeamText.setTextColor(Color.YELLOW);
+                    }
+                    //System.out.println("ADDING BLUE TEAM" + matchObj.getBlueTeamKeys().get(b).replace("frc","")  );
+                    blueRow.addView(blueTeamText);
+
+                }
+                LinearLayout redRow = new LinearLayout(this);
+                redRow.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,40));
+                redRow.setOrientation(LinearLayout.HORIZONTAL);
+                redRow.setBackgroundColor(Color.RED);
+
+                for(int r=0;r<3;r++){
+                    TextView redTeamText = new TextView(this);
+                    redTeamText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                    redTeamText.setTextColor(Color.BLACK);
+                    redTeamText.setTextSize(30);
+                    redTeamText.setText(" "+matchObj.getRedTeamKeys().get(r).replace("frc","")+" ");
+                    if(matchObj.getRedTeamKeys().get(r).equals(HARD_CODED_TKEY)){
+                        redTeamText.setTextColor(Color.YELLOW);
+                    }
+                    redRow.addView(redTeamText);
+                   // System.out.println("ADDING RED TEAM" + matchObj.getRedTeamKeys().get(r).replace("frc","")  );
+
+                }
+                teamData.addView(redRow);
+                teamData.addView(blueRow);
+                matchRow.addView(teamData);
+                TextView matchNum = new TextView(this);
+                matchNum.setLayoutParams(new TableRow.LayoutParams(200, TableRow.LayoutParams.MATCH_PARENT));
+                matchNum.setGravity(Gravity.CENTER);
+                matchNum.setTextSize(30);
+                matchNum.setText("MATCH " +matchObj.getMatchNum());
+                System.out.println("FINAL"+ isBlue);
+                matchNum.setTextColor(Color.RED);
+                if(isBlue){
+                    matchNum.setTextColor(Color.BLUE);
+                }
+                matchRow.addView(matchNum);
+                TextView rowDivider = new TextView(this);
+                rowDivider.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,10));
+                rowDivider.setBackgroundColor(Color.DKGRAY);
+                masterTable.addView(rowDivider);
+
+                masterTable.addView(matchRow);
+            }
 
         }
 
