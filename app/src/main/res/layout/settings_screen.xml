@@ -46,19 +46,53 @@
             android:textSize="30sp" />
     </LinearLayout>
 
+    <Spinner
+        android:id="@+id/eventSpinner"
+        style="@style/J_spinner"
+        android:layout_height="49dp"
+      />
 
+    <Button
+        android:id="@+id/aliiance"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="@color/RButtonBackground"
+        android:shadowColor="#673AB7"
+        android:text="RED ALLIANCE"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/RText"></Button>
 
-        <Spinner
-            android:id="@+id/eventSpinner"
-            style="@style/J_spinner"
-            android:layout_height="49dp"
-            android:textColor="#8AFFFFFF" />
+    <RadioGroup
+        android:id="@+id/teams"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="vertical">
 
-        <Button
+        <RadioButton
+            android:id="@+id/team1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Team 1" />
+
+        <RadioButton
+            android:id="@+id/team2"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Team 2" />
+
+        <RadioButton
+            android:id="@+id/team3"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Team 3" />
+
+    </RadioGroup>
+
+    <Button
         android:id="@+id/reconfigure"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="75dp"
         android:shadowColor="#673AB7"
         android:text="Reconfigure"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -68,6 +102,7 @@
         android:id="@+id/configure"
         android:layout_width="match_parent"
         android:layout_height="75dp"
+        android:layout_marginTop="25dp"
         android:text="Save Configuration"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#2196F3"/>

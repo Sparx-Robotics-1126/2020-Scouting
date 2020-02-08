@@ -53,8 +53,6 @@ public class Welcome extends AppCompatActivity {
 
         loginData = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
 
-        //Get rid of this block once save configuration is completed
-        toggledBlue = false;
         changeUi();
 
         emailInput = findViewById(R.id.emailInput);
