@@ -88,6 +88,22 @@ public class SettingsScreen extends AppCompatActivity {
                 if (!selectedItem.contentEquals(getResources().getString(R.string.selectEvent))) {
                     String previousSelectedEvent = settings.getString(getResources().getString(R.string.pref_SelectedEvent), "");
                     Log.e("selected Event:", selectedItem);
+                    // JT: move into  settings after event is selected and use the selected event
+                    blueAlliance.downloadEventMatches(selectedItem, new BlueAllianceNetwork.Callback() {
+                        @Override
+                        public void handleFinishDownload(final String _data) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //Log.i("TAG", _data);
+                                    //System.out.println(_data);
+                                    BlueAllianceMatch.parseDataToBAMMap(_data);
+                                    Intent mainActivity = new Intent(SettingsScreen.this, MainActivity.class);
+                                    startActivity(mainActivity);
+                                }
+                            });
+                        }
+                    });
                 }
             }
 
