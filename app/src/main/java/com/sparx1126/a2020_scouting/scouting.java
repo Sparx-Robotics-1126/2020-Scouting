@@ -5,29 +5,20 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.TestLooperManager;
-import android.util.Log;
-import android.util.Patterns;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Button;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
 import com.sparx1126.a2020_scouting.Utilities.SendMail;
 import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
-import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.Set;
 
@@ -49,17 +40,18 @@ public class scouting extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.scouting);
+        setContentView(R.layout.activity_scouting);
 
         changeUi();
+        login();
 
         save = findViewById(R.id.Save);
         settings = getSharedPreferences("Sparx_prefs", 0);
         logout = findViewById(R.id.logOut);
         name = findViewById(R.id.name);
-        plusBalls = findViewById(R.id.Plus_balls);
-        minusBalls = findViewById(R.id.Minus_balls);
-        balls = findViewById(R.id.Balls);
+//        plusBalls = findViewById(R.id.Plus_balls);
+//        minusBalls = findViewById(R.id.Minus_balls);
+//        balls = findViewById(R.id.Balls);
         match = findViewById(R.id.match_num);
         plusMatch = findViewById(R.id.Plus_match);
         minusMatch = findViewById(R.id.Minus_match);
@@ -92,21 +84,21 @@ public class scouting extends AppCompatActivity {
             }
         });
 
-        plusBalls.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int value = Integer.parseInt(balls.getText().toString());
-                balls.setText(String.valueOf(value + 1));
-            }
-        });
-
-        minusBalls.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int value = Integer.parseInt(match.getText().toString());
-                balls.setText(String.valueOf(value - 1));
-            }
-        });
+//        plusBalls.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int value = Integer.parseInt(balls.getText().toString());
+//                balls.setText(String.valueOf(value + 1));
+//            }
+//        });
+//
+//        minusBalls.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int value = Integer.parseInt(match.getText().toString());
+//                balls.setText(String.valueOf(value - 1));
+//            }
+//        });
 
         plusMatch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,22 +158,22 @@ public class scouting extends AppCompatActivity {
             Button logOut = findViewById(R.id.logOut);
             logOut.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
             logOut.setTextColor(getResources().getColor(R.color.BText));
-            TextView text = findViewById(R.id.text);
+            TextView text = findViewById(R.id.txtname);
             text.setTextColor(getResources().getColor(R.color.BText));
             TextView name = findViewById(R.id.name);
             name.setTextColor(getResources().getColor(R.color.BText));
-            Button plus = findViewById(R.id.Plus_balls);
-            plus.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
-            plus.setTextColor(getResources().getColor(R.color.BText));
-            Button minus = findViewById(R.id.Minus_balls);
-            minus.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
-            minus.setTextColor(getResources().getColor(R.color.BText));
-            TextView scoredBalls = findViewById(R.id.txtBalls);
-            scoredBalls.setBackgroundColor(getResources().getColor(R.color.BBackground));
-            scoredBalls.setTextColor(getResources().getColor(R.color.BText));
-            AutoCompleteTextView numBalls = findViewById(R.id.Balls);
-            numBalls.setBackgroundColor(getResources().getColor(R.color.BBackground));
-            numBalls.setTextColor(getResources().getColor(R.color.BText));
+//            Button plus = findViewById(R.id.Plus_balls);
+//            plus.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+//            plus.setTextColor(getResources().getColor(R.color.BText));
+//            Button minus = findViewById(R.id.Minus_balls);
+//            minus.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+//            minus.setTextColor(getResources().getColor(R.color.BText));
+//            TextView scoredBalls = findViewById(R.id.txtBalls);
+//            scoredBalls.setBackgroundColor(getResources().getColor(R.color.BBackground));
+//            scoredBalls.setTextColor(getResources().getColor(R.color.BText));
+//            AutoCompleteTextView numBalls = findViewById(R.id.Balls);
+//            numBalls.setBackgroundColor(getResources().getColor(R.color.BBackground));
+//            numBalls.setTextColor(getResources().getColor(R.color.BText));
             Button save = findViewById(R.id.Save);
             save.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
             save.setTextColor(getResources().getColor(R.color.BText));
@@ -198,27 +190,27 @@ public class scouting extends AppCompatActivity {
             txtmatch.setBackgroundColor(getResources().getColor(R.color.BBackground));
             txtmatch.setTextColor(getResources().getColor(R.color.BText));
         }else{
-            LinearLayout li = (LinearLayout)findViewById(R.id.background);
+            ScrollView li = (ScrollView) findViewById(R.id.background);
             li.setBackgroundColor(getResources().getColor(R.color.RBackground));
             Button logOut = findViewById(R.id.logOut);
             logOut.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
             logOut.setTextColor(getResources().getColor(R.color.RText));
-            TextView text = findViewById(R.id.text);
+            TextView text = findViewById(R.id.txtname);
             text.setTextColor(getResources().getColor(R.color.RText));
             TextView name = findViewById(R.id.name);
             name.setTextColor(getResources().getColor(R.color.RText));
-            Button plus = findViewById(R.id.Plus_balls);
-            plus.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
-            plus.setTextColor(getResources().getColor(R.color.RText));
-            Button minus = findViewById(R.id.Minus_balls);
-            minus.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
-            minus.setTextColor(getResources().getColor(R.color.RText));
-            TextView scoredBalls = findViewById(R.id.txtBalls);
-            scoredBalls.setBackgroundColor(getResources().getColor(R.color.RBackground));
-            scoredBalls.setTextColor(getResources().getColor(R.color.RText));
-            AutoCompleteTextView numBalls = findViewById(R.id.Balls);
-            numBalls.setBackgroundColor(getResources().getColor(R.color.RBackground));
-            numBalls.setTextColor(getResources().getColor(R.color.RText));
+//            Button plus = findViewById(R.id.Plus_balls);
+//            plus.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
+//            plus.setTextColor(getResources().getColor(R.color.RText));
+//            Button minus = findViewById(R.id.Minus_balls);
+//            minus.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
+//            minus.setTextColor(getResources().getColor(R.color.RText));
+//            TextView scoredBalls = findViewById(R.id.txtBalls);
+//            scoredBalls.setBackgroundColor(getResources().getColor(R.color.RBackground));
+//            scoredBalls.setTextColor(getResources().getColor(R.color.RText));
+//            AutoCompleteTextView numBalls = findViewById(R.id.Balls);
+//            numBalls.setBackgroundColor(getResources().getColor(R.color.RBackground));
+//            numBalls.setTextColor(getResources().getColor(R.color.RText));
             Button save = findViewById(R.id.Save);
             save.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
             save.setTextColor(getResources().getColor(R.color.RText));
@@ -234,8 +226,9 @@ public class scouting extends AppCompatActivity {
             TextView txtmatch = findViewById(R.id.txtMatch);
             txtmatch.setBackgroundColor(getResources().getColor(R.color.RBackground));
             txtmatch.setTextColor(getResources().getColor(R.color.RText));
-
-
+            TextView assignment = findViewById(R.id.assignment);
+            assignment.setBackgroundColor(getResources().getColor(R.color.RBackground));
+            assignment.setTextColor(getResources().getColor(R.color.RText));
         }
     }
 
