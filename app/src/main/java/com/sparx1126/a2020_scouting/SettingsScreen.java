@@ -3,6 +3,7 @@ package com.sparx1126.a2020_scouting;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceEvent;
+import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
 import com.sparx1126.a2020_scouting.Utilities.*;
 
 import android.app.AlertDialog;
