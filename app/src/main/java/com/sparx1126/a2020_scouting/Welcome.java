@@ -22,16 +22,16 @@ public class Welcome extends AppCompatActivity {
 
     private EditText emailInput, passwordInput, teamInput;
     private SharedPreferences loginData;
+    private FileIO IO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-
+        IO = FileIO.getInstance();
+        IO.intializeStorage(Welcome.this);
         loginData = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
 
-        //Get rid of this block once save configuration is completed
-        toggledBlue = false;
         changeUi();
 
         emailInput = findViewById(R.id.emailInput);
@@ -69,7 +69,7 @@ public class Welcome extends AppCompatActivity {
             EditText teamInput = findViewById(R.id.teamInput);
             teamInput.setTextColor(getResources().getColor(R.color.BText));
         }else{
-            LinearLayout li = (LinearLayout)findViewById(R.id.background);
+            LinearLayout li = findViewById(R.id.background);
             li.setBackgroundColor(getResources().getColor(R.color.RBackground));
             Button log = findViewById(R.id.login);
             log.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));

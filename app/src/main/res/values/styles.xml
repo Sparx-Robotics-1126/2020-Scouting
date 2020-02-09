@@ -35,6 +35,11 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="J_radioButton">
+        <item name="android:buttonTint"></item>
+        <item name="android:textColor"></item>
+    </style>
+
     <style name="t019_plusMinusButton" parent="t019_basic">
         <item name="android:layout_width">50dp</item>
         <item name="android:padding">0dp</item>

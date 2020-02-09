@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/background"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/assignment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Assignment:"
+            android:textSize="30dp">
+        </TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/txtname"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Scouter"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="22dp">
+            </TextView>
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="22dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large">
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtMatch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Match Number"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="22dp">
+            </TextView>
+
+            <Button
+                android:id="@+id/Plus_match"
+                style="@style/t019_plusMinusButton"
+                android:layout_marginLeft="140dp"
+                android:text="+" />
+
+            <AutoCompleteTextView
+                android:id="@+id/match_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/Minus_match"
+                style="@style/t019_plusMinusButton"
+                android:layout_weight="0"
+                android:text="-" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/logOut"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:shadowColor="#673AB7"
+                android:text="Log Out"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="#2196F3" >
+            </Button>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/team"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Team"
+                android:textSize="22dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large">
+            </TextView>
+            <TextView
+                android:id="@+id/scoutingTeam"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textSize="22dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large">
+            </TextView>
+            <TextView
+                android:id="@+id/alliance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:text="Alliiance Color"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="22dp">
+            </TextView>
+            <TextView
+                android:id="@+id/allianceColor"
+                android:layout_width="100dp"
+                android:layout_height="match_parent">
+            </TextView>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:text="Autonomous:">
+        </TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Starting Position:"
+                android:textSize="25dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large">
+            </TextView>
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Closest to Power Port"
+                    android:textSize="20dp">
+                </RadioButton>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Middle"
+                    android:textSize="20dp">
+                </RadioButton>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Farthest to Power Port"
+                    android:textSize="20dp">
+                </RadioButton>
+            </RadioGroup>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Power Cells in robot at start:"
+                    android:textSize ="25dp">
+                </TextView>
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="None"
+                        android:textSize="20dp">
+                    </RadioButton>
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="One"
+                        android:textSize="20dp">
+                    </RadioButton>
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Two"
+                        android:textSize="20dp">
+                    </RadioButton>
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Three"
+                        android:textSize="20dp">
+                    </RadioButton>
+                </RadioGroup>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Power Cells Scored:"
+                    android:textSize="25dp">
+                </TextView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bottom port"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textSize="22dp">
+                    </TextView>
+                    <Button
+                        style="@style/t019_plusMinusButton"
+                        android:layout_marginLeft="170dp"
+                        android:text="+" />
+                    <AutoCompleteTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textStyle="bold" />
+
+                    <Button
+                        style="@style/t019_plusMinusButton"
+                        android:layout_weight="0"
+                        android:text="-" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Outer port"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textSize="22dp">
+                    </TextView>
+                    <Button
+                        style="@style/t019_plusMinusButton"
+                        android:layout_marginLeft="190dp"
+                        android:text="+" />
+                    <AutoCompleteTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textStyle="bold" />
+
+                    <Button
+                        style="@style/t019_plusMinusButton"
+                        android:layout_weight="0"
+                        android:text="-" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Inner port"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textSize="22dp">
+                    </TextView>
+                    <Button
+                        style="@style/t019_plusMinusButton"
+                        android:layout_marginLeft="195dp"
+                        android:text="+" />
+                    <AutoCompleteTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textStyle="bold" />
+
+                    <Button
+                        style="@style/t019_plusMinusButton"
+                        android:layout_weight="0"
+                        android:text="-" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/Save"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginTop="275dp"
+            android:shadowColor="#673AB7"
+            android:text="Save"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#2196F3"/>
+    </LinearLayout>
+</ScrollView>
