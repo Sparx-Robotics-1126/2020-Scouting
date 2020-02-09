@@ -18,13 +18,14 @@ import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
 import com.sparx1126.a2020_scouting.Utilities.SendMail;
 import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
 
+
 import android.view.View;
 
 import java.util.Set;
 
 public class scouting extends AppCompatActivity {
     private SharedPreferences.Editor editor;
-    private Button logout;;
+    private Button logout;
     private TextView name;
     private SharedPreferences settings;
     private Button plusBalls;
