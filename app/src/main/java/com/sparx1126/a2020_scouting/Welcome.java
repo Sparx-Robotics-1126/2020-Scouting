@@ -2,7 +2,6 @@ package com.sparx1126.a2020_scouting;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,50 +9,30 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.util.Patterns;
+import android.widget.Toast;
 
-import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
-import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
-import com.sparx1126.a2020_scouting.Utilities.FileIO;
-
+import com.sparx1126.a2020_scouting.Utilities.*;
 
 public class Welcome extends AppCompatActivity {
+    //once the tablet has been configured to a team change this value
+    public static boolean toggledBlue;
 
     private EditText emailInput, passwordInput, teamInput;
     private SharedPreferences loginData;
-    private BlueAllianceNetwork network;
     private FileIO IO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        network=BlueAllianceNetwork.getInstance();
         IO = FileIO.getInstance();
-        //BAM POPULATE
-        network.downloadEventMatches("2019ohcl", new BlueAllianceNetwork.Callback() {
-            @Override
-            public void handleFinishDownload(final String _data) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //Log.i("TAG", _data);
-                        //System.out.println(_data);
-
-                            IO.intializeStorage(Welcome.this);
-                            IO.storeEventMatches(_data,"2019ohcl");
-                            String test = IO.fetchEventMatches("2019ohcl");
-                            BlueAllianceMatch.parseDataToBAMMap(test);
-
-                        //BlueAllianceMatch.parseDataToBAMMap(_data);
-
-                    }
-                });
-
-            }
-        });
-
-
+        IO.intializeStorage(Welcome.this);
         loginData = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
+
+        changeUi();
 
         emailInput = findViewById(R.id.emailInput);
         passwordInput = findViewById(R.id.passwordInput);
@@ -70,17 +49,61 @@ public class Welcome extends AppCompatActivity {
         checkPreferences();
     }
 
+    public  void changeUi(){
+        if(toggledBlue == true){
+            LinearLayout li = findViewById(R.id.background);
+            li.setBackgroundColor(getResources().getColor(R.color.BBackground));
+            Button log = findViewById(R.id.login);
+            log.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            log.setTextColor(getResources().getColor(R.color.BText));
+            TextView email = findViewById(R.id.email);
+            email.setTextColor(getResources().getColor(R.color.BText));
+            TextView password = findViewById(R.id.password);
+            password.setTextColor(getResources().getColor(R.color.BText));
+            TextView team = findViewById(R.id.team);
+            team.setTextColor(getResources().getColor(R.color.BText));
+            EditText emailInput = findViewById(R.id.emailInput);
+            emailInput.setTextColor(getResources().getColor(R.color.BText));
+            EditText passwordInput = findViewById(R.id.passwordInput);
+            passwordInput.setTextColor(getResources().getColor(R.color.BText));
+            EditText teamInput = findViewById(R.id.teamInput);
+            teamInput.setTextColor(getResources().getColor(R.color.BText));
+        }else{
+            LinearLayout li = findViewById(R.id.background);
+            li.setBackgroundColor(getResources().getColor(R.color.RBackground));
+            Button log = findViewById(R.id.login);
+            log.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
+            log.setTextColor(getResources().getColor(R.color.RText));
+            TextView email = findViewById(R.id.email);
+            email.setTextColor(getResources().getColor(R.color.RText));
+            TextView password = findViewById(R.id.password);
+            password.setTextColor(getResources().getColor(R.color.RText));
+            TextView team = findViewById(R.id.team);
+            team.setTextColor(getResources().getColor(R.color.RText));
+            EditText emailInput = findViewById(R.id.emailInput);
+            emailInput.setTextColor(getResources().getColor(R.color.RText));
+            EditText passwordInput = findViewById(R.id.passwordInput);
+            passwordInput.setTextColor(getResources().getColor(R.color.RText));
+            EditText teamInput = findViewById(R.id.teamInput);
+            teamInput.setTextColor(getResources().getColor(R.color.RText));
+        }
+    }
+
     public void checkPreferences(){
-        // Jaren: Please check all fields: email, password, team
-        // I found that for email u can use -> test if not empty and
-        // Patterns.EMAIL_ADDRESS.matcher(loginData.getString("email", ""))
-        // For the team test -> not empty and Integer.parseInt(loginData.getString("team", ""))
-        if(!loginData.getString("password", "").isEmpty()) {
-            BlueAllianceNetwork.getInstance().seteamKey("frc" + loginData.getString("team", "team number not found"));
+        if(loginData.getString("password", "").isEmpty()) {
+            Toast.makeText(Welcome.this, "checkPreferences: No password found", Toast.LENGTH_LONG).show();
+            Log.e("checkPreferences","No password found");
+        } else if(loginData.getString("team", "").isEmpty()) { // team can only be a number based on xml
+            Toast.makeText(Welcome.this, "checkPreferences: No team found", Toast.LENGTH_LONG).show();
+            Log.e("checkPreferences","No team found");
+        } else if(loginData.getString("email", "").isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(loginData.getString("email", "")).matches()) {
+            Toast.makeText(Welcome.this, "checkPreferences: No email or bad email found" + loginData.getString("email", ""), Toast.LENGTH_LONG).show();
+            Log.e("checkPreferences","No email found");
+        } else {
+            BlueAllianceNetwork.getInstance().seteamKey("frc" + loginData.getString("team", ""));
             switchScreen();
         }
-        // Jaren: Please add an else with a Toast that says something is wrong...
-        // Tell on a dialog exactly what went wrong
+
     }
 
     public void login() {
@@ -101,12 +124,12 @@ public class Welcome extends AppCompatActivity {
         Log.i("loginSave", "password: " + loginData.getString(getString(R.string.PASSWORD), "password not found"));
         Log.i("loginSave", "team: " + loginData.getString(getString(R.string.TEAM), "team number not found"));
 
-        // Jaren: I suggest that instead of switching you call checkPreferences
-        switchScreen();
+
+        checkPreferences();
     }
 
     public void switchScreen(){
         Log.i("switchScreen", "unknown");
-        startActivity(new Intent(Welcome.this, MatchViewer.class));
+        startActivity(new Intent(Welcome.this, SettingsScreen.class));
     }
 }

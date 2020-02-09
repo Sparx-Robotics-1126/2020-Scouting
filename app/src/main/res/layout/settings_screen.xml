@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/background"
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,6 +11,7 @@
 
 
         <TextView
+            android:id="@id/email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
@@ -29,6 +31,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:id="@+id/team"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Team #:"
@@ -43,21 +46,53 @@
             android:textSize="30sp" />
     </LinearLayout>
 
+    <Spinner
+        android:id="@+id/eventSpinner"
+        style="@style/J_spinner"
+        android:layout_height="49dp"
+      />
 
-    <LinearLayout
-        android:id="@+id/adminLayout"
-        style="@style/VerticalLinearLayout">
+    <Button
+        android:id="@+id/aliiance"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="@color/RButtonBackground"
+        android:shadowColor="#673AB7"
+        android:text="RED ALLIANCE"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/RText"></Button>
 
-        <Spinner
-            android:id="@+id/eventSpinner"
-            style="@style/J_spinner"
-            android:layout_height="49dp" />
+    <RadioGroup
+        android:id="@+id/teams"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="vertical">
 
-        <Button
+        <RadioButton
+            android:id="@+id/team1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Team 1" />
+
+        <RadioButton
+            android:id="@+id/team2"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Team 2" />
+
+        <RadioButton
+            android:id="@+id/team3"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Team 3" />
+
+    </RadioGroup>
+
+    <Button
         android:id="@+id/reconfigure"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="75dp"
         android:shadowColor="#673AB7"
         android:text="Reconfigure"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -68,9 +103,7 @@
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_marginTop="25dp"
-        android:shadowColor="#673AB7"
         android:text="Save Configuration"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#2196F3" />
+        android:textColor="#2196F3"/>
     </LinearLayout>
-</LinearLayout>

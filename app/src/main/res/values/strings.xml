@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">2020-Scouting</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_rankings">Rankings</string>
+    <string name="title_settings">Settings</string>
     <string name="selectEvent">Select Event</string>
     <string name="pref_SelectedEvent">pref_SelectedEvent</string>
     <string name="pref_BlueAlliance">pref_BlueAlliance</string>
@@ -10,9 +10,11 @@
     <string name="tablet_Configured">tablet_Configured</string>
     <string name="password">hiram</string>
     <string name="SPARX_PREFS">Sparx_prefs</string>
+    <string name="sparx_email">sparx1126scouts@gmail.com</string>
     <string name="EMAIL">email</string>
     <string name="PASSWORD">password</string>
     <string name="TEAM">team</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_scouting">scouting</string>
+    <string name="title_activity_ranking">Ranking</string>
 </resources>
