@@ -5,6 +5,9 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="RED">#FF000B</color>
+    <color name="BLUE">#004BEC</color>
+
     <!--Red Theme-->
     <color name="RText">#EE454D</color>
     <color name="RToggleButton">#801336</color>
