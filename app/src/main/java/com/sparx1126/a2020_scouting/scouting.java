@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.AutoCompleteTextView;
@@ -32,10 +34,42 @@ public class scouting extends AppCompatActivity {
     private Button logout;
     private TextView name;
     private SharedPreferences settings;
-    private Button plusBalls;
-    private Button minusBalls;
+
     private Button plusMatch;
+    private AutoCompleteTextView txtMatch;
     private Button minusMatch;
+    private Button plusBallsBottemAuto;
+    private AutoCompleteTextView txtBallsBottomAuto;
+    private Button minusBallsBottemAuto;
+    private Button plusBallsOuterAuto;
+    private AutoCompleteTextView txtBallsOuterAuto;
+    private Button minusBallsOuterAuto;
+    private Button plusBallsInnerAuto;
+    private AutoCompleteTextView txtBallsInnerAuto;
+    private Button minusBallsInnerAuto;
+    private Button plusBallsFloorAuto;
+    private AutoCompleteTextView txtBallsFloorAuto;
+    private Button minusBallsFloorAuto;
+    private Button plusBallsBottemTele;
+    private AutoCompleteTextView txtBallsBottemTele;
+    private Button minusBallsBottemTele;
+    private Button plusBallsOuterTele;
+    private AutoCompleteTextView txtBallsOuterTele;
+    private Button minusBallsOuterTele;
+    private Button plusBallsInnerTele;
+    private AutoCompleteTextView txtBallsInnerTele;
+    private Button minusBallsInnerTele;
+    private Button plusBallsFloorTele;
+    private AutoCompleteTextView txtBallsFloorTele;
+    private Button minusBallsFloorTele;
+    private Button plusBallsLowChuteTele;
+    private AutoCompleteTextView txtBallsLowChuteTele;
+    private Button minusBallsLowChuteTele;
+    private Button plusBallsHighChuteTele;
+    private AutoCompleteTextView txtBallsHighChuteTele;
+    private Button minusBallsHighChuteTele;
+
+
     private TextView match;
     private Button save;
     private AutoCompleteTextView balls;
@@ -83,42 +117,197 @@ public class scouting extends AppCompatActivity {
             }
         });
 
-//        plusBalls.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int value = Integer.parseInt(balls.getText().toString());
-//                balls.setText(String.valueOf(value + 1));
-//            }
-//        });
-//
-//        minusBalls.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int value = Integer.parseInt(match.getText().toString());
-//                balls.setText(String.valueOf(value - 1));
-//            }
-//        });
-//
-//        plusMatch.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int value = Integer.parseInt(match.getText().toString());
-//                match.setText(String.valueOf(value + 1));
-//            }
-//        });
-//
-//        minusMatch.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int value = Integer.parseInt(balls.getText().toString());
-//                match.setText(String.valueOf(value - 1));
-//            }
-//        });
+        plusMatch = findViewById(R.id.plusMatch);
+        txtMatch = findViewById(R.id.txtMatch);
+        minusMatch = findViewById(R.id.minusMatch);
+
+        plusMatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                plusBalls(txtMatch);
+            }
+        });
+
+        minusMatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                minusBalls(txtMatch);
+            }
+        });
+
+        plusBallsBottemAuto = findViewById(R.id.plusBallsBottemAuto);
+        txtBallsBottomAuto = findViewById(R.id.txtBallsBottomAuto);
+        minusBallsBottemAuto = findViewById(R.id.minusBallsBottemAuto);
+
+        plusBallsBottemAuto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                plusBalls(txtBallsBottomAuto);
+            }
+        });
+        minusBallsBottemAuto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                minusBalls(txtBallsBottomAuto);
+            }
+        });
+
+        plusBallsOuterAuto = findViewById(R.id.plusBallsOuterAuto);
+        txtBallsOuterAuto = findViewById(R.id.txtBallsOuterAuto);
+        minusBallsOuterAuto = findViewById(R.id.minusBallsOuterAuto);
+
+        plusBallsOuterAuto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                plusBalls(txtBallsOuterAuto);
+            }
+        });
+        minusBallsOuterAuto.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                minusBalls(txtBallsOuterAuto);
+            }
+        });
+
+        plusBallsInnerAuto = findViewById(R.id.plusBallsInnerAuto);
+        txtBallsInnerAuto = findViewById(R.id.txtBallsInnerAuto);
+        minusBallsInnerAuto = findViewById(R.id.minusBallsInnerAuto);
+
+        plusBallsInnerAuto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                plusBalls(txtBallsInnerAuto);
+            }
+        });
+        minusBallsInnerAuto.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                minusBalls(txtBallsInnerAuto);
+            }
+        });
+
+        plusBallsFloorAuto = findViewById(R.id.plusBallsFloorAuto);
+        txtBallsFloorAuto = findViewById(R.id.txtBallsFloorAuto);
+        minusBallsFloorAuto = findViewById(R.id.minusBallsFloorAuto);
+
+        plusBallsFloorAuto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                plusBalls(txtBallsFloorAuto);
+            }
+        });
+        minusBallsFloorAuto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                minusBalls(txtBallsFloorAuto);
+            }
+        });
+
+        plusBallsBottemTele = findViewById(R.id.plusBallsBottemTele);
+        txtBallsBottemTele = findViewById(R.id.txtBallsBottemTele);
+        minusBallsBottemTele = findViewById(R.id.minusBallsBottemTele);
+
+        plusBallsBottemTele.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                plusBalls(txtBallsBottemTele);
+            }
+        });
+        minusBallsBottemTele.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                minusBalls(txtBallsBottemTele);
+            }
+        });
+
+        plusBallsOuterTele = findViewById(R.id.plusBallsOuterTele);
+        txtBallsOuterTele = findViewById(R.id.txtBallsOuterTele);
+        minusBallsOuterTele = findViewById(R.id.minusBallsOuterTele);
+
+        plusBallsOuterTele.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                plusBalls(txtBallsOuterTele);
+            }
+        });
+        minusBallsOuterTele.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                minusBalls(txtBallsOuterTele);
+            }
+        });
+
+        plusBallsInnerTele = findViewById(R.id.plusBallsInnerTele);
+        txtBallsInnerTele = findViewById(R.id.txtBallsInnerTele);
+        minusBallsInnerTele = findViewById(R.id.minusBallsInnerTele);
+
+        plusBallsInnerTele.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                plusBalls(txtBallsInnerTele);
+            }
+        });
+        minusBallsInnerTele.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                minusBalls(txtBallsInnerTele);
+            }
+        });
+
+        plusBallsFloorTele = findViewById(R.id.plusBallsFloorTele);
+        txtBallsFloorTele = findViewById(R.id.txtBallsFloorAuto);
+        minusBallsFloorTele = findViewById(R.id.minusBallsFloorTele);
+
+        plusBallsFloorTele.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                plusBalls(txtBallsFloorTele);
+            }
+        });
+        minusBallsFloorTele.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                minusBalls(txtBallsFloorTele);
+            }
+        });
+
+        plusBallsLowChuteTele = findViewById(R.id.plusBallsLowChuteTele);
+        txtBallsLowChuteTele = findViewById(R.id.txtBallsLowChuteTele);
+        minusBallsLowChuteTele = findViewById(R.id.minusBallsLowChuteTele);
+
+        plusBallsLowChuteTele.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                plusBalls(txtBallsLowChuteTele);
+            }
+        });
+        minusBallsLowChuteTele.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                minusBalls(txtBallsLowChuteTele);
+            }
+        });
+
+        plusBallsHighChuteTele = findViewById(R.id.plusBallsHighChuteTele);
+        txtBallsHighChuteTele = findViewById(R.id.txtBallsHighChuteTele);
+        minusBallsHighChuteTele = findViewById(R.id.minusBallsHighChuteTele);
+
+        plusBallsHighChuteTele.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                plusBalls(txtBallsHighChuteTele);
+            }
+        });
+        minusBallsHighChuteTele.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                minusBalls(txtBallsHighChuteTele);
+            }
+        });
 
 
-
-
-        logout.setOnClickListener(new View.OnClickListener(){
+        logout.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View view) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(scouting.this);
@@ -150,9 +339,200 @@ public class scouting extends AppCompatActivity {
         }
     }
 
+    public void plusBalls(AutoCompleteTextView view){
+        int value = Integer.parseInt(view.getText().toString());
+        view.setText(String.valueOf(value + 1));
+    }
+    public void minusBalls(AutoCompleteTextView view){
+        int value = Integer.parseInt(view.getText().toString());
+        view.setText(String.valueOf(value - 1));
+    }
+
     public  void changeUi(){
         if(Welcome.toggledBlue){
-
+            ScrollView background = findViewById(R.id.background);
+            background.setBackgroundColor(getResources().getColor(R.color.BBackground));
+            TextView assignment = findViewById(R.id.assignment);
+            assignment.setTextColor(getResources().getColor(R.color.BText));
+            TextView txtName = findViewById(R.id.txtname);
+            txtName.setTextColor(getResources().getColor(R.color.BText));
+            TextView name = findViewById(R.id.name);
+            name.setTextColor(getResources().getColor(R.color.BText));
+            TextView matchNum = findViewById(R.id.matchNum);
+            matchNum.setTextColor(getResources().getColor(R.color.BText));
+            Button plusMatch = findViewById(R.id.plusMatch);
+            plusMatch.setTextColor(getResources().getColor(R.color.BText));
+            plusMatch.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            AutoCompleteTextView txtMatch = findViewById(R.id.txtMatch);
+            txtMatch.setTextColor(getResources().getColor(R.color.BText));
+            Button minusMatch = findViewById(R.id.minusMatch);
+            minusMatch.setTextColor(getResources().getColor(R.color.BText));
+            minusMatch.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            Button logOut = findViewById(R.id.logOut);
+            logOut.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            logOut.setTextColor(getResources().getColor(R.color.BText));
+            TextView team = findViewById(R.id.team);
+            team.setTextColor(getResources().getColor(R.color.BText));
+            TextView teamScouting = findViewById(R.id.scoutingTeam);
+            teamScouting.setTextColor(getResources().getColor(R.color.BText));
+            TextView alliance = findViewById(R.id.alliance);
+            alliance.setTextColor(getResources().getColor(R.color.BText));
+            TextView allianceColor = findViewById(R.id.allianceColor);
+            allianceColor.setBackgroundColor(getResources().getColor(R.color.BLUE));
+            TextView auto = findViewById(R.id.autonomous);
+            auto.setTextColor(getResources().getColor(R.color.BText));
+            TextView startingPos = findViewById(R.id.startingPos);
+            startingPos.setTextColor(getResources().getColor(R.color.BText));
+            RadioButton closest = findViewById(R.id.closest);
+            closest.setTextColor(getResources().getColor(R.color.BText));
+            RadioButton middle = findViewById(R.id.middle);
+            middle.setTextColor(getResources().getColor(R.color.BText));
+            RadioButton farthest = findViewById(R.id.farthest);
+            farthest.setTextColor(getResources().getColor(R.color.BText));
+            TextView startBalls = findViewById(R.id.startBalls);
+            startBalls.setTextColor(getResources().getColor(R.color.BText));
+            RadioButton none = findViewById(R.id.none);
+            none.setTextColor(getResources().getColor(R.color.BText));
+            RadioButton one = findViewById(R.id.one);
+            one.setTextColor(getResources().getColor(R.color.BText));
+            RadioButton two = findViewById(R.id.two);
+            two.setTextColor(getResources().getColor(R.color.BText));
+            RadioButton three = findViewById(R.id.three);
+            three.setTextColor(getResources().getColor(R.color.BText));
+            TextView scoredBalls = findViewById(R.id.ballsScoredAuto);
+            scoredBalls.setTextColor(getResources().getColor(R.color.BText));
+            TextView bottemPortAuto = findViewById(R.id.bottomPortAuto);
+            bottemPortAuto.setTextColor(getResources().getColor(R.color.BText));
+            Button plusBallsBottemAuto = findViewById(R.id.plusBallsBottemAuto);
+            plusBallsBottemAuto.setTextColor(getResources().getColor(R.color.BText));
+            plusBallsBottemAuto.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            AutoCompleteTextView txtBallsBottemAuto = findViewById(R.id.txtBallsBottomAuto);
+            txtBallsBottemAuto.setTextColor(getResources().getColor(R.color.BText));
+            Button minusBallsBottemAuto = findViewById(R.id.minusBallsBottemAuto);
+            minusBallsBottemAuto.setTextColor(getResources().getColor(R.color.BText));
+            minusBallsBottemAuto.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            TextView outerPortAuto = findViewById(R.id.outerPortAuto);
+            outerPortAuto.setTextColor(getResources().getColor(R.color.BText));
+            Button plusBallsOuterAuto = findViewById(R.id.plusBallsOuterAuto);
+            plusBallsOuterAuto.setTextColor(getResources().getColor(R.color.BText));
+            plusBallsOuterAuto.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            AutoCompleteTextView txtBallsOuterAuto = findViewById(R.id.txtBallsOuterAuto);
+            txtBallsOuterAuto.setTextColor(getResources().getColor(R.color.BText));
+            Button minusBallsOuterAuto = findViewById(R.id.minusBallsOuterAuto);
+            minusBallsOuterAuto.setTextColor(getResources().getColor(R.color.BText));
+            minusBallsOuterAuto.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            TextView innerPortAuto = findViewById(R.id.innerPortAuto);
+            innerPortAuto.setTextColor(getResources().getColor(R.color.BText));
+            Button plusBallsInnerAuto = findViewById(R.id.plusBallsInnerAuto);
+            plusBallsInnerAuto.setTextColor(getResources().getColor(R.color.BText));
+            plusBallsInnerAuto.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            AutoCompleteTextView txtBallsInnerAuto = findViewById(R.id.txtBallsInnerAuto);
+            txtBallsInnerAuto.setTextColor(getResources().getColor(R.color.BText));
+            Button minusBallsInnerAuto = findViewById(R.id.minusBallsInnerAuto);
+            minusBallsInnerAuto.setTextColor(getResources().getColor(R.color.BText));
+            minusBallsInnerAuto.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            TextView ballsAquAuto = findViewById(R.id.ballsAcquiredAuto);
+            ballsAquAuto.setTextColor(getResources().getColor(R.color.BText));
+            TextView floorAuto = findViewById(R.id.floorAuto);
+            floorAuto.setTextColor(getResources().getColor(R.color.BText));
+            Button plusBallsFloorAuto = findViewById(R.id.plusBallsFloorAuto);
+            plusBallsFloorAuto.setTextColor(getResources().getColor(R.color.BText));
+            plusBallsFloorAuto.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            AutoCompleteTextView txtBallsFloorAuto = findViewById(R.id.txtBallsFloorAuto);
+            txtBallsFloorAuto.setTextColor(getResources().getColor(R.color.BText));
+            Button minusBallsFloorAuto = findViewById(R.id.minusBallsFloorAuto);
+            minusBallsFloorAuto.setTextColor(getResources().getColor(R.color.BText));
+            minusBallsFloorAuto.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            TextView crossesLine = findViewById(R.id.crossesLine);
+            crossesLine.setTextColor(getResources().getColor(R.color.BText));
+            TextView txtCrossesLine = findViewById(R.id.txtCrossesLine);
+            txtCrossesLine.setTextColor(getResources().getColor(R.color.BText));
+            TextView tele = findViewById(R.id.teleoperated);
+            tele.setTextColor(getResources().getColor(R.color.BText));
+            TextView ballsScoredTele = findViewById(R.id.ballsScoredTele);
+            ballsScoredTele.setTextColor(getResources().getColor(R.color.BText));
+            TextView bottomPortTele = findViewById(R.id.bottomPortTele);
+            bottomPortTele.setTextColor(getResources().getColor(R.color.BText));
+            Button plusBallsBottemtele = findViewById(R.id.plusBallsBottemTele);
+            plusBallsBottemtele.setTextColor(getResources().getColor(R.color.BText));
+            plusBallsBottemtele.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            AutoCompleteTextView txtBallsBottemTele = findViewById(R.id.txtBallsBottemTele);
+            txtBallsBottemTele.setTextColor(getResources().getColor(R.color.BText));
+            Button minusBallsBottemTele = findViewById(R.id.minusBallsBottemTele);
+            minusBallsBottemTele.setTextColor(getResources().getColor(R.color.BText));
+            minusBallsBottemTele.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            TextView outerPortTele = findViewById(R.id.outerPortTele);
+            outerPortTele.setTextColor(getResources().getColor(R.color.BText));
+            Button plusBallsOuterTele = findViewById(R.id.plusBallsOuterTele);
+            plusBallsOuterTele.setTextColor(getResources().getColor(R.color.BText));
+            plusBallsOuterTele.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            AutoCompleteTextView txtBallsOuterTele = findViewById(R.id.txtBallsOuterTele);
+            txtBallsOuterTele.setTextColor(getResources().getColor(R.color.BText));
+            Button minusBallsOuterTele = findViewById(R.id.minusBallsOuterTele);
+            minusBallsOuterTele.setTextColor(getResources().getColor(R.color.BText));
+            minusBallsOuterTele.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            TextView innerPortTele = findViewById(R.id.innerPortTele);
+            innerPortTele.setTextColor(getResources().getColor(R.color.BText));
+            Button plusBallsInnerTele = findViewById(R.id.plusBallsInnerTele);
+            plusBallsInnerTele.setTextColor(getResources().getColor(R.color.BText));
+            plusBallsInnerTele.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            AutoCompleteTextView txtBallsInnerTele = findViewById(R.id.txtBallsInnerTele);
+            txtBallsInnerTele.setTextColor(getResources().getColor(R.color.BText));
+            Button minusBallsInnerTele = findViewById(R.id.minusBallsInnerTele);
+            minusBallsInnerTele.setTextColor(getResources().getColor(R.color.BText));
+            minusBallsInnerTele.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            TextView ballsAquTele = findViewById(R.id.ballsAcquiredTele);
+            ballsAquTele.setTextColor(getResources().getColor(R.color.BText));
+            TextView floorTele = findViewById(R.id.floorTele);
+            floorTele.setTextColor(getResources().getColor(R.color.BText));
+            Button plusBallsFloorTele = findViewById(R.id.plusBallsFloorTele);
+            plusBallsFloorTele.setTextColor(getResources().getColor(R.color.BText));
+            plusBallsFloorTele.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            AutoCompleteTextView txtBallsFloorTele = findViewById(R.id.txtBallsFloorTele);
+            txtBallsFloorTele.setTextColor(getResources().getColor(R.color.BText));
+            Button minusBallsFloorTele = findViewById(R.id.minusBallsFloorTele);
+            minusBallsFloorTele.setTextColor(getResources().getColor(R.color.BText));
+            minusBallsFloorTele.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            TextView lowChuteTele = findViewById(R.id.lowChuteTele);
+            lowChuteTele.setTextColor(getResources().getColor(R.color.BText));
+            Button plusBallsLowChuteTele = findViewById(R.id.plusBallsLowChuteTele);
+            plusBallsLowChuteTele.setTextColor(getResources().getColor(R.color.BText));
+            plusBallsLowChuteTele.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            AutoCompleteTextView txtBallsLowChuteTele = findViewById(R.id.txtBallsLowChuteTele);
+            txtBallsLowChuteTele.setTextColor(getResources().getColor(R.color.BText));
+            Button minusBallsLowChuteTele = findViewById(R.id.minusBallsLowChuteTele);
+            minusBallsLowChuteTele.setTextColor(getResources().getColor(R.color.BText));
+            minusBallsLowChuteTele.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            TextView highChuteTele = findViewById(R.id.highChuteTele);
+            highChuteTele.setTextColor(getResources().getColor(R.color.BText));
+            Button plusBallsHighChuteTele = findViewById(R.id.plusBallsHighChuteTele);
+            plusBallsHighChuteTele.setTextColor(getResources().getColor(R.color.BText));
+            plusBallsHighChuteTele.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            AutoCompleteTextView txtBallsHighChuteTele = findViewById(R.id.txtBallsHighChuteTele);
+            txtBallsHighChuteTele.setTextColor(getResources().getColor(R.color.BText));
+            Button minusBallsHighChuteTele = findViewById(R.id.minusBallsHighChuteTele);
+            minusBallsHighChuteTele.setTextColor(getResources().getColor(R.color.BText));
+            minusBallsHighChuteTele.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            TextView controlPannel = findViewById(R.id.controlPanelInteraction);
+            controlPannel.setTextColor(getResources().getColor(R.color.BText));
+            TextView performdRotation = findViewById(R.id.performedRotationControl);
+            performdRotation.setTextColor(getResources().getColor(R.color.BText));
+            TextView performedPosition = findViewById(R.id.performedPositoinControl);
+            performedPosition.setTextColor(getResources().getColor(R.color.BText));
+            TextView endGame = findViewById(R.id.endGame);
+            endGame.setTextColor(getResources().getColor(R.color.BText));
+            TextView rendezuous = findViewById(R.id.rendezuous);
+            rendezuous.setTextColor(getResources().getColor(R.color.BText));
+            TextView hanging = findViewById(R.id.hanging);
+            hanging.setTextColor(getResources().getColor(R.color.BText));
+            TextView parked = findViewById(R.id.parked);
+            parked.setTextColor(getResources().getColor(R.color.BText));
+            RadioButton noLeveling = findViewById(R.id.noLeveling);
+            noLeveling.setTextColor(getResources().getColor(R.color.BText));
+            RadioButton triedToLevel = findViewById(R.id.triedToLevel);
+            triedToLevel.setTextColor(getResources().getColor(R.color.BText));
+            RadioButton successfullyLeveled = findViewById(R.id.successfullyLeveled);
+            successfullyLeveled.setTextColor(getResources().getColor(R.color.BText));
         }else{
             ScrollView background = findViewById(R.id.background);
             background.setBackgroundColor(getResources().getColor(R.color.RBackground));
@@ -325,6 +705,18 @@ public class scouting extends AppCompatActivity {
             performedPosition.setTextColor(getResources().getColor(R.color.RText));
             TextView endGame = findViewById(R.id.endGame);
             endGame.setTextColor(getResources().getColor(R.color.RText));
+            TextView rendezuous = findViewById(R.id.rendezuous);
+            rendezuous.setTextColor(getResources().getColor(R.color.RText));
+            TextView hanging = findViewById(R.id.hanging);
+            hanging.setTextColor(getResources().getColor(R.color.RText));
+            TextView parked = findViewById(R.id.parked);
+            parked.setTextColor(getResources().getColor(R.color.RText));
+            RadioButton noLeveling = findViewById(R.id.noLeveling);
+            noLeveling.setTextColor(getResources().getColor(R.color.RText));
+            RadioButton triedToLevel = findViewById(R.id.triedToLevel);
+            triedToLevel.setTextColor(getResources().getColor(R.color.RText));
+            RadioButton successfullyLeveled = findViewById(R.id.successfullyLeveled);
+            successfullyLeveled.setTextColor(getResources().getColor(R.color.RText));
         }
     }
 

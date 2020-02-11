@@ -144,6 +144,7 @@
                 android:layout_height="wrap_content">
                 <RadioButton
                     android:id="@+id/closest"
+                    style="@style/t019_radioButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Closest to Power Port"
@@ -151,6 +152,7 @@
                 </RadioButton>
                 <RadioButton
                     android:id="@+id/middle"
+                    style="@style/t019_radioButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Middle"
@@ -159,6 +161,7 @@
                 <RadioButton
                     android:id="@+id/farthest"
                     android:layout_width="match_parent"
+                    style="@style/t019_radioButton"
                     android:layout_height="wrap_content"
                     android:text="Farthest to Power Port"
                     android:textSize="20dp">
@@ -180,6 +183,7 @@
                     android:layout_height="wrap_content">
                     <RadioButton
                         android:id="@+id/none"
+                        style="@style/t019_radioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="None"
@@ -187,6 +191,7 @@
                     </RadioButton>
                     <RadioButton
                         android:id="@+id/one"
+                        style="@style/t019_radioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="One"
@@ -194,6 +199,7 @@
                     </RadioButton>
                     <RadioButton
                         android:id="@+id/two"
+                        style="@style/t019_radioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Two"
@@ -201,6 +207,7 @@
                     </RadioButton>
                     <RadioButton
                         android:id="@+id/three"
+                        style="@style/t019_radioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Three"
@@ -379,6 +386,7 @@
                     </TextView>
                     <CheckBox
                         android:id="@+id/crossesLineCheckBox"
+                        style="@style/t019_checkBox"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="150dp">
@@ -611,6 +619,7 @@
                 </TextView>
                 <CheckBox
                     android:id="@+id/performedRotationControlCheckBox"
+                    style="@style/t019_checkBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="108dp">
@@ -629,6 +638,7 @@
                 </TextView>
                 <CheckBox
                     android:id="@+id/performedPositionControlCheckBox"
+                    style="@style/t019_checkBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="110dp">
@@ -665,6 +675,7 @@
                     android:textSize="22dp">
                 </TextView>
                 <CheckBox
+                    style="@style/t019_checkBox"
                     android:id="@+id/hangingCheckBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -684,6 +695,7 @@
                 </TextView>
                 <CheckBox
                     android:id="@+id/parkedCheckBox"
+                    style="@style/t019_checkBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="315dp">
@@ -702,6 +714,7 @@
                 android:layout_height="wrap_content">
                 <RadioButton
                     android:id="@+id/noLeveling"
+                    style="@style/t019_radioButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="No leveling"
@@ -709,6 +722,7 @@
                 </RadioButton>
                 <RadioButton
                     android:id="@+id/triedToLevel"
+                    style="@style/t019_radioButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Tried to level"
@@ -716,6 +730,7 @@
                 </RadioButton>
                 <RadioButton
                     android:id="@+id/successfullyLeveled"
+                    style="@style/t019_radioButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Successfully leveled"
