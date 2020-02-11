@@ -16,6 +16,12 @@
         android:name="com.sparx1126.a2020_scouting.ui.rankings.RankingsFragment"
         android:label="@string/title_rankings"
         tools:layout="@layout/fragment_rankings" />
+    <fragment
+        android:id="@+id/navigation_match"
+        android:name="com.sparx1126.a2020_scouting.ui.match_viewer.MatchViewerFragment"
+        android:label="MatchViewer"
+        tools:layout="@layout/fragment_match" />
+
 
     <fragment
         android:id="@+id/navigation_settings"
