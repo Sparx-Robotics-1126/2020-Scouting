@@ -35,15 +35,17 @@ public class RankingsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_rankings, container, false);
 
         //list
+        /*
         final ListView rankList = root.findViewById(R.id.rankList);
         String[] values = new String[]{"Hi", "bye"};
 
         final ArrayAdapter adapter = new ArrayAdapter(getActivity(),
                 android.R.layout.simple_list_item_1, values);
         rankList.setAdapter(adapter);
+        */
 
 
-        //ArrayAdapter adapter = new ArrayAdapter<RankCustomLayout>(this, R.layout.rank_custom_layout, );
+        //ArrayAdapter adapter = new ArrayAdapter<RankCustomLayout>(this, R.layout.rankItem_layout, );
 
         /*
         RankCustomLayout testRank = root.findViewById(R.id.testRank);

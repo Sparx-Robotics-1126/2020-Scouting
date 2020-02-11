@@ -10,26 +10,36 @@ import android.widget.TextView;
 
 import com.sparx1126.a2020_scouting.R;
 
-public class RankCustomLayout extends LinearLayout {
+public class RankListItem {
 
-    private TextView teamNumber, details, record, rank, teamName;
+    private String teamNumber, details, record, rank, teamName;
 
-    public RankCustomLayout(Context _context, AttributeSet _attrs) {
-        super(_context, _attrs);
+    public RankListItem() {
+        teamNumber = "1234";
+        details = "ploopy";
+        record = "6-4-0";
+        rank = "3";
+        teamName = "Sprax";
+    }
+    //temporary for testing
 
-        LayoutInflater layoutInflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        assert layoutInflater != null;
-        View view = layoutInflater.inflate(R.layout.rank_custom_layout, this);
-
-        if (view != null) {
-            teamNumber = view.findViewById(R.id.teamNumber);
-            details = view.findViewById(R.id.details);
-            record = view.findViewById(R.id.record);
-            rank = view.findViewById(R.id.rank);
-            teamName = view.findViewById(R.id.teamName);
-        }
+    public String getTeamNumber(){
+        return teamNumber;
+    }
+    public String getDetails(){
+        return details;
+    }
+    public String getRecord(){
+        return record;
+    }
+    public String getRank(){
+        return rank;
+    }
+    public String getTeamName(){
+        return teamName;
     }
 
+    /*
     public void setTeamNumber(Integer teamNumber){
         this.teamNumber.setText(teamNumber.toString());
     }
@@ -45,4 +55,5 @@ public class RankCustomLayout extends LinearLayout {
     public void setTeamName(String teamName){
         this.teamName.setText(teamName);
     }
+     */
 }
