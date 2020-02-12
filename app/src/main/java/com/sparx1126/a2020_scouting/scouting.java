@@ -8,17 +8,22 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
 import com.sparx1126.a2020_scouting.Utilities.SendMail;
 import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
@@ -92,28 +97,7 @@ public class scouting extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ban = BlueAllianceNetwork.getInstance();
-                ban.downloadEventMatches("2019ohcl", new BlueAllianceNetwork.Callback() {
-                    @Override
-                    public void handleFinishDownload(final String _data) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                BlueAllianceMatch.parseDataToBAMMap(_data);
-                                Set<String> keys = BlueAllianceMatch.getMatches().keySet();
-                                String str = "";
-                                for(String k: keys){
-                                    if(k.equals(match.getText().toString())) {
-                                        str += "\n" + BlueAllianceMatch.getMatches().get(k).toString();
-                                    }
-                                }
-                                TextView name = findViewById(R.id.name);
-                                mail = new SendMail(scouting.this,getResources().getString(R.string.sparx_email), (String)name.getText(), str);
-                                mail.execute();
-                            }
-                        });
-                    }
-                });
+                Save();
             }
         });
 
@@ -255,19 +239,22 @@ public class scouting extends AppCompatActivity {
         });
 
         plusBallsFloorTele = findViewById(R.id.plusBallsFloorTele);
-        txtBallsFloorTele = findViewById(R.id.txtBallsFloorAuto);
+        txtBallsFloorTele = findViewById(R.id.txtFloorTele);
         minusBallsFloorTele = findViewById(R.id.minusBallsFloorTele);
 
         plusBallsFloorTele.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 plusBalls(txtBallsFloorTele);
+                Log.e("plusBallsFloorTele", "true");
             }
         });
         minusBallsFloorTele.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 minusBalls(txtBallsFloorTele);
+                Log.e("minusBallsFloorTele", "true");
+
             }
         });
 
@@ -337,6 +324,33 @@ public class scouting extends AppCompatActivity {
         }else{
             login();
         }
+    }
+
+    public void Save(){
+        Gson gson = new Gson();
+        RadioGroup startingpos = findViewById(R.id.startingPosition);
+        RadioButton checkedStartingPos = findViewById(startingpos.getCheckedRadioButtonId());
+        RadioGroup startingBalls = findViewById(R.id.startingBalls);
+        RadioButton checkedStartingBalls = findViewById(startingBalls.getCheckedRadioButtonId());
+        CheckBox crossesLine = findViewById(R.id.crossesLineCheckBox);
+        CheckBox performendRotation = findViewById(R.id.performedRotationControlCheckBox);
+        CheckBox performedPosition = findViewById(R.id.performedPositionControlCheckBox);
+        CheckBox hanging = findViewById(R.id.hangingCheckBox);
+        CheckBox parked = findViewById(R.id.parkedCheckBox);
+        RadioGroup level = findViewById(R.id.level);
+        RadioButton levelButton = findViewById(level.getCheckedRadioButtonId());
+        TextView scoutingTeam = findViewById(R.id.scoutingTeam);
+
+        String string= gson.toJson(new ScoutingData((String)name.getText(),
+                txtMatch.getText().toString(),scoutingTeam.getText().toString(), checkedStartingPos.getText().toString(), checkedStartingBalls.getText().toString(), txtBallsBottomAuto.getText().toString(),
+                txtBallsOuterAuto.getText().toString(), txtBallsInnerAuto.getText().toString(), txtBallsFloorAuto.getText().toString(), crossesLine.isChecked(),
+                txtBallsBottemTele.getText().toString(), txtBallsOuterTele.getText().toString(), txtBallsInnerTele.getText().toString(), txtBallsFloorTele.getText().toString(),
+                txtBallsLowChuteTele.getText().toString(), txtBallsHighChuteTele.getText().toString(), performendRotation.isChecked(), performedPosition.isChecked(),
+                hanging.isChecked(), parked.isChecked(), levelButton.getText().toString()));
+
+
+        mail = new SendMail(scouting.this,getResources().getString(R.string.sparx_email), "Hello Testing - Sohail Shaik", string);
+        mail.execute();
     }
 
     public void plusBalls(AutoCompleteTextView view){
@@ -488,7 +502,7 @@ public class scouting extends AppCompatActivity {
             Button plusBallsFloorTele = findViewById(R.id.plusBallsFloorTele);
             plusBallsFloorTele.setTextColor(getResources().getColor(R.color.BText));
             plusBallsFloorTele.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
-            AutoCompleteTextView txtBallsFloorTele = findViewById(R.id.txtBallsFloorTele);
+            AutoCompleteTextView txtBallsFloorTele = findViewById(R.id.txtFloorTele);
             txtBallsFloorTele.setTextColor(getResources().getColor(R.color.BText));
             Button minusBallsFloorTele = findViewById(R.id.minusBallsFloorTele);
             minusBallsFloorTele.setTextColor(getResources().getColor(R.color.BText));
@@ -527,6 +541,8 @@ public class scouting extends AppCompatActivity {
             hanging.setTextColor(getResources().getColor(R.color.BText));
             TextView parked = findViewById(R.id.parked);
             parked.setTextColor(getResources().getColor(R.color.BText));
+            TextView level = findViewById(R.id.leveling);
+            level.setTextColor(getResources().getColor(R.color.RText));
             RadioButton noLeveling = findViewById(R.id.noLeveling);
             noLeveling.setTextColor(getResources().getColor(R.color.BText));
             RadioButton triedToLevel = findViewById(R.id.triedToLevel);
@@ -672,7 +688,7 @@ public class scouting extends AppCompatActivity {
             Button plusBallsFloorTele = findViewById(R.id.plusBallsFloorTele);
             plusBallsFloorTele.setTextColor(getResources().getColor(R.color.RText));
             plusBallsFloorTele.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
-            AutoCompleteTextView txtBallsFloorTele = findViewById(R.id.txtBallsFloorTele);
+            AutoCompleteTextView txtBallsFloorTele = findViewById(R.id.txtFloorTele);
             txtBallsFloorTele.setTextColor(getResources().getColor(R.color.RText));
             Button minusBallsFloorTele = findViewById(R.id.minusBallsFloorTele);
             minusBallsFloorTele.setTextColor(getResources().getColor(R.color.RText));
@@ -707,6 +723,8 @@ public class scouting extends AppCompatActivity {
             endGame.setTextColor(getResources().getColor(R.color.RText));
             TextView rendezuous = findViewById(R.id.rendezuous);
             rendezuous.setTextColor(getResources().getColor(R.color.RText));
+            TextView level = findViewById(R.id.leveling);
+            level.setTextColor(getResources().getColor(R.color.RText));
             TextView hanging = findViewById(R.id.hanging);
             hanging.setTextColor(getResources().getColor(R.color.RText));
             TextView parked = findViewById(R.id.parked);

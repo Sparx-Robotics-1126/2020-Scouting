@@ -140,6 +140,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large">
             </TextView>
             <RadioGroup
+                android:id="@+id/startingPosition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <RadioButton
@@ -167,7 +168,8 @@
                     android:textSize="20dp">
                 </RadioButton>
             </RadioGroup>
-            <LinearLayout
+            <RadioGroup
+                android:id="@+id/startingBalls"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -214,7 +216,7 @@
                         android:textSize="20dp">
                     </RadioButton>
                 </RadioGroup>
-            </LinearLayout>
+            </RadioGroup>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -527,7 +529,7 @@
                     android:layout_marginLeft="240dp"
                     android:text="+" />
                 <AutoCompleteTextView
-                    android:id="@+id/txtBallsFloorTele"
+                    android:id="@+id/txtFloorTele"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
@@ -710,6 +712,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large">
             </TextView>
             <RadioGroup
+                android:id="@+id/level"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <RadioButton
