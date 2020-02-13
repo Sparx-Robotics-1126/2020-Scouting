@@ -27,6 +27,8 @@ import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
 
 import android.view.View;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.w3c.dom.Text;
 
 import java.util.Set;
@@ -324,7 +326,28 @@ public class scouting extends AppCompatActivity {
     }
 
     public void Save(){
-        mail = new SendMail(scouting.this, getResources().getString(R.string.sparx_email), "Hello Testing - Sohail Shaik", "str");
+        RadioGroup starting = findViewById(R.id.startingPosition);
+        RadioButton startingpos = findViewById(starting.getCheckedRadioButtonId());
+        TextView teamScouting = findViewById(R.id.scoutingTeam);
+        RadioGroup startingb = findViewById(R.id.startingBalls);
+        RadioButton startingballs = findViewById(startingb.getCheckedRadioButtonId());
+        CheckBox crossesLine = findViewById(R.id.crossesLineCheckBox);
+        CheckBox performendRot = findViewById(R.id.performedRotationControlCheckBox);
+        CheckBox performedPos = findViewById(R.id.performedPositionControlCheckBox);
+        CheckBox hanging = findViewById(R.id.hangingCheckBox);
+        CheckBox parked  = findViewById(R.id.parkedCheckBox);
+        RadioGroup level = findViewById(R.id.level);
+        RadioButton leveled = findViewById(level.getCheckedRadioButtonId());
+
+        ScoutingData scoutingData = new ScoutingData(name.getText().toString(), txtMatch.getText().toString(), teamScouting.getText().toString(),
+                startingpos.getText().toString(), startingballs.getText().toString(), txtBallsBottomAuto.getText().toString(), txtBallsOuterAuto.getText().toString(),
+                txtBallsInnerAuto.getText().toString(), txtBallsFloorAuto.getText().toString(), crossesLine.isChecked(), txtBallsBottemTele.getText().toString(),
+                txtBallsOuterTele.getText().toString(), txtBallsInnerTele.getText().toString(), txtBallsFloorTele.getText().toString(), txtBallsLowChuteTele.getText().toString(),
+                txtBallsHighChuteTele.getText().toString(), performendRot.isChecked(), performedPos.isChecked(), hanging.isChecked(), parked.isChecked(), leveled.getText().toString());
+
+        Log.e("checking if it is Json", " " + isValidJsonArray(scoutingData.toJson()));
+
+        mail = new SendMail(scouting.this, getResources().getString(R.string.sparx_email), "Hello Testing - Sohail Shaik", scoutingData.toJson());
         mail.execute();
     }
 
@@ -736,6 +759,14 @@ public class scouting extends AppCompatActivity {
         });
         builder.create().show();
 
+    }
+    private boolean isValidJsonArray(String _data) {
+        try {
+            new JSONArray(_data);
+        } catch (JSONException jsExcp) {
+            return false;
+        }
+        return true;
     }
 }
 

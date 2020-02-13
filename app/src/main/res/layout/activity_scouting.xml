@@ -168,8 +168,7 @@
                     android:textSize="20dp">
                 </RadioButton>
             </RadioGroup>
-            <RadioGroup
-                android:id="@+id/startingBalls"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -181,6 +180,7 @@
                     android:textSize ="25dp">
                 </TextView>
                 <RadioGroup
+                    android:id="@+id/startingBalls"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <RadioButton
@@ -216,7 +216,7 @@
                         android:textSize="20dp">
                     </RadioButton>
                 </RadioGroup>
-            </RadioGroup>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
