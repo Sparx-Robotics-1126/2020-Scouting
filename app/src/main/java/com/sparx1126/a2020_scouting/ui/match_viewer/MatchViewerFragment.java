@@ -2,6 +2,7 @@ package com.sparx1126.a2020_scouting.ui.match_viewer;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,10 +39,11 @@ public class MatchViewerFragment extends Fragment {
         HashMap teamMatchObjs = BlueAllianceMatch.getTeamMatches();
         BlueAllianceMatch matchObj = null;
         Set<String> keys = BlueAllianceMatch.getTeamMatches().keySet();
+        Log.i("MATCHVIEWER_FRAGMENT_UI", keys.toString());
         for(int i = 1; i<= BlueAllianceMatch.getMatches().size(); i++){
             if (keys.contains(String.valueOf(i))) {
                 boolean isBlue =false;
-                System.out.println("ADDING MATCH" + i);
+                Log.i("MATCHVIEWER_FRAGMENT_UI", "ADDING MATCH #" + i);
                 matchObj=(BlueAllianceMatch) teamMatchObjs.get((String.valueOf(i)));
                 TableRow matchRow = new TableRow(getActivity());
 
@@ -63,7 +65,6 @@ public class MatchViewerFragment extends Fragment {
                     blueTeamText.setTextSize(30);
                     if(matchObj.getBlueTeamKeys().get(b).equals(HARD_CODED_TKEY)){
                         isBlue=true;
-                        System.out.println(isBlue);
                         blueTeamText.setTextColor(Color.YELLOW);
                     }
                     //System.out.println("ADDING BLUE TEAM" + matchObj.getBlueTeamKeys().get(b).replace("frc","")  );
@@ -96,14 +97,13 @@ public class MatchViewerFragment extends Fragment {
                 matchNum.setGravity(Gravity.CENTER);
                 matchNum.setTextSize(30);
                 matchNum.setText("MATCH " +matchObj.getMatchNum());
-                System.out.println("FINAL"+ isBlue);
                 matchNum.setTextColor(Color.RED);
                 if(isBlue){
                     matchNum.setTextColor(Color.BLUE);
                 }
                 matchRow.addView(matchNum);
                 TextView rowDivider = new TextView(getActivity());
-                rowDivider.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,10));
+                rowDivider.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,6));
                 rowDivider.setBackgroundColor(Color.DKGRAY);
                 masterTable.addView(rowDivider);
 
@@ -111,6 +111,11 @@ public class MatchViewerFragment extends Fragment {
             }
 
         }
+        TextView rowDivider = new TextView(getActivity());
+        rowDivider.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,6));
+        rowDivider.setBackgroundColor(Color.DKGRAY);
+        masterTable.addView(rowDivider);
+
         return root;
     }
 

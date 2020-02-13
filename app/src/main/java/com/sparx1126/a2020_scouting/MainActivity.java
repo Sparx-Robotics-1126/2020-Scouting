@@ -61,11 +61,10 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.e("JT", _data);
+                        //Log.e("JT", _data);
                         if (_data.length() > 0) {
                             BlueAllianceEvent.pharseJson(_data);
-                            Set<String> keys = BlueAllianceEvent.getEvents().keySet();
-                            Log.e("Sohail", BlueAllianceEvent.getEvents().get("2019nyro").toString());
+                           // Log.e("Sohail", BlueAllianceEvent.getEvents().get("2019nyro").toString());
                         }
                     }
                 });
