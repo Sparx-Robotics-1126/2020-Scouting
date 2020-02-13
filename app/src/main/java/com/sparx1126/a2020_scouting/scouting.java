@@ -21,9 +21,6 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
 import com.sparx1126.a2020_scouting.Utilities.SendMail;
 import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
@@ -327,29 +324,7 @@ public class scouting extends AppCompatActivity {
     }
 
     public void Save(){
-        Gson gson = new Gson();
-        RadioGroup startingpos = findViewById(R.id.startingPosition);
-        RadioButton checkedStartingPos = findViewById(startingpos.getCheckedRadioButtonId());
-        RadioGroup startingBalls = findViewById(R.id.startingBalls);
-        RadioButton checkedStartingBalls = findViewById(startingBalls.getCheckedRadioButtonId());
-        CheckBox crossesLine = findViewById(R.id.crossesLineCheckBox);
-        CheckBox performendRotation = findViewById(R.id.performedRotationControlCheckBox);
-        CheckBox performedPosition = findViewById(R.id.performedPositionControlCheckBox);
-        CheckBox hanging = findViewById(R.id.hangingCheckBox);
-        CheckBox parked = findViewById(R.id.parkedCheckBox);
-        RadioGroup level = findViewById(R.id.level);
-        RadioButton levelButton = findViewById(level.getCheckedRadioButtonId());
-        TextView scoutingTeam = findViewById(R.id.scoutingTeam);
-
-        String string= gson.toJson(new ScoutingData((String)name.getText(),
-                txtMatch.getText().toString(),scoutingTeam.getText().toString(), checkedStartingPos.getText().toString(), checkedStartingBalls.getText().toString(), txtBallsBottomAuto.getText().toString(),
-                txtBallsOuterAuto.getText().toString(), txtBallsInnerAuto.getText().toString(), txtBallsFloorAuto.getText().toString(), crossesLine.isChecked(),
-                txtBallsBottemTele.getText().toString(), txtBallsOuterTele.getText().toString(), txtBallsInnerTele.getText().toString(), txtBallsFloorTele.getText().toString(),
-                txtBallsLowChuteTele.getText().toString(), txtBallsHighChuteTele.getText().toString(), performendRotation.isChecked(), performedPosition.isChecked(),
-                hanging.isChecked(), parked.isChecked(), levelButton.getText().toString()));
-
-
-        mail = new SendMail(scouting.this,getResources().getString(R.string.sparx_email), "Hello Testing - Sohail Shaik", string);
+        mail = new SendMail(scouting.this, getResources().getString(R.string.sparx_email), "Hello Testing - Sohail Shaik", "str");
         mail.execute();
     }
 
