@@ -24,6 +24,9 @@ import java.util.ArrayList;
 
 public class RankingsFragment extends Fragment {
 
+    private ListView listView;
+    private RankArrayAdapter adapter;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,28 +37,20 @@ public class RankingsFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_rankings, container, false);
 
-        //list
-        /*
-        final ListView rankList = root.findViewById(R.id.rankList);
-        String[] values = new String[]{"Hi", "bye"};
 
-        final ArrayAdapter adapter = new ArrayAdapter(getActivity(),
-                android.R.layout.simple_list_item_1, values);
-        rankList.setAdapter(adapter);
-        */
+        listView = (ListView) root.findViewById(R.id.rankList);
+        ArrayList<RankListItem> rankList = new ArrayList<>();
+        //multiple of these:
+        rankList.add(new RankListItem());
+        rankList.add(new RankListItem());
+        rankList.add(new RankListItem());
+        rankList.add(new RankListItem());
+        RankListItem hasData = new RankListItem();
+        hasData.setDetails("I live in a boat with a bunch of Justins");
+        rankList.add(hasData);
 
-
-        //ArrayAdapter adapter = new ArrayAdapter<RankCustomLayout>(this, R.layout.rankItem_layout, );
-
-        /*
-        RankCustomLayout testRank = root.findViewById(R.id.testRank);
-
-        testRank.setRank(5);
-        testRank.setTeamNumber(1126);
-        testRank.setRecord(1,2,3);
-        testRank.setTeamName("Sprax");
-        testRank.setDetails("Jaren was here");
-         */
+        adapter = new RankArrayAdapter(getActivity(), rankList);
+        listView.setAdapter(adapter);
 
         return root;
 

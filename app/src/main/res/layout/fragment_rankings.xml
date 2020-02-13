@@ -4,7 +4,8 @@
     android:id="@+id/rankList"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:divider="#341234">
+    android:divider="#341234"
+    android:headerDividersEnabled="true">
     <!--android:entries=""-->
 
 </ListView>

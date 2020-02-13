@@ -1,59 +1,80 @@
 package com.sparx1126.a2020_scouting.ui.rankings;
 
-import android.widget.LinearLayout;
-
-import android.content.Context;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.TextView;
-
-import com.sparx1126.a2020_scouting.R;
+import androidx.annotation.NonNull;
 
 public class RankListItem {
+    //this class is the sole checker of proper type and value
 
-    private String teamNumber, details, record, rank, teamName;
+    private String details, teamName;
+    private Integer teamNumber, wins, losses, ties, rank;
 
     public RankListItem() {
-        teamNumber = "1234";
-        details = "ploopy";
-        record = "6-4-0";
-        rank = "3";
-        teamName = "Sprax";
+
     }
-    //temporary for testing
 
     public String getTeamNumber(){
-        return teamNumber;
+        if(teamNumber == null)
+            return "No Number!";
+        else
+            return teamNumber.toString();
     }
     public String getDetails(){
-        return details;
+        if(details == null)
+            return "No Details!";
+        else
+            return details;
     }
     public String getRecord(){
-        return record;
+        String winsStr, lossesStr, tiesStr;
+        if(wins == null)
+            winsStr = "?";
+        else
+            winsStr = wins.toString();
+
+        if(losses == null)
+            lossesStr = "?";
+        else
+            lossesStr = losses.toString();
+
+        if(ties == null)
+            tiesStr = "?";
+        else
+            tiesStr = ties.toString();
+
+        return winsStr + "-" + lossesStr + "-" + tiesStr;
     }
     public String getRank(){
-        return rank;
+        String rankStr;
+        if(rank == null)
+            rankStr = "?";
+        else
+            rankStr = rank.toString();
+
+        return "Rank " + rankStr;
     }
     public String getTeamName(){
-        return teamName;
+        if(teamName == null)
+            return "No Team Name";
+        else
+            return teamName;
     }
 
-    /*
-    public void setTeamNumber(Integer teamNumber){
-        this.teamNumber.setText(teamNumber.toString());
+
+    public void setTeamNumber(int teamNumber){
+        this.teamNumber = teamNumber;
     }
     public void setDetails(String details){
-        this.details.setText(details);
+        this.details = details;
     }
     public void setRecord(int wins, int losses, int ties){
-        record.setText(wins + "-" + losses + "-" + ties);
+        this.wins = wins;
+        this.losses = losses;
+        this.ties = ties;
     }
     public void setRank(int rank){
-        this.rank.setText("Rank " + rank);
+        this.rank = rank;
     }
     public void setTeamName(String teamName){
-        this.teamName.setText(teamName);
+        this.teamName = teamName;
     }
-     */
 }
