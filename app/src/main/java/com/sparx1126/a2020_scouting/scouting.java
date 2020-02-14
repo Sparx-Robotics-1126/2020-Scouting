@@ -29,6 +29,7 @@ import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.Set;
@@ -761,12 +762,16 @@ public class scouting extends AppCompatActivity {
 
     }
     private boolean isValidJsonArray(String _data) {
-        try {
-            new JSONArray(_data);
-        } catch (JSONException jsExcp) {
-            return false;
-        }
-        return true;
+       try{
+           new JSONObject(_data);
+       }catch(JSONException ex){
+           try{
+               new JSONArray(_data);
+           } catch (JSONException ex1){
+               return false;
+           }
+       }
+       return true;
     }
 }
 

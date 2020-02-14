@@ -205,37 +205,37 @@ public class ScoutingData {
          * }
          * }
          */
-        String ScouterName = "scouter_name:"+ scouterName;
-        String MatchNum = "match_num:"+ MatchNumber;
-        String teamNum = "team_num:" + TeamScouted;
-        String startingPos = "starting_pos:"+ this.startingPos;
-        String bottomPort =  "bottom_port:" + ballsScoredOnBottomAuto + ",";
-        String OuterPort = "outer_port:" + ballsScoredOnOuterAuto + ",";
-        String InnerPort = "inner_port:" + ballsScoredOnBottomAuto;
-        String PowerCellsScored =  "Power_Cells_Scored:{" + bottomPort + OuterPort + InnerPort+ "},";
-        String powerCellsStart = "power_cell_start:" + PowerCellAtStart;
-        String PowerCellsAcqFloor =  "power_cells_acq_floor:" + ballsAcquiredFloorAuto;
-        String crosses = "crosses_initiation_line:"+ crossesInitiatoinLine;
-        String bottomPortTele = "bottom_port:"+ ballsScoredOnBottomTele + ",";
-        String outerPortTele = "outer_port:" + ballsScoredOnOuterTele + ",";
-        String innerPortTele = "inner_port:" + ballsScoredOnInnerTele;
-        String PowerCellsScoredTele = "power_cells_scored:{" + bottomPortTele + outerPortTele + innerPortTele + "},";
-        String floorTele = "acq_floor:" + ballsAcquiredFloorTele;
-        String lowChuteTele = "low_chute:" + ballsAcquiredLowChuteTele;
-        String highChuteTele = "high_chute" + ballsAcquiredHighChuteTele;
-        String PowerCellsAcqTele = "power_cell_acq:{" + floorTele + lowChuteTele + highChuteTele + "},";
-        String performedRot = "performed_rotation_control:" + preformedRotationControl + ",";
-        String performtPos = "performed_position_control:" + performedPositionControl+ ",";
-        String ControlPanel = "control_panel:{"+ performedRot + performtPos + "},";
-        String hanging = "hanging:" + isHanging()+",";
-        String parked = "parked:" + isParked()+",";
-        String rendezoas = "rendzoas:{" + hanging + parked + "},";
-        String leveling = "leveling:" + this.leveling;
+        String ScouterName = "\"scouter_name\":" +"\""+ scouterName+ "\"";
+        String MatchNum = "\"match_num\":"+ "\""+MatchNumber +"\"";
+        String teamNum = "\"team_num\":" + "\""+TeamScouted+"\"";
+        String startingPos = "\"starting_pos\":"+ "\""+this.startingPos+"\"";
+        String bottomPort =  "\"bottom_port\":" + "\""+ballsScoredOnBottomAuto + "\""+ ",";
+        String OuterPort = "\"outer_port\":" + "\""+ballsScoredOnOuterAuto + "\""+ ",";
+        String InnerPort = "\"inner_port\":" + "\""+ballsScoredOnBottomAuto+ "\"";
+        String PowerCellsScored =  "\"Power_Cells_Scored\":{" + bottomPort + OuterPort + InnerPort+ "},";
+        String powerCellsStart = "\"power_cell_start\":" + "\""+PowerCellAtStart+ "\"";
+        String PowerCellsAcqFloor =  "\"power_cells_acq_floor\":" +"\""+ ballsAcquiredFloorAuto+ "\"";
+        String crosses = "\"crosses_initiation_line\":"+ "\""+crossesInitiatoinLine+ "\"";
+        String bottomPortTele = "\"bottom_port\":"+"\""+ ballsScoredOnBottomTele+ "\"" + ",";
+        String outerPortTele = "\"outer_port\":" + "\""+ballsScoredOnOuterTele+ "\"" + ",";
+        String innerPortTele = "\"inner_port\":" + "\""+ballsScoredOnInnerTele+ "\"";
+        String PowerCellsScoredTele = "\"power_cells_scored\":{" + bottomPortTele + outerPortTele + innerPortTele + "},";
+        String floorTele = "\"acq_floor\":" +"\""+ ballsAcquiredFloorTele+ "\""+ ",";
+        String lowChuteTele = "\"low_chute\":" + "\""+ballsAcquiredLowChuteTele+ "\""+ ",";
+        String highChuteTele = "\"high_chute\":" + "\""+ballsAcquiredHighChuteTele+ "\"";
+        String PowerCellsAcqTele = "\"power_cell_acq\":{" +floorTele + lowChuteTele + highChuteTele + "},";
+        String performedRot = "\"performed_rotation_control\":" + "\""+ preformedRotationControl + "\""+ ",";
+        String performtPos = "\"performed_position_control\":" + "\""+ performedPositionControl+ "\"";
+        String ControlPanel = "\"control_panel\":{"+ performedRot + performtPos + "}";
+        String hanging = "\"hanging\":" + "\""+ isHanging()+ "\""+",";
+        String parked = "\"parked\":" + "\""+isParked()+ "\"";
+        String rendezoas = "\"rendzoas\":{" + hanging + parked + "},";
+        String leveling = "\"leveling\":" +"\""+ this.leveling+ "\"";
 
-        return ("{" + ScouterName +","+ MatchNum + ","+ teamNum + "," + "Auto:{"+ startingPos + ","+
+        return ("{" + ScouterName +","+ MatchNum + ","+ teamNum + "," + "\"Auto\":{"+ startingPos + ","+
                 PowerCellsScored + powerCellsStart + "," + PowerCellsAcqFloor + "," + crosses + "},"
-                + "Teleop:{" +  PowerCellsScoredTele + PowerCellsAcqTele + ControlPanel + "}," +
-                "EndGame:{" + rendezoas + leveling+ "}," + "}");
+                + "\"Teleop\":{" +  PowerCellsScoredTele + PowerCellsAcqTele + ControlPanel + "}," +
+                "\"EndGame\":{" + rendezoas + leveling+ "}" + "}");
     }
 
     public String getScouterName() {
