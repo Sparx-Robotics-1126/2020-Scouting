@@ -14,8 +14,10 @@ import java.io.IOException;
 public class FileIO {
     //Strings for file Path names
     private static final String FOLDER_NAME = "infiniteRecharge";
-    //{key} is intended to be replaced when creating the file path
+    //{key} is intended to be replaced when creating the file path with the event
     private static final String EVENT_MATCHES_FILE_PATH = "eventMatches{key}.json";
+    //{key} is intended to be replaced when creating the file path with the team
+    private static final String TEAM_EVENTS_FILE_NAME = "teamEvents{key}.json";
 
     private File directory;
     private File externalDirectory;
@@ -28,6 +30,7 @@ public class FileIO {
         }
         return instance;
     }
+
     //Creates directory in harddrive for sto intialilize storage
     public void intializeStorage(Context _context){
         directory = new File(_context.getFilesDir(), FOLDER_NAME);
@@ -41,7 +44,11 @@ public class FileIO {
             }
         }
         Toast.makeText(_context, "Storage Path:" + directory.getPath(), Toast.LENGTH_LONG).show();
+    }
 
+    public void storeTeamEvents(String _input, String team) { storeData(TEAM_EVENTS_FILE_NAME, _input, team); }
+    public String fetchTeamEvents(String team) {
+        return fetchData(TEAM_EVENTS_FILE_NAME, team);
     }
 
 
@@ -87,9 +94,5 @@ public class FileIO {
 
         return contentBuilder.toString();
     }
-
-
-
-
 }
 

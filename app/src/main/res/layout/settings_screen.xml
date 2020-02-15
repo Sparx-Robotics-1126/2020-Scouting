@@ -49,44 +49,49 @@
     <Spinner
         android:id="@+id/eventSpinner"
         style="@style/J_spinner"
-        android:layout_height="49dp"
-      />
+        android:layout_height="49dp"/>
 
-    <Button
-        android:id="@+id/aliiance"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:background="@color/RButtonBackground"
-        android:shadowColor="#673AB7"
-        android:text="RED ALLIANCE"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/RText"></Button>
-
-    <RadioGroup
-        android:id="@+id/teams"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:orientation="vertical">
-
-        <RadioButton
-            android:id="@+id/team1"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/scoutingTabletLayout">
+        <Button
+            android:id="@+id/aliiance"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="Team 1" />
+            android:layout_height="75dp"
+            android:background="@color/RButtonBackground"
+            android:shadowColor="#673AB7"
+            android:text="RED ALLIANCE"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/RText"></Button>
 
-        <RadioButton
-            android:id="@+id/team2"
+        <RadioGroup
+            android:id="@+id/teams"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="Team 2" />
+            android:layout_height="120dp"
+            android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/team3"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="Team 3" />
+            <RadioButton
+                android:id="@+id/team1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="Team 1" />
 
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/team2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="Team 2" />
+
+            <RadioButton
+                android:id="@+id/team3"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="Team 3" />
+
+        </RadioGroup>
+    </LinearLayout>
 
     <Button
         android:id="@+id/reconfigure"

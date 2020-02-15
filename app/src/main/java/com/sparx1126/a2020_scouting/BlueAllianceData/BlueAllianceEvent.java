@@ -2,6 +2,8 @@ package com.sparx1126.a2020_scouting.BlueAllianceData;
 
 import android.util.Log;
 
+import com.sparx1126.a2020_scouting.Utilities.FileIO;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,7 +32,7 @@ public class BlueAllianceEvent extends JsonData {
     private String startDate;
     private String endDate;
 
-    private static  Map<String, BlueAllianceEvent> events = new HashMap<>();
+    private static Map<String, BlueAllianceEvent> events = new HashMap<>();
 
     public BlueAllianceEvent(String key, String name, String week, String Location, String startDate, String endDate) {
        this.key = key;
@@ -41,7 +43,7 @@ public class BlueAllianceEvent extends JsonData {
        this.endDate = endDate;
     }
 
-    public static void pharseJson(String _data){
+    public static void parseJson(String _data, String _team){
         events.clear();
         try{
            JSONArray arr = new JSONArray(_data);
@@ -56,6 +58,8 @@ public class BlueAllianceEvent extends JsonData {
 
                events.put(k ,new BlueAllianceEvent(k, n, w, l ,s ,e));
            }
+           FileIO fileIO = FileIO.getInstance();
+           fileIO.storeTeamEvents(_data, _team);
         }catch(JSONException e) {
             e.printStackTrace();
         }
@@ -67,7 +71,17 @@ public class BlueAllianceEvent extends JsonData {
     public String getLocation() {return Location;}
     public String getStartDate() {return startDate;}
     public String getEndDate() {return endDate;}
-    public static Map<String, BlueAllianceEvent> getEvents() {return events;}
+    public static Map<String, BlueAllianceEvent> getEvents(String _team) {
+        if(events.isEmpty()) {
+            FileIO fileIO = FileIO.getInstance();
+            String data = fileIO.fetchTeamEvents(_team);
+            if(!data.isEmpty()) {
+                parseJson(data, _team);
+            }
+        }
+
+        return events;
+    }
 
     @Override
     public String toString(){

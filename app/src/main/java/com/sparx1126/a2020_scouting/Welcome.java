@@ -120,10 +120,12 @@ public class Welcome extends AppCompatActivity {
         editor.putString(getString(R.string.TEAM), team);
         editor.apply();
 
-        Log.i("loginSave", "email: " + loginData.getString(getString(R.string.EMAIL), "email not found"));
-        Log.i("loginSave", "password: " + loginData.getString(getString(R.string.PASSWORD), "password not found"));
-        Log.i("loginSave", "team: " + loginData.getString(getString(R.string.TEAM), "team number not found"));
-
+        //Temporary
+        editor.putString(getString(R.string.EMAIL), "sparx1126scouts@gmail.com");
+        editor.putString(getString(R.string.PASSWORD), "gosparx!");
+        editor.putString(getString(R.string.TEAM), "1126");
+        editor.putBoolean(getString(R.string.SCOUT), true);
+        editor.apply();
 
         checkPreferences();
     }
