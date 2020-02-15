@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_rankings, R.id.navigation_settings)
+                R.id.navigation_home, R.id.navigation_rankings,R.id.navigation_match, R.id.navigation_settings)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -61,11 +61,10 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.e("JT", _data);
+                        //Log.e("JT", _data);
                         if (_data.length() > 0) {
                             BlueAllianceEvent.pharseJson(_data);
-                            Set<String> keys = BlueAllianceEvent.getEvents().keySet();
-                            Log.e("Sohail", BlueAllianceEvent.getEvents().get("2019nyro").toString());
+                           // Log.e("Sohail", BlueAllianceEvent.getEvents().get("2019nyro").toString());
                         }
                     }
                 });
