@@ -348,8 +348,8 @@ public class scouting extends AppCompatActivity {
                 txtBallsHighChuteTele.getText().toString(), performendRot.isChecked(), performedPos.isChecked(), hanging.isChecked(), parked.isChecked(), leveled.getText().toString());
 
         Log.e("checking if it is Json", " " + isValidJsonArray(scoutingData.toJson()));
-
-        mail = new SendMail(scouting.this, getResources().getString(R.string.sparx_email), "Hello Testing - Sohail Shaik", scoutingData.toJson());
+        //hardcoded 1126 bc the scouting screen aint fully done
+        mail = new SendMail(scouting.this, getResources().getString(R.string.sparx_email), settings.getString("pref_SelectedEvent",null)+".frc1126."+ txtMatch.getText().toString()+".json" ,scoutingData.toJson());
         mail.execute();
     }
 

@@ -3,6 +3,8 @@ package com.sparx1126.a2020_scouting;
 import android.service.autofill.FieldClassification;
 import android.util.Log;
 
+import java.util.HashMap;
+
 public class ScoutingData {
 
     private String scouterName;
@@ -26,6 +28,8 @@ public class ScoutingData {
     private boolean hanging;
     private boolean parked;
     private String leveling;
+    //keys format will be "teamkey.matchnum"
+    private static HashMap<String,ScoutingData> allScoutData = new HashMap<String,ScoutingData>();
 
     public ScoutingData(String scouterName,
              String MatchNumber,
@@ -70,6 +74,7 @@ public class ScoutingData {
           this.hanging = hanging;
           this.parked = parked;
           this.leveling = leveling;
+          allScoutData.put(TeamScouted+"."+MatchNumber,this);
 
     }
 
