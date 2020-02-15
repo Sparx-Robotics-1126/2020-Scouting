@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ public class Welcome extends AppCompatActivity {
     public static boolean toggledBlue;
 
     private EditText emailInput, passwordInput, teamInput;
+    private CheckBox scoutingCheck;
     private SharedPreferences loginData;
     private FileIO IO;
 
@@ -37,6 +39,7 @@ public class Welcome extends AppCompatActivity {
         emailInput = findViewById(R.id.emailInput);
         passwordInput = findViewById(R.id.passwordInput);
         teamInput = findViewById(R.id.teamInput);
+        scoutingCheck = findViewById(R.id.scoutingCheckBox);
 
         Button login = findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
@@ -48,7 +51,7 @@ public class Welcome extends AppCompatActivity {
 
         checkPreferences();
     }
-
+//This change UI may never be actually used since the tablet will always be configured after this screen is seen.
     public  void changeUi(){
         if(toggledBlue == true){
             LinearLayout li = findViewById(R.id.background);
@@ -71,6 +74,10 @@ public class Welcome extends AppCompatActivity {
         }else{
             LinearLayout li = findViewById(R.id.background);
             li.setBackgroundColor(getResources().getColor(R.color.RBackground));
+            TextView welcome = findViewById(R.id.welcomeMessage);
+            CheckBox scouting = findViewById(R.id.scoutingCheckBox);
+            scouting.setTextColor(getResources().getColor(R.color.RText));
+            welcome.setTextColor(getResources().getColor(R.color.RText));
             Button log = findViewById(R.id.login);
             log.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
             log.setTextColor(getResources().getColor(R.color.RText));
@@ -97,7 +104,7 @@ public class Welcome extends AppCompatActivity {
             Toast.makeText(Welcome.this, "checkPreferences: No team found", Toast.LENGTH_LONG).show();
             Log.e("checkPreferences","No team found");
         } else if(loginData.getString("email", "").isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(loginData.getString("email", "")).matches()) {
-            Toast.makeText(Welcome.this, "checkPreferences: No email or bad email found" + loginData.getString("email", ""), Toast.LENGTH_LONG).show();
+            Toast.makeText(Welcome.this, "checkPreferences: No email or bad email found " + loginData.getString("email", ""), Toast.LENGTH_LONG).show();
             Log.e("checkPreferences","No email found");
         } else {
             BlueAllianceNetwork.getInstance().seteamKey("frc" + loginData.getString("team", ""));
@@ -107,14 +114,16 @@ public class Welcome extends AppCompatActivity {
     }
 
     public void login() {
-        String email, password, team;
+        String email, password, team, isScouting;
         email = emailInput.getText().toString();
         password = passwordInput.getText().toString();
         team = teamInput.getText().toString();
+        isScouting = String.valueOf((scoutingCheck.isChecked()) ? 1 : 0);
+
 
         SharedPreferences.Editor editor;
         editor = loginData.edit();
-
+        editor.putString(getString(R.string.pref_isScoutngDevice),isScouting);
         editor.putString(getString(R.string.EMAIL), email);
         editor.putString(getString(R.string.PASSWORD), password);
         editor.putString(getString(R.string.TEAM), team);
