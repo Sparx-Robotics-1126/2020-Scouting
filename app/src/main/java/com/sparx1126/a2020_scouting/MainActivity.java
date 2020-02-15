@@ -52,24 +52,5 @@ public class MainActivity extends AppCompatActivity {
         GetMail gm = new GetMail(this);
         //Executing sendmail to send email
         //gm.execute();
-
-        // To be removed: BLUE ALLIACNE TESTING
-        events = new HashMap<>();
-        network.downloadEvents(new BlueAllianceNetwork.Callback() {
-            @Override
-            public void handleFinishDownload(final String _data) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //Log.e("JT", _data);
-                        if (_data.length() > 0) {
-                            BlueAllianceEvent.pharseJson(_data);
-                           // Log.e("Sohail", BlueAllianceEvent.getEvents().get("2019nyro").toString());
-                        }
-                    }
-                });
-            }
-
-        });
     }
 }
