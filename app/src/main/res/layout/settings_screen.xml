@@ -111,4 +111,11 @@
         android:text="Save Configuration"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#2196F3"/>
+
+    <Button
+        android:id="@+id/exit"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:text="Exit (without saving)"/>
+
     </LinearLayout>
