@@ -41,7 +41,7 @@ public class BlueAllianceEvent extends JsonData {
        this.endDate = endDate;
     }
 
-    public static void pharseJson(String _data){
+    public static void parseJson(String _data){
         events.clear();
         try{
            JSONArray arr = new JSONArray(_data);

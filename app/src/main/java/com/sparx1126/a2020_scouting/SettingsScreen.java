@@ -306,7 +306,7 @@ public class SettingsScreen extends AppCompatActivity {
                     public void run() {
                         System.out.println("JT " + _data);
                         if (isValidJsonArray(_data)) {
-                            BlueAllianceEvent.pharseJson(_data);
+                            BlueAllianceEvent.parseJson(_data);
                             setSpinner();
                         } else {
                             Toast.makeText(SettingsScreen.this, "Internet returned BAD DATA for Events, try another wifi!", Toast.LENGTH_LONG).show();

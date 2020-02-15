@@ -8,17 +8,12 @@ import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceEvent;
 import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
 import com.sparx1126.a2020_scouting.Utilities.SendMail;
 import com.sparx1126.a2020_scouting.Utilities.GetMail;
-import com.sparx1126.a2020_scouting.Utilities.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         Log.e("JT", _data);
                         if (_data.length() > 0) {
-                            BlueAllianceEvent.pharseJson(_data);
+                            BlueAllianceEvent.parseJson(_data);
                             Set<String> keys = BlueAllianceEvent.getEvents().keySet();
                             Log.e("Sohail", BlueAllianceEvent.getEvents().get("2019nyro").toString());
                         }

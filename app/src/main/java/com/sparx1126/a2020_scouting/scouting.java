@@ -342,9 +342,10 @@ public class scouting extends AppCompatActivity {
 
         ScoutingData scoutingData = new ScoutingData(name.getText().toString(), txtMatch.getText().toString(), teamScouting.getText().toString(),
                 startingpos.getText().toString(), startingballs.getText().toString(), txtBallsBottomAuto.getText().toString(), txtBallsOuterAuto.getText().toString(),
-                txtBallsInnerAuto.getText().toString(), txtBallsFloorAuto.getText().toString(), crossesLine.isChecked(), txtBallsBottemTele.getText().toString(),
+                txtBallsInnerAuto.getText().toString(), txtBallsFloorAuto.getText().toString(), ""+ crossesLine.isChecked(), txtBallsBottemTele.getText().toString(),
                 txtBallsOuterTele.getText().toString(), txtBallsInnerTele.getText().toString(), txtBallsFloorTele.getText().toString(), txtBallsLowChuteTele.getText().toString(),
-                txtBallsHighChuteTele.getText().toString(), performendRot.isChecked(), performedPos.isChecked(), hanging.isChecked(), parked.isChecked(), leveled.getText().toString());
+                txtBallsHighChuteTele.getText().toString(), ""+performendRot.isChecked(), ""+performedPos.isChecked(), ""+hanging.isChecked(),
+                ""+parked.isChecked(), leveled.getText().toString());
 
         Log.e("checking if it is Json", " " + isValidJsonArray(scoutingData.toJson()));
 
@@ -541,7 +542,7 @@ public class scouting extends AppCompatActivity {
             TextView parked = findViewById(R.id.parked);
             parked.setTextColor(getResources().getColor(R.color.BText));
             TextView level = findViewById(R.id.leveling);
-            level.setTextColor(getResources().getColor(R.color.RText));
+            level.setTextColor(getResources().getColor(R.color.BText));
             RadioButton noLeveling = findViewById(R.id.noLeveling);
             noLeveling.setTextColor(getResources().getColor(R.color.BText));
             RadioButton triedToLevel = findViewById(R.id.triedToLevel);
