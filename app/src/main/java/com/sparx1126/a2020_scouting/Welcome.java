@@ -122,9 +122,9 @@ public class Welcome extends AppCompatActivity {
 
         //Temporary
         editor.putString(getString(R.string.EMAIL), "sparx1126scouts@gmail.com");
-        editor.putString(getString(R.string.PASSWORD), "gosparx!");
+        editor.putString(getString(R.string.PASSWORD), "h");
         editor.putString(getString(R.string.TEAM), "1126");
-        editor.putBoolean(getString(R.string.SCOUT), true);
+        editor.putBoolean(getString(R.string.scouting), true);
         editor.apply();
 
         checkPreferences();

@@ -90,6 +90,22 @@ public class SettingsScreen extends AppCompatActivity {
                 if (!selectedItem.contentEquals(getResources().getString(R.string.selectEvent))) {
                     String previousSelectedEvent = settings.getString(getResources().getString(R.string.pref_SelectedEvent), "");
                     Log.e("selected Event:", selectedItem);
+                    // JT: move into  settings after event is selected and use the selected event
+                    blueAlliance.downloadEventMatches(selectedItem, new BlueAllianceNetwork.Callback() {
+                        @Override
+                        public void handleFinishDownload(final String _data) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //Log.i("TAG", _data);
+                                    //System.out.println(_data);
+                                    BlueAllianceMatch.parseDataToBAMMap(_data);
+                                    Intent mainActivity = new Intent(SettingsScreen.this, MainActivity.class);
+                                    startActivity(mainActivity);
+                                }
+                            });
+                        }
+                    });
                 }
             }
 
@@ -99,7 +115,7 @@ public class SettingsScreen extends AppCompatActivity {
         });
 
         scoutingTabletLayout = findViewById(R.id.scoutingTabletLayout);
-        if(!settings.getBoolean(getString(R.string.SCOUT), false)) {
+        if(!settings.getBoolean(getString(R.string.scouting), false)) {
             scoutingTabletLayout.setVisibility(View.INVISIBLE);
         }
 
@@ -197,11 +213,6 @@ public class SettingsScreen extends AppCompatActivity {
                     input.setText("");
                 } else {
                     if(!(eventSpinner.getSelectedItem().toString().equals("Select Event")) || teams.isDirty()) {
-                        editor.putString(getString(R.string.EMAIL), "");
-                        editor.putString(getString(R.string.PASSWORD), "");
-                        editor.putString(getString(R.string.TEAM), "");
-                        editor.apply();
-
                         configured = true;
                         selectedEvent = eventSpinner.getSelectedItem().toString();
                         if (team1.isChecked()) {
@@ -352,7 +363,7 @@ public class SettingsScreen extends AppCompatActivity {
 
     private void restorePreferences() {
         boolean tableConfigured = settings.getBoolean(getResources().getString(R.string.tablet_Configured), false);
-        boolean scoutingTablet = settings.getBoolean(getResources().getString(R.string.SCOUT), false);
+        boolean scoutingTablet = settings.getBoolean(getResources().getString(R.string.scouting), false);
         if (tableConfigured && scoutingTablet) {
             boolean blueAllianceToggled = settings.getBoolean(getResources().getString(R.string.pref_BlueAlliance), false);
             if (blueAllianceToggled == true) {
