@@ -39,6 +39,17 @@
         <item name="android:buttonTint"></item>
         <item name="android:textColor"></item>
     </style>
+    <style name="t019_checkBox" parent="t019_basic">
+        <item name="android:layout_weight">0</item>
+        <item name="android:buttonTint">@color/interact</item>
+    </style>
+
+    <style name="t019_radioButton" parent="t019_basic">
+        <item name="android:buttonTint">@color/interact</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:paddingTop">5dp</item>
+    </style>
 
     <style name="t019_plusMinusButton" parent="t019_basic">
         <item name="android:layout_width">50dp</item>

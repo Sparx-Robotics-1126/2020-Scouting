@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Assignment:"
-            android:textSize="30dp">
+            android:textSize="40dp">
         </TextView>
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,7 +23,7 @@
                 android:id="@+id/txtname"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="Scouter"
+                android:text="Scouter:"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textSize="22dp">
             </TextView>
@@ -38,33 +38,33 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
-
             <TextView
-                android:id="@+id/txtMatch"
+                android:id="@+id/matchNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Match Number"
+                android:text="Match Number:"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textSize="22dp">
             </TextView>
 
             <Button
-                android:id="@+id/Plus_match"
+                android:id="@+id/plusMatch"
                 style="@style/t019_plusMinusButton"
-                android:layout_marginLeft="140dp"
+                android:layout_width="44dp"
+                android:layout_marginLeft="150dp"
                 android:text="+" />
 
             <AutoCompleteTextView
-                android:id="@+id/match_num"
+                android:id="@+id/txtMatch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/Minus_match"
+                android:id="@+id/minusMatch"
                 style="@style/t019_plusMinusButton"
                 android:layout_weight="0"
                 android:text="-" />
@@ -121,9 +121,10 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/autonomous"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="40dp"
             android:text="Autonomous:">
         </TextView>
         <LinearLayout
@@ -131,6 +132,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/startingPos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Starting Position:"
@@ -138,22 +140,29 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large">
             </TextView>
             <RadioGroup
+                android:id="@+id/startingPosition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <RadioButton
+                    android:id="@+id/closest"
+                    style="@style/t019_radioButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Closest to Power Port"
                     android:textSize="20dp">
                 </RadioButton>
                 <RadioButton
+                    android:id="@+id/middle"
+                    style="@style/t019_radioButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Middle"
                     android:textSize="20dp">
                 </RadioButton>
                 <RadioButton
+                    android:id="@+id/farthest"
                     android:layout_width="match_parent"
+                    style="@style/t019_radioButton"
                     android:layout_height="wrap_content"
                     android:text="Farthest to Power Port"
                     android:textSize="20dp">
@@ -164,33 +173,43 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/startBalls"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Power Cells in robot at start:"
                     android:textSize ="25dp">
                 </TextView>
                 <RadioGroup
+                    android:id="@+id/startingBalls"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <RadioButton
+                        android:id="@+id/none"
+                        style="@style/t019_radioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="None"
                         android:textSize="20dp">
                     </RadioButton>
                     <RadioButton
+                        android:id="@+id/one"
+                        style="@style/t019_radioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="One"
                         android:textSize="20dp">
                     </RadioButton>
                     <RadioButton
+                        android:id="@+id/two"
+                        style="@style/t019_radioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Two"
                         android:textSize="20dp">
                     </RadioButton>
                     <RadioButton
+                        android:id="@+id/three"
+                        style="@style/t019_radioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Three"
@@ -203,6 +222,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/ballsScoredAuto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Power Cells Scored:"
@@ -213,6 +233,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
+                        android:id="@+id/bottomPortAuto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Bottom port"
@@ -220,16 +241,19 @@
                         android:textSize="22dp">
                     </TextView>
                     <Button
+                        android:id="@+id/plusBallsBottemAuto"
                         style="@style/t019_plusMinusButton"
                         android:layout_marginLeft="170dp"
                         android:text="+" />
                     <AutoCompleteTextView
+                        android:id="@+id/txtBallsBottomAuto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:textStyle="bold" />
 
                     <Button
+                        android:id="@+id/minusBallsBottemAuto"
                         style="@style/t019_plusMinusButton"
                         android:layout_weight="0"
                         android:text="-" />
@@ -240,6 +264,7 @@
                     android:layout_marginTop="5dp"
                     android:orientation="horizontal">
                     <TextView
+                        android:id="@+id/outerPortAuto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Outer port"
@@ -247,16 +272,19 @@
                         android:textSize="22dp">
                     </TextView>
                     <Button
+                        android:id="@+id/plusBallsOuterAuto"
                         style="@style/t019_plusMinusButton"
                         android:layout_marginLeft="190dp"
                         android:text="+" />
                     <AutoCompleteTextView
+                        android:id="@+id/txtBallsOuterAuto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:textStyle="bold" />
 
                     <Button
+                        android:id="@+id/minusBallsOuterAuto"
                         style="@style/t019_plusMinusButton"
                         android:layout_weight="0"
                         android:text="-" />
@@ -267,6 +295,7 @@
                     android:layout_marginTop="5dp"
                     android:orientation="horizontal">
                     <TextView
+                        android:id="@+id/innerPortAuto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Inner port"
@@ -274,21 +303,443 @@
                         android:textSize="22dp">
                     </TextView>
                     <Button
+                        android:id="@+id/plusBallsInnerAuto"
                         style="@style/t019_plusMinusButton"
                         android:layout_marginLeft="195dp"
                         android:text="+" />
                     <AutoCompleteTextView
+                        android:id="@+id/txtBallsInnerAuto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:textStyle="bold" />
 
                     <Button
+                        android:id="@+id/minusBallsInnerAuto"
                         style="@style/t019_plusMinusButton"
                         android:layout_weight="0"
                         android:text="-" />
                 </LinearLayout>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/ballsAcquiredAuto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Power Cells Acquired:"
+                    android:textSize="25dp">
+                </TextView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/floorAuto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Floor"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textSize="22dp">
+                    </TextView>
+                    <Button
+                        android:id="@+id/plusBallsFloorAuto"
+                        style="@style/t019_plusMinusButton"
+                        android:layout_marginLeft="240dp"
+                        android:text="+" />
+                    <AutoCompleteTextView
+                        android:id="@+id/txtBallsFloorAuto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/minusBallsFloorAuto"
+                        style="@style/t019_plusMinusButton"
+                        android:layout_weight="0"
+                        android:text="-" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/crossesLine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cross Initiation Line:"
+                    android:textSize="25dp">
+                </TextView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/txtCrossesLine"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Left Line at some point"
+                        android:textSize="22dp">
+                    </TextView>
+                    <CheckBox
+                        android:id="@+id/crossesLineCheckBox"
+                        style="@style/t019_checkBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="150dp">
+                    </CheckBox>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/teleoperated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Teleoperated:"
+            android:textSize="40dp">
+        </TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/ballsScoredTele"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Power Cells Scored:"
+                android:textSize="25dp">
+            </TextView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/bottomPortTele"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bottom port"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textSize="22dp">
+                </TextView>
+                <Button
+                    android:id="@+id/plusBallsBottemTele"
+                    style="@style/t019_plusMinusButton"
+                    android:layout_marginLeft="170dp"
+                    android:text="+" />
+                <AutoCompleteTextView
+                    android:id="@+id/txtBallsBottemTele"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/minusBallsBottemTele"
+                    style="@style/t019_plusMinusButton"
+                    android:layout_weight="0"
+                    android:text="-" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/outerPortTele"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Outer port"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textSize="22dp">
+                </TextView>
+                <Button
+                    android:id="@+id/plusBallsOuterTele"
+                    style="@style/t019_plusMinusButton"
+                    android:layout_marginLeft="190dp"
+                    android:text="+" />
+                <AutoCompleteTextView
+                    android:id="@+id/txtBallsOuterTele"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/minusBallsOuterTele"
+                    style="@style/t019_plusMinusButton"
+                    android:layout_weight="0"
+                    android:text="-" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/innerPortTele"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Inner port"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textSize="22dp">
+                </TextView>
+                <Button
+                    android:id="@+id/plusBallsInnerTele"
+                    style="@style/t019_plusMinusButton"
+                    android:layout_marginLeft="195dp"
+                    android:text="+" />
+                <AutoCompleteTextView
+                    android:id="@+id/txtBallsInnerTele"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/minusBallsInnerTele"
+                    style="@style/t019_plusMinusButton"
+                    android:layout_weight="0"
+                    android:text="-" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/ballsAcquiredTele"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Power Cells Acquired:"
+                android:textSize="25dp">
+            </TextView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/floorTele"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Floor"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textSize="22dp">
+                </TextView>
+                <Button
+                    android:id="@+id/plusBallsFloorTele"
+                    style="@style/t019_plusMinusButton"
+                    android:layout_marginLeft="240dp"
+                    android:text="+" />
+                <AutoCompleteTextView
+                    android:id="@+id/txtFloorTele"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/minusBallsFloorTele"
+                    style="@style/t019_plusMinusButton"
+                    android:layout_weight="0"
+                    android:text="-" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/lowChuteTele"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Low Chute"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textSize="22dp">
+                </TextView>
+                <Button
+                    android:id="@+id/plusBallsLowChuteTele"
+                    style="@style/t019_plusMinusButton"
+                    android:layout_marginLeft="185dp"
+                    android:text="+" />
+                <AutoCompleteTextView
+                    android:id="@+id/txtBallsLowChuteTele"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/minusBallsLowChuteTele"
+                    style="@style/t019_plusMinusButton"
+                    android:layout_weight="0"
+                    android:text="-" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/highChuteTele"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="High Chute"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textSize="22dp">
+                </TextView>
+                <Button
+                    android:id="@+id/plusBallsHighChuteTele"
+                    style="@style/t019_plusMinusButton"
+                    android:layout_marginLeft="182dp"
+                    android:text="+" />
+                <AutoCompleteTextView
+                    android:id="@+id/txtBallsHighChuteTele"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/minusBallsHighChuteTele"
+                    style="@style/t019_plusMinusButton"
+                    android:layout_weight="0"
+                    android:text="-" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/controlPanelInteraction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Control Panel Interaction:"
+                android:textSize="25dp">
+            </TextView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/performedRotationControl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Performed Rotation Control"
+                    android:textSize="22dp">
+                </TextView>
+                <CheckBox
+                    android:id="@+id/performedRotationControlCheckBox"
+                    style="@style/t019_checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="108dp">
+                </CheckBox>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/performedPositoinControl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Performed Position Control"
+                    android:textSize="22dp">
+                </TextView>
+                <CheckBox
+                    android:id="@+id/performedPositionControlCheckBox"
+                    style="@style/t019_checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="110dp">
+                </CheckBox>
+            </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/endGame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="40dp"
+            android:text="End Game:">
+        </TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/rendezuous"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rendezvous:"
+                android:textSize="25dp">
+            </TextView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/hanging"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hanging"
+                    android:textSize="22dp">
+                </TextView>
+                <CheckBox
+                    style="@style/t019_checkBox"
+                    android:id="@+id/hangingCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="300dp">
+                </CheckBox>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/parked"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Parked"
+                    android:textSize="22dp">
+                </TextView>
+                <CheckBox
+                    android:id="@+id/parkedCheckBox"
+                    style="@style/t019_checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="315dp">
+                </CheckBox>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/leveling"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Leveling:"
+                android:textSize="25dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large">
+            </TextView>
+            <RadioGroup
+                android:id="@+id/level"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RadioButton
+                    android:id="@+id/noLeveling"
+                    style="@style/t019_radioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="No leveling"
+                    android:textSize="20dp">
+                </RadioButton>
+                <RadioButton
+                    android:id="@+id/triedToLevel"
+                    style="@style/t019_radioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tried to level"
+                    android:textSize="20dp">
+                </RadioButton>
+                <RadioButton
+                    android:id="@+id/successfullyLeveled"
+                    style="@style/t019_radioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Successfully leveled"
+                    android:textSize="20dp">
+                </RadioButton>
+            </RadioGroup>
         </LinearLayout>
 
         <Button
