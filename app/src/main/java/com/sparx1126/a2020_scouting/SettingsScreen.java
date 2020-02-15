@@ -3,6 +3,7 @@ package com.sparx1126.a2020_scouting;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceEvent;
+import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
 import com.sparx1126.a2020_scouting.Utilities.*;
 
 import android.app.AlertDialog;
@@ -38,6 +39,7 @@ public class SettingsScreen extends AppCompatActivity {
     private TextView teamNum;
     private Button reconfigure;
     private Button configure;
+    private LinearLayout scoutingTabletLayout;
     private Button alliance;
     private RadioGroup teams;
     private RadioButton team1;
@@ -50,7 +52,6 @@ public class SettingsScreen extends AppCompatActivity {
     private String selectedEvent;
 
     private Spinner eventSpinner;
-    private ArrayAdapter<String> adapter;
 
 
     @Override
@@ -62,6 +63,7 @@ public class SettingsScreen extends AppCompatActivity {
 
         settings = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
         editor = settings.edit();
+
         blueAlliance = BlueAllianceNetwork.getInstance();
 
         reconfigure = findViewById(R.id.reconfigure);
@@ -96,6 +98,11 @@ public class SettingsScreen extends AppCompatActivity {
             }
         });
 
+        scoutingTabletLayout = findViewById(R.id.scoutingTabletLayout);
+        if(!settings.getBoolean(getString(R.string.SCOUT), false)) {
+            scoutingTabletLayout.setVisibility(View.INVISIBLE);
+        }
+
         alliance = findViewById(R.id.aliiance);
         alliance.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,11 +136,6 @@ public class SettingsScreen extends AppCompatActivity {
         teamNum = findViewById(R.id.teamInput);
         teamNum.setText(settings.getString(getString(R.string.TEAM), "team number not found"));
 
-        Log.i("email", settings.getString(getString(R.string.EMAIL), "email not found"));
-        Log.i("password", settings.getString(getString(R.string.PASSWORD), "password not found"));
-        Log.i("team", settings.getString(getString(R.string.TEAM), "team number not found"));
-
-        downLoadEvents();
         restorePreferences();
     }
 
@@ -146,7 +148,7 @@ public class SettingsScreen extends AppCompatActivity {
     private void reconfigure() {
         AlertDialog.Builder builder = new AlertDialog.Builder(SettingsScreen.this);
         builder.setTitle("Reconfigure");
-        builder.setMessage("Please enter you email password to continue");
+        builder.setMessage("Please enter the Admin password to continue");
         // Set an EditText view to get user input
         final EditText input = new EditText(this);
         builder.setView(input);
@@ -227,7 +229,8 @@ public class SettingsScreen extends AppCompatActivity {
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                finish();
+                Intent stayHere = new Intent(SettingsScreen.this, SettingsScreen.class);
+                startActivity(stayHere);
             }
         });
         builder.create().show();
@@ -293,27 +296,29 @@ public class SettingsScreen extends AppCompatActivity {
         }
     }
 
-    // Sohail: We should move this to the Welcome Screen after JT is done making the BAM
-    // Copy the way he stored the matches.
     private void downLoadEvents() {
-        blueAlliance.downloadEvents(new BlueAllianceNetwork.Callback() {
-            @Override
-            public void handleFinishDownload(final String _data) {
-                // this needs to run on the ui thread because of ui components in it
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        System.out.println("JT " + _data);
-                        if (isValidJsonArray(_data)) {
-                            BlueAllianceEvent.parseJson(_data);
-                            setSpinner();
-                        } else {
-                            Toast.makeText(SettingsScreen.this, "Internet returned BAD DATA for Events, try another wifi!", Toast.LENGTH_LONG).show();
+        if(BlueAllianceEvent.getEvents(settings.getString(getString(R.string.TEAM), "")).isEmpty()) {
+            blueAlliance.downloadEvents(new BlueAllianceNetwork.Callback() {
+                @Override
+                public void handleFinishDownload(final String _data) {
+                    // this needs to run on the ui thread because of ui components in it
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (isValidJsonArray(_data)) {
+                                BlueAllianceEvent.parseJson(_data, settings.getString(getString(R.string.TEAM), ""));
+                                setSpinner();
+                            } else {
+                                Toast.makeText(SettingsScreen.this, "Internet returned BAD DATA for Events, try another wifi!", Toast.LENGTH_LONG).show();
+                            }
                         }
-                    }
-                });
-            }
-        });
+                    });
+                }
+            });
+        }
+        else {
+            setSpinner();
+        }
     }
 
     private void setSpinner() {
@@ -322,10 +327,10 @@ public class SettingsScreen extends AppCompatActivity {
 
         if (pref_SelectedEvent.isEmpty()) {
             eventSpinnerList.add(getResources().getString(R.string.selectEvent));
-            eventSpinnerList.addAll(BlueAllianceEvent.getEvents().keySet());
+            eventSpinnerList.addAll(BlueAllianceEvent.getEvents(settings.getString(getString(R.string.TEAM), "")).keySet());
         } else {
             eventSpinnerList.add(pref_SelectedEvent);
-            for (String eventName : BlueAllianceEvent.getEvents().keySet()) {
+            for (String eventName : BlueAllianceEvent.getEvents(settings.getString(getString(R.string.TEAM), "")).keySet()) {
                 if (!eventName.equals(pref_SelectedEvent)) {
                     eventSpinnerList.add(eventName);
                 }
@@ -347,9 +352,10 @@ public class SettingsScreen extends AppCompatActivity {
 
     private void restorePreferences() {
         boolean tableConfigured = settings.getBoolean(getResources().getString(R.string.tablet_Configured), false);
-        if (tableConfigured) {
+        boolean scoutingTablet = settings.getBoolean(getResources().getString(R.string.SCOUT), false);
+        if (tableConfigured && scoutingTablet) {
             boolean blueAllianceToggled = settings.getBoolean(getResources().getString(R.string.pref_BlueAlliance), false);
-            if(blueAllianceToggled == true) {
+            if (blueAllianceToggled == true) {
                 alliance.performClick();
             }
             int teamPositionNum = settings.getInt(getResources().getString(R.string.pref_TeamPosition), 0);
@@ -360,9 +366,7 @@ public class SettingsScreen extends AppCompatActivity {
             } else if (teamPositionNum == 3) {
                 team3.setChecked(true);
             }
-            setSpinner();
-        } else {
-            downLoadEvents();
         }
+        downLoadEvents();
     }
 }
