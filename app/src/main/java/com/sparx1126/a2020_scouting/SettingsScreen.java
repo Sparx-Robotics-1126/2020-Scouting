@@ -217,8 +217,8 @@ public class SettingsScreen extends AppCompatActivity {
                         editor.apply();
 
                         Log.e("selectedEvent", selectedEvent);
-                        Intent switchToWelcome = new Intent(SettingsScreen.this, Welcome.class);
-                        startActivity(switchToWelcome);
+                        Intent switchToMain = new Intent(SettingsScreen.this, MainActivity.class);
+                        startActivity(switchToMain);
                     }else{
                         Toast.makeText(SettingsScreen.this, "You didn't change anything",Toast.LENGTH_LONG).show();
                     }
@@ -227,8 +227,7 @@ public class SettingsScreen extends AppCompatActivity {
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                Intent stayHere = new Intent(SettingsScreen.this, SettingsScreen.class);
-                startActivity(stayHere);
+                finish();
             }
         });
         builder.create().show();

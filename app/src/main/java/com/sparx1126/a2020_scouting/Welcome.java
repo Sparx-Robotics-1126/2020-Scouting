@@ -53,7 +53,7 @@ public class Welcome extends AppCompatActivity {
 
         loginData = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
 
-        toggledBlue = true;
+
         changeUi();
 
         emailInput = findViewById(R.id.emailInput);
@@ -149,6 +149,6 @@ public class Welcome extends AppCompatActivity {
 
     public void switchScreen(){
         Log.i("switchScreen", "unknown");
-        startActivity(new Intent(Welcome.this, scouting.class));
+        startActivity(new Intent(Welcome.this, SettingsScreen.class));
     }
 }
