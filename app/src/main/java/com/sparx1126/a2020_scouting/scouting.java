@@ -27,6 +27,7 @@ import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
 
 
 import android.view.View;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -341,11 +342,17 @@ public class scouting extends AppCompatActivity {
         RadioGroup level = findViewById(R.id.level);
         RadioButton leveled = findViewById(level.getCheckedRadioButtonId());
 
+        if(startingpos == null || startingballs == null || leveled == null){
+            Toast.makeText(this, "Don't forget to fill out hte entire form", Toast.LENGTH_LONG).show();
+        }
+
         ScoutingData scoutingData = new ScoutingData(name.getText().toString(), txtMatch.getText().toString(), teamScouting.getText().toString(),
-                startingpos.getText().toString(), startingballs.getText().toString(), txtBallsBottomAuto.getText().toString(), txtBallsOuterAuto.getText().toString(),
-                txtBallsInnerAuto.getText().toString(), txtBallsFloorAuto.getText().toString(), crossesLine.isChecked(), txtBallsBottemTele.getText().toString(),
+                startingpos.getText().toString(),
+                startingballs.getText().toString(), txtBallsBottomAuto.getText().toString(), txtBallsOuterAuto.getText().toString(),
+                txtBallsInnerAuto.getText().toString(), txtBallsFloorAuto.getText().toString(), ""+ crossesLine.isChecked(), txtBallsBottemTele.getText().toString(),
                 txtBallsOuterTele.getText().toString(), txtBallsInnerTele.getText().toString(), txtBallsFloorTele.getText().toString(), txtBallsLowChuteTele.getText().toString(),
-                txtBallsHighChuteTele.getText().toString(), performendRot.isChecked(), performedPos.isChecked(), hanging.isChecked(), parked.isChecked(), leveled.getText().toString());
+                txtBallsHighChuteTele.getText().toString(), ""+performendRot.isChecked(), ""+performedPos.isChecked(), ""+hanging.isChecked(),
+                ""+parked.isChecked(), leveled.getText().toString());
 
         Log.e("checking if it is Json", " " + isValidJsonArray(scoutingData.toJson()));
         //hardcoded 1126 bc the scouting screen aint fully done
@@ -542,7 +549,7 @@ public class scouting extends AppCompatActivity {
             TextView parked = findViewById(R.id.parked);
             parked.setTextColor(getResources().getColor(R.color.BText));
             TextView level = findViewById(R.id.leveling);
-            level.setTextColor(getResources().getColor(R.color.RText));
+            level.setTextColor(getResources().getColor(R.color.BText));
             RadioButton noLeveling = findViewById(R.id.noLeveling);
             noLeveling.setTextColor(getResources().getColor(R.color.BText));
             RadioButton triedToLevel = findViewById(R.id.triedToLevel);

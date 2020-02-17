@@ -28,4 +28,10 @@
         android:name="com.sparx1126.a2020_scouting.ui.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/navigation_scoutings"
+        android:name="com.sparx1126.a2020_scouting.ui.scouting.ScoutingFragment"
+        android:label="@string/title_scoutings"
+        tools:layout="@layout/fragment_scoutings" />
 </navigation>

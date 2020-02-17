@@ -22,7 +22,6 @@ public class Welcome extends AppCompatActivity {
     public static boolean toggledBlue;
 
     private EditText emailInput, passwordInput, teamInput;
-    private CheckBox scoutingCheck;
     private SharedPreferences loginData;
     private FileIO IO;
 
@@ -39,7 +38,6 @@ public class Welcome extends AppCompatActivity {
         emailInput = findViewById(R.id.emailInput);
         passwordInput = findViewById(R.id.passwordInput);
         teamInput = findViewById(R.id.teamInput);
-        scoutingCheck = findViewById(R.id.scoutingCheckBox);
 
         Button login = findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
@@ -74,10 +72,6 @@ public class Welcome extends AppCompatActivity {
         }else{
             LinearLayout li = findViewById(R.id.background);
             li.setBackgroundColor(getResources().getColor(R.color.RBackground));
-            TextView welcome = findViewById(R.id.welcomeMessage);
-            CheckBox scouting = findViewById(R.id.scoutingCheckBox);
-            scouting.setTextColor(getResources().getColor(R.color.RText));
-            welcome.setTextColor(getResources().getColor(R.color.RText));
             Button log = findViewById(R.id.login);
             log.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
             log.setTextColor(getResources().getColor(R.color.RText));
@@ -114,16 +108,14 @@ public class Welcome extends AppCompatActivity {
     }
 
     public void login() {
-        String email, password, team, isScouting;
+        String email, password, team;
         email = emailInput.getText().toString();
         password = passwordInput.getText().toString();
         team = teamInput.getText().toString();
-        isScouting = String.valueOf((scoutingCheck.isChecked()) ? 1 : 0);
-
 
         SharedPreferences.Editor editor;
         editor = loginData.edit();
-        editor.putString(getString(R.string.pref_isScoutngDevice),isScouting);
+
         editor.putString(getString(R.string.EMAIL), email);
         editor.putString(getString(R.string.PASSWORD), password);
         editor.putString(getString(R.string.TEAM), team);
@@ -131,9 +123,9 @@ public class Welcome extends AppCompatActivity {
 
         //Temporary
         editor.putString(getString(R.string.EMAIL), "sparx1126scouts@gmail.com");
-        editor.putString(getString(R.string.PASSWORD), "gosparx!");
+        editor.putString(getString(R.string.PASSWORD), "h");
         editor.putString(getString(R.string.TEAM), "1126");
-        editor.putBoolean(getString(R.string.SCOUT), true);
+        editor.putBoolean(getResources().getString(R.string.scouting), true);
         editor.apply();
 
         checkPreferences();

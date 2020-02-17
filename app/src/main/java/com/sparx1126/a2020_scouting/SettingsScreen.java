@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SettingsScreen extends AppCompatActivity {
+    private boolean firstTimeChecked = false;
     private SharedPreferences settings;
     private SharedPreferences.Editor editor;
     private static BlueAllianceNetwork blueAlliance;
@@ -39,6 +40,7 @@ public class SettingsScreen extends AppCompatActivity {
     private TextView teamNum;
     private Button reconfigure;
     private Button configure;
+    private Button exit;
     private LinearLayout scoutingTabletLayout;
     private Button alliance;
     private RadioGroup teams;
@@ -60,6 +62,7 @@ public class SettingsScreen extends AppCompatActivity {
         setContentView(R.layout.settings_screen);
 
         changeUi();
+        firstTimeChecked = false;
 
         settings = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
         editor = settings.edit();
@@ -90,26 +93,8 @@ public class SettingsScreen extends AppCompatActivity {
                 if (!selectedItem.contentEquals(getResources().getString(R.string.selectEvent))) {
                     String previousSelectedEvent = settings.getString(getResources().getString(R.string.pref_SelectedEvent), "");
                     Log.e("selected Event:", selectedItem);
+
                 }
-//                final String selectedItem = eventSpinner.getSelectedItem().toString();
-//                if (!selectedItem.contentEquals(getResources().getString(R.string.selectEvent))) {
-//                    String previousSelectedEvent = settings.getString(getResources().getString(R.string.pref_SelectedEvent), "");
-//                    Log.e("selected Event:", selectedItem);
-//                    // JT: move into  settings after event is selected and use the selected event
-//                    blueAlliance.downloadEventMatches(selectedItem, new BlueAllianceNetwork.Callback() {
-//                        @Override
-//                        public void handleFinishDownload(final String _data) {
-//                            runOnUiThread(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    //Log.i("TAG", _data);
-//                                    //System.out.println(_data);
-//                                    BlueAllianceMatch.parseDataToBAMMap(_data);
-//                                }
-//                            });
-//                        }
-//                    });
-//                }
             }
 
             @Override
@@ -117,8 +102,17 @@ public class SettingsScreen extends AppCompatActivity {
             }
         });
 
+        exit = findViewById(R.id.exit);
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingsScreen.this, MainActivity.class));
+
+            }
+        });
+
         scoutingTabletLayout = findViewById(R.id.scoutingTabletLayout);
-        if(!settings.getBoolean(getString(R.string.SCOUT), false)) {
+        if(!settings.getBoolean(getString(R.string.scouting), false)) {
             scoutingTabletLayout.setVisibility(View.INVISIBLE);
         }
 
@@ -154,7 +148,11 @@ public class SettingsScreen extends AppCompatActivity {
 
         teamNum = findViewById(R.id.teamInput);
         teamNum.setText(settings.getString(getString(R.string.TEAM), "team number not found"));
+    }
 
+    @Override
+    public void onStart(){
+        super.onStart();
         restorePreferences();
     }
 
@@ -183,7 +181,13 @@ public class SettingsScreen extends AppCompatActivity {
                     editor.putString(getString(R.string.EMAIL), "");
                     editor.putString(getString(R.string.PASSWORD), "");
                     editor.putString(getString(R.string.TEAM), "");
+                    editor.putBoolean(getString(R.string.scouting), false);
+                    editor.putBoolean(getString(R.string.tablet_Configured), false);
+                    editor.putInt(getString(R.string.pref_TeamPosition), 0);
+                    BlueAllianceEvent.getEvents("").clear();
+                    BlueAllianceMatch.getMatches().clear();
                     editor.apply();
+
 
                     Intent switchToWelcome = new Intent(SettingsScreen.this, Welcome.class);
                     startActivity(switchToWelcome);
@@ -216,11 +220,6 @@ public class SettingsScreen extends AppCompatActivity {
                     input.setText("");
                 } else {
                     if(!(eventSpinner.getSelectedItem().toString().equals("Select Event")) || teams.isDirty()) {
-                        editor.putString(getString(R.string.EMAIL), "");
-                        editor.putString(getString(R.string.PASSWORD), "");
-                        editor.putString(getString(R.string.TEAM), "");
-                        editor.apply();
-
                         configured = true;
                         selectedEvent = eventSpinner.getSelectedItem().toString();
                         if (team1.isChecked()) {
@@ -236,6 +235,21 @@ public class SettingsScreen extends AppCompatActivity {
                         editor.putInt("pref_TeamPosition", chosenTeam);
                         editor.putString(getResources().getString(R.string.pref_SelectedEvent), selectedEvent);
                         editor.apply();
+
+                        // JT: move into  settings after event is selected and use the selected event
+                        blueAlliance.downloadEventMatches(selectedEvent, new BlueAllianceNetwork.Callback() {
+                            @Override
+                            public void handleFinishDownload(final String _data) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        //Log.i("TAG", _data);
+                                        //System.out.println(_data);
+                                        BlueAllianceMatch.parseDataToBAMMap(_data);
+                                    }
+                                });
+                            }
+                        });
 
                         Log.e("selectedEvent", selectedEvent);
                         Intent switchToMain = new Intent(SettingsScreen.this, MainActivity.class);
@@ -370,11 +384,15 @@ public class SettingsScreen extends AppCompatActivity {
     }
 
     private void restorePreferences() {
-        boolean tableConfigured = settings.getBoolean(getResources().getString(R.string.tablet_Configured), false);
-        boolean scoutingTablet = settings.getBoolean(getResources().getString(R.string.SCOUT), false);
-        if (tableConfigured && scoutingTablet) {
+        downLoadEvents();
+        boolean tabletConfigured = settings.getBoolean(getResources().getString(R.string.tablet_Configured), false);
+        boolean scoutingTablet = settings.getBoolean(getResources().getString(R.string.scouting), false);
+        if (tabletConfigured && !firstTimeChecked) {
+            firstTimeChecked = true;
+            startActivity(new Intent(SettingsScreen.this, MainActivity.class));
+        }else if(scoutingTablet){
             boolean blueAllianceToggled = settings.getBoolean(getResources().getString(R.string.pref_BlueAlliance), false);
-            if (blueAllianceToggled == true) {
+            if (blueAllianceToggled == true && !alliance.getText().equals("BLUE ALLIANCE")) {
                 alliance.performClick();
             }
             int teamPositionNum = settings.getInt(getResources().getString(R.string.pref_TeamPosition), 0);
@@ -386,6 +404,5 @@ public class SettingsScreen extends AppCompatActivity {
                 team3.setChecked(true);
             }
         }
-        downLoadEvents();
     }
 }
