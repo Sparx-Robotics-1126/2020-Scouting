@@ -63,6 +63,8 @@ public class SettingsScreen extends AppCompatActivity {
 
         settings = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
         editor = settings.edit();
+        Log.e("TEST1234",settings.getString(getString(R.string.PASSWORD), ""));
+
 
         blueAlliance = BlueAllianceNetwork.getInstance();
 
