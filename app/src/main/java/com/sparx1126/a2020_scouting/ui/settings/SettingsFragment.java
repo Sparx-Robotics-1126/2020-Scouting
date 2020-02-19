@@ -29,8 +29,9 @@ public class SettingsFragment extends Fragment {
         //        textView.setText(s);
         //    }
         //});
-        Intent intent = new Intent(getActivity(), SettingsScreen.class);
-        startActivity(intent);
+//        Intent intent = new Intent(getActivity(), SettingsScreen.class);
+//        startActivity(intent);
+        getActivity().finish();
         return root;
     }
 }

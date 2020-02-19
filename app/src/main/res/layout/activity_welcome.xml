@@ -6,15 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Welcome"
-    android:screenOrientation="portrait"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/welcomeMessage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="22sp"
-        android:text="Welcome to our App! This App is meant to collect individual team achievement data during a match for scouting purposes. You will need 6 dedicated devices to collect the data per match. Each device will be assigned a unique team per match. You will also need a dedicated email for this app. The collected data will be sent to the email. You will also need to enter the email password in order to fetch the data and display it on a device. You will need to enable less secure app, SMTP and POP3 on the emails settings. The preset admin password is hjjmssjc , however you will be able to change this in settings" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,7 +36,7 @@
             android:id="@+id/password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Set Email Password:"
+            android:text="Set Password:"
             android:layout_weight="0"
             android:textSize="30sp"/>
         <EditText
@@ -76,17 +69,15 @@
             android:textSize="30sp"/>
     </LinearLayout>
 
-    <CheckBox
-        android:id="@+id/scoutingCheckBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="Is this one of your scouting devices?" />
-
     <Button
         android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Login" />
 
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/avatar_full"/>
 </LinearLayout>
