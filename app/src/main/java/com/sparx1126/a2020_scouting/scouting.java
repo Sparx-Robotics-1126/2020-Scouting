@@ -342,22 +342,21 @@ public class scouting extends AppCompatActivity {
         RadioGroup level = findViewById(R.id.level);
         RadioButton leveled = findViewById(level.getCheckedRadioButtonId());
 
-        if(startingpos == null || startingballs == null || leveled == null){
+        if(!(startingpos == null) && !(startingballs == null) && !(leveled == null)){
+            ScoutingData scoutingData = new ScoutingData(name.getText().toString(), txtMatch.getText().toString(), teamScouting.getText().toString(), startingpos.getText().toString(),
+                    startingballs.getText().toString(), txtBallsBottomAuto.getText().toString(), txtBallsOuterAuto.getText().toString(),
+                    txtBallsInnerAuto.getText().toString(), txtBallsFloorAuto.getText().toString(), ""+ crossesLine.isChecked(), txtBallsBottemTele.getText().toString(),
+                    txtBallsOuterTele.getText().toString(), txtBallsInnerTele.getText().toString(), txtBallsFloorTele.getText().toString(), txtBallsLowChuteTele.getText().toString(),
+                    txtBallsHighChuteTele.getText().toString(), ""+performendRot.isChecked(), ""+performedPos.isChecked(), ""+hanging.isChecked(),
+                    ""+parked.isChecked(), leveled.getText().toString());
+            mail = new SendMail(scouting.this, getResources().getString(R.string.sparx_email), settings.getString("pref_SelectedEvent",null)+".frc1126."+ txtMatch.getText().toString()+".json" ,scoutingData.toJson());
+            mail.execute();
+        }else{
             Toast.makeText(this, "Don't forget to fill out hte entire form", Toast.LENGTH_LONG).show();
         }
 
-        ScoutingData scoutingData = new ScoutingData(name.getText().toString(), txtMatch.getText().toString(), teamScouting.getText().toString(),
-                startingpos.getText().toString(),
-                startingballs.getText().toString(), txtBallsBottomAuto.getText().toString(), txtBallsOuterAuto.getText().toString(),
-                txtBallsInnerAuto.getText().toString(), txtBallsFloorAuto.getText().toString(), ""+ crossesLine.isChecked(), txtBallsBottemTele.getText().toString(),
-                txtBallsOuterTele.getText().toString(), txtBallsInnerTele.getText().toString(), txtBallsFloorTele.getText().toString(), txtBallsLowChuteTele.getText().toString(),
-                txtBallsHighChuteTele.getText().toString(), ""+performendRot.isChecked(), ""+performedPos.isChecked(), ""+hanging.isChecked(),
-                ""+parked.isChecked(), leveled.getText().toString());
-
-        Log.e("checking if it is Json", " " + isValidJsonArray(scoutingData.toJson()));
         //hardcoded 1126 bc the scouting screen aint fully done
-        mail = new SendMail(scouting.this, getResources().getString(R.string.sparx_email), settings.getString("pref_SelectedEvent",null)+".frc1126."+ txtMatch.getText().toString()+".json" ,scoutingData.toJson());
-        mail.execute();
+
     }
 
     public void plusBalls(AutoCompleteTextView view){
@@ -556,6 +555,9 @@ public class scouting extends AppCompatActivity {
             triedToLevel.setTextColor(getResources().getColor(R.color.BText));
             RadioButton successfullyLeveled = findViewById(R.id.successfullyLeveled);
             successfullyLeveled.setTextColor(getResources().getColor(R.color.BText));
+            Button save = findViewById(R.id.Save);
+            save.setTextColor(getResources().getColor(R.color.BText));
+            save.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
         }else{
             ScrollView background = findViewById(R.id.background);
             background.setBackgroundColor(getResources().getColor(R.color.RBackground));
@@ -742,6 +744,9 @@ public class scouting extends AppCompatActivity {
             triedToLevel.setTextColor(getResources().getColor(R.color.RText));
             RadioButton successfullyLeveled = findViewById(R.id.successfullyLeveled);
             successfullyLeveled.setTextColor(getResources().getColor(R.color.RText));
+            Button save = findViewById(R.id.Save);
+            save.setTextColor(getResources().getColor(R.color.RText));
+            save.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
         }
     }
 
