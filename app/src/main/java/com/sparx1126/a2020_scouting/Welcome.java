@@ -18,26 +18,28 @@ import android.widget.Toast;
 import com.sparx1126.a2020_scouting.Utilities.*;
 
 public class Welcome extends AppCompatActivity {
-    //once the tablet has been configured to a team change this value
-    public static boolean toggledBlue;
-
     private EditText emailInput, passwordInput, teamInput;
+    private CheckBox scoutingCheck;
     private SharedPreferences loginData;
     private FileIO IO;
+    private boolean toggledBlue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
         IO = FileIO.getInstance();
+        // This has to be done once
         IO.intializeStorage(Welcome.this);
         loginData = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
 
-        changeUi();
+        toggledBlue = loginData.getBoolean("pref_BlueAlliance", false);
 
         emailInput = findViewById(R.id.emailInput);
         passwordInput = findViewById(R.id.passwordInput);
         teamInput = findViewById(R.id.teamInput);
+        scoutingCheck = findViewById(R.id.scoutingCheckBox);
 
         Button login = findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +49,8 @@ public class Welcome extends AppCompatActivity {
             }
         });
 
+        changeUi();
+
         checkPreferences();
     }
 //This change UI may never be actually used since the tablet will always be configured after this screen is seen.
@@ -54,6 +58,12 @@ public class Welcome extends AppCompatActivity {
         if(toggledBlue == true){
             LinearLayout li = findViewById(R.id.background);
             li.setBackgroundColor(getResources().getColor(R.color.BBackground));
+            TextView welcome = findViewById(R.id.welcomeMessage);
+            TextView scoutingTextView = findViewById(R.id.scoutingTextView);
+            CheckBox scouting = findViewById(R.id.scoutingCheckBox);
+            scouting.setTextColor(getResources().getColor(R.color.BText));
+            welcome.setTextColor(getResources().getColor(R.color.BText));
+            scoutingTextView.setTextColor(getResources().getColor(R.color.BText));
             Button log = findViewById(R.id.login);
             log.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
             log.setTextColor(getResources().getColor(R.color.BText));
@@ -72,6 +82,12 @@ public class Welcome extends AppCompatActivity {
         }else{
             LinearLayout li = findViewById(R.id.background);
             li.setBackgroundColor(getResources().getColor(R.color.RBackground));
+            TextView welcome = findViewById(R.id.welcomeMessage);
+            TextView scoutingTextView = findViewById(R.id.scoutingTextView);
+            CheckBox scouting = findViewById(R.id.scoutingCheckBox);
+            scouting.setTextColor(getResources().getColor(R.color.RText));
+            welcome.setTextColor(getResources().getColor(R.color.RText));
+            scoutingTextView.setTextColor(getResources().getColor(R.color.RText));
             Button log = findViewById(R.id.login);
             log.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
             log.setTextColor(getResources().getColor(R.color.RText));
@@ -109,23 +125,26 @@ public class Welcome extends AppCompatActivity {
 
     public void login() {
         String email, password, team;
+        Boolean isScouting;
         email = emailInput.getText().toString();
         password = passwordInput.getText().toString();
         team = teamInput.getText().toString();
+        isScouting = scoutingCheck.isChecked();
+
 
         SharedPreferences.Editor editor;
         editor = loginData.edit();
-
         editor.putString(getString(R.string.EMAIL), email);
         editor.putString(getString(R.string.PASSWORD), password);
         editor.putString(getString(R.string.TEAM), team);
+        editor.putBoolean(getString(R.string.SCOUT),isScouting);
         editor.apply();
 
         //Temporary
         editor.putString(getString(R.string.EMAIL), "sparx1126scouts@gmail.com");
-        editor.putString(getString(R.string.PASSWORD), "h");
-        editor.putString(getString(R.string.TEAM), "1126");
-        editor.putBoolean(getResources().getString(R.string.scouting), true);
+        editor.putString(getString(R.string.PASSWORD), "gosparx!");
+        editor.putString(getString(R.string.TEAM), "58"); // participated in Week 0
+        editor.putBoolean(getString(R.string.SCOUT), true);
         editor.apply();
 
         checkPreferences();
@@ -133,6 +152,6 @@ public class Welcome extends AppCompatActivity {
 
     public void switchScreen(){
         Log.i("switchScreen", "unknown");
-        startActivity(new Intent(Welcome.this, SettingsScreen.class));
+        startActivity(new Intent(Welcome.this, MainActivity.class));
     }
 }

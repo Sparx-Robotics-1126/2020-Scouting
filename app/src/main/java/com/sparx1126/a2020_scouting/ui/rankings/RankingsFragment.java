@@ -36,21 +36,27 @@ public class RankingsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_rankings, container, false);
+        for(int i = 0; i < 3; ++i) {
+            View segment = inflater.inflate(R.layout.rank_item_layout, container, false);
+            TextView team = segment.findViewById(R.id.teamNumber);
+            team.setText(String.valueOf(i));
+            ((LinearLayout)root).addView(segment);
+        }
 
 
-        listView = (ListView) root.findViewById(R.id.rankList);
-        ArrayList<RankListItem> rankList = new ArrayList<>();
+        //listView = (ListView) root.findViewById(R.id.rankList);
+        //ArrayList<RankListItem> rankList = new ArrayList<>();
         //multiple of these:
-        rankList.add(new RankListItem());
-        rankList.add(new RankListItem());
-        rankList.add(new RankListItem());
-        rankList.add(new RankListItem());
-        RankListItem hasData = new RankListItem();
-        hasData.setDetails("I live in a boat with a bunch of Justins");
-        rankList.add(hasData);
+        //rankList.add(new RankListItem());
+        //rankList.add(new RankListItem());
+        //rankList.add(new RankListItem());
+        //rankList.add(new RankListItem());
+        //RankListItem hasData = new RankListItem();
+        //hasData.setDetails("I live in a boat with a bunch of Justins");
+        //rankList.add(hasData);
 
-        adapter = new RankArrayAdapter(getActivity(), rankList);
-        listView.setAdapter(adapter);
+        //adapter = new RankArrayAdapter(getActivity(), rankList);
+        //listView.setAdapter(adapter);
 
         return root;
 
