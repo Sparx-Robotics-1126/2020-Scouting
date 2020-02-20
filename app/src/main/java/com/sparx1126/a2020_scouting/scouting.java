@@ -27,6 +27,7 @@ import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
 
 
 import android.view.View;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -81,17 +82,19 @@ public class scouting extends AppCompatActivity {
     private AutoCompleteTextView balls;
     private SendMail mail;
     private BlueAllianceNetwork ban;
+    private boolean blueAllianceChosen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scouting);
 
+        settings = getSharedPreferences("Sparx_prefs", 0);
+        blueAllianceChosen = settings.getBoolean("pref_BlueAlliance", false);
         changeUi();
         login();
 
         save = findViewById(R.id.Save);
-        settings = getSharedPreferences("Sparx_prefs", 0);
         logout = findViewById(R.id.logOut);
         name = findViewById(R.id.name);
 
@@ -341,15 +344,21 @@ public class scouting extends AppCompatActivity {
         RadioGroup level = findViewById(R.id.level);
         RadioButton leveled = findViewById(level.getCheckedRadioButtonId());
 
+        if(startingpos == null || startingballs == null || leveled == null){
+            Toast.makeText(this, "Don't forget to fill out hte entire form", Toast.LENGTH_LONG).show();
+        }
+
         ScoutingData scoutingData = new ScoutingData(name.getText().toString(), txtMatch.getText().toString(), teamScouting.getText().toString(),
-                startingpos.getText().toString(), startingballs.getText().toString(), txtBallsBottomAuto.getText().toString(), txtBallsOuterAuto.getText().toString(),
-                txtBallsInnerAuto.getText().toString(), txtBallsFloorAuto.getText().toString(), crossesLine.isChecked(), txtBallsBottemTele.getText().toString(),
+                startingpos.getText().toString(),
+                startingballs.getText().toString(), txtBallsBottomAuto.getText().toString(), txtBallsOuterAuto.getText().toString(),
+                txtBallsInnerAuto.getText().toString(), txtBallsFloorAuto.getText().toString(), ""+ crossesLine.isChecked(), txtBallsBottemTele.getText().toString(),
                 txtBallsOuterTele.getText().toString(), txtBallsInnerTele.getText().toString(), txtBallsFloorTele.getText().toString(), txtBallsLowChuteTele.getText().toString(),
-                txtBallsHighChuteTele.getText().toString(), performendRot.isChecked(), performedPos.isChecked(), hanging.isChecked(), parked.isChecked(), leveled.getText().toString());
+                txtBallsHighChuteTele.getText().toString(), ""+performendRot.isChecked(), ""+performedPos.isChecked(), ""+hanging.isChecked(),
+                ""+parked.isChecked(), leveled.getText().toString());
 
         Log.e("checking if it is Json", " " + isValidJsonArray(scoutingData.toJson()));
-
-        mail = new SendMail(scouting.this, getResources().getString(R.string.sparx_email), "Hello Testing - Sohail Shaik", scoutingData.toJson());
+        //hardcoded 1126 bc the scouting screen aint fully done
+        mail = new SendMail(scouting.this, getResources().getString(R.string.sparx_email), settings.getString("pref_SelectedEvent",null)+".frc1126."+ txtMatch.getText().toString()+".json" ,scoutingData.toJson());
         mail.execute();
     }
 
@@ -363,7 +372,7 @@ public class scouting extends AppCompatActivity {
     }
 
     public  void changeUi(){
-        if(Welcome.toggledBlue){
+        if(blueAllianceChosen){
             ScrollView background = findViewById(R.id.background);
             background.setBackgroundColor(getResources().getColor(R.color.BBackground));
             TextView assignment = findViewById(R.id.assignment);
@@ -542,7 +551,7 @@ public class scouting extends AppCompatActivity {
             TextView parked = findViewById(R.id.parked);
             parked.setTextColor(getResources().getColor(R.color.BText));
             TextView level = findViewById(R.id.leveling);
-            level.setTextColor(getResources().getColor(R.color.RText));
+            level.setTextColor(getResources().getColor(R.color.BText));
             RadioButton noLeveling = findViewById(R.id.noLeveling);
             noLeveling.setTextColor(getResources().getColor(R.color.BText));
             RadioButton triedToLevel = findViewById(R.id.triedToLevel);

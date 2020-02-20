@@ -43,7 +43,6 @@
         <item name="android:layout_weight">0</item>
         <item name="android:buttonTint">@color/interact</item>
     </style>
-
     <style name="t019_radioButton" parent="t019_basic">
         <item name="android:buttonTint">@color/interact</item>
         <item name="android:layout_width">match_parent</item>

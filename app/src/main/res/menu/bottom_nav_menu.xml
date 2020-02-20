@@ -19,6 +19,9 @@
         android:id="@+id/navigation_settings"
         android:icon="@drawable/ic_settings_black_24dp"
         android:title="@string/title_settings" />
-
+    <item
+        android:id="@+id/navigation_scoutings"
+        android:icon="@drawable/binoculars"
+        android:title="@string/title_scoutings"/>
 
 </menu>
