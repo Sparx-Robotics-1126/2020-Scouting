@@ -8,6 +8,8 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
@@ -21,7 +23,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
+import com.sparx1126.a2020_scouting.BlueAllianceData.*;
 import com.sparx1126.a2020_scouting.Utilities.SendMail;
 import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
 
@@ -34,7 +36,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Set;
+
+import static com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch.getMatches;
 
 public class scouting extends AppCompatActivity {
     private SharedPreferences.Editor editor;
@@ -44,6 +50,7 @@ public class scouting extends AppCompatActivity {
 
     private Button plusMatch;
     private AutoCompleteTextView txtMatch;
+    private TextView teamScouting;
     private Button minusMatch;
     private Button plusBallsBottemAuto;
     private AutoCompleteTextView txtBallsBottomAuto;
@@ -106,6 +113,20 @@ public class scouting extends AppCompatActivity {
         plusMatch = findViewById(R.id.plusMatch);
         txtMatch = findViewById(R.id.txtMatch);
         minusMatch = findViewById(R.id.minusMatch);
+        teamScouting = findViewById(R.id.scoutingTeam);
+
+        txtMatch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+               findTeam();
+            }
+        });
 
         plusMatch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -331,7 +352,6 @@ public class scouting extends AppCompatActivity {
     public void Save(){
         RadioGroup starting = findViewById(R.id.startingPosition);
         RadioButton startingpos = findViewById(starting.getCheckedRadioButtonId());
-        TextView teamScouting = findViewById(R.id.scoutingTeam);
         RadioGroup startingb = findViewById(R.id.startingBalls);
         RadioButton startingballs = findViewById(startingb.getCheckedRadioButtonId());
         CheckBox crossesLine = findViewById(R.id.crossesLineCheckBox);
@@ -355,8 +375,8 @@ public class scouting extends AppCompatActivity {
                 ""+parked.isChecked(), leveled.getText().toString());
 
         Log.e("checking if it is Json", " " + isValidJsonArray(scoutingData.toJson()));
-        //hardcoded 1126 bc the scouting screen aint fully done
-        mail = new SendMail(scouting.this, getResources().getString(R.string.sparx_email), settings.getString("pref_SelectedEvent",null)+".frc1126."+ txtMatch.getText().toString()+".json" ,scoutingData.toJson());
+        //email subjetc fomrat is aa follows evetkey.teamkey.matchnum
+        mail = new SendMail(scouting.this, getResources().getString(R.string.sparx_email), settings.getString("pref_SelectedEvent",null)+"."+txtMatch.getText().toString()+"." +teamScouting.getText().toString() +".json" ,scoutingData.toJson());
         mail.execute();
     }
 
@@ -768,6 +788,23 @@ public class scouting extends AppCompatActivity {
         });
         builder.create().show();
 
+    }
+    private void findTeam(){
+        String teamText;
+        int matchnum = Integer.parseInt(txtMatch.getText().toString());
+        Log.e("test7",String.valueOf(matchnum));
+        HashMap<String,BlueAllianceMatch> matches= BlueAllianceMatch.getMatches();
+        Set<String> keys = BlueAllianceMatch.getMatches().keySet();
+        BlueAllianceMatch matchObj = matches.get(String.valueOf(matchnum));
+        ArrayList<String> allainceKeySet;
+        boolean blue = settings.getBoolean("pref_BlueAlliance",false);
+        if(blue){
+            allainceKeySet=matchObj.getBlueTeamKeys();
+        }
+        else
+            allainceKeySet=matchObj.getRedTeamKeys();
+        teamText=(allainceKeySet.get(settings.getInt("pref_TeamPosition",0)-1)).replace("frc","");
+        teamScouting.setText(teamText);
     }
     private boolean isValidJsonArray(String _data) {
        try{
