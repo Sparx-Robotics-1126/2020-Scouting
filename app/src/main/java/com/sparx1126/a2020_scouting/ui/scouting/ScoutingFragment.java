@@ -12,12 +12,10 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.sparx1126.a2020_scouting.R;
 import com.sparx1126.a2020_scouting.scouting;
-import com.sparx1126.a2020_scouting.ui.settings.SettingsViewModel;
 
 public class ScoutingFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ViewModelProviders.of(this).get(SettingsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
         Intent intent = new Intent(getActivity(), scouting.class);
         startActivity(intent);

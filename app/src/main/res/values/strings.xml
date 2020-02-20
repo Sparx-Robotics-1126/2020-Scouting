@@ -14,7 +14,7 @@
     <string name="EMAIL">email</string>
     <string name="PASSWORD">password</string>
     <string name="TEAM">team</string>
-    <string name="scouting">scout</string>
+    <string name="SCOUT">scout</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_scouting">scouting</string>
     <string name="title_activity_ranking">Ranking</string>
