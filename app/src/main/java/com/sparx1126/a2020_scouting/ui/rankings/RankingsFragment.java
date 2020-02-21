@@ -1,6 +1,8 @@
 package com.sparx1126.a2020_scouting.ui.rankings;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,15 +19,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
+import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceRank;
 import com.sparx1126.a2020_scouting.MainActivity;
 import com.sparx1126.a2020_scouting.R;
+import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class RankingsFragment extends Fragment {
 
-    private ListView listView;
-    private RankArrayAdapter adapter;
+    //private ListView listView;
+    //private RankArrayAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,10 +42,12 @@ public class RankingsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_rankings, container, false);
-        for(int i = 0; i < 3; ++i) {
+        Map<Integer, BlueAllianceRank> ranks = BlueAllianceRank.getRanks();
+        for(int i = 1; i <= ranks.size(); i++) {
             View segment = inflater.inflate(R.layout.rank_item_layout, container, false);
             TextView team = segment.findViewById(R.id.teamNumber);
-            team.setText(String.valueOf(i));
+            Log.e("Hiram3: ", String.valueOf(i));
+            team.setText(String.valueOf(ranks.get(i).getTeamNum()));
             ((LinearLayout)root).addView(segment);
         }
 

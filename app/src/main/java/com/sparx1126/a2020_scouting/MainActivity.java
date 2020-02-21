@@ -3,8 +3,11 @@ package com.sparx1126.a2020_scouting;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceRank;
+import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -14,6 +17,7 @@ import androidx.navigation.ui.NavigationUI;
 
 public class MainActivity extends AppCompatActivity {
     private SharedPreferences settings;
+    private static BlueAllianceNetwork blueAlliance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         settings = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
+        blueAlliance = BlueAllianceNetwork.getInstance();
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -40,5 +45,23 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        String selectedEvent = settings.getString(getResources().getString(R.string.pref_SelectedEvent), "");
+        blueAlliance.downloadEventRanks(selectedEvent, new BlueAllianceNetwork.Callback() {
+            @Override
+            public void handleFinishDownload(final String _data) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        BlueAllianceRank.parseJson(_data);
+                        Log.e("Hiram: ", String.valueOf(BlueAllianceRank.getRanks().size()));
+                    }
+                });
+            }
+        });
     }
 }
