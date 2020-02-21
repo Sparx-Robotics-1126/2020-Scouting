@@ -40,7 +40,7 @@ public class scouting extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private Button logout;
     private TextView name;
-    private SharedPreferences settings;
+    public static SharedPreferences settings;
 
     private Button plusMatch;
     private AutoCompleteTextView txtMatch;

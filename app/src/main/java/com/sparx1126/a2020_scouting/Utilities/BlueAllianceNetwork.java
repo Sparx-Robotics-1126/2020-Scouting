@@ -158,7 +158,8 @@ public class BlueAllianceNetwork {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException { if(response.isSuccessful()){
+            public void onResponse(Call call, Response response) throws IOException {
+                if(response.isSuccessful()){
                 String rtrn = response.body().string();
                 assert rtrn != null;
                 callback.handleFinishDownload(rtrn);
