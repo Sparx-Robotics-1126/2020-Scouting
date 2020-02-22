@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceRank;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceTeam;
 import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
@@ -50,6 +51,18 @@ public class MainActivity extends AppCompatActivity {
         //Log.e("resumimg main", "mian");
         String selectedEvent = settings.getString(getResources().getString(R.string.pref_SelectedEvent), "");
         //Log.e("selected event", selectedEvent);
+        if(selectedEvent.isEmpty()) {
+            finish();
+        }
+
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        //Log.e("resumimg main", "mian");
+        String selectedEvent = settings.getString(getResources().getString(R.string.pref_SelectedEvent), "");
+        //Log.e("selected event", selectedEvent);
         if(!selectedEvent.isEmpty()) {
             blueAlliance.downloadEventRanks(selectedEvent, new BlueAllianceNetwork.Callback() {
                 @Override
@@ -74,10 +87,20 @@ public class MainActivity extends AppCompatActivity {
                     });
                 }
             });
-        }
-        else {
-           // Log.e("finishing" ," main");
-            finish();
+
+            blueAlliance.downloadEventMatches(selectedEvent, new BlueAllianceNetwork.Callback() {
+                @Override
+                public void handleFinishDownload(final String _data) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //Log.i("TAG", _data);
+                            //System.out.println(_data);
+                            BlueAllianceMatch.parseDataToBAMMap(_data);
+                        }
+                    });
+                }
+            });
         }
     }
 
