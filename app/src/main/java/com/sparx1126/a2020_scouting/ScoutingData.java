@@ -3,6 +3,7 @@ package com.sparx1126.a2020_scouting;
 import android.service.autofill.FieldClassification;
 import android.util.Log;
 
+
 import com.sparx1126.a2020_scouting.BlueAllianceData.JsonData;
 
 import org.json.JSONArray;

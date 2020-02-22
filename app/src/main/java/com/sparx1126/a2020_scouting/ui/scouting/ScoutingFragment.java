@@ -19,6 +19,8 @@ public class ScoutingFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
         Intent intent = new Intent(getActivity(), scouting.class);
         startActivity(intent);
+
+        getFragmentManager().popBackStack();
         return root;
     }
 
