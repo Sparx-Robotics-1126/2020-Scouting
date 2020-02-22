@@ -1,63 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
     <!--repeated-->
     <LinearLayout
-        android:id="@+id/background"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="15dp">
+        android:paddingBottom="10dp">
         <!-- column 1-->
         <LinearLayout android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
+            android:paddingRight="10dp">
 
-            <TextView android:id="@+id/teamNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="1126"/>
-
-            <LinearLayout android:orientation="horizontal"
+            <LinearLayout android:orientation="vertical"
+                android:id="@+id/background1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <TextView android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtrank"
-                    android:textSize="15dp"
-                    android:text="Rank "/>
-
-                <TextView android:id="@+id/rank"
+                <TextView android:id="@+id/teamNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15dp"
-                    android:text="1"/>
+                    android:text="1126"/>
 
+                <LinearLayout android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtrank"
+                        android:textSize="15dp"
+                        android:text="Rank "/>
+
+                    <TextView android:id="@+id/rank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:text="1"/>
+                </LinearLayout>
+
+                <TextView android:id="@+id/record"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:text="3-0-0"/>
             </LinearLayout>
-
-            <TextView android:id="@+id/record"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="3-0-0"/>
-
         </LinearLayout>
         <!-- column 2-->
         <LinearLayout android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:id="@+id/background2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <TextView android:id="@+id/teamName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:text="Sparx"/>
 
             <TextView android:id="@+id/details"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:text="Ranking Acore: 2.00, Auto: 15, End Game: 55, Teleop Cell + CPanel: 33"/>

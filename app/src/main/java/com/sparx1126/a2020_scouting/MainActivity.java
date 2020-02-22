@@ -3,7 +3,6 @@ package com.sparx1126.a2020_scouting;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceRank;
@@ -42,40 +41,39 @@ public class MainActivity extends AppCompatActivity {
         if(!tabletConfigured) {
             startActivity(new Intent(MainActivity.this, SettingsScreen.class));
         }
-        else if(settings.getString(getResources().getString(R.string.TEAM), "").isEmpty()) {
-            finish();
-        }
-
     }
 
     @Override
     public void onStart(){
         super.onStart();
         String selectedEvent = settings.getString(getResources().getString(R.string.pref_SelectedEvent), "");
-        blueAlliance.downloadEventRanks("2020week0", new BlueAllianceNetwork.Callback() {
-            @Override
-            public void handleFinishDownload(final String _data) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        BlueAllianceRank.parseJson(_data);
-                        Log.e("Hiram: ", String.valueOf(BlueAllianceRank.getRanks().size()));
-                    }
-                });
-            }
-        });
+        if(!selectedEvent.isEmpty()) {
+            blueAlliance.downloadEventRanks(selectedEvent, new BlueAllianceNetwork.Callback() {
+                @Override
+                public void handleFinishDownload(final String _data) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            BlueAllianceRank.parseJson(_data);
+                        }
+                    });
+                }
+            });
 
-        blueAlliance.downloadEventTeams("2020week0", new BlueAllianceNetwork.Callback() {
-            @Override
-            public void handleFinishDownload(final String _data) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        BlueAllianceTeam.parseJson(_data);
-                        Log.e("sohial", _data);
-                    }
-                });
-            }
-        });
+            blueAlliance.downloadEventTeams(selectedEvent, new BlueAllianceNetwork.Callback() {
+                @Override
+                public void handleFinishDownload(final String _data) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            BlueAllianceTeam.parseJson(_data);
+                        }
+                    });
+                }
+            });
+        }
+        else {
+            finish();
+        }
     }
 }
