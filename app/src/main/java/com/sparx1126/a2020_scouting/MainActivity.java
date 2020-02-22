@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     public void onStart(){
         super.onStart();
         String selectedEvent = settings.getString(getResources().getString(R.string.pref_SelectedEvent), "");
-        blueAlliance.downloadEventRanks(selectedEvent, new BlueAllianceNetwork.Callback() {
+        blueAlliance.downloadEventRanks("2020week0", new BlueAllianceNetwork.Callback() {
             @Override
             public void handleFinishDownload(final String _data) {
                 runOnUiThread(new Runnable() {
@@ -64,14 +64,15 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
-        blueAlliance.downloadEventTeams(selectedEvent, new BlueAllianceNetwork.Callback() {
+
+        blueAlliance.downloadEventTeams("2020week0", new BlueAllianceNetwork.Callback() {
             @Override
-            public void handleFinishDownload( final String _data) {
+            public void handleFinishDownload(final String _data) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         BlueAllianceTeam.parseJson(_data);
-                        Log.e("the data for BAT", _data);
+                        Log.e("sohial", _data);
                     }
                 });
             }

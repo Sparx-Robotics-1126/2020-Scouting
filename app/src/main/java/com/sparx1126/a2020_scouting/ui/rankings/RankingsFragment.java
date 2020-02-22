@@ -26,11 +26,14 @@ import com.sparx1126.a2020_scouting.MainActivity;
 import com.sparx1126.a2020_scouting.R;
 import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Map;
 
 public class RankingsFragment extends Fragment {
 
+    private SharedPreferences settings;
     //private ListView listView;
     //private RankArrayAdapter adapter;
 
@@ -43,6 +46,8 @@ public class RankingsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_rankings, container, false);
+        View linearlayout = root.findViewById(R.id.linearLayout);
+        settings = getActivity().getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
         Map<Integer, BlueAllianceRank> ranks = BlueAllianceRank.getRanks();
         Map<String, BlueAllianceTeam> teams = BlueAllianceTeam.getTeams();
         for(int i = 1; i <= ranks.size(); i++) {
@@ -57,7 +62,30 @@ public class RankingsFragment extends Fragment {
             record.setText(String.valueOf(ranks.get(i).getRecord()));
             details.setText(String.valueOf(ranks.get(i).getDetails()));
             teamName.setText(String.valueOf(teams.get(ranks.get(i).getTeamNum()).getTeam_name()));
-            ((LinearLayout)root).addView(segment);
+            if(settings.getBoolean(getString(R.string.pref_BlueAlliance), false)){
+                root.setBackgroundColor(getResources().getColor(R.color.BBackground));
+                team.setTextColor(getResources().getColor(R.color.BText));
+                rank.setTextColor(getResources().getColor(R.color.BText));
+                record.setTextColor(getResources().getColor(R.color.BText));
+                details.setTextColor(getResources().getColor(R.color.BText));
+                teamName.setTextColor(getResources().getColor(R.color.BText));
+                TextView txtRank = segment.findViewById(R.id.txtrank);
+                txtRank.setTextColor(getResources().getColor(R.color.BText));
+                LinearLayout background = segment.findViewById(R.id.background);
+                background.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            }else{
+                root.setBackgroundColor(getResources().getColor(R.color.RBackground));
+                team.setTextColor(getResources().getColor(R.color.RText));
+                rank.setTextColor(getResources().getColor(R.color.RText));
+                record.setTextColor(getResources().getColor(R.color.RText));
+                details.setTextColor(getResources().getColor(R.color.RText));
+                teamName.setTextColor(getResources().getColor(R.color.RText));
+                TextView txtRank = segment.findViewById(R.id.txtrank);
+                txtRank.setTextColor(getResources().getColor(R.color.RText));
+                LinearLayout background = segment.findViewById(R.id.background);
+                background.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
+            }
+            ((LinearLayout)linearlayout).addView(segment);
         }
 
 
