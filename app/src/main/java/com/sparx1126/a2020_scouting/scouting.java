@@ -90,6 +90,7 @@ public class scouting extends AppCompatActivity {
         setContentView(R.layout.activity_scouting);
 
         settings = getSharedPreferences("Sparx_prefs", 0);
+        editor = settings.edit();
         blueAllianceChosen = settings.getBoolean("pref_BlueAlliance", false);
         changeUi();
         login();
@@ -764,8 +765,9 @@ public class scouting extends AppCompatActivity {
 
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
+                editor.putString(getString(R.string.scouter), "");
+                editor.apply();
                 name.setText(value);
-
             }
         });
         builder.setNegativeButton("Cancel" ,new DialogInterface.OnClickListener() {
