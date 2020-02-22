@@ -32,7 +32,7 @@ public class BlueAllianceNetwork {
     private static String TEAM_EVENTS_URL_TAIL = "team/{team_key}/events/" + YEAR;
     private static String TEAM_SPECIFIC_EVENT_MATCHES="team/{team_key}/event/{event_key}/matches/simple";
     private static String EVENT_MATCHES_URL_TAIL = "event/{event_key}/matches/simple";
- //Private constructor> only one instance per app instance
+    //Private constructor> only one instance per app instance
     private BlueAllianceNetwork(){client=new OkHttpClient();}
 
     public  static synchronized BlueAllianceNetwork getInstance(){

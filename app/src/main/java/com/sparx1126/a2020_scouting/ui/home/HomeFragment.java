@@ -1,5 +1,6 @@
 package com.sparx1126.a2020_scouting.ui.home;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +14,14 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.sparx1126.a2020_scouting.R;
+import com.sparx1126.a2020_scouting.SettingsScreen;
+
+import org.w3c.dom.Text;
 
 public class HomeFragment extends Fragment {
+    private SharedPreferences settings;
+    private TextView emailtxt;
+    private TextView emailInput;
 
     private HomeViewModel homeViewModel;
 
@@ -30,6 +37,16 @@ public class HomeFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+
+
+        emailtxt = root.findViewById(R.id.emailTxt);
+        emailInput = root.findViewById(R.id.emailInput);
         return root;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 }
