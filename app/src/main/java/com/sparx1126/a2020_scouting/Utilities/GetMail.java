@@ -36,6 +36,7 @@ public class GetMail extends AsyncTask<Void,Void,Void> {
     private static Context context;
     private static GetMail instance;
     private Callback cb;
+    private boolean executed = false;
 
     private static  Map<String, JSONObject> JSONMails = new HashMap<>();
 
@@ -122,7 +123,10 @@ public class GetMail extends AsyncTask<Void,Void,Void> {
 
     public void downloadMail(final GetMail.Callback callback){
         cb = callback;
-        this.execute();
+        if(!executed) {
+            this.execute();
+            executed = true;
+        }
     }
 
     private boolean isValidJsonArray(String _data) {

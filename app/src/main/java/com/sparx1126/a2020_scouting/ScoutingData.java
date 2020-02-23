@@ -201,9 +201,7 @@ public class ScoutingData extends JsonData {
     public static void parseJson(String str){
         data.clear();
         try{
-            JSONArray arr = new JSONArray(str);
-            for(int i = 0; i < arr.length(); i++){
-                JSONObject obj  = arr.getJSONObject(i);
+            JSONObject obj = new JSONObject(str);
                 String name = getString(obj, scouter_name);
                 String matchNum = getString(obj, match_num);
                 String teamNum = getString(obj, team_scouted);
@@ -228,7 +226,6 @@ public class ScoutingData extends JsonData {
 
                 data.put(matchNum, new ScoutingData(name, matchNum, teamNum, startingPos,bottomPort, outerPort, innerPort, ballsStart, ballsAcq, crosses,
                         bottomPortTele, outerPortTele, innerPortTele, acqFloor, bottomChute, highChute,performedRot, performedPos, hangingEnd ,parkedend,leveling));
-            }
         }catch (JSONException e){
             e.printStackTrace();
         }

@@ -363,9 +363,8 @@ public class scouting extends AppCompatActivity {
             public void handleFinishDownload(Map<String, JSONObject> mails) {
                 if(mails.containsKey((settings.getString("pref_SelectedEvent",null)+".frc1126."+ txtMatch.getText().toString()+".json"))){
                     ScoutingData.parseJson(mails.get((settings.getString("pref_SelectedEvent",null)+".frc1126."+ txtMatch.getText().toString()+".json")).toString());
+                    Log.e("ssssssssssssssssssss", ScoutingData.getData().toString());
                     Map<String, ScoutingData> scouting = ScoutingData.getData();
-                    name.setText(scouting.get(matchNum).getScouterName());
-
                 }
             }
         });
