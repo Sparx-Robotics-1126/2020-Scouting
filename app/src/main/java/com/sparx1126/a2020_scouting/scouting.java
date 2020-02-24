@@ -89,12 +89,13 @@ public class scouting extends AppCompatActivity {
     private AutoCompleteTextView balls;
     private SendMail mail;
     private BlueAllianceNetwork ban;
+    private boolean blueAllianceChosen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scouting);
-
+        blueAllianceChosen = settings.getBoolean("pref_BlueAlliance", false);
         changeUi();
         login();
 
@@ -390,7 +391,7 @@ public class scouting extends AppCompatActivity {
     }
 
     public  void changeUi(){
-        if(Welcome.toggledBlue){
+        if(blueAllianceChosen){
             ScrollView background = findViewById(R.id.background);
             background.setBackgroundColor(getResources().getColor(R.color.BBackground));
             TextView assignment = findViewById(R.id.assignment);

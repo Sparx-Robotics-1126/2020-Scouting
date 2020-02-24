@@ -49,13 +49,16 @@
                 android:textSize="22dp">
             </TextView>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="right">
+
             <Button
                 android:id="@+id/plusMatch"
                 style="@style/t019_plusMinusButton"
-                android:layout_width="44dp"
-                android:layout_marginLeft="150dp"
                 android:text="+" />
-
             <AutoCompleteTextView
                 android:id="@+id/txtMatch"
                 android:layout_width="wrap_content"
@@ -68,6 +71,7 @@
                 style="@style/t019_plusMinusButton"
                 android:layout_weight="0"
                 android:text="-" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -241,10 +245,14 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
                         android:textSize="22dp">
                     </TextView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="right">
                     <Button
                         android:id="@+id/plusBallsBottemAuto"
                         style="@style/t019_plusMinusButton"
-                        android:layout_marginLeft="170dp"
                         android:text="+" />
                     <AutoCompleteTextView
                         android:id="@+id/txtBallsBottomAuto"
@@ -259,6 +267,7 @@
                         android:layout_weight="0"
                         android:text="-" />
                 </LinearLayout>
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -272,10 +281,14 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
                         android:textSize="22dp">
                     </TextView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="right">
                     <Button
                         android:id="@+id/plusBallsOuterAuto"
                         style="@style/t019_plusMinusButton"
-                        android:layout_marginLeft="190dp"
                         android:text="+" />
                     <AutoCompleteTextView
                         android:id="@+id/txtBallsOuterAuto"
@@ -290,6 +303,7 @@
                         android:layout_weight="0"
                         android:text="-" />
                 </LinearLayout>
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -303,10 +317,14 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
                         android:textSize="22dp">
                     </TextView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="right">
                     <Button
                         android:id="@+id/plusBallsInnerAuto"
                         style="@style/t019_plusMinusButton"
-                        android:layout_marginLeft="195dp"
                         android:text="+" />
                     <AutoCompleteTextView
                         android:id="@+id/txtBallsInnerAuto"
@@ -320,6 +338,7 @@
                         style="@style/t019_plusMinusButton"
                         android:layout_weight="0"
                         android:text="-" />
+                </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -346,10 +365,14 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
                         android:textSize="22dp">
                     </TextView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="right">
                     <Button
                         android:id="@+id/plusBallsFloorAuto"
                         style="@style/t019_plusMinusButton"
-                        android:layout_marginLeft="240dp"
                         android:text="+" />
                     <AutoCompleteTextView
                         android:id="@+id/txtBallsFloorAuto"
@@ -363,6 +386,7 @@
                         style="@style/t019_plusMinusButton"
                         android:layout_weight="0"
                         android:text="-" />
+                </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -382,18 +406,16 @@
                     android:orientation="horizontal">
                     <TextView
                         android:id="@+id/txtCrossesLine"
+                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Left Line at some point"
                         android:textSize="22dp">
                     </TextView>
+
                     <CheckBox
                         android:id="@+id/crossesLineCheckBox"
-                        style="@style/t019_checkBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="150dp">
-                    </CheckBox>
+                        style="@style/t019_checkBox"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -427,10 +449,14 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="22dp">
                 </TextView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="right">
                 <Button
                     android:id="@+id/plusBallsBottemTele"
                     style="@style/t019_plusMinusButton"
-                    android:layout_marginLeft="170dp"
                     android:text="+" />
                 <AutoCompleteTextView
                     android:id="@+id/txtBallsBottemTele"
@@ -445,6 +471,7 @@
                     android:layout_weight="0"
                     android:text="-" />
             </LinearLayout>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -457,10 +484,14 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="22dp">
                 </TextView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="right">
                 <Button
                     android:id="@+id/plusBallsOuterTele"
                     style="@style/t019_plusMinusButton"
-                    android:layout_marginLeft="190dp"
                     android:text="+" />
                 <AutoCompleteTextView
                     android:id="@+id/txtBallsOuterTele"
@@ -475,6 +506,7 @@
                     android:layout_weight="0"
                     android:text="-" />
             </LinearLayout>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -487,10 +519,14 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="22dp">
                 </TextView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="right">
                 <Button
                     android:id="@+id/plusBallsInnerTele"
                     style="@style/t019_plusMinusButton"
-                    android:layout_marginLeft="195dp"
                     android:text="+" />
                 <AutoCompleteTextView
                     android:id="@+id/txtBallsInnerTele"
@@ -504,6 +540,7 @@
                     style="@style/t019_plusMinusButton"
                     android:layout_weight="0"
                     android:text="-" />
+            </LinearLayout>
             </LinearLayout>
             <TextView
                 android:id="@+id/ballsAcquiredTele"
@@ -524,10 +561,14 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="22dp">
                 </TextView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="right">
                 <Button
                     android:id="@+id/plusBallsFloorTele"
                     style="@style/t019_plusMinusButton"
-                    android:layout_marginLeft="240dp"
                     android:text="+" />
                 <AutoCompleteTextView
                     android:id="@+id/txtFloorTele"
@@ -542,6 +583,7 @@
                     android:layout_weight="0"
                     android:text="-" />
             </LinearLayout>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -554,10 +596,14 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="22dp">
                 </TextView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="right">
                 <Button
                     android:id="@+id/plusBallsLowChuteTele"
                     style="@style/t019_plusMinusButton"
-                    android:layout_marginLeft="185dp"
                     android:text="+" />
                 <AutoCompleteTextView
                     android:id="@+id/txtBallsLowChuteTele"
@@ -572,6 +618,7 @@
                     android:layout_weight="0"
                     android:text="-" />
             </LinearLayout>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -584,10 +631,14 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="22dp">
                 </TextView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="right">
                 <Button
                     android:id="@+id/plusBallsHighChuteTele"
                     style="@style/t019_plusMinusButton"
-                    android:layout_marginLeft="182dp"
                     android:text="+" />
                 <AutoCompleteTextView
                     android:id="@+id/txtBallsHighChuteTele"
@@ -601,6 +652,7 @@
                     style="@style/t019_plusMinusButton"
                     android:layout_weight="0"
                     android:text="-" />
+            </LinearLayout>
             </LinearLayout>
             <TextView
                 android:id="@+id/controlPanelInteraction"
@@ -618,6 +670,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Performed Rotation Control"
+                    android:layout_weight="1"
                     android:textSize="22dp">
                 </TextView>
                 <CheckBox
@@ -636,6 +689,7 @@
                     android:id="@+id/performedPositoinControl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Performed Position Control"
                     android:textSize="22dp">
                 </TextView>
@@ -674,6 +728,7 @@
                     android:id="@+id/hanging"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Hanging"
                     android:textSize="22dp">
                 </TextView>
@@ -693,6 +748,7 @@
                     android:id="@+id/parked"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Parked"
                     android:textSize="22dp">
                 </TextView>

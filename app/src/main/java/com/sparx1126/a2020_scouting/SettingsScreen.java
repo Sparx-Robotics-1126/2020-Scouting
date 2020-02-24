@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SettingsScreen extends AppCompatActivity {
-    private boolean firstTimeChecked = false;
     private SharedPreferences settings;
     private SharedPreferences.Editor editor;
     private static BlueAllianceNetwork blueAlliance;
@@ -49,20 +48,16 @@ public class SettingsScreen extends AppCompatActivity {
     private RadioButton team3;
 
     private boolean configured;
-    private boolean BlueAllianceChosen;
+    private boolean blueAllianceChosen;
     private int chosenTeam;
     private String selectedEvent;
 
     private Spinner eventSpinner;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_screen);
-
-        changeUi();
-        firstTimeChecked = false;
 
         settings = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
         editor = settings.edit();
@@ -92,8 +87,7 @@ public class SettingsScreen extends AppCompatActivity {
                 final String selectedItem = eventSpinner.getSelectedItem().toString();
                 if (!selectedItem.contentEquals(getResources().getString(R.string.selectEvent))) {
                     String previousSelectedEvent = settings.getString(getResources().getString(R.string.pref_SelectedEvent), "");
-                    Log.e("selected Event:", selectedItem);
-
+                    Log.d("selected Event:", selectedItem);
                 }
             }
 
@@ -106,13 +100,12 @@ public class SettingsScreen extends AppCompatActivity {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SettingsScreen.this, MainActivity.class));
-
+                finish();
             }
         });
 
         scoutingTabletLayout = findViewById(R.id.scoutingTabletLayout);
-        if(!settings.getBoolean(getString(R.string.scouting), false)) {
+        if(!settings.getBoolean(getString(R.string.SCOUT), false)) {
             scoutingTabletLayout.setVisibility(View.INVISIBLE);
         }
 
@@ -121,18 +114,10 @@ public class SettingsScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(alliance.getText().toString().equals("RED ALLIANCE")){
-                    BlueAllianceChosen = true;
-                    Welcome.toggledBlue = true;
-                    alliance.setText("BLUE ALLIANCE");
-                    alliance.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
-                    alliance.setTextColor(getResources().getColor(R.color.BText));
+                    blueAllianceChosen = true;
                     changeUi();
                 }else if(alliance.getText().toString().equals("BLUE ALLIANCE")){
-                    BlueAllianceChosen = false;
-                    Welcome.toggledBlue = false;
-                    alliance.setText("RED ALLIANCE");
-                    alliance.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
-                    alliance.setTextColor(getResources().getColor(R.color.RText));
+                    blueAllianceChosen = false;
                     changeUi();
                 }
             }
@@ -148,6 +133,10 @@ public class SettingsScreen extends AppCompatActivity {
 
         teamNum = findViewById(R.id.teamInput);
         teamNum.setText(settings.getString(getString(R.string.TEAM), "team number not found"));
+
+        blueAllianceChosen = settings.getBoolean("pref_BlueAlliance", false);
+        configured = settings.getBoolean("tablet_Configured", false);
+        changeUi();
     }
 
     @Override
@@ -158,14 +147,18 @@ public class SettingsScreen extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(!configured)
+        if(!configured) {
             Toast.makeText(SettingsScreen.this, "You can't leave until you have configured", Toast.LENGTH_LONG).show();
+        }
+        else {
+            Toast.makeText(SettingsScreen.this, "Press Exit to return with no changes...", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void reconfigure() {
         AlertDialog.Builder builder = new AlertDialog.Builder(SettingsScreen.this);
         builder.setTitle("Reconfigure");
-        builder.setMessage("Please enter the Admin password to continue");
+        builder.setMessage("Please enter the Password to continue");
         // Set an EditText view to get user input
         final EditText input = new EditText(this);
         builder.setView(input);
@@ -181,23 +174,20 @@ public class SettingsScreen extends AppCompatActivity {
                     editor.putString(getString(R.string.EMAIL), "");
                     editor.putString(getString(R.string.PASSWORD), "");
                     editor.putString(getString(R.string.TEAM), "");
-                    editor.putBoolean(getString(R.string.scouting), false);
+                    editor.putBoolean(getString(R.string.SCOUT), false);
                     editor.putBoolean(getString(R.string.tablet_Configured), false);
                     editor.putInt(getString(R.string.pref_TeamPosition), 0);
                     BlueAllianceEvent.getEvents("").clear();
                     BlueAllianceMatch.getMatches().clear();
                     editor.apply();
 
-
-                    Intent switchToWelcome = new Intent(SettingsScreen.this, Welcome.class);
-                    startActivity(switchToWelcome);
+                    finish();
                 }
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                Intent stayHere = new Intent(SettingsScreen.this, SettingsScreen.class);
-                startActivity(stayHere);
+                dialog.dismiss();
             }
         });
         builder.create().show();
@@ -206,7 +196,7 @@ public class SettingsScreen extends AppCompatActivity {
     private void configure() {
         AlertDialog.Builder builder = new AlertDialog.Builder(SettingsScreen.this);
         builder.setTitle("Configure");
-        builder.setMessage("Please enter you email password to continue");
+        builder.setMessage("Please enter the Password to continue");
         // Set an EditText view to get user input
         final EditText input = new EditText(this);
         builder.setView(input);
@@ -231,7 +221,7 @@ public class SettingsScreen extends AppCompatActivity {
                         }
 
                         editor.putBoolean("tablet_Configured", configured);
-                        editor.putBoolean("pref_BlueAlliance", BlueAllianceChosen);
+                        editor.putBoolean("pref_BlueAlliance", blueAllianceChosen);
                         editor.putInt("pref_TeamPosition", chosenTeam);
                         editor.putString(getResources().getString(R.string.pref_SelectedEvent), selectedEvent);
                         editor.apply();
@@ -251,9 +241,7 @@ public class SettingsScreen extends AppCompatActivity {
                             }
                         });
 
-                        Log.e("selectedEvent", selectedEvent);
-                        Intent switchToMain = new Intent(SettingsScreen.this, MainActivity.class);
-                        startActivity(switchToMain);
+                        finish();
                     }else{
                         Toast.makeText(SettingsScreen.this, "You didn't change anything",Toast.LENGTH_LONG).show();
                     }
@@ -262,15 +250,14 @@ public class SettingsScreen extends AppCompatActivity {
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                Intent stayHere = new Intent(SettingsScreen.this, SettingsScreen.class);
-                startActivity(stayHere);
+                dialog.dismiss();
             }
         });
         builder.create().show();
     }
 
     public  void changeUi(){
-        if(Welcome.toggledBlue){
+        if(blueAllianceChosen){
             LinearLayout li = (LinearLayout)findViewById(R.id.background);
             li.setBackgroundColor(getResources().getColor(R.color.BBackground));
             Button recon = findViewById(R.id.reconfigure);
@@ -298,6 +285,9 @@ public class SettingsScreen extends AppCompatActivity {
             t2.setTextColor(getResources().getColor(R.color.BText));
             RadioButton t3 = findViewById(R.id.team3);
             t3.setTextColor(getResources().getColor(R.color.BText));
+            alliance.setText("BLUE ALLIANCE");
+            alliance.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            alliance.setTextColor(getResources().getColor(R.color.BText));
         }else{
             LinearLayout li = (LinearLayout)findViewById(R.id.background);
             li.setBackgroundColor(getResources().getColor(R.color.RBackground));
@@ -326,6 +316,9 @@ public class SettingsScreen extends AppCompatActivity {
             t2.setTextColor(getResources().getColor(R.color.RText));
             RadioButton t3 = findViewById(R.id.team3);
             t3.setTextColor(getResources().getColor(R.color.RText));
+            alliance.setText("RED ALLIANCE");
+            alliance.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
+            alliance.setTextColor(getResources().getColor(R.color.RText));
         }
     }
 
@@ -385,12 +378,8 @@ public class SettingsScreen extends AppCompatActivity {
 
     private void restorePreferences() {
         downLoadEvents();
-        boolean tabletConfigured = settings.getBoolean(getResources().getString(R.string.tablet_Configured), false);
-        boolean scoutingTablet = settings.getBoolean(getResources().getString(R.string.scouting), false);
-        if (tabletConfigured && !firstTimeChecked) {
-            firstTimeChecked = true;
-            startActivity(new Intent(SettingsScreen.this, MainActivity.class));
-        }else if(scoutingTablet){
+        boolean scoutingTablet = settings.getBoolean(getResources().getString(R.string.SCOUT), false);
+        if(scoutingTablet){
             boolean blueAllianceToggled = settings.getBoolean(getResources().getString(R.string.pref_BlueAlliance), false);
             if (blueAllianceToggled == true && !alliance.getText().equals("BLUE ALLIANCE")) {
                 alliance.performClick();

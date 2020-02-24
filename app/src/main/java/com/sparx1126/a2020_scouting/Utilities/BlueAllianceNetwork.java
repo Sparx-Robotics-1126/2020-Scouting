@@ -22,9 +22,9 @@ public class BlueAllianceNetwork {
     private final String TAG = "BlueAllianceNetwork";
     private final String AUTH_TAG="X-TBA-Auth-Key";
     private static final String BLUE_ALLIANCE_KEY = "4EFyOEdszrGNcCJuibGSr6W92SjET2cfhx2QU9Agxv3LNASra77KcsCEv5GnoSIq";
-    private static final String YEAR = "2019";
+    private static final String YEAR = "2020";
     //Not set as final as it is intened to be changed at will in settings menu
-    private static  String teamKey = "frc1126";
+    private static String teamKey = "frc1126";
     // intention is for {event_key} to be substituted in the url handed to the okhttp client
     private static String EVENT_TEAMS_URL_TAIL = "event/{event_key}/teams";
     private static String EVENT_RANKS_URL_TAIL = "event/{event_key}/rankings";
@@ -32,7 +32,7 @@ public class BlueAllianceNetwork {
     private static String TEAM_EVENTS_URL_TAIL = "team/{team_key}/events/" + YEAR;
     private static String TEAM_SPECIFIC_EVENT_MATCHES="team/{team_key}/event/{event_key}/matches/simple";
     private static String EVENT_MATCHES_URL_TAIL = "event/{event_key}/matches/simple";
- //Private constructor> only one instance per app instance
+    //Private constructor> only one instance per app instance
     private BlueAllianceNetwork(){client=new OkHttpClient();}
 
     public  static synchronized BlueAllianceNetwork getInstance(){
