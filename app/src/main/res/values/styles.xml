@@ -55,4 +55,42 @@
         <item name="android:padding">0dp</item>
     </style>
 
+    <style name="jcas_bigOlButton">
+    </style>
+
+    <style name="jcas_background">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">#777777</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="jcas_backgroundComplement" parent="jcas_background">
+        <item name="android:background">#BBBBBB</item>
+    </style>
+
+    <style name="jcas_editText">
+    </style>
+
+    <style name="jcas_textView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="jcas_headerTextView" parent="jcas_textView">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="jcas_checkBox">
+    </style>
+
+    <style name="jcas_spinner">
+    </style>
+
+    <style name="jcas_horizontalBlock">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
 </resources>
