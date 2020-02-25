@@ -95,12 +95,12 @@ public class scouting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scouting);
-        blueAllianceChosen = settings.getBoolean("pref_BlueAlliance", false);
         changeUi();
         login();
 
         save = findViewById(R.id.Save);
         settings = getSharedPreferences("Sparx_prefs", 0);
+        blueAllianceChosen = settings.getBoolean("pref_BlueAlliance", false);
         logout = findViewById(R.id.logOut);
         name = findViewById(R.id.name);
 
@@ -798,6 +798,7 @@ public class scouting extends AppCompatActivity {
         Set<String> keys = BlueAllianceMatch.getMatches().keySet();
         BlueAllianceMatch matchObj = matches.get(String.valueOf(matchnum));
         ArrayList<String> allainceKeySet;
+        Log.i("TEST#",keys.toString());
         boolean blue = settings.getBoolean("pref_BlueAlliance",false);
         if(blue){
             allainceKeySet=matchObj.getBlueTeamKeys();
