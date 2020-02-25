@@ -130,6 +130,7 @@ public class scouting extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                findTeam();
+               Log.e("restor data", "data has been sent");
                 RestoreData(new Integer(txtMatch.getText().toString()));
             }
         });
@@ -361,11 +362,12 @@ public class scouting extends AppCompatActivity {
         gm.downloadMail(new GetMail.Callback() {
             @Override
             public void handleFinishDownload(Map<String, JSONObject> mails) {
-                if(mails.containsKey((settings.getString("pref_SelectedEvent",null)+".frc1126."+ txtMatch.getText().toString()+".json"))){
-                    ScoutingData.parseJson(mails.get((settings.getString("pref_SelectedEvent",null)+".frc1126."+ txtMatch.getText().toString()+".json")).toString());
+                if (mails.containsKey((settings.getString("pref_SelectedEvent", null) + ".frc1126." + txtMatch.getText().toString() + ".json"))) {
+                    ScoutingData.parseJson(mails.get((settings.getString("pref_SelectedEvent", null) + ".frc1126." + txtMatch.getText().toString() + ".json")).toString());
                     Log.e("ssssssssssssssssssss", ScoutingData.getData().toString());
                     Map<String, ScoutingData> scouting = ScoutingData.getData();
                 }
+                Log.e("tag", String.valueOf(mails.size()));
             }
         });
     }
