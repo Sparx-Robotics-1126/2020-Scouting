@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         boolean tabletConfigured = settings.getBoolean(getResources().getString(R.string.tablet_Configured), false);
         if(!tabletConfigured) {
+            Log.d("MainActivity: ", "tablet not configured");
             startActivity(new Intent(MainActivity.this, SettingsScreen.class));
         }
     }
@@ -48,21 +49,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRestart(){
         super.onRestart();
-        //Log.e("resumimg main", "mian");
-        String selectedEvent = settings.getString(getResources().getString(R.string.pref_SelectedEvent), "");
-        //Log.e("selected event", selectedEvent);
-        if(selectedEvent.isEmpty()) {
+        if(!settings.getBoolean(getResources().getString(R.string.tablet_Configured), false)) {
+            Log.d("MainActivity: ", "going back to welcome screen");
             finish();
         }
-
     }
 
     @Override
     public void onStart(){
         super.onStart();
-        //Log.e("resumimg main", "mian");
         String selectedEvent = settings.getString(getResources().getString(R.string.pref_SelectedEvent), "");
-        //Log.e("selected event", selectedEvent);
         if(!selectedEvent.isEmpty()) {
             blueAlliance.downloadEventRanks(selectedEvent, new BlueAllianceNetwork.Callback() {
                 @Override
@@ -94,8 +90,6 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            //Log.i("TAG", _data);
-                            //System.out.println(_data);
                             BlueAllianceMatch.parseDataToBAMMap(_data);
                         }
                     });

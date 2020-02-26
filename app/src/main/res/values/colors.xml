@@ -7,6 +7,7 @@
 
     <color name="RED">#FF000B</color>
     <color name="BLUE">#004BEC</color>
+    <color name="BLACK">#000000</color>
 
     <!-- radio button theme -->
     <color name="interact">#8A8A8A</color>
