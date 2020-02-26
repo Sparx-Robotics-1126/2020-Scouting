@@ -24,6 +24,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sparx1126.a2020_scouting.BlueAllianceData.*;
+import com.sparx1126.a2020_scouting.Utilities.GetMail;
 import com.sparx1126.a2020_scouting.Utilities.SendMail;
 import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
 
@@ -38,6 +39,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import static com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch.getMatches;
@@ -97,6 +99,7 @@ public class scouting extends AppCompatActivity {
         setContentView(R.layout.activity_scouting);
 
         settings = getSharedPreferences("Sparx_prefs", 0);
+        editor = settings.edit();
         blueAllianceChosen = settings.getBoolean("pref_BlueAlliance", false);
         changeUi();
         login();
@@ -127,6 +130,7 @@ public class scouting extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                findTeam();
+                RestoreData(new Integer(txtMatch.getText().toString()));
             }
         });
 
@@ -349,6 +353,22 @@ public class scouting extends AppCompatActivity {
         }else{
             login();
         }
+
+    }
+
+    public void RestoreData(final int matchNum){
+        GetMail gm = GetMail.getInstance(scouting.this);
+        gm.downloadMail(new GetMail.Callback() {
+            @Override
+            public void handleFinishDownload(Map<String, JSONObject> mails) {
+                if(mails.containsKey((settings.getString("pref_SelectedEvent",null)+".frc1126."+ txtMatch.getText().toString()+".json"))){
+                    ScoutingData.parseJson(mails.get((settings.getString("pref_SelectedEvent",null)+".frc1126."+ txtMatch.getText().toString()+".json")).toString());
+                    Map<String, ScoutingData> scouting = ScoutingData.getData();
+                    name.setText(scouting.get(matchNum).getScouterName());
+
+                }
+            }
+        });
     }
 
     public void Save(){
@@ -378,7 +398,6 @@ public class scouting extends AppCompatActivity {
         }
 
         //hardcoded 1126 bc the scouting screen aint fully done
-
     }
 
     public void plusBalls(AutoCompleteTextView view){
@@ -784,13 +803,14 @@ public class scouting extends AppCompatActivity {
 
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
+                editor.putString(getString(R.string.scouter), "");
+                editor.apply();
                 name.setText(value);
-
             }
         });
         builder.setNegativeButton("Cancel" ,new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                startActivity(new Intent(scouting.this, Welcome.class));
+                finish();
             }
         });
         builder.create().show();
@@ -808,11 +828,13 @@ public class scouting extends AppCompatActivity {
         if(blue){
             allainceKeySet=matchObj.getBlueTeamKeys();
         }
-        else
-            allainceKeySet=matchObj.getRedTeamKeys();
+        else {
+            allainceKeySet = matchObj.getRedTeamKeys();
+        }
         teamText=(allainceKeySet.get(settings.getInt("pref_TeamPosition",0)-1)).replace("frc","");
         teamScouting.setText(teamText);
     }
+
     private boolean isValidJsonArray(String _data) {
        try{
            new JSONObject(_data);

@@ -261,6 +261,10 @@ public class ScoutingData extends JsonData {
                 '}';
     }
 
+    public static Map<String, ScoutingData> getData(){
+        return data;
+    }
+
     public void setScouterName(String scouterName) {
         this.scouterName = scouterName;
     }

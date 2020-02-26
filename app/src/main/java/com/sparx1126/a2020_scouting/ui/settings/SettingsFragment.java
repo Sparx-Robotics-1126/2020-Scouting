@@ -21,6 +21,8 @@ public class SettingsFragment extends Fragment {
         Intent intent = new Intent(getActivity(), SettingsScreen.class);
         startActivity(intent);
 
+        getFragmentManager().popBackStack();
+
         return root;
     }
 }

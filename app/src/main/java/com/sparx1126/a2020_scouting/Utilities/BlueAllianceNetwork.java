@@ -35,7 +35,7 @@ public class BlueAllianceNetwork {
     //Private constructor> only one instance per app instance
     private BlueAllianceNetwork(){client=new OkHttpClient();}
 
-    public  static synchronized BlueAllianceNetwork getInstance(){
+    public static synchronized BlueAllianceNetwork getInstance(){
         if (instance==null){
             instance=new BlueAllianceNetwork();
         }

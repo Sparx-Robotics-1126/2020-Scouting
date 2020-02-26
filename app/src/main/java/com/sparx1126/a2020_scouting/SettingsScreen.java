@@ -100,7 +100,11 @@ public class SettingsScreen extends AppCompatActivity {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                if(settings.getBoolean(getString(R.string.tablet_Configured), false)){
+                    finish();
+                }else{
+                    Toast.makeText(SettingsScreen.this, "You have not configured the tablet, please do so before you leave", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -241,6 +245,7 @@ public class SettingsScreen extends AppCompatActivity {
                             }
                         });
 
+                        Log.e("selected event 1:", selectedEvent);
                         finish();
                     }else{
                         Toast.makeText(SettingsScreen.this, "You didn't change anything",Toast.LENGTH_LONG).show();
@@ -288,6 +293,8 @@ public class SettingsScreen extends AppCompatActivity {
             alliance.setText("BLUE ALLIANCE");
             alliance.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
             alliance.setTextColor(getResources().getColor(R.color.BText));
+            exit.setTextColor(getResources().getColor(R.color.BText));
+            exit.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
         }else{
             LinearLayout li = (LinearLayout)findViewById(R.id.background);
             li.setBackgroundColor(getResources().getColor(R.color.RBackground));
@@ -319,6 +326,9 @@ public class SettingsScreen extends AppCompatActivity {
             alliance.setText("RED ALLIANCE");
             alliance.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
             alliance.setTextColor(getResources().getColor(R.color.RText));
+            exit.setTextColor(getResources().getColor(R.color.RText));
+            exit.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
+
         }
     }
 

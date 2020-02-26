@@ -5,6 +5,7 @@
     <string name="title_settings">Settings</string>
     <string name="title_scoutings">Scoutings</string>
     <string name="selectEvent">Select Event</string>
+    <string name="scouter">scouter</string>
     <string name="pref_SelectedEvent">pref_SelectedEvent</string>
     <string name="pref_BlueAlliance">pref_BlueAlliance</string>
     <string name="pref_TeamPosition">pref_TeamPosition</string>

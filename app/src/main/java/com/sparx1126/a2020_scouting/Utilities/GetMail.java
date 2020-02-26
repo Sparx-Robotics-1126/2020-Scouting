@@ -5,6 +5,14 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -14,19 +22,36 @@ import javax.mail.Store;
 import javax.mail.Folder;
 import javax.mail.NoSuchProviderException;
 
+import okhttp3.Call;
+import okhttp3.Response;
+
 //Class is extending AsyncTask because this class is going to perform a networking operation
 public class GetMail extends AsyncTask<Void,Void,Void> {
 
+    public interface Callback {
+        void handleFinishDownload(Map<String, JSONObject> mails);
+    }
+
     //Declaring Variables
-    private Context context;
+    private static Context context;
+    private static GetMail instance;
+    private Callback cb;
+
+    private static  Map<String, JSONObject> JSONMails = new HashMap<>();
 
     //Progressdialog to show while sending email
     private ProgressDialog progressDialog;
 
+    public static synchronized GetMail getInstance(Context _context){
+        if (instance==null){
+            instance=new GetMail();
+        }
+        context = _context;
+        return instance;
+    }
+
     //Class Constructor
-    public GetMail(Context context){
-        //Initializing variables
-        this.context = context;
+    private GetMail(){
     }
 
     @Override
@@ -67,6 +92,7 @@ public class GetMail extends AsyncTask<Void,Void,Void> {
             //Fetch messages from the folder and print in a loop
             Message[] messageobjs = emailFolderObj.getMessages();
 
+            JSONMails.clear();
             for (int i = 0, n = messageobjs.length; i < n; i++) {
                 Message indvidualmsg = messageobjs[i];
                 System.out.println("Printing individual messages");
@@ -74,6 +100,11 @@ public class GetMail extends AsyncTask<Void,Void,Void> {
                 System.out.println("Email Subject: " + indvidualmsg.getSubject());
                 System.out.println("Sender: " + indvidualmsg.getFrom()[0]);
                 System.out.println("Content: " + indvidualmsg.getContent().toString());
+
+                if(isValidJsonArray(indvidualmsg.getContent().toString())){
+                    JSONMails.put(indvidualmsg.getSubject(), new JSONObject(indvidualmsg.getContent().toString()));
+                }
+                cb.handleFinishDownload(JSONMails);
 
             }
             //Now close all the objects
@@ -87,5 +118,23 @@ public class GetMail extends AsyncTask<Void,Void,Void> {
             exp.printStackTrace();
         }
         return null;
+    }
+
+    public void downloadMail(final GetMail.Callback callback){
+        cb = callback;
+        this.execute();
+    }
+
+    private boolean isValidJsonArray(String _data) {
+        try{
+            new JSONObject(_data);
+        }catch(JSONException ex){
+            try{
+                new JSONArray(_data);
+            } catch (JSONException ex1){
+                return false;
+            }
+        }
+        return true;
     }
 }
