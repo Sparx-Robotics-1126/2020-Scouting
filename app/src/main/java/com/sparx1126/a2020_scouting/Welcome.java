@@ -48,7 +48,6 @@ public class Welcome extends AppCompatActivity {
         });
 
         changeUi();
-
         checkPreferences();
     }
 //This change UI may never be actually used since the tablet will always be configured after this screen is seen.
@@ -119,6 +118,7 @@ public class Welcome extends AppCompatActivity {
             } else if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 Toast.makeText(Welcome.this, "checkPreferences: No email or bad email found (" + email + ")", Toast.LENGTH_LONG).show();
             } else {
+                Log.d("Welcome: ", "switching to main");
                 BlueAllianceNetwork.getInstance().seteamKey("frc" + team);
                 startActivity(new Intent(Welcome.this, MainActivity.class));
             }
@@ -129,7 +129,7 @@ public class Welcome extends AppCompatActivity {
     }
 
     public void login() {
-        Log.d("Welcome: ", "login");
+        Log.d("Welcome: ", "login pushed");
         String email, password, team;
         boolean isScouting;
         email = emailInput.getText().toString();
