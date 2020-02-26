@@ -97,7 +97,7 @@ public class HomeFragment extends Fragment {
                posTxt.setTextColor(getResources().getColor(R.color.RText));
                posInput.setTextColor(getResources().getColor(R.color.RText));
                View background = root.findViewById(R.id.background);
-               background.setBackgroundColor(getResources().getColor(R.color.BBackground));
+               background.setBackgroundColor(getResources().getColor(R.color.RBackground));
            }
         }
 

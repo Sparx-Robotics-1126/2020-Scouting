@@ -3,6 +3,7 @@ package com.sparx1126.a2020_scouting.Utilities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -15,12 +16,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.mail.BodyPart;
+import javax.mail.FetchProfile;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.Folder;
 import javax.mail.NoSuchProviderException;
+import javax.mail.internet.MimeMultipart;
 
 import okhttp3.Call;
 import okhttp3.Response;
@@ -36,6 +40,7 @@ public class GetMail extends AsyncTask<Void,Void,Void> {
     private static Context context;
     private static GetMail instance;
     private Callback cb;
+    private boolean executed = false;
 
     private static  Map<String, JSONObject> JSONMails = new HashMap<>();
 
@@ -67,6 +72,7 @@ public class GetMail extends AsyncTask<Void,Void,Void> {
         //Dismissing the progress dialog
         progressDialog.dismiss();
         //Showing a success message
+        cb.handleFinishDownload(JSONMails);
         Toast.makeText(context,"Got Email",Toast.LENGTH_LONG).show();
     }
 
@@ -91,22 +97,24 @@ public class GetMail extends AsyncTask<Void,Void,Void> {
             emailFolderObj.open(Folder.READ_ONLY);
             //Fetch messages from the folder and print in a loop
             Message[] messageobjs = emailFolderObj.getMessages();
+            FetchProfile fp = new FetchProfile();
+            fp.add(FetchProfile.Item.FLAGS);
+            emailFolderObj.fetch(messageobjs, fp);
 
             JSONMails.clear();
             for (int i = 0, n = messageobjs.length; i < n; i++) {
                 Message indvidualmsg = messageobjs[i];
-                System.out.println("Printing individual messages");
-                System.out.println("No# " + (i + 1));
-                System.out.println("Email Subject: " + indvidualmsg.getSubject());
-                System.out.println("Sender: " + indvidualmsg.getFrom()[0]);
-                System.out.println("Content: " + indvidualmsg.getContent().toString());
+//                System.out.println("Printing individual messages");
+//                System.out.println("No# " + (i + 1));
+//                System.out.println("Email Subject: " + indvidualmsg.getSubject());
+//                Log.e("Sender: " , indvidualmsg.getFrom()[0]);
+                Log.e("Content: ", getTextFromMessage(indvidualmsg));
 
-                if(isValidJsonArray(indvidualmsg.getContent().toString())){
-                    JSONMails.put(indvidualmsg.getSubject(), new JSONObject(indvidualmsg.getContent().toString()));
+                if(isValidJsonArray(getTextFromMessage(indvidualmsg))) {
+                    JSONMails.put(indvidualmsg.getSubject(), new JSONObject(getTextFromMessage(indvidualmsg)));
                 }
-                cb.handleFinishDownload(JSONMails);
-
             }
+
             //Now close all the objects
             emailFolderObj.close(false);
             storeObj.close();
@@ -122,7 +130,10 @@ public class GetMail extends AsyncTask<Void,Void,Void> {
 
     public void downloadMail(final GetMail.Callback callback){
         cb = callback;
-        this.execute();
+        if(!executed) {
+            this.execute();
+            executed = true;
+        }
     }
 
     private boolean isValidJsonArray(String _data) {
@@ -137,4 +148,32 @@ public class GetMail extends AsyncTask<Void,Void,Void> {
         }
         return true;
     }
+
+    private String getTextFromMessage(Message message) throws MessagingException, IOException {
+        String result = "";
+        if (message.isMimeType("text/plain")) {
+            result = message.getContent().toString();
+        } else if (message.isMimeType("multipart/*")) {
+            MimeMultipart mimeMultipart = (MimeMultipart) message.getContent();
+            result = getTextFromMimeMultipart(mimeMultipart);
+        }
+        return result;
+    }
+
+    private String getTextFromMimeMultipart(
+            MimeMultipart mimeMultipart)  throws MessagingException, IOException{
+        String result = "";
+        int count = mimeMultipart.getCount();
+        for (int i = 0; i < count; i++) {
+            BodyPart bodyPart = mimeMultipart.getBodyPart(i);
+            if (bodyPart.isMimeType("text/plain")) {
+                result = result + "\n" + bodyPart.getContent();
+                break; // without break same text appears twice in my tests
+            } else if (bodyPart.getContent() instanceof MimeMultipart){
+                result = result + getTextFromMimeMultipart((MimeMultipart)bodyPart.getContent());
+            }
+        }
+        return result;
+    }
+
 }
