@@ -18,4 +18,31 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_scouting">scouting</string>
     <string name="title_activity_ranking">Ranking</string>
+    <string-array name="driveTypes">
+    <item>Select Type of Drive</item>
+    <item>Tank</item>
+    <item>Mecanum</item>
+    <item>Swerve</item>
+    <item>H-Drive / Slide</item>
+    <item>Other</item>
+    </string-array>
+    <string-array name="wheelTypes">
+        <item>Select Type of Wheels</item>
+        <item>Traction Narrow</item>
+        <item>Traction Wide</item>
+        <item>Omni</item>
+        <item>Tank Treads</item>
+        <item>Combination Traction And Omni</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="visionTypes">
+        <item>Select Vision Type</item>
+        <item>Auto Detect Goal</item>
+        <item>Driver Vision</item>
+        <item>Both</item>
+    </string-array>
+    <string-array name="startPos">
+        <item>Select Start Position</item>
+    </string-array>
 </resources>
+

@@ -6,14 +6,72 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="5dp">
         <!--General Kenobi-->
         <LinearLayout
             style="@style/jcas_background">
             <!--Header-->
+
             <TextView
                 style="@style/jcas_headerTextView"
-                android:text="General"/>
+                android:text="General" />
+
+            <Spinner
+                android:id="@+id/driveType"
+                style="@style/jcas_spinner"/>
+
+            <Spinner
+                android:id="@+id/wheelType"
+                style="@style/jcas_spinner"/>
+
+            <LinearLayout
+                style="@style/jcas_horizontalBlock"
+                >
+                <TextView
+                    style="@style/jcas_textView"
+                    android:text="Number Wheels:"/>
+                <EditText
+                    style="@style/jcas_editText" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/jcas_horizontalBlock"
+                >
+                <TextView
+                    style="@style/jcas_textView"
+                    android:text="Max Speed:"/>
+                <EditText
+                    style="@style/jcas_editText" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/jcas_horizontalBlock"
+                >
+                <TextView
+                    style="@style/jcas_textView"
+                    android:text="Normal Height:"/>
+                <EditText
+                    style="@style/jcas_editText" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/jcas_horizontalBlock"
+                >
+                <TextView
+                    style="@style/jcas_textView"
+                    android:text="Weight:"/>
+                <EditText
+                    style="@style/jcas_editText" />
+
+            </LinearLayout>
+
+            <Spinner
+                android:id="@+id/visionType"
+                style="@style/jcas_spinner"/>
 
         </LinearLayout>
         <!--Auto-->
@@ -24,6 +82,47 @@
                 style="@style/jcas_headerTextView"
                 android:text="Auto"/>
 
+            <Spinner
+                android:id="@+id/startPos"
+                style="@style/jcas_spinner"/>
+
+            <LinearLayout
+                style="@style/jcas_horizontalBlock">
+                <TextView
+                    style="@style/jcas_textView"
+                    android:text="Max Starting Power Cells"/>
+                <com.sparx1126.a2020_scouting.Utilities.PlusMinusEditTextLinearLayout
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/jcas_horizontalBlock">
+                <TextView
+                    style="@style/jcas_textView"
+                    android:text="Can Score Bottom Port"/>
+                <CheckBox
+                    style="@style/jcas_checkBox"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/jcas_horizontalBlock">
+                <TextView
+                    style="@style/jcas_textView"
+                    android:text="Can Score Inner/Outer Port"/>
+                <CheckBox
+                    style="@style/jcas_checkBox"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/jcas_horizontalBlock">
+                <TextView
+                    style="@style/jcas_textView"
+                    android:text="Can Acquire From Floor"/>
+                <CheckBox
+                    style="@style/jcas_checkBox"/>
+            </LinearLayout>
+
         </LinearLayout>
         <!--Teleop-->
         <LinearLayout
@@ -33,6 +132,33 @@
                 style="@style/jcas_headerTextView"
                 android:text="Teleop"/>
 
+            <LinearLayout
+                style="@style/jcas_horizontalBlock">
+                <TextView
+                    style="@style/jcas_textView"
+                    android:text="Can Score Bottom Port"/>
+                <CheckBox
+                    style="@style/jcas_checkBox"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/jcas_horizontalBlock">
+                <TextView
+                    style="@style/jcas_textView"
+                    android:text="Can Score Inner/Outer Port"/>
+                <CheckBox
+                    style="@style/jcas_checkBox"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/jcas_horizontalBlock">
+                <TextView
+                    style="@style/jcas_textView"
+                    android:text="Can Acquire From Floor"/>
+                <CheckBox
+                    style="@style/jcas_checkBox"/>
+            </LinearLayout>
+
         </LinearLayout>
         <!--Avengers: End Game-->
         <LinearLayout
@@ -41,7 +167,23 @@
             <TextView
                 style="@style/jcas_headerTextView"
                 android:text="End Game"/>
+            <LinearLayout
+                style="@style/jcas_horizontalBlock">
+                <TextView
+                    style="@style/jcas_textView"
+                    android:text="Can Climb"/>
+                <CheckBox
+                    style="@style/jcas_checkBox"/>
+            </LinearLayout>
 
+            <LinearLayout
+                style="@style/jcas_horizontalBlock">
+                <TextView
+                    style="@style/jcas_textView"
+                    android:text="Can Actively Level"/>
+                <CheckBox
+                    style="@style/jcas_checkBox"/>
+            </LinearLayout>
 
         </LinearLayout>
         <!--Comments-->
@@ -51,6 +193,10 @@
             <TextView
                 style="@style/jcas_headerTextView"
                 android:text="Comments"/>
+            <EditText
+                style="@style/jcas_editText"
+                android:layout_width="match_parent"
+                />
 
         </LinearLayout>
 

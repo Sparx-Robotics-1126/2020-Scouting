@@ -62,7 +62,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">#777777</item>
-        <item name="android:orientation">horizontal</item>
+        <item name="android:orientation">vertical</item>
     </style>
 
     <style name="jcas_backgroundComplement" parent="jcas_background">
@@ -70,11 +70,14 @@
     </style>
 
     <style name="jcas_editText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">text</item>
     </style>
 
     <style name="jcas_textView">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
     </style>
 
     <style name="jcas_headerTextView" parent="jcas_textView">
@@ -82,9 +85,13 @@
     </style>
 
     <style name="jcas_checkBox">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
     </style>
 
     <style name="jcas_spinner">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="jcas_horizontalBlock">
