@@ -102,11 +102,11 @@ public class SettingsScreen extends AppCompatActivity {
         alliance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(alliance.getText().toString().equals("RED ALLIANCE")){
-                    blueAllianceChosen = false;
-                    changeUi();
-                }else if(alliance.getText().toString().equals("BLUE ALLIANCE")){
+                if(alliance.getText().toString().equals("RED ALLIANCE")){ // use to be red changing to blue
                     blueAllianceChosen = true;
+                    changeUi();
+                }else if(alliance.getText().toString().equals("BLUE ALLIANCE")){ // use to be blue changing to red
+                    blueAllianceChosen = false;
                     changeUi();
                 }
             }
