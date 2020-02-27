@@ -7,16 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import com.sparx1126.a2020_scouting.R;
-import com.sparx1126.a2020_scouting.SettingsScreen;
-
-import org.w3c.dom.Text;
 
 public class HomeFragment extends Fragment {
     private SharedPreferences settings;
@@ -32,14 +25,12 @@ public class HomeFragment extends Fragment {
     private TextView posInput;
     private TextView txtColor;
     private TextView colorInput;
-
-    private HomeViewModel homeViewModel;
+    private View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+
+        root = inflater.inflate(R.layout.fragment_home, container, false);
         settings = getActivity().getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
 
         //email
@@ -68,44 +59,44 @@ public class HomeFragment extends Fragment {
 
             txtColor = root.findViewById(R.id.txtColor);
             colorInput = root.findViewById(R.id.colorInput);
-           if(settings.getBoolean(getString(R.string.pref_BlueAlliance), false)){
-               txtColor.setTextColor(getResources().getColor(R.color.BText));
-               colorInput.setBackgroundColor(getResources().getColor(R.color.BLUE));
-               emailtxt.setTextColor(getResources().getColor(R.color.BText));
-               emailInput.setTextColor(getResources().getColor(R.color.BText));
-               teamtxt.setTextColor(getResources().getColor(R.color.BText));
-               teamInput.setTextColor(getResources().getColor(R.color.BText));
-               eventtxt.setTextColor(getResources().getColor(R.color.BText));
-               eventInput.setTextColor(getResources().getColor(R.color.BText));
-               scoutertxt.setTextColor(getResources().getColor(R.color.BText));
-               scouterInput.setTextColor(getResources().getColor(R.color.BText));
-               posTxt.setTextColor(getResources().getColor(R.color.BText));
-               posInput.setTextColor(getResources().getColor(R.color.BText));
-               View background = root.findViewById(R.id.background);
-               background.setBackgroundColor(getResources().getColor(R.color.BBackground));
-           }else{
-               txtColor.setTextColor(getResources().getColor(R.color.RText));
-               colorInput.setBackgroundColor(getResources().getColor(R.color.RED));
-               emailtxt.setTextColor(getResources().getColor(R.color.RText));
-               emailInput.setTextColor(getResources().getColor(R.color.RText));
-               teamtxt.setTextColor(getResources().getColor(R.color.RText));
-               teamInput.setTextColor(getResources().getColor(R.color.RText));
-               eventtxt.setTextColor(getResources().getColor(R.color.RText));
-               eventInput.setTextColor(getResources().getColor(R.color.RText));
-               scoutertxt.setTextColor(getResources().getColor(R.color.RText));
-               scouterInput.setTextColor(getResources().getColor(R.color.RText));
-               posTxt.setTextColor(getResources().getColor(R.color.RText));
-               posInput.setTextColor(getResources().getColor(R.color.RText));
-               View background = root.findViewById(R.id.background);
-               background.setBackgroundColor(getResources().getColor(R.color.RBackground));
-           }
         }
 
         return root;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onStart(){
+        super.onStart();
+        if(settings.getBoolean(getString(R.string.pref_BlueAlliance), false)){
+            txtColor.setTextColor(getResources().getColor(R.color.BText));
+            colorInput.setBackgroundColor(getResources().getColor(R.color.BLUE));
+            emailtxt.setTextColor(getResources().getColor(R.color.BText));
+            emailInput.setTextColor(getResources().getColor(R.color.BText));
+            teamtxt.setTextColor(getResources().getColor(R.color.BText));
+            teamInput.setTextColor(getResources().getColor(R.color.BText));
+            eventtxt.setTextColor(getResources().getColor(R.color.BText));
+            eventInput.setTextColor(getResources().getColor(R.color.BText));
+            scoutertxt.setTextColor(getResources().getColor(R.color.BText));
+            scouterInput.setTextColor(getResources().getColor(R.color.BText));
+            posTxt.setTextColor(getResources().getColor(R.color.BText));
+            posInput.setTextColor(getResources().getColor(R.color.BText));
+            View background = root.findViewById(R.id.background);
+            background.setBackgroundColor(getResources().getColor(R.color.BBackground));
+        }else{
+            txtColor.setTextColor(getResources().getColor(R.color.RText));
+            colorInput.setBackgroundColor(getResources().getColor(R.color.RED));
+            emailtxt.setTextColor(getResources().getColor(R.color.RText));
+            emailInput.setTextColor(getResources().getColor(R.color.RText));
+            teamtxt.setTextColor(getResources().getColor(R.color.RText));
+            teamInput.setTextColor(getResources().getColor(R.color.RText));
+            eventtxt.setTextColor(getResources().getColor(R.color.RText));
+            eventInput.setTextColor(getResources().getColor(R.color.RText));
+            scoutertxt.setTextColor(getResources().getColor(R.color.RText));
+            scouterInput.setTextColor(getResources().getColor(R.color.RText));
+            posTxt.setTextColor(getResources().getColor(R.color.RText));
+            posInput.setTextColor(getResources().getColor(R.color.RText));
+            View background = root.findViewById(R.id.background);
+            background.setBackgroundColor(getResources().getColor(R.color.RBackground));
+        }
     }
 }

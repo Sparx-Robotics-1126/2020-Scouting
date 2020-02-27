@@ -59,7 +59,7 @@ public class Welcome extends AppCompatActivity {
         teamInput.setText("");
         scoutingCheck.setChecked(false);
     }
-
+    
 //This change UI may never be actually used since the tablet will always be configured after this screen is seen.
     public  void changeUi(){
         Log.d("Welcome: ", "toggleBlue " + toggledBlue);
