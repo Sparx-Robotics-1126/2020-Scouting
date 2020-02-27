@@ -103,10 +103,10 @@ public class SettingsScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(alliance.getText().toString().equals("RED ALLIANCE")){
-                    blueAllianceChosen = true;
+                    blueAllianceChosen = false;
                     changeUi();
                 }else if(alliance.getText().toString().equals("BLUE ALLIANCE")){
-                    blueAllianceChosen = false;
+                    blueAllianceChosen = true;
                     changeUi();
                 }
             }
@@ -157,6 +157,10 @@ public class SettingsScreen extends AppCompatActivity {
                     input.setText("");
                 } else {
                     editor.putBoolean(getString(R.string.tablet_Configured), false);
+                    editor.putString(getString(R.string.EMAIL), "");
+                    editor.putString(getString(R.string.PASSWORD), "");
+                    editor.putString(getString(R.string.TEAM), "");
+                    editor.putBoolean(getString(R.string.SCOUT), false);
                     editor.apply();
                     Log.d("Settings: ", "reconfiguring");
 
@@ -205,7 +209,7 @@ public class SettingsScreen extends AppCompatActivity {
                         editor.putString(getResources().getString(R.string.pref_SelectedEvent), selectedEvent);
                         editor.apply();
 
-                        Log.d("selected event 1:", selectedEvent);
+                        Log.d("selected event:", selectedEvent);
                         finish();
                     }else{
                         Toast.makeText(SettingsScreen.this, "You didn't change anything",Toast.LENGTH_LONG).show();
