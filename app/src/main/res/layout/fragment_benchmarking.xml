@@ -41,7 +41,7 @@
                 >
                 <TextView
                     style="@style/jcas_textView"
-                    android:text="Max Speed:"/>
+                    android:text="Max Speed(mph):"/>
                 <EditText
                     style="@style/jcas_editText" />
 
@@ -52,7 +52,7 @@
                 >
                 <TextView
                     style="@style/jcas_textView"
-                    android:text="Normal Height:"/>
+                    android:text="Normal Height():"/>
                 <EditText
                     style="@style/jcas_editText" />
 
@@ -63,7 +63,7 @@
                 >
                 <TextView
                     style="@style/jcas_textView"
-                    android:text="Weight:"/>
+                    android:text="Weight():"/>
                 <EditText
                     style="@style/jcas_editText" />
 
@@ -196,6 +196,7 @@
             <EditText
                 style="@style/jcas_editText"
                 android:layout_width="match_parent"
+                android:inputType="text"
                 />
 
         </LinearLayout>
