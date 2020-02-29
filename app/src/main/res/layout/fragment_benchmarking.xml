@@ -7,7 +7,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:background="@color/background">
+        <!--No header-->
+        <LinearLayout
+            style="@style/jcas_backgroundComplement">
+            <LinearLayout
+                style="@style/jcas_horizontalBlock">
+                <TextView
+                    style="@style/jcas_textView"
+                    android:text="Team Number"/>
+                <EditText
+                    style="@style/jcas_editText" />
+            </LinearLayout>
+        </LinearLayout>
         <!--General Kenobi-->
         <LinearLayout
             style="@style/jcas_background">
@@ -23,7 +35,7 @@
 
             <Spinner
                 android:id="@+id/wheelType"
-                style="@style/jcas_spinner"/>
+                style="@style/jcas_spinner" />
 
             <LinearLayout
                 style="@style/jcas_horizontalBlock"
@@ -41,7 +53,7 @@
                 >
                 <TextView
                     style="@style/jcas_textView"
-                    android:text="Max Speed(mph):"/>
+                    android:text="Max Speed(ft/s):"/>
                 <EditText
                     style="@style/jcas_editText" />
 
@@ -52,7 +64,7 @@
                 >
                 <TextView
                     style="@style/jcas_textView"
-                    android:text="Normal Height():"/>
+                    android:text="Normal Height(ft):"/>
                 <EditText
                     style="@style/jcas_editText" />
 
@@ -63,7 +75,7 @@
                 >
                 <TextView
                     style="@style/jcas_textView"
-                    android:text="Weight():"/>
+                    android:text="Weight(lbs):"/>
                 <EditText
                     style="@style/jcas_editText" />
 
@@ -91,9 +103,8 @@
                 <TextView
                     style="@style/jcas_textView"
                     android:text="Max Starting Power Cells"/>
-                <com.sparx1126.a2020_scouting.Utilities.PlusMinusEditTextLinearLayout
-                    android:layout_height="match_parent"
-                    android:layout_width="wrap_content" />
+                <EditText
+                    style="@style/jcas_editText"/>
             </LinearLayout>
 
             <LinearLayout

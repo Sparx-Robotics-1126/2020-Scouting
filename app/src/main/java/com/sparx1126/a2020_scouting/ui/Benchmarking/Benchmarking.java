@@ -27,7 +27,7 @@ public class Benchmarking extends AppCompatActivity {
 
         String[] driveTypesArray = getResources().getStringArray(R.array.driveTypes);
         driveType = findViewById(R.id.driveType);
-        SpinnerAdapter driveAdapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, driveTypesArray);
+        SpinnerAdapter driveAdapter = new ArrayAdapter<>(this, R.layout.benchmarking_spinner, driveTypesArray);
         driveType.setAdapter(driveAdapter);
         driveType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -43,7 +43,7 @@ public class Benchmarking extends AppCompatActivity {
 
         String[] wheelTypesArray = getResources().getStringArray(R.array.wheelTypes);
         wheelType = findViewById(R.id.wheelType);
-        SpinnerAdapter wheelAdapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, wheelTypesArray);
+        SpinnerAdapter wheelAdapter = new ArrayAdapter<>(this, R.layout.benchmarking_spinner, wheelTypesArray);
         wheelType.setAdapter(wheelAdapter);
         wheelType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -59,7 +59,7 @@ public class Benchmarking extends AppCompatActivity {
 
         String[] visionTypesArray = getResources().getStringArray(R.array.visionTypes);
         visionType = findViewById(R.id.visionType);
-        SpinnerAdapter visionAdapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, visionTypesArray);
+        SpinnerAdapter visionAdapter = new ArrayAdapter<>(this, R.layout.benchmarking_spinner, visionTypesArray);
         visionType.setAdapter(visionAdapter);
         visionType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -75,7 +75,7 @@ public class Benchmarking extends AppCompatActivity {
 
         String[] startPosArray = getResources().getStringArray(R.array.startPos);
         startPos = findViewById(R.id.startPos);
-        SpinnerAdapter startAdapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, startPosArray);
+        SpinnerAdapter startAdapter = new ArrayAdapter<>(this, R.layout.benchmarking_spinner, startPosArray);
         startPos.setAdapter(startAdapter);
         startPos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

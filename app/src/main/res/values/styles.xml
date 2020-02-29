@@ -8,7 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-
     <style name="J_spinner">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
@@ -56,37 +55,45 @@
     </style>
 
     <style name="jcas_bigOlButton">
+        <item name="android:background">@color/complement</item>
+        <item name="android:textColor">@color/textColorComplement</item>
     </style>
 
     <style name="jcas_background">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">#777777</item>
         <item name="android:orientation">vertical</item>
+        <item name="android:padding">5dp</item>
     </style>
 
     <style name="jcas_backgroundComplement" parent="jcas_background">
-        <item name="android:background">#BBBBBB</item>
+        <item name="android:background">@color/backgroundSupplement</item>
+        <item name="android:layout_margin">5dp</item>
     </style>
 
     <style name="jcas_editText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">number</item>
+        <item name="android:textColor">@color/textColorComplement</item>
     </style>
 
     <style name="jcas_textView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/textColor</item>
     </style>
 
     <style name="jcas_headerTextView" parent="jcas_textView">
         <item name="android:layout_width">match_parent</item>
+        <item name="android:textSize">30sp</item>
     </style>
 
     <style name="jcas_checkBox">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
+        <item name="android:buttonTint">@color/complement</item>
     </style>
 
     <style name="jcas_spinner">

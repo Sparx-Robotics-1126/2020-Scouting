@@ -3,8 +3,9 @@
     android:id="@+id/cust_spin"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:gravity="left|center_vertical"
+    android:gravity="start|center_vertical"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
     android:textIsSelectable="false"
-    android:background = "#EEEEEE"/>
+    android:textColor="@color/textColorComplement"
+    android:background = "@color/complement"/>
