@@ -2,8 +2,7 @@ package com.sparx1126.a2020_scouting;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceEvent;
-import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
+import com.sparx1126.a2020_scouting.BlueAllianceData.*;
 import com.sparx1126.a2020_scouting.Utilities.*;
 
 import android.app.AlertDialog;
@@ -12,7 +11,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -123,8 +121,8 @@ public class SettingsScreen extends AppCompatActivity {
         teamNum = findViewById(R.id.teamInput);
         teamNum.setText(settings.getString(getString(R.string.TEAM), "team number not found"));
 
-        blueAllianceChosen = settings.getBoolean("pref_BlueAlliance", false);
-        configured = settings.getBoolean("tablet_Configured", false);
+        blueAllianceChosen = settings.getBoolean(getString(R.string.pref_BlueAlliance), false);
+        configured = settings.getBoolean(getResources().getString(R.string.tablet_Configured), false);
         changeUi();
         downLoadEvents();
         restorePreferences();

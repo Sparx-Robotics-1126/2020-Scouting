@@ -50,27 +50,28 @@
             </TextView>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="254dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="right">
+                android:gravity="right"
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/plusMatch"
-                style="@style/t019_plusMinusButton"
-                android:text="+" />
-            <AutoCompleteTextView
-                android:id="@+id/txtMatch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textStyle="bold" />
+                <Button
+                    android:id="@+id/plusMatch"
+                    style="@style/t019_plusMinusButton"
+                    android:text="+" />
 
-            <Button
-                android:id="@+id/minusMatch"
-                style="@style/t019_plusMinusButton"
-                android:layout_weight="0"
-                android:text="-" />
+                <TextView
+                    android:id="@+id/txtMatch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/minusMatch"
+                    style="@style/t019_plusMinusButton"
+                    android:layout_weight="0"
+                    android:text="-" />
             </LinearLayout>
         </LinearLayout>
 
@@ -254,7 +255,7 @@
                         android:id="@+id/plusBallsBottemAuto"
                         style="@style/t019_plusMinusButton"
                         android:text="+" />
-                    <AutoCompleteTextView
+                    <TextView
                         android:id="@+id/txtBallsBottomAuto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -290,7 +291,7 @@
                         android:id="@+id/plusBallsOuterAuto"
                         style="@style/t019_plusMinusButton"
                         android:text="+" />
-                    <AutoCompleteTextView
+                    <TextView
                         android:id="@+id/txtBallsOuterAuto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -326,7 +327,7 @@
                         android:id="@+id/plusBallsInnerAuto"
                         style="@style/t019_plusMinusButton"
                         android:text="+" />
-                    <AutoCompleteTextView
+                    <TextView
                         android:id="@+id/txtBallsInnerAuto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -374,7 +375,7 @@
                         android:id="@+id/plusBallsFloorAuto"
                         style="@style/t019_plusMinusButton"
                         android:text="+" />
-                    <AutoCompleteTextView
+                    <TextView
                         android:id="@+id/txtBallsFloorAuto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -458,7 +459,7 @@
                     android:id="@+id/plusBallsBottemTele"
                     style="@style/t019_plusMinusButton"
                     android:text="+" />
-                <AutoCompleteTextView
+                <TextView
                     android:id="@+id/txtBallsBottemTele"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -493,7 +494,7 @@
                     android:id="@+id/plusBallsOuterTele"
                     style="@style/t019_plusMinusButton"
                     android:text="+" />
-                <AutoCompleteTextView
+                <TextView
                     android:id="@+id/txtBallsOuterTele"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -528,7 +529,7 @@
                     android:id="@+id/plusBallsInnerTele"
                     style="@style/t019_plusMinusButton"
                     android:text="+" />
-                <AutoCompleteTextView
+                <TextView
                     android:id="@+id/txtBallsInnerTele"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -570,7 +571,7 @@
                     android:id="@+id/plusBallsFloorTele"
                     style="@style/t019_plusMinusButton"
                     android:text="+" />
-                <AutoCompleteTextView
+                <TextView
                     android:id="@+id/txtFloorTele"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -605,7 +606,7 @@
                     android:id="@+id/plusBallsLowChuteTele"
                     style="@style/t019_plusMinusButton"
                     android:text="+" />
-                <AutoCompleteTextView
+                <TextView
                     android:id="@+id/txtBallsLowChuteTele"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -640,7 +641,7 @@
                     android:id="@+id/plusBallsHighChuteTele"
                     style="@style/t019_plusMinusButton"
                     android:text="+" />
-                <AutoCompleteTextView
+                <TextView
                     android:id="@+id/txtBallsHighChuteTele"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

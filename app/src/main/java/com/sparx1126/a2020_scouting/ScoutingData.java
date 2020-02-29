@@ -4,6 +4,7 @@ import android.service.autofill.FieldClassification;
 import android.util.Log;
 
 
+import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
 import com.sparx1126.a2020_scouting.BlueAllianceData.JsonData;
 
 import org.json.JSONArray;
@@ -68,6 +69,30 @@ public class ScoutingData extends JsonData {
     private String leveling;
 
     private static Map<String, ScoutingData> data = new HashMap<>();
+
+    public ScoutingData(String match_num){
+        this.scouterName = "";
+        this.MatchNumber = match_num;
+        this.TeamScouted = "";
+        this.startingPos = "";
+        this.PowerCellAtStart = "";
+        this.ballsScoredOnBottomAuto = "";
+        this.ballsScoredOnOuterAuto = "";
+        this.ballsScoredOnInnerAuto = "";
+        this.ballsAcquiredFloorAuto = "";
+        this.crossesInitiatoinLine = "";
+        this.ballsScoredOnBottomTele = "";
+        this.ballsScoredOnOuterTele = "";
+        this.ballsScoredOnInnerTele = "";
+        this.ballsAcquiredFloorTele = "";
+        this.ballsAcquiredLowChuteTele = "";
+        this.ballsAcquiredHighChuteTele = "";
+        this.preformedRotationControl = "";
+        this.performedPositionControl = "";
+        this.hanging = "";
+        this.parked = "";
+        this.leveling = "";
+    }
 
     public ScoutingData(String scouterName,
              String MatchNumber,
@@ -196,6 +221,10 @@ public class ScoutingData extends JsonData {
                 PowerCellsScored + powerCellsStart + "," + PowerCellsAcqFloor + "," + crosses + "},"
                 + "\"Teleop\":{" +  PowerCellsScoredTele + PowerCellsAcqTele + ControlPanel + "}," +
                 "\"EndGame\":{" + rendezoas + leveling+ "}" + "}");
+    }
+
+    public static void setJson(Map<String, BlueAllianceMatch> bam){
+
     }
 
     public static void parseJson(String str){

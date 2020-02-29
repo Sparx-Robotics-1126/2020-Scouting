@@ -2,19 +2,13 @@ package com.sparx1126.a2020_scouting;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
@@ -26,71 +20,59 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.sparx1126.a2020_scouting.BlueAllianceData.*;
 import com.sparx1126.a2020_scouting.Utilities.GetMail;
 import com.sparx1126.a2020_scouting.Utilities.SendMail;
-import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
-
 
 import android.view.View;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
-import static com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch.getMatches;
-
-public class scouting extends AppCompatActivity {
+public class Scouting extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private Button logout;
     private TextView name;
     private SharedPreferences settings;
 
     private Button plusMatch;
-    private AutoCompleteTextView txtMatch;
+    private TextView txtMatch;
     private TextView teamScouting;
     private Button minusMatch;
     private Button plusBallsBottemAuto;
-    private AutoCompleteTextView txtBallsBottomAuto;
+    private TextView txtBallsBottomAuto;
     private Button minusBallsBottemAuto;
     private Button plusBallsOuterAuto;
-    private AutoCompleteTextView txtBallsOuterAuto;
+    private TextView txtBallsOuterAuto;
     private Button minusBallsOuterAuto;
     private Button plusBallsInnerAuto;
-    private AutoCompleteTextView txtBallsInnerAuto;
+    private TextView txtBallsInnerAuto;
     private Button minusBallsInnerAuto;
     private Button plusBallsFloorAuto;
-    private AutoCompleteTextView txtBallsFloorAuto;
+    private TextView txtBallsFloorAuto;
     private Button minusBallsFloorAuto;
     private Button plusBallsBottemTele;
-    private AutoCompleteTextView txtBallsBottemTele;
+    private TextView txtBallsBottemTele;
     private Button minusBallsBottemTele;
     private Button plusBallsOuterTele;
-    private AutoCompleteTextView txtBallsOuterTele;
+    private TextView txtBallsOuterTele;
     private Button minusBallsOuterTele;
     private Button plusBallsInnerTele;
-    private AutoCompleteTextView txtBallsInnerTele;
+    private TextView txtBallsInnerTele;
     private Button minusBallsInnerTele;
     private Button plusBallsFloorTele;
-    private AutoCompleteTextView txtBallsFloorTele;
+    private TextView txtBallsFloorTele;
     private Button minusBallsFloorTele;
     private Button plusBallsLowChuteTele;
-    private AutoCompleteTextView txtBallsLowChuteTele;
+    private TextView txtBallsLowChuteTele;
     private Button minusBallsLowChuteTele;
     private Button plusBallsHighChuteTele;
-    private AutoCompleteTextView txtBallsHighChuteTele;
+    private TextView txtBallsHighChuteTele;
     private Button minusBallsHighChuteTele;
 
-
-    private TextView match;
     private Button save;
-    private AutoCompleteTextView balls;
     private SendMail mail;
-    private BlueAllianceNetwork ban;
     private boolean blueAllianceChosen;
 
     @Override
@@ -98,11 +80,9 @@ public class scouting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scouting);
 
-        settings = getSharedPreferences("Sparx_prefs", 0);
+        settings = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
         editor = settings.edit();
-        blueAllianceChosen = settings.getBoolean("pref_BlueAlliance", false);
-        changeUi();
-        login();
+        blueAllianceChosen = settings.getBoolean(getResources().getString(R.string.pref_BlueAlliance), false);
 
         save = findViewById(R.id.Save);
         logout = findViewById(R.id.logOut);
@@ -129,9 +109,9 @@ public class scouting extends AppCompatActivity {
             }
             @Override
             public void afterTextChanged(Editable s) {
-               findTeam();
-               Log.e("restor data", "data has been sent");
-                RestoreData(new Integer(txtMatch.getText().toString()));
+               if(findTeam()) {
+                   //RestoreData(new Integer(txtMatch.getText().toString()));
+               }
             }
         });
 
@@ -276,15 +256,12 @@ public class scouting extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 plusBalls(txtBallsFloorTele);
-                Log.e("plusBallsFloorTele", "true");
             }
         });
         minusBallsFloorTele.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 minusBalls(txtBallsFloorTele);
-                Log.e("minusBallsFloorTele", "true");
-
             }
         });
 
@@ -327,14 +304,14 @@ public class scouting extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(scouting.this);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(Scouting.this);
                 builder.setTitle("Log Out");
                 builder.setMessage("Are you sure you want to log out");
 
                 builder.setPositiveButton("cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(scouting.this ,scouting.class));
+                        dialog.dismiss();
                     }
                 });
 
@@ -348,28 +325,42 @@ public class scouting extends AppCompatActivity {
             }
         });
 
-        if(!settings.getString("email", "email not found").equals("email not found")){
-            name.setText(settings.getString("email", "email ont found"));
-            name.setTextSize(30f);
-        }else{
+        changeUi();
+        String scouter = settings.getString(getString(R.string.scouter), "");
+        if(scouter.isEmpty()) {
             login();
         }
-
+        else {
+            name.setText(scouter);
+        }
     }
 
     public void RestoreData(final int matchNum){
-        GetMail gm = GetMail.getInstance(scouting.this);
-        gm.downloadMail(new GetMail.Callback() {
-            @Override
-            public void handleFinishDownload(Map<String, JSONObject> mails) {
-                if (mails.containsKey((settings.getString("pref_SelectedEvent", null) + ".frc1126." + txtMatch.getText().toString() + ".json"))) {
-                    ScoutingData.parseJson(mails.get((settings.getString("pref_SelectedEvent", null) + ".frc1126." + txtMatch.getText().toString() + ".json")).toString());
-                    Log.e("ssssssssssssssssssss", ScoutingData.getData().toString());
-                    Map<String, ScoutingData> scouting = ScoutingData.getData();
-                }
-                Log.e("tag", String.valueOf(mails.size()));
-            }
-        });
+       Map<String, ScoutingData> data = ScoutingData.getData();
+       if(data.get("starting_pos").equals("Closest to Power Port")){
+           RadioGroup startingGroup = findViewById(R.id.startingPosition);
+           startingGroup.check(R.id.closest);
+       }else if(data.get("starting_pos").equals("Middle")){
+           RadioGroup startingGroup = findViewById(R.id.startingPosition);
+           startingGroup.check(R.id.middle);
+       }else if(data.get("starting_pos").equals("Farthest to Power Port")){
+           RadioGroup startingGroup = findViewById(R.id.startingPosition);
+           startingGroup.check(R.id.farthest);
+       }
+
+       if(data.get("power_cell_start").equals("None")){
+            RadioGroup startingBalls = findViewById(R.id.startingBalls);
+            startingBalls.check(R.id.none);
+        }else if(data.get("power_cell_start").equals("One")){
+           RadioGroup startingBalls = findViewById(R.id.startingBalls);
+           startingBalls.check(R.id.one);
+        }else if(data.get("power_cell_start").equals("Two")){
+           RadioGroup startingBalls = findViewById(R.id.startingBalls);
+           startingBalls.check(R.id.one);
+        }else if(data.get("power_cell_start").equals("Three")){
+           RadioGroup startingBalls = findViewById(R.id.startingBalls);
+           startingBalls.check(R.id.one);
+       }
     }
 
     public void Save(){
@@ -392,20 +383,20 @@ public class scouting extends AppCompatActivity {
                     txtBallsOuterTele.getText().toString(), txtBallsInnerTele.getText().toString(), txtBallsFloorTele.getText().toString(), txtBallsLowChuteTele.getText().toString(),
                     txtBallsHighChuteTele.getText().toString(), ""+performendRot.isChecked(), ""+performedPos.isChecked(), ""+hanging.isChecked(),
                     ""+parked.isChecked(), leveled.getText().toString());
-            mail = new SendMail(scouting.this, getResources().getString(R.string.sparx_email), settings.getString("pref_SelectedEvent",null)+".frc1126."+ txtMatch.getText().toString()+".json" ,scoutingData.toJson());
+            String email = settings.getString(getString(R.string.EMAIL), "");
+            String subject = settings.getString("pref_SelectedEvent",null)+".frc1126."+ txtMatch.getText().toString()+".json";
+            mail = new SendMail(Scouting.this, email, subject, scoutingData.toJson());
             mail.execute();
         }else{
             Toast.makeText(this, "Don't forget to fill out hte entire form", Toast.LENGTH_LONG).show();
         }
-
-        //hardcoded 1126 bc the scouting screen aint fully done
     }
 
-    public void plusBalls(AutoCompleteTextView view){
+    public void plusBalls(TextView view){
         int value = Integer.parseInt(view.getText().toString());
         view.setText(String.valueOf(value + 1));
     }
-    public void minusBalls(AutoCompleteTextView view){
+    public void minusBalls(TextView view){
         int value = Integer.parseInt(view.getText().toString());
         view.setText(String.valueOf(value - 1));
     }
@@ -425,7 +416,7 @@ public class scouting extends AppCompatActivity {
             Button plusMatch = findViewById(R.id.plusMatch);
             plusMatch.setTextColor(getResources().getColor(R.color.BText));
             plusMatch.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
-            AutoCompleteTextView txtMatch = findViewById(R.id.txtMatch);
+            TextView txtMatch = findViewById(R.id.txtMatch);
             txtMatch.setTextColor(getResources().getColor(R.color.BText));
             Button minusMatch = findViewById(R.id.minusMatch);
             minusMatch.setTextColor(getResources().getColor(R.color.BText));
@@ -468,7 +459,7 @@ public class scouting extends AppCompatActivity {
             Button plusBallsBottemAuto = findViewById(R.id.plusBallsBottemAuto);
             plusBallsBottemAuto.setTextColor(getResources().getColor(R.color.BText));
             plusBallsBottemAuto.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
-            AutoCompleteTextView txtBallsBottemAuto = findViewById(R.id.txtBallsBottomAuto);
+            TextView txtBallsBottemAuto = findViewById(R.id.txtBallsBottomAuto);
             txtBallsBottemAuto.setTextColor(getResources().getColor(R.color.BText));
             Button minusBallsBottemAuto = findViewById(R.id.minusBallsBottemAuto);
             minusBallsBottemAuto.setTextColor(getResources().getColor(R.color.BText));
@@ -478,7 +469,7 @@ public class scouting extends AppCompatActivity {
             Button plusBallsOuterAuto = findViewById(R.id.plusBallsOuterAuto);
             plusBallsOuterAuto.setTextColor(getResources().getColor(R.color.BText));
             plusBallsOuterAuto.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
-            AutoCompleteTextView txtBallsOuterAuto = findViewById(R.id.txtBallsOuterAuto);
+            TextView txtBallsOuterAuto = findViewById(R.id.txtBallsOuterAuto);
             txtBallsOuterAuto.setTextColor(getResources().getColor(R.color.BText));
             Button minusBallsOuterAuto = findViewById(R.id.minusBallsOuterAuto);
             minusBallsOuterAuto.setTextColor(getResources().getColor(R.color.BText));
@@ -488,7 +479,7 @@ public class scouting extends AppCompatActivity {
             Button plusBallsInnerAuto = findViewById(R.id.plusBallsInnerAuto);
             plusBallsInnerAuto.setTextColor(getResources().getColor(R.color.BText));
             plusBallsInnerAuto.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
-            AutoCompleteTextView txtBallsInnerAuto = findViewById(R.id.txtBallsInnerAuto);
+            TextView txtBallsInnerAuto = findViewById(R.id.txtBallsInnerAuto);
             txtBallsInnerAuto.setTextColor(getResources().getColor(R.color.BText));
             Button minusBallsInnerAuto = findViewById(R.id.minusBallsInnerAuto);
             minusBallsInnerAuto.setTextColor(getResources().getColor(R.color.BText));
@@ -500,7 +491,7 @@ public class scouting extends AppCompatActivity {
             Button plusBallsFloorAuto = findViewById(R.id.plusBallsFloorAuto);
             plusBallsFloorAuto.setTextColor(getResources().getColor(R.color.BText));
             plusBallsFloorAuto.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
-            AutoCompleteTextView txtBallsFloorAuto = findViewById(R.id.txtBallsFloorAuto);
+            TextView txtBallsFloorAuto = findViewById(R.id.txtBallsFloorAuto);
             txtBallsFloorAuto.setTextColor(getResources().getColor(R.color.BText));
             Button minusBallsFloorAuto = findViewById(R.id.minusBallsFloorAuto);
             minusBallsFloorAuto.setTextColor(getResources().getColor(R.color.BText));
@@ -518,7 +509,7 @@ public class scouting extends AppCompatActivity {
             Button plusBallsBottemtele = findViewById(R.id.plusBallsBottemTele);
             plusBallsBottemtele.setTextColor(getResources().getColor(R.color.BText));
             plusBallsBottemtele.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
-            AutoCompleteTextView txtBallsBottemTele = findViewById(R.id.txtBallsBottemTele);
+            TextView txtBallsBottemTele = findViewById(R.id.txtBallsBottemTele);
             txtBallsBottemTele.setTextColor(getResources().getColor(R.color.BText));
             Button minusBallsBottemTele = findViewById(R.id.minusBallsBottemTele);
             minusBallsBottemTele.setTextColor(getResources().getColor(R.color.BText));
@@ -528,7 +519,7 @@ public class scouting extends AppCompatActivity {
             Button plusBallsOuterTele = findViewById(R.id.plusBallsOuterTele);
             plusBallsOuterTele.setTextColor(getResources().getColor(R.color.BText));
             plusBallsOuterTele.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
-            AutoCompleteTextView txtBallsOuterTele = findViewById(R.id.txtBallsOuterTele);
+            TextView txtBallsOuterTele = findViewById(R.id.txtBallsOuterTele);
             txtBallsOuterTele.setTextColor(getResources().getColor(R.color.BText));
             Button minusBallsOuterTele = findViewById(R.id.minusBallsOuterTele);
             minusBallsOuterTele.setTextColor(getResources().getColor(R.color.BText));
@@ -538,7 +529,7 @@ public class scouting extends AppCompatActivity {
             Button plusBallsInnerTele = findViewById(R.id.plusBallsInnerTele);
             plusBallsInnerTele.setTextColor(getResources().getColor(R.color.BText));
             plusBallsInnerTele.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
-            AutoCompleteTextView txtBallsInnerTele = findViewById(R.id.txtBallsInnerTele);
+            TextView txtBallsInnerTele = findViewById(R.id.txtBallsInnerTele);
             txtBallsInnerTele.setTextColor(getResources().getColor(R.color.BText));
             Button minusBallsInnerTele = findViewById(R.id.minusBallsInnerTele);
             minusBallsInnerTele.setTextColor(getResources().getColor(R.color.BText));
@@ -550,7 +541,7 @@ public class scouting extends AppCompatActivity {
             Button plusBallsFloorTele = findViewById(R.id.plusBallsFloorTele);
             plusBallsFloorTele.setTextColor(getResources().getColor(R.color.BText));
             plusBallsFloorTele.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
-            AutoCompleteTextView txtBallsFloorTele = findViewById(R.id.txtFloorTele);
+            TextView txtBallsFloorTele = findViewById(R.id.txtFloorTele);
             txtBallsFloorTele.setTextColor(getResources().getColor(R.color.BText));
             Button minusBallsFloorTele = findViewById(R.id.minusBallsFloorTele);
             minusBallsFloorTele.setTextColor(getResources().getColor(R.color.BText));
@@ -560,7 +551,7 @@ public class scouting extends AppCompatActivity {
             Button plusBallsLowChuteTele = findViewById(R.id.plusBallsLowChuteTele);
             plusBallsLowChuteTele.setTextColor(getResources().getColor(R.color.BText));
             plusBallsLowChuteTele.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
-            AutoCompleteTextView txtBallsLowChuteTele = findViewById(R.id.txtBallsLowChuteTele);
+            TextView txtBallsLowChuteTele = findViewById(R.id.txtBallsLowChuteTele);
             txtBallsLowChuteTele.setTextColor(getResources().getColor(R.color.BText));
             Button minusBallsLowChuteTele = findViewById(R.id.minusBallsLowChuteTele);
             minusBallsLowChuteTele.setTextColor(getResources().getColor(R.color.BText));
@@ -570,7 +561,7 @@ public class scouting extends AppCompatActivity {
             Button plusBallsHighChuteTele = findViewById(R.id.plusBallsHighChuteTele);
             plusBallsHighChuteTele.setTextColor(getResources().getColor(R.color.BText));
             plusBallsHighChuteTele.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
-            AutoCompleteTextView txtBallsHighChuteTele = findViewById(R.id.txtBallsHighChuteTele);
+            TextView txtBallsHighChuteTele = findViewById(R.id.txtBallsHighChuteTele);
             txtBallsHighChuteTele.setTextColor(getResources().getColor(R.color.BText));
             Button minusBallsHighChuteTele = findViewById(R.id.minusBallsHighChuteTele);
             minusBallsHighChuteTele.setTextColor(getResources().getColor(R.color.BText));
@@ -614,7 +605,7 @@ public class scouting extends AppCompatActivity {
             Button plusMatch = findViewById(R.id.plusMatch);
             plusMatch.setTextColor(getResources().getColor(R.color.RText));
             plusMatch.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
-            AutoCompleteTextView txtMatch = findViewById(R.id.txtMatch);
+            TextView txtMatch = findViewById(R.id.txtMatch);
             txtMatch.setTextColor(getResources().getColor(R.color.RText));
             Button minusMatch = findViewById(R.id.minusMatch);
             minusMatch.setTextColor(getResources().getColor(R.color.RText));
@@ -657,7 +648,7 @@ public class scouting extends AppCompatActivity {
             Button plusBallsBottemAuto = findViewById(R.id.plusBallsBottemAuto);
             plusBallsBottemAuto.setTextColor(getResources().getColor(R.color.RText));
             plusBallsBottemAuto.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
-            AutoCompleteTextView txtBallsBottemAuto = findViewById(R.id.txtBallsBottomAuto);
+            TextView txtBallsBottemAuto = findViewById(R.id.txtBallsBottomAuto);
             txtBallsBottemAuto.setTextColor(getResources().getColor(R.color.RText));
             Button minusBallsBottemAuto = findViewById(R.id.minusBallsBottemAuto);
             minusBallsBottemAuto.setTextColor(getResources().getColor(R.color.RText));
@@ -667,7 +658,7 @@ public class scouting extends AppCompatActivity {
             Button plusBallsOuterAuto = findViewById(R.id.plusBallsOuterAuto);
             plusBallsOuterAuto.setTextColor(getResources().getColor(R.color.RText));
             plusBallsOuterAuto.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
-            AutoCompleteTextView txtBallsOuterAuto = findViewById(R.id.txtBallsOuterAuto);
+            TextView txtBallsOuterAuto = findViewById(R.id.txtBallsOuterAuto);
             txtBallsOuterAuto.setTextColor(getResources().getColor(R.color.RText));
             Button minusBallsOuterAuto = findViewById(R.id.minusBallsOuterAuto);
             minusBallsOuterAuto.setTextColor(getResources().getColor(R.color.RText));
@@ -677,7 +668,7 @@ public class scouting extends AppCompatActivity {
             Button plusBallsInnerAuto = findViewById(R.id.plusBallsInnerAuto);
             plusBallsInnerAuto.setTextColor(getResources().getColor(R.color.RText));
             plusBallsInnerAuto.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
-            AutoCompleteTextView txtBallsInnerAuto = findViewById(R.id.txtBallsInnerAuto);
+            TextView txtBallsInnerAuto = findViewById(R.id.txtBallsInnerAuto);
             txtBallsInnerAuto.setTextColor(getResources().getColor(R.color.RText));
             Button minusBallsInnerAuto = findViewById(R.id.minusBallsInnerAuto);
             minusBallsInnerAuto.setTextColor(getResources().getColor(R.color.RText));
@@ -689,7 +680,7 @@ public class scouting extends AppCompatActivity {
             Button plusBallsFloorAuto = findViewById(R.id.plusBallsFloorAuto);
             plusBallsFloorAuto.setTextColor(getResources().getColor(R.color.RText));
             plusBallsFloorAuto.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
-            AutoCompleteTextView txtBallsFloorAuto = findViewById(R.id.txtBallsFloorAuto);
+            TextView txtBallsFloorAuto = findViewById(R.id.txtBallsFloorAuto);
             txtBallsFloorAuto.setTextColor(getResources().getColor(R.color.RText));
             Button minusBallsFloorAuto = findViewById(R.id.minusBallsFloorAuto);
             minusBallsFloorAuto.setTextColor(getResources().getColor(R.color.RText));
@@ -707,7 +698,7 @@ public class scouting extends AppCompatActivity {
             Button plusBallsBottemtele = findViewById(R.id.plusBallsBottemTele);
             plusBallsBottemtele.setTextColor(getResources().getColor(R.color.RText));
             plusBallsBottemtele.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
-            AutoCompleteTextView txtBallsBottemTele = findViewById(R.id.txtBallsBottemTele);
+            TextView txtBallsBottemTele = findViewById(R.id.txtBallsBottemTele);
             txtBallsBottemTele.setTextColor(getResources().getColor(R.color.RText));
             Button minusBallsBottemTele = findViewById(R.id.minusBallsBottemTele);
             minusBallsBottemTele.setTextColor(getResources().getColor(R.color.RText));
@@ -717,7 +708,7 @@ public class scouting extends AppCompatActivity {
             Button plusBallsOuterTele = findViewById(R.id.plusBallsOuterTele);
             plusBallsOuterTele.setTextColor(getResources().getColor(R.color.RText));
             plusBallsOuterTele.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
-            AutoCompleteTextView txtBallsOuterTele = findViewById(R.id.txtBallsOuterTele);
+            TextView txtBallsOuterTele = findViewById(R.id.txtBallsOuterTele);
             txtBallsOuterTele.setTextColor(getResources().getColor(R.color.RText));
             Button minusBallsOuterTele = findViewById(R.id.minusBallsOuterTele);
             minusBallsOuterTele.setTextColor(getResources().getColor(R.color.RText));
@@ -727,7 +718,7 @@ public class scouting extends AppCompatActivity {
             Button plusBallsInnerTele = findViewById(R.id.plusBallsInnerTele);
             plusBallsInnerTele.setTextColor(getResources().getColor(R.color.RText));
             plusBallsInnerTele.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
-            AutoCompleteTextView txtBallsInnerTele = findViewById(R.id.txtBallsInnerTele);
+            TextView txtBallsInnerTele = findViewById(R.id.txtBallsInnerTele);
             txtBallsInnerTele.setTextColor(getResources().getColor(R.color.RText));
             Button minusBallsInnerTele = findViewById(R.id.minusBallsInnerTele);
             minusBallsInnerTele.setTextColor(getResources().getColor(R.color.RText));
@@ -739,7 +730,7 @@ public class scouting extends AppCompatActivity {
             Button plusBallsFloorTele = findViewById(R.id.plusBallsFloorTele);
             plusBallsFloorTele.setTextColor(getResources().getColor(R.color.RText));
             plusBallsFloorTele.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
-            AutoCompleteTextView txtBallsFloorTele = findViewById(R.id.txtFloorTele);
+            TextView txtBallsFloorTele = findViewById(R.id.txtFloorTele);
             txtBallsFloorTele.setTextColor(getResources().getColor(R.color.RText));
             Button minusBallsFloorTele = findViewById(R.id.minusBallsFloorTele);
             minusBallsFloorTele.setTextColor(getResources().getColor(R.color.RText));
@@ -749,7 +740,7 @@ public class scouting extends AppCompatActivity {
             Button plusBallsLowChuteTele = findViewById(R.id.plusBallsLowChuteTele);
             plusBallsLowChuteTele.setTextColor(getResources().getColor(R.color.RText));
             plusBallsLowChuteTele.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
-            AutoCompleteTextView txtBallsLowChuteTele = findViewById(R.id.txtBallsLowChuteTele);
+            TextView txtBallsLowChuteTele = findViewById(R.id.txtBallsLowChuteTele);
             txtBallsLowChuteTele.setTextColor(getResources().getColor(R.color.RText));
             Button minusBallsLowChuteTele = findViewById(R.id.minusBallsLowChuteTele);
             minusBallsLowChuteTele.setTextColor(getResources().getColor(R.color.RText));
@@ -759,7 +750,7 @@ public class scouting extends AppCompatActivity {
             Button plusBallsHighChuteTele = findViewById(R.id.plusBallsHighChuteTele);
             plusBallsHighChuteTele.setTextColor(getResources().getColor(R.color.RText));
             plusBallsHighChuteTele.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
-            AutoCompleteTextView txtBallsHighChuteTele = findViewById(R.id.txtBallsHighChuteTele);
+            TextView txtBallsHighChuteTele = findViewById(R.id.txtBallsHighChuteTele);
             txtBallsHighChuteTele.setTextColor(getResources().getColor(R.color.RText));
             Button minusBallsHighChuteTele = findViewById(R.id.minusBallsHighChuteTele);
             minusBallsHighChuteTele.setTextColor(getResources().getColor(R.color.RText));
@@ -793,7 +784,7 @@ public class scouting extends AppCompatActivity {
     }
 
     private void login(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(scouting.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(Scouting.this);
         builder.setTitle("Login");
         builder.setMessage("Please log in to continue");
         // Set an EditText view to get user input
@@ -815,38 +806,31 @@ public class scouting extends AppCompatActivity {
             }
         });
         builder.create().show();
-
     }
-    private void findTeam(){
-        String teamText;
-        int matchnum = Integer.parseInt(txtMatch.getText().toString());
-        Log.e("test7",String.valueOf(matchnum));
-        HashMap<String,BlueAllianceMatch> matches= BlueAllianceMatch.getMatches();
-        Set<String> keys = BlueAllianceMatch.getMatches().keySet();
-        BlueAllianceMatch matchObj = matches.get(String.valueOf(matchnum));
-        ArrayList<String> allainceKeySet;
-        boolean blue = settings.getBoolean("pref_BlueAlliance",false);
-        if(blue){
-            allainceKeySet=matchObj.getBlueTeamKeys();
+
+    private boolean findTeam(){
+        boolean found = false;
+        String matchnum = txtMatch.getText().toString();
+        HashMap<String, BlueAllianceMatch> matches = BlueAllianceMatch.getMatches();
+
+        if(matches.containsKey(matchnum)) {
+            BlueAllianceMatch matchObj = matches.get(matchnum);
+            ArrayList<String> allainceKeySet;
+            if(blueAllianceChosen){
+                allainceKeySet = matchObj.getBlueTeamKeys();
+            }
+            else {
+                allainceKeySet = matchObj.getRedTeamKeys();
+            }
+            int teamPosition = settings.getInt(getResources().getString(R.string.pref_TeamPosition),0);
+            String teamText = (allainceKeySet.get(teamPosition-1)).replace("frc","");
+            teamScouting.setText(teamText);
+            found = true;
         }
         else {
-            allainceKeySet = matchObj.getRedTeamKeys();
+            Toast.makeText(Scouting.this, "Match Not Found " + matchnum,Toast.LENGTH_LONG).show();
         }
-        teamText=(allainceKeySet.get(settings.getInt("pref_TeamPosition",0)-1)).replace("frc","");
-        teamScouting.setText(teamText);
-    }
-
-    private boolean isValidJsonArray(String _data) {
-       try{
-           new JSONObject(_data);
-       }catch(JSONException ex){
-           try{
-               new JSONArray(_data);
-           } catch (JSONException ex1){
-               return false;
-           }
-       }
-       return true;
+        return found;
     }
 }
 

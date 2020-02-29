@@ -17,6 +17,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
     private SharedPreferences settings;
     private static BlueAllianceNetwork blueAlliance;
@@ -91,6 +93,13 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             BlueAllianceMatch.parseDataToBAMMap(_data);
+                            if(ScoutingData.getData().isEmpty()){
+                                Map<String, BlueAllianceMatch> matchs = BlueAllianceMatch.getMatches();
+                                for(BlueAllianceMatch data : matchs.values()){
+                                    ScoutingData emptyData = new ScoutingData(data.getMatchNum());
+                                    ScoutingData.getData().put(data.getMatchNum(), emptyData);
+                                }
+                            }
                         }
                     });
                 }
