@@ -351,16 +351,24 @@ public class Scouting extends AppCompatActivity {
        if(data.get("power_cell_start").equals("None")){
             RadioGroup startingBalls = findViewById(R.id.startingBalls);
             startingBalls.check(R.id.none);
-        }else if(data.get("power_cell_start").equals("One")){
+       }else if(data.get("power_cell_start").equals("One")){
            RadioGroup startingBalls = findViewById(R.id.startingBalls);
            startingBalls.check(R.id.one);
-        }else if(data.get("power_cell_start").equals("Two")){
+       }else if(data.get("power_cell_start").equals("Two")){
            RadioGroup startingBalls = findViewById(R.id.startingBalls);
            startingBalls.check(R.id.one);
-        }else if(data.get("power_cell_start").equals("Three")){
+       }else if(data.get("power_cell_start").equals("Three")){
            RadioGroup startingBalls = findViewById(R.id.startingBalls);
            startingBalls.check(R.id.one);
        }
+
+       txtBallsBottomAuto.setText(String.valueOf(data.get("bottom_port")));
+       txtBallsOuterAuto.setText(String.valueOf(data.get("outer_port")));
+       txtBallsInnerAuto.setText(String.valueOf(data.get("inner_port")));
+
+       txtBallsFloorAuto.setText(String.valueOf(data.get("power_cells_acq_floor")));
+
+        CheckBox crossesLine = findViewById(R.id.crossesLineCheckBox);
     }
 
     public void Save(){
