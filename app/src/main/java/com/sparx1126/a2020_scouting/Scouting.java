@@ -110,7 +110,7 @@ public class Scouting extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                if(findTeam()) {
-                   //RestoreData(new Integer(txtMatch.getText().toString()));
+                   RestoreData(txtMatch.getText().toString());
                }
             }
         });
@@ -335,43 +335,87 @@ public class Scouting extends AppCompatActivity {
         }
     }
 
-    public void RestoreData(final int matchNum){
+    public void RestoreData(final String matchNum){
        Map<String, ScoutingData> data = ScoutingData.getData();
-       if(data.get("starting_pos").equals("Closest to Power Port")){
+
+       if(data.get(matchNum).getStartingPos().equals("Closest to Power Port")){
            RadioGroup startingGroup = findViewById(R.id.startingPosition);
            startingGroup.check(R.id.closest);
-       }else if(data.get("starting_pos").equals("Middle")){
+       }else if(data.get(matchNum).getStartingPos().equals("Middle")){
            RadioGroup startingGroup = findViewById(R.id.startingPosition);
            startingGroup.check(R.id.middle);
-       }else if(data.get("starting_pos").equals("Farthest to Power Port")){
+       }else if(data.get(matchNum).getStartingPos().equals("Farthest to Power Port")){
            RadioGroup startingGroup = findViewById(R.id.startingPosition);
            startingGroup.check(R.id.farthest);
+       }else{
+           RadioGroup startingGroup = findViewById(R.id.startingPosition);
+           startingGroup.clearCheck();
        }
 
-       if(data.get("power_cell_start").equals("None")){
+       if(data.get(matchNum).getPowerCellAtStart().equals("None")){
             RadioGroup startingBalls = findViewById(R.id.startingBalls);
             startingBalls.check(R.id.none);
-       }else if(data.get("power_cell_start").equals("One")){
+       }else if(data.get(matchNum).getPowerCellAtStart().equals("One")){
            RadioGroup startingBalls = findViewById(R.id.startingBalls);
            startingBalls.check(R.id.one);
-       }else if(data.get("power_cell_start").equals("Two")){
+       }else if(data.get(matchNum).getPowerCellAtStart().equals("Two")){
            RadioGroup startingBalls = findViewById(R.id.startingBalls);
            startingBalls.check(R.id.one);
-       }else if(data.get("power_cell_start").equals("Three")){
+       }else if(data.get(matchNum).getPowerCellAtStart().equals("Three")){
            RadioGroup startingBalls = findViewById(R.id.startingBalls);
            startingBalls.check(R.id.one);
+       }else {
+           RadioGroup startingBalls = findViewById(R.id.startingBalls);
+           startingBalls.clearCheck();
        }
 
-       txtBallsBottomAuto.setText(String.valueOf(data.get("bottom_port")));
-       txtBallsOuterAuto.setText(String.valueOf(data.get("outer_port")));
-       txtBallsInnerAuto.setText(String.valueOf(data.get("inner_port")));
+       txtBallsBottomAuto.setText(String.valueOf(data.get(matchNum).getBallsScoredOnBottomAuto()));
+       txtBallsOuterAuto.setText(String.valueOf(data.get(matchNum).getBallsScoredOnOuterAuto()));
+       txtBallsInnerAuto.setText(String.valueOf(data.get(matchNum).getBallsScoredOnOuterAuto()));
 
-       txtBallsFloorAuto.setText(String.valueOf(data.get("power_cells_acq_floor")));
+       txtBallsFloorAuto.setText(String.valueOf(data.get(matchNum).getBallsAcquiredFloorAuto()));
 
         CheckBox crossesLine = findViewById(R.id.crossesLineCheckBox);
+        crossesLine.setChecked(Boolean.valueOf(String.valueOf(data.get(matchNum).isCrossesInitiatoinLine())));
+
+        txtBallsBottemTele.setText(String.valueOf(data.get(matchNum).getBallsScoredOnBottomTele()));
+        txtBallsOuterTele.setText(String.valueOf(data.get(matchNum).getBallsScoredOnOuterTele()));
+        txtBallsInnerTele.setText(String.valueOf(data.get(matchNum).getBallsScoredOnInnerTele()));
+
+        txtBallsFloorTele.setText(String.valueOf(data.get(matchNum).getBallsAcquiredFloorTele()));
+        txtBallsLowChuteTele.setText(String.valueOf(data.get(matchNum).getBallsAcquiredLowChuteTele()));
+        txtBallsHighChuteTele.setText(String.valueOf(data.get(matchNum).getBallsAcquiredHighChuteTele()));
+
+        CheckBox performedRotationControlCheckBox = findViewById(R.id.performedRotationControlCheckBox);
+        performedRotationControlCheckBox.setChecked(Boolean.valueOf(String.valueOf(data.get(matchNum).isPreformedRotationControl())));
+
+        CheckBox performedPositionControlCheckBox = findViewById(R.id.performedPositionControlCheckBox);
+        performedPositionControlCheckBox.setChecked(Boolean.valueOf(String.valueOf(data.get(matchNum).isPerformedPositionControl())));
+
+        CheckBox hangingCheckBox = findViewById(R.id.hangingCheckBox);
+        hangingCheckBox.setChecked(Boolean.valueOf(String.valueOf(data.get(matchNum).isHanging())));
+
+        CheckBox parkedCheckBox = findViewById(R.id.parkedCheckBox);
+        parkedCheckBox.setChecked(Boolean.valueOf(String.valueOf(data.get(matchNum).isParked())));
+
+        if(data.get(matchNum).getLeveling().equals("No leveling")){
+            RadioGroup level = findViewById(R.id.level);
+            level.check(R.id.noLeveling);
+        }else if(data.get(matchNum).getLeveling().equals("Tried to level")){
+            RadioGroup level = findViewById(R.id.level);
+            level.check(R.id.triedToLevel);
+        }else if(data.get(matchNum).getLeveling().equals("successfullyLeveled")){
+            RadioGroup level = findViewById(R.id.level);
+            level.check(R.id.successfullyLeveled);
+        }else{
+            RadioGroup level = findViewById(R.id.level);
+            level.clearCheck();
+        }
     }
 
     public void Save(){
+        Map<String, ScoutingData> data = ScoutingData.getData();
+
         RadioGroup starting = findViewById(R.id.startingPosition);
         RadioButton startingpos = findViewById(starting.getCheckedRadioButtonId());
         RadioGroup startingb = findViewById(R.id.startingBalls);
@@ -398,6 +442,29 @@ public class Scouting extends AppCompatActivity {
         }else{
             Toast.makeText(this, "Don't forget to fill out hte entire form", Toast.LENGTH_LONG).show();
         }
+
+        data.get(txtMatch.getText().toString()).setScouterName(name.getText().toString());
+        data.get(txtMatch.getText().toString()).setMatchNumber(txtMatch.getText().toString());
+        data.get(txtMatch.getText().toString()).setStartingPos(startingpos.getText().toString());
+        data.get(txtMatch.getText().toString()).setPowerCellAtStart(startingballs.getText().toString());
+        data.get(txtMatch.getText().toString()).setBallsScoredOnBottomAuto(txtBallsBottomAuto.getText().toString());
+        data.get(txtMatch.getText().toString()).setBallsScoredOnOuterAuto(txtBallsOuterAuto.getText().toString());
+        data.get(txtMatch.getText().toString()).setBallsScoredOnInnerAuto(txtBallsInnerAuto.getText().toString());
+        data.get(txtMatch.getText().toString()).setBallsAcquiredFloorAuto(txtBallsFloorAuto.getText().toString());
+        data.get(txtMatch.getText().toString()).setCrossesInitiatoinLine(String.valueOf(crossesLine.isChecked()));
+        data.get(txtMatch.getText().toString()).setBallsScoredOnBottomTele(txtBallsBottemTele.getText().toString());
+        data.get(txtMatch.getText().toString()).setBallsScoredOnOuterTele(txtBallsOuterTele.getText().toString());
+        data.get(txtMatch.getText().toString()).setBallsScoredOnInnerTele(txtBallsInnerTele.getText().toString());
+        data.get(txtMatch.getText().toString()).setBallsAcquiredFloorTele(txtBallsFloorTele.getText().toString());
+        data.get(txtMatch.getText().toString()).setBallsAcquiredLowChuteTele(txtBallsLowChuteTele.getText().toString());
+        data.get(txtMatch.getText().toString()).setBallsAcquiredHighChuteTele(txtBallsHighChuteTele.getText().toString());
+        data.get(txtMatch.getText().toString()).setPreformedRotationControl(String.valueOf(performendRot.isChecked()));
+        data.get(txtMatch.getText().toString()).setPerformedPositionControl(String.valueOf(performedPos.isChecked()));
+        data.get(txtMatch.getText().toString()).setHanging(String.valueOf(hanging.isChecked()));
+        data.get(txtMatch.getText().toString()).setParked(String.valueOf(parked.isChecked()));
+        data.get(txtMatch.getText().toString()).setLeveling(leveled.getText().toString());
+        Toast.makeText(this, "Data was saved on device", Toast.LENGTH_LONG).show();
+
     }
 
     public void plusBalls(TextView view){

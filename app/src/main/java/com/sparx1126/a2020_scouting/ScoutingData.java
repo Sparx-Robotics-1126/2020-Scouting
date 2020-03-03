@@ -71,22 +71,22 @@ public class ScoutingData extends JsonData {
     private static Map<String, ScoutingData> data = new HashMap<>();
 
     public ScoutingData(String match_num){
-        this.scouterName = "";
+        this.scouterName = "NO SCOUTER";
         this.MatchNumber = match_num;
-        this.TeamScouted = "";
-        this.startingPos = "";
-        this.PowerCellAtStart = "";
-        this.ballsScoredOnBottomAuto = "";
-        this.ballsScoredOnOuterAuto = "";
-        this.ballsScoredOnInnerAuto = "";
-        this.ballsAcquiredFloorAuto = "";
-        this.crossesInitiatoinLine = "";
-        this.ballsScoredOnBottomTele = "";
-        this.ballsScoredOnOuterTele = "";
-        this.ballsScoredOnInnerTele = "";
-        this.ballsAcquiredFloorTele = "";
-        this.ballsAcquiredLowChuteTele = "";
-        this.ballsAcquiredHighChuteTele = "";
+        this.TeamScouted = "0000";
+        this.startingPos = "-1";
+        this.PowerCellAtStart = "-1";
+        this.ballsScoredOnBottomAuto = "0";
+        this.ballsScoredOnOuterAuto = "0";
+        this.ballsScoredOnInnerAuto = "0";
+        this.ballsAcquiredFloorAuto = "0";
+        this.crossesInitiatoinLine = "false";
+        this.ballsScoredOnBottomTele = "0";
+        this.ballsScoredOnOuterTele = "0";
+        this.ballsScoredOnInnerTele = "0";
+        this.ballsAcquiredFloorTele = "0";
+        this.ballsAcquiredLowChuteTele = "0";
+        this.ballsAcquiredHighChuteTele = "0";
         this.preformedRotationControl = "";
         this.performedPositionControl = "";
         this.hanging = "";
