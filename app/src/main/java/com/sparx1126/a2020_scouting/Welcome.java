@@ -158,7 +158,7 @@ public class Welcome extends AppCompatActivity {
         //Temporary
         editor.putString(getString(R.string.EMAIL), "sparx1126scouts@gmail.com");
         editor.putString(getString(R.string.PASSWORD), "h");
-        editor.putString(getString(R.string.TEAM), "58"); // participated in Week 0
+        editor.putString(getString(R.string.TEAM), "876"); // participated in Week 1
         editor.putBoolean(getString(R.string.SCOUT), true);
         editor.apply();
 
