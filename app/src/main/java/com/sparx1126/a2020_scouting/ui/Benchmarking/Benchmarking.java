@@ -6,24 +6,72 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sparx1126.a2020_scouting.R;
 
 public class Benchmarking extends AppCompatActivity {
+    private EditText teamNumber;
+    //General
     private Spinner driveType;
     private Spinner wheelType;
+    private EditText numWheels;
+    private EditText maxSpeed;
+    private EditText normalHeight;
+    private EditText weight;
     private Spinner visionType;
+    //Auto
     private Spinner startPos;
+    private EditText startingCells;
+    private CheckBox autoScoreBottom;
+    private CheckBox autoScoreTop;
+    private CheckBox autoAcquireFloor;
+    //Teleop
+    private CheckBox teleScoreBottom;
+    private CheckBox teleScoreTop;
+    private CheckBox teleAcquireFloor;
+    //End Game
+    private CheckBox canClimb;
+    private CheckBox canLevel;
+    //Comments
+    private EditText comments;
 
+
+
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(Benchmarking.this, "To exit press the \" "+ getResources().getString(R.string.benchmark_exit) + "\" button", Toast.LENGTH_LONG).show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_benchmarking);
+
+        teamNumber = findViewById(R.id.teamNumber);
+
+        numWheels = findViewById(R.id.numWheels);
+        maxSpeed = findViewById(R.id.maxSpeed);
+        normalHeight = findViewById(R.id.normalHeight);
+        weight = findViewById(R.id.weight);
+        startingCells = findViewById(R.id.startingCells);
+        autoScoreBottom = findViewById(R.id.autoScoreBottom);
+        autoScoreTop = findViewById(R.id.autoScoreTop);
+        autoAcquireFloor = findViewById(R.id.autoAcquireFloor);
+        teleScoreBottom = findViewById(R.id.teleScoreBottom);
+        teleScoreTop = findViewById(R.id.teleScoreTop);
+        teleAcquireFloor = findViewById(R.id.teleAcquireFloor);
+        canClimb = findViewById(R.id.canClimb);
+        canLevel = findViewById(R.id.canLevel);
+        comments = findViewById(R.id.comments);
 
         String[] driveTypesArray = getResources().getStringArray(R.array.driveTypes);
         driveType = findViewById(R.id.driveType);
@@ -88,12 +136,67 @@ public class Benchmarking extends AppCompatActivity {
                 dismissKeyboard();
             }
         });
+        Button exitButton;
+        exitButton = findViewById(R.id.exitButton);
+        exitButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        Button saveButton;
+        saveButton = findViewById(R.id.saveButton);
+        saveButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                saveData(teamNumber.getText().toString());
+            }
+        });
+
+
+
+
     }
 
-    public void dismissKeyboard() {
+    private void dismissKeyboard() {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
+    private void saveData(String teamNumber){
+        BenchmarkingData benchData = new BenchmarkingData();
+
+        
+        /*
+        //General
+        private Spinner driveType;
+        private Spinner wheelType;
+        private EditText numWheels;
+        private EditText maxSpeed;
+        private EditText normalHeight;
+        private EditText weight;
+        private Spinner visionType;
+        //Auto
+        private Spinner startPos;
+        private EditText startingCells;
+        private CheckBox autoScoreBottom;
+        private CheckBox autoScoreTop;
+        private CheckBox autoAcquireFloor;
+        //Teleop
+        private CheckBox teleScoreBottom;
+        private CheckBox teleScoreTop;
+        private CheckBox teleAcquireFloor;
+        //End Game
+        private CheckBox canClimb;
+        private CheckBox canLevel;
+        //Comments
+        private EditText comments;
+         */
+
+    }
+
+    private void restoreData(int teamNumber){
+
+    }
 
 }

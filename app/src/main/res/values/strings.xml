@@ -47,5 +47,6 @@
         <item>Middle</item>
         <item>Loading Bay Side</item>
     </string-array>
+    <string name="benchmark_exit">Exit (Save?)</string>
 </resources>
 

@@ -55,6 +55,8 @@
     </style>
 
     <style name="jcas_bigOlButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@color/complement</item>
         <item name="android:textColor">@color/textColorComplement</item>
     </style>
@@ -68,7 +70,7 @@
 
     <style name="jcas_backgroundComplement" parent="jcas_background">
         <item name="android:background">@color/backgroundSupplement</item>
-        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_margin">0dp</item>
     </style>
 
     <style name="jcas_editText">
