@@ -10,12 +10,17 @@ import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceRank;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceTeam;
 import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
+import com.sparx1126.a2020_scouting.Utilities.GetMail;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import org.json.JSONObject;
+
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private SharedPreferences settings;
@@ -91,8 +96,27 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             BlueAllianceMatch.parseDataToBAMMap(_data);
+                            if(ScoutingData.getData().isEmpty()){
+                                Map<String, BlueAllianceMatch> matchs = BlueAllianceMatch.getMatches();
+                                for(BlueAllianceMatch data : matchs.values()){
+                                    ScoutingData emptyData = new ScoutingData(data.getMatchNum());
+                                    ScoutingData.getData().put(data.getMatchNum(), emptyData);
+                                }
+                            }
                         }
                     });
+                }
+            });
+
+            GetMail.getInstance(MainActivity.this).downloadMail(new GetMail.Callback() {
+                @Override
+                public void handleFinishDownload(Map<String, JSONObject> mails) {
+                    for(Map.Entry<String, JSONObject> mail :  mails.entrySet()){
+                        String subject = mail.getKey();
+                         int indexStart= subject.indexOf("frc");
+                         int endIndex = subject.indexOf(".", subject.indexOf(".")+1);
+                         String team =  subject.substring(indexStart, endIndex);
+                    }
                 }
             });
         }

@@ -14,7 +14,7 @@
         <activity android:name=".SettingsScreen"/>
         <activity android:name=".MatchViewer"/>
         <activity android:name=".MainActivity"/>
-        <activity android:name=".scouting"/>
+        <activity android:name=".Scouting"/>
         <activity android:name=".Welcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
