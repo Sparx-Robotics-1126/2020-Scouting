@@ -11,9 +11,8 @@
         android:roundIcon="@drawable/avatar_icon4"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SettingsScreen"/>
-        <activity android:name=".MatchViewer"/>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".Settings"/>
+        <activity android:name=".Home"/>
         <activity android:name=".Scouting"/>
         <activity android:name=".Welcome">
             <intent-filter>

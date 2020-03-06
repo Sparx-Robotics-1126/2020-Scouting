@@ -22,14 +22,17 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class Home extends AppCompatActivity {
+    static String TAG = "Sparx: ";
+    static String HEADER = "Home: ";
+
     private SharedPreferences settings;
     private static BlueAllianceNetwork blueAlliance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
 
         settings = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
         blueAlliance = BlueAllianceNetwork.getInstance();
@@ -46,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
         boolean tabletConfigured = settings.getBoolean(getResources().getString(R.string.tablet_Configured), false);
         if(!tabletConfigured) {
-            Log.d("MainActivity: ", "tablet not configured");
-            startActivity(new Intent(MainActivity.this, SettingsScreen.class));
+            Log.d(TAG, HEADER + "tablet not configured");
+            startActivity(new Intent(Home.this, Settings.class));
         }
     }
 
@@ -55,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     public void onRestart(){
         super.onRestart();
         if(!settings.getBoolean(getResources().getString(R.string.tablet_Configured), false)) {
-            Log.d("MainActivity: ", "going back to welcome screen");
+            Log.d(TAG, HEADER + "going back to welcome screen");
             finish();
         }
     }
@@ -97,8 +100,8 @@ public class MainActivity extends AppCompatActivity {
                         public void run() {
                             BlueAllianceMatch.parseDataToBAMMap(_data);
                             if(ScoutingData.getData().isEmpty()){
-                                Map<String, BlueAllianceMatch> matchs = BlueAllianceMatch.getMatches();
-                                for(BlueAllianceMatch data : matchs.values()){
+                                Map<String, BlueAllianceMatch> matches = BlueAllianceMatch.getMatches();
+                                for(BlueAllianceMatch data : matches.values()){
                                     ScoutingData emptyData = new ScoutingData(data.getMatchNum());
                                     ScoutingData.getData().put(data.getMatchNum(), emptyData);
                                 }
@@ -108,18 +111,21 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            GetMail.getInstance(MainActivity.this).downloadMail(new GetMail.Callback() {
+            GetMail.getInstance(Home.this).downloadMail(
+                    settings.getString(getString(R.string.EMAIL), ""),
+                    settings.getString(getString(R.string.PASSWORD), ""),
+                    new GetMail.Callback() {
                 @Override
                 public void handleFinishDownload(Map<String, JSONObject> mails) {
                     for(Map.Entry<String, JSONObject> mail :  mails.entrySet()){
                         String subject = mail.getKey();
-                         int indexStart= subject.indexOf("frc");
-                         int endIndex = subject.indexOf(".", subject.indexOf(".")+1);
-                         String team =  subject.substring(indexStart, endIndex);
+                        int indexStart= subject.indexOf("frc");
+                        int endIndex = subject.indexOf(".", subject.indexOf(".")+1);
+                        String team =  subject.substring(indexStart, endIndex);
+                        Log.e(TAG, HEADER + "Hiram: " + team);
                     }
                 }
             });
         }
     }
-
 }

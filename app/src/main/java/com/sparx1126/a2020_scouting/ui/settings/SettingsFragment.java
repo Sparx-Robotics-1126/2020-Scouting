@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.sparx1126.a2020_scouting.R;
-import com.sparx1126.a2020_scouting.SettingsScreen;
+import com.sparx1126.a2020_scouting.Settings;
 
 public class SettingsFragment extends Fragment {
 
@@ -18,7 +18,7 @@ public class SettingsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        Intent intent = new Intent(getActivity(), SettingsScreen.class);
+        Intent intent = new Intent(getActivity(), Settings.class);
         startActivity(intent);
 
         getFragmentManager().popBackStack();
