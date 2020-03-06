@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,7 @@ public class HomeFragment extends Fragment {
     private TextView posInput;
     private TextView txtColor;
     private TextView colorInput;
+    private LinearLayout ifScoutingTablet;
     private View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -36,29 +38,27 @@ public class HomeFragment extends Fragment {
         //email
         emailtxt = root.findViewById(R.id.emailTxt);
         emailInput = root.findViewById(R.id.emailInput);
-        emailInput.setText(settings.getString(getString(R.string.EMAIL), "no"));
 
         //team
         teamtxt = root.findViewById(R.id.teamTxt);
         teamInput = root.findViewById(R.id.teamInput);
-        teamInput.setText(settings.getString(getString(R.string.TEAM), "no"));
 
         //event
         eventtxt = root.findViewById(R.id.eventTxt);
         eventInput = root.findViewById(R.id.eventInput);
-        eventInput.setText(settings.getString(getString(R.string.pref_SelectedEvent), "no"));
 
-        if(settings.getBoolean(getString(R.string.SCOUT), false)){
-            scoutertxt = root.findViewById(R.id.scouterTxt);
-            scouterInput = root.findViewById(R.id.scouterInput);
-            scouterInput.setText(settings.getString(getString(R.string.scouter), "No one has Scouted"));
+        scoutertxt = root.findViewById(R.id.scouterTxt);
+        scouterInput = root.findViewById(R.id.scouterInput);
 
-            posTxt = root.findViewById(R.id.txtPos);
-            posInput = root.findViewById(R.id.PosInput);
-            posInput.setText(String.valueOf(settings.getInt(getString(R.string.pref_TeamPosition), 0)));
+        posTxt = root.findViewById(R.id.txtPos);
+        posInput = root.findViewById(R.id.PosInput);
 
-            txtColor = root.findViewById(R.id.txtColor);
-            colorInput = root.findViewById(R.id.colorInput);
+        txtColor = root.findViewById(R.id.txtColor);
+        colorInput = root.findViewById(R.id.colorInput);
+
+        ifScoutingTablet = root.findViewById(R.id.ifScoutingTablet);
+        if(!settings.getBoolean(getString(R.string.SCOUT), false)) {
+            ifScoutingTablet.setVisibility(View.INVISIBLE);
         }
 
         return root;
@@ -67,6 +67,18 @@ public class HomeFragment extends Fragment {
     @Override
     public void onStart(){
         super.onStart();
+        emailInput.setText(settings.getString(getString(R.string.EMAIL), "no"));
+        teamInput.setText(settings.getString(getString(R.string.TEAM), "no"));
+        eventInput.setText(settings.getString(getString(R.string.pref_SelectedEvent), "no"));
+        if(settings.getBoolean(getString(R.string.SCOUT), false)){
+            ifScoutingTablet.setVisibility(View.VISIBLE);
+            scouterInput.setText(settings.getString(getString(R.string.scouter), "No one has Scouted"));
+            posInput.setText(String.valueOf(settings.getInt(getString(R.string.pref_TeamPosition), 0)));
+        }
+        else {
+            ifScoutingTablet.setVisibility(View.INVISIBLE);
+        }
+
         if(settings.getBoolean(getString(R.string.pref_BlueAlliance), false)){
             txtColor.setTextColor(getResources().getColor(R.color.BText));
             colorInput.setBackgroundColor(getResources().getColor(R.color.BLUE));

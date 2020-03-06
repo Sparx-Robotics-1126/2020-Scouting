@@ -190,7 +190,8 @@ public class SettingsScreen extends AppCompatActivity {
                     Toast.makeText(SettingsScreen.this, "Wrong Password", Toast.LENGTH_LONG).show();
                     input.setText("");
                 } else {
-                    if(!(eventSpinner.getSelectedItem().toString().equals("Select Event")) || teams.isDirty()) {
+                    boolean buttonChecked = team1.isChecked() || team2.isChecked() || team3.isChecked();
+                    if(!(eventSpinner.getSelectedItem().toString().equals("Select Event")) && buttonChecked) {
                         configured = true;
                         selectedEvent = eventSpinner.getSelectedItem().toString();
                         if (team1.isChecked()) {
@@ -350,7 +351,7 @@ public class SettingsScreen extends AppCompatActivity {
         if(scoutingTablet){
             Log.d("Settings: ", "restorePreferences scoutingTablet");
             boolean blueAllianceToggled = settings.getBoolean(getResources().getString(R.string.pref_BlueAlliance), false);
-            if (blueAllianceToggled == true && !alliance.getText().equals("BLUE ALLIANCE")) {
+            if (blueAllianceToggled && !alliance.getText().equals("BLUE ALLIANCE")) {
                 alliance.performClick();
             }
             int teamPositionNum = settings.getInt(getResources().getString(R.string.pref_TeamPosition), 0);
