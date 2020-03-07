@@ -1,4 +1,4 @@
-package com.sparx1126.a2020_scouting.Utilities;
+package com.sparx1126.a2020_scouting.Data;
 
 import com.sparx1126.a2020_scouting.BlueAllianceData.JsonData;
 

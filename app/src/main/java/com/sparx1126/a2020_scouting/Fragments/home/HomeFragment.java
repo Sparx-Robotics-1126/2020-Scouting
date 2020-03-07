@@ -1,4 +1,4 @@
-package com.sparx1126.a2020_scouting.fragments.home;
+package com.sparx1126.a2020_scouting.Fragments.home;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
