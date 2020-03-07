@@ -1,7 +1,5 @@
 package com.sparx1126.a2020_scouting.BlueAllianceData;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,8 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BlueAllianceMatch extends JsonData {
-    private static final String HARD_CODED_FRC_TEAM = "frc1126";
-
     //keys to access the JSON Object
     private static final String EPOCH_TIME = "predicted_time";
     private static final String MATCH_NUMBER = "match_number";
@@ -47,8 +43,6 @@ public class BlueAllianceMatch extends JsonData {
         redTeamKeys=redKeys;
         epochTime=time;
         this.matchNum=matchNum;
-
-
     }
 
     //Parses all the matches in the JSON Object in String form(_data), to populate the static map(matches)
@@ -87,15 +81,12 @@ public class BlueAllianceMatch extends JsonData {
         }
 
     }
-    public static HashMap<String,BlueAllianceMatch> getTeamMatches() {
+    public static HashMap<String,BlueAllianceMatch> getTeamMatches(String _teamkey) {
         HashMap<String, BlueAllianceMatch> rtrn = new HashMap<>();
         for (int i = 1; i < matches.size(); i++) {
-            //System.out.println("TESTING "+ i);
             BlueAllianceMatch match = BlueAllianceMatch.getMatches().get(String.valueOf(i));
-            //Log.e("TEST KEYS NULL", match.toString());
 
-            if (match.getBlueTeamKeys().contains(HARD_CODED_FRC_TEAM) || match.getRedTeamKeys().contains(HARD_CODED_FRC_TEAM)) {
-                //Log.e("TEAM TEST SAT",match.getEpochTime());
+            if (match.getBlueTeamKeys().contains(_teamkey) || match.getRedTeamKeys().contains(_teamkey)) {
                 rtrn.put(String.valueOf(i), match);
             }
         }
@@ -108,8 +99,4 @@ public class BlueAllianceMatch extends JsonData {
     public String toString(){
       return  "\n"+"MATCH NUMBER: " + matchNum +"\n"+ "TIME: "+ epochTime + "\n" + "RED KEYS: " + redTeamKeys.toString() + "\n" + "BLUE KEYS: " + blueTeamKeys.toString();
     }
-
-
-
-
 }

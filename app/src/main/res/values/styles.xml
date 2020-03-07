@@ -32,10 +32,6 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="J_radioButton">
-        <item name="android:buttonTint"></item>
-        <item name="android:textColor"></item>
-    </style>
     <style name="t019_checkBox" parent="t019_basic">
         <item name="android:layout_weight">0</item>
         <item name="android:buttonTint">@color/interact</item>

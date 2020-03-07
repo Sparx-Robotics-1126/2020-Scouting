@@ -18,34 +18,44 @@ import android.widget.Toast;
 import com.sparx1126.a2020_scouting.Utilities.*;
 
 public class Welcome extends AppCompatActivity {
+    static String TAG = "Sparx: ";
+    static String HEADER = "Welcome: ";
+
+    private SharedPreferences settings;
+
+    private Button loggingButton;
+    private CheckBox scoutingCheckBox;
     private EditText emailInput, passwordInput, teamInput;
-    private CheckBox scoutingCheck;
-    private SharedPreferences loginData;
-    private boolean toggledBlue;
+    private LinearLayout backgroundLayout;
+    private TextView scoutingTextView, emailTextView, passwordTextView, teamTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        Log.d(TAG, HEADER + "onCreate");
 
         // This has to be done once
         FileIO.getInstance().intializeStorage(Welcome.this);
 
-        loginData = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
-        toggledBlue = loginData.getBoolean(getString(R.string.pref_BlueAlliance), false);
+        settings = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
 
-        emailInput = findViewById(R.id.emailInput);
-        passwordInput = findViewById(R.id.passwordInput);
-        teamInput = findViewById(R.id.teamInput);
-        scoutingCheck = findViewById(R.id.scoutingCheckBox);
-
-        Button login = findViewById(R.id.login);
-        login.setOnClickListener(new View.OnClickListener() {
+        loggingButton = findViewById(R.id.login);
+        loggingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 login();
             }
         });
+        scoutingCheckBox = findViewById(R.id.scoutingCheckBox);
+        emailInput = findViewById(R.id.emailInput);
+        passwordInput = findViewById(R.id.passwordInput);
+        teamInput = findViewById(R.id.teamInput);
+        backgroundLayout = findViewById(R.id.background);
+        scoutingTextView = findViewById(R.id.scoutingTextView);
+        emailTextView = findViewById(R.id.email);
+        passwordTextView = findViewById(R.id.password);
+        teamTextView = findViewById(R.id.team);
 
         changeUi();
         checkPreferences();
@@ -54,70 +64,50 @@ public class Welcome extends AppCompatActivity {
     @Override
     public void onRestart(){
         super.onRestart();
+
+        Log.d(TAG, HEADER + "onRestart");
+
         emailInput.setText("");
         passwordInput.setText("");
         teamInput.setText("");
-        scoutingCheck.setChecked(false);
+        scoutingCheckBox.setChecked(false);
     }
 
 //This change UI may never be actually used since the tablet will always be configured after this screen is seen.
     public  void changeUi(){
-        Log.d("Welcome: ", "toggleBlue " + toggledBlue);
-        if(toggledBlue){
-            LinearLayout li = findViewById(R.id.background);
-            li.setBackgroundColor(getResources().getColor(R.color.BBackground));
-            //TextView welcome = findViewById(R.id.welcomeMessage);
-            TextView scoutingTextView = findViewById(R.id.scoutingTextView);
-            CheckBox scouting = findViewById(R.id.scoutingCheckBox);
-            scouting.setTextColor(getResources().getColor(R.color.BText));
-            //welcome.setTextColor(getResources().getColor(R.color.BText));
+        boolean blueAlliancePref = settings.getBoolean(getString(R.string.pref_BlueAlliance), false);
+        Log.d(TAG, HEADER + "toggleBlue " + blueAlliancePref);
+        if(blueAlliancePref){
+            backgroundLayout.setBackgroundColor(getResources().getColor(R.color.BBackground));
+            scoutingCheckBox.setTextColor(getResources().getColor(R.color.BText));
             scoutingTextView.setTextColor(getResources().getColor(R.color.BText));
-            Button log = findViewById(R.id.login);
-            log.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
-            log.setTextColor(getResources().getColor(R.color.BText));
-            TextView email = findViewById(R.id.email);
-            email.setTextColor(getResources().getColor(R.color.BText));
-            TextView password = findViewById(R.id.password);
-            password.setTextColor(getResources().getColor(R.color.BText));
-            TextView team = findViewById(R.id.team);
-            team.setTextColor(getResources().getColor(R.color.BText));
-            EditText emailInput = findViewById(R.id.emailInput);
+            loggingButton.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
+            loggingButton.setTextColor(getResources().getColor(R.color.BText));
+            emailTextView.setTextColor(getResources().getColor(R.color.BText));
+            passwordTextView.setTextColor(getResources().getColor(R.color.BText));
+            teamTextView.setTextColor(getResources().getColor(R.color.BText));
             emailInput.setTextColor(getResources().getColor(R.color.BText));
-            EditText passwordInput = findViewById(R.id.passwordInput);
             passwordInput.setTextColor(getResources().getColor(R.color.BText));
-            EditText teamInput = findViewById(R.id.teamInput);
             teamInput.setTextColor(getResources().getColor(R.color.BText));
         }else{
-            LinearLayout li = findViewById(R.id.background);
-            li.setBackgroundColor(getResources().getColor(R.color.RBackground));
-            //TextView welcome = findViewById(R.id.welcomeMessage);
-            TextView scoutingTextView = findViewById(R.id.scoutingTextView);
-            CheckBox scouting = findViewById(R.id.scoutingCheckBox);
-            scouting.setTextColor(getResources().getColor(R.color.RText));
-            //welcome.setTextColor(getResources().getColor(R.color.RText));
+            backgroundLayout.setBackgroundColor(getResources().getColor(R.color.RBackground));
+            scoutingCheckBox.setTextColor(getResources().getColor(R.color.RText));
             scoutingTextView.setTextColor(getResources().getColor(R.color.RText));
-            Button log = findViewById(R.id.login);
-            log.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
-            log.setTextColor(getResources().getColor(R.color.RText));
-            TextView email = findViewById(R.id.email);
-            email.setTextColor(getResources().getColor(R.color.RText));
-            TextView password = findViewById(R.id.password);
-            password.setTextColor(getResources().getColor(R.color.RText));
-            TextView team = findViewById(R.id.team);
-            team.setTextColor(getResources().getColor(R.color.RText));
-            EditText emailInput = findViewById(R.id.emailInput);
+            loggingButton.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
+            loggingButton.setTextColor(getResources().getColor(R.color.RText));
+            emailTextView.setTextColor(getResources().getColor(R.color.RText));
+            passwordTextView.setTextColor(getResources().getColor(R.color.RText));
+            teamTextView.setTextColor(getResources().getColor(R.color.RText));
             emailInput.setTextColor(getResources().getColor(R.color.RText));
-            EditText passwordInput = findViewById(R.id.passwordInput);
             passwordInput.setTextColor(getResources().getColor(R.color.RText));
-            EditText teamInput = findViewById(R.id.teamInput);
             teamInput.setTextColor(getResources().getColor(R.color.RText));
         }
     }
 
     public void checkPreferences(){
-        String email = loginData.getString(getString(R.string.EMAIL), "");
-        String password = loginData.getString(getString(R.string.PASSWORD), "");
-        String team = loginData.getString(getString(R.string.TEAM), "");
+        String email = settings.getString(getString(R.string.EMAIL), "");
+        String password = settings.getString(getString(R.string.PASSWORD), "");
+        String team = settings.getString(getString(R.string.TEAM), "");
 
         // If anything has ever been entered
         if(!email.isEmpty() || !password.isEmpty() || !team.isEmpty()) {
@@ -130,25 +120,23 @@ public class Welcome extends AppCompatActivity {
             } else {
                 Log.d("Welcome: ", "switching to main");
                 BlueAllianceNetwork.getInstance().seteamKey("frc" + team);
-                startActivity(new Intent(Welcome.this, MainActivity.class));
+                startActivity(new Intent(Welcome.this, Home.class));
             }
         }
         else {
-            Log.d("Welcome: ", "found nothing");
+            Log.d(TAG, HEADER + "found nothing");
         }
     }
 
     public void login() {
-        Log.d("Welcome: ", "login pushed");
-        String email, password, team;
-        boolean isScouting;
-        email = emailInput.getText().toString();
-        password = passwordInput.getText().toString();
-        team = teamInput.getText().toString();
-        isScouting = scoutingCheck.isChecked();
+        Log.d(TAG, HEADER + "login pushed");
+        String email = emailInput.getText().toString();
+        String password = passwordInput.getText().toString();
+        String team = teamInput.getText().toString();
+        boolean isScouting = scoutingCheckBox.isChecked();
 
         SharedPreferences.Editor editor;
-        editor = loginData.edit();
+        editor = settings.edit();
         editor.putString(getString(R.string.EMAIL), email);
         editor.putString(getString(R.string.PASSWORD), password);
         editor.putString(getString(R.string.TEAM), team);
@@ -157,7 +145,7 @@ public class Welcome extends AppCompatActivity {
 
         //Temporary
         editor.putString(getString(R.string.EMAIL), "sparx1126scouts@gmail.com");
-        editor.putString(getString(R.string.PASSWORD), "h");
+        editor.putString(getString(R.string.PASSWORD), "gosparx!"); // use the real password or you will break email
         editor.putString(getString(R.string.TEAM), "876"); // participated in Week 1
         editor.putBoolean(getString(R.string.SCOUT), true);
         editor.apply();

@@ -25,6 +25,12 @@ import javax.mail.internet.MimeMultipart;
 
 //Class is extending AsyncTask because this class is going to perform a networking operation
 public class GetMail extends AsyncTask<Void,Void,Void> {
+    static String TAG = "Sparx: ";
+    static String HEADER = "GetMail: ";
+    static final String PROTOCOL = "imap"; // It did not work with pop, it read only new emails
+    static final String HOST = PROTOCOL + ".gmail.com";
+    static final String PORT = "993"; // Imap port for gmail
+    static final String EMAIL_STORE = PROTOCOL + "s";
 
     public interface Callback {
         void handleFinishDownload(Map<String, JSONObject> mails);
@@ -32,40 +38,25 @@ public class GetMail extends AsyncTask<Void,Void,Void> {
 
     //Declaring Variables
     private static Context context;
-    private static GetMail instance;
+    private String email;
+    private String password;
     private Callback cb;
-    private Properties props;
 
-    private static  Map<String, JSONObject> jsonMails = new HashMap<>();
+    private Map<String, JSONObject> jsonMails = new HashMap<>();
 
     //Progressdialog to show while sending email
     private ProgressDialog progressDialog;
 
-    public static synchronized GetMail getInstance(Context _context){
-        if (instance == null){
-            instance = new GetMail();
-        }
-        context = _context;
-        return instance;
-    }
-
     //Class Constructor
-    private GetMail(){
-        //Creating properties
-        Properties props = new Properties();
-
-        //Configuring properties for gmail
-        //If you are not using gmail you may need to change the values
-        props.put("mail.pop3.host", "pop.gmail.com");
-        props.put("mail.pop3.port", "995");
-        props.put("mail.pop3.starttls.enable", "true");
+    public GetMail(Context _context){
+        context = _context;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
         //Showing progress dialog while sending email
-        progressDialog = ProgressDialog.show(context,"Sending message","Please wait...",false,false);
+        progressDialog = ProgressDialog.show(context,"Getting messages","Please wait...",false,false);
     }
 
     @Override
@@ -79,31 +70,35 @@ public class GetMail extends AsyncTask<Void,Void,Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
+        jsonMails.clear();
+        //Creating properties
+        Properties props = new Properties();
+
+        props.put("mail.pop3.host", HOST);
+        props.put("mail.pop3.port", PORT);
+        props.put("mail.pop3.starttls.enable", "true");
+
         try {
             Session emailSessionObj = Session.getDefaultInstance(props);
             //Create POP3 store object and connect with the server
-            Store storeObj = emailSessionObj.getStore("pop3s");
-            storeObj.connect("pop.gmail.com", "sparx1126scouts@gmail.com", "gosparx!");
+            Store storeObj = emailSessionObj.getStore(EMAIL_STORE);
+            storeObj.connect(HOST, email, password);
             //Create folder object and open it in read-only mode
             Folder emailFolderObj = storeObj.getFolder("INBOX");
-            //emailFolderObj.open(Folder.READ_ONLY);
+            emailFolderObj.open(Folder.READ_ONLY);
             //Fetch messages from the folder and print in a loop
             Message[] messageobjs = emailFolderObj.getMessages();
+            Log.d(TAG, HEADER + "Number of emails received " + messageobjs.length);
 
-            jsonMails.clear();
             for (int i = 0, n = messageobjs.length; i < n; i++) {
                 Message indvidualmsg = messageobjs[i];
-//                System.out.println("Printing individual messages");
-//                System.out.println("No# " + (i + 1));
-//                System.out.println("Email Subject: " + indvidualmsg.getSubject());
-//                Log.e("Sender: " , indvidualmsg.getFrom()[0]);
-
-                if(isValidJsonArray(getTextFromMessage(indvidualmsg))) {
-                    Log.e("Content: ", getTextFromMessage(indvidualmsg));
-                    jsonMails.put(indvidualmsg.getSubject(), new JSONObject(getTextFromMessage(indvidualmsg)));
+                String body = getTextFromMessage(indvidualmsg);
+                String key = indvidualmsg.getSubject();
+                if(isValidJsonArray(body)) {
+                    Log.d(TAG, HEADER + "Adding json " + key);
+                    jsonMails.put(key, new JSONObject(body));
                 }
             }
-
             //Now close all the objects
             emailFolderObj.close(false);
             storeObj.close();
@@ -117,8 +112,10 @@ public class GetMail extends AsyncTask<Void,Void,Void> {
         return null;
     }
 
-    public void downloadMail(final GetMail.Callback callback){
-        cb = callback;
+    public void downloadMail(String _email, String _password, GetMail.Callback _callback){
+        email = _email;
+        password = _password;
+        cb = _callback;
         this.execute();
     }
 
