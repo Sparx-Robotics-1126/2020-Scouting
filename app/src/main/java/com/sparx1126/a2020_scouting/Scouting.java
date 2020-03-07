@@ -438,7 +438,7 @@ public class Scouting extends AppCompatActivity {
                     txtBallsHighChuteTele.getText().toString(), ""+performendRot.isChecked(), ""+performedPos.isChecked(), ""+hanging.isChecked(),
                     ""+parked.isChecked(), leveled.getText().toString());
             String email = settings.getString(getString(R.string.EMAIL), "");
-            String subject = settings.getString("pref_SelectedEvent",null)+".frc1126."+ txtMatch.getText().toString()+".json";
+            String subject = settings.getString("pref_SelectedEvent",null)+".frc" + teamScouting.getText().toString()+ "."+ txtMatch.getText().toString()+".json";
             mail = new SendMail(Scouting.this, email, subject, scoutingData.toJson());
             mail.execute();
         }else{
