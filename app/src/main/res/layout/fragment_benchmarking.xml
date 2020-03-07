@@ -18,7 +18,8 @@
                     android:text="Team Number"/>
                 <EditText
                     android:id="@+id/teamNumber"
-                    style="@style/jcas_editText" />
+                    style="@style/jcas_editText"
+                    android:inputType="number"/>
             </LinearLayout>
             <Button
                 android:id="@+id/exitButton"
@@ -49,7 +50,8 @@
                     android:text="Number Wheels:"/>
                 <EditText
                     android:id="@+id/numWheels"
-                    style="@style/jcas_editText" />
+                    style="@style/jcas_editText"
+                    android:inputType="number"/>
 
             </LinearLayout>
 
@@ -61,7 +63,8 @@
                     android:text="Max Speed(ft/s):"/>
                 <EditText
                     android:id="@+id/maxSpeed"
-                    style="@style/jcas_editText" />
+                    style="@style/jcas_editText"
+                    android:inputType="numberDecimal"/>
 
             </LinearLayout>
 
@@ -73,7 +76,8 @@
                     android:text="Normal Height(ft):"/>
                 <EditText
                     android:id="@+id/normalHeight"
-                    style="@style/jcas_editText" />
+                    style="@style/jcas_editText"
+                    android:inputType="numberDecimal"/>
 
             </LinearLayout>
 
@@ -85,6 +89,7 @@
                     android:text="Weight(lbs):"/>
                 <EditText
                     android:id="@+id/weight"
+                    android:inputType="numberDecimal"
                     style="@style/jcas_editText" />
 
             </LinearLayout>
@@ -113,6 +118,7 @@
                     android:text="Starting Power Cells"/>
                 <EditText
                     android:id="@+id/startingCells"
+                    android:inputType="number"
                     style="@style/jcas_editText"/>
             </LinearLayout>
 
