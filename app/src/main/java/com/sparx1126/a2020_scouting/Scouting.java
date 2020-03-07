@@ -18,7 +18,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sparx1126.a2020_scouting.BlueAllianceData.*;
-import com.sparx1126.a2020_scouting.Utilities.ScoutingData;
+import com.sparx1126.a2020_scouting.Data.ScoutingData;
 import com.sparx1126.a2020_scouting.Utilities.SendMail;
 
 import android.view.View;

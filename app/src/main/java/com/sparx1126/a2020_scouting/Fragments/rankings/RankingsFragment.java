@@ -1,4 +1,4 @@
-package com.sparx1126.a2020_scouting.fragments.rankings;
+package com.sparx1126.a2020_scouting.Fragments.rankings;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

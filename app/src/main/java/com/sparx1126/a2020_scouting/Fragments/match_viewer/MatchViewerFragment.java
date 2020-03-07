@@ -1,4 +1,4 @@
-package com.sparx1126.a2020_scouting.fragments.match_viewer;
+package com.sparx1126.a2020_scouting.Fragments.match_viewer;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;

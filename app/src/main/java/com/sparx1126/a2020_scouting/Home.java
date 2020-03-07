@@ -11,7 +11,7 @@ import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceRank;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceTeam;
 import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
 import com.sparx1126.a2020_scouting.Utilities.GetMail;
-import com.sparx1126.a2020_scouting.Utilities.ScoutingData;
+import com.sparx1126.a2020_scouting.Data.ScoutingData;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
