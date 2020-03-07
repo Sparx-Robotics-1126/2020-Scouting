@@ -1,4 +1,4 @@
-package com.sparx1126.a2020_scouting.ui.rankings;
+package com.sparx1126.a2020_scouting.fragments.rankings;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -22,16 +21,14 @@ import com.sparx1126.a2020_scouting.R;
 import java.util.Map;
 
 public class RankingsFragment extends Fragment {
+    static String TAG = "Sparx: ";
+    static String HEADER = "RankingsFragment: ";
 
     private SharedPreferences settings;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG, HEADER + "onCreateView");
 
         View root = inflater.inflate(R.layout.fragment_rankings, container, false);
         View linearlayout = root.findViewById(R.id.linearLayout);
@@ -92,6 +89,5 @@ public class RankingsFragment extends Fragment {
         }
 
         return root;
-
     }
 }

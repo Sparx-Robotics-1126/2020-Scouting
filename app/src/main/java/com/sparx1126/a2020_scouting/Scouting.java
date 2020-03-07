@@ -18,19 +18,20 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sparx1126.a2020_scouting.BlueAllianceData.*;
-import com.sparx1126.a2020_scouting.Utilities.GetMail;
+import com.sparx1126.a2020_scouting.Utilities.ScoutingData;
 import com.sparx1126.a2020_scouting.Utilities.SendMail;
 
 import android.view.View;
 import android.widget.Toast;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Scouting extends AppCompatActivity {
+    static String TAG = "Sparx: ";
+    static String HEADER = "Scouting: ";
+
     private SharedPreferences.Editor editor;
     private Button logout;
     private TextView name;
@@ -79,6 +80,7 @@ public class Scouting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scouting);
+        Log.d(TAG, HEADER + "onCreate");
 
         settings = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
         editor = settings.edit();
@@ -371,7 +373,7 @@ public class Scouting extends AppCompatActivity {
 
        txtBallsBottomAuto.setText(String.valueOf(data.get(matchNum).getBallsScoredOnBottomAuto()));
        txtBallsOuterAuto.setText(String.valueOf(data.get(matchNum).getBallsScoredOnOuterAuto()));
-       txtBallsInnerAuto.setText(String.valueOf(data.get(matchNum).getBallsScoredOnOuterAuto()));
+       txtBallsInnerAuto.setText(String.valueOf(data.get(matchNum).getBallsScoredOnInnerAuto()));
 
        txtBallsFloorAuto.setText(String.valueOf(data.get(matchNum).getBallsAcquiredFloorAuto()));
 

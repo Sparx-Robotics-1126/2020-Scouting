@@ -11,6 +11,7 @@ import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceRank;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceTeam;
 import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
 import com.sparx1126.a2020_scouting.Utilities.GetMail;
+import com.sparx1126.a2020_scouting.Utilities.ScoutingData;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -33,6 +34,7 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        Log.d(TAG, HEADER + "onCreate");
 
         settings = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
         blueAlliance = BlueAllianceNetwork.getInstance();
@@ -46,17 +48,12 @@ public class Home extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-
-        boolean tabletConfigured = settings.getBoolean(getResources().getString(R.string.tablet_Configured), false);
-        if(!tabletConfigured) {
-            Log.d(TAG, HEADER + "tablet not configured");
-            startActivity(new Intent(Home.this, Settings.class));
-        }
     }
 
     @Override
     public void onRestart(){
         super.onRestart();
+        Log.d(TAG, HEADER + "onRestart");
         if(!settings.getBoolean(getResources().getString(R.string.tablet_Configured), false)) {
             Log.d(TAG, HEADER + "going back to welcome screen");
             finish();
@@ -66,6 +63,7 @@ public class Home extends AppCompatActivity {
     @Override
     public void onStart(){
         super.onStart();
+        Log.d(TAG, HEADER + "onStart");
         String selectedEvent = settings.getString(getResources().getString(R.string.pref_SelectedEvent), "");
         if(!selectedEvent.isEmpty()) {
             blueAlliance.downloadEventRanks(selectedEvent, new BlueAllianceNetwork.Callback() {
@@ -111,7 +109,8 @@ public class Home extends AppCompatActivity {
                 }
             });
 
-            GetMail.getInstance(Home.this).downloadMail(
+            GetMail email = new GetMail(Home.this);
+            email.downloadMail(
                     settings.getString(getString(R.string.EMAIL), ""),
                     settings.getString(getString(R.string.PASSWORD), ""),
                     new GetMail.Callback() {
@@ -126,6 +125,12 @@ public class Home extends AppCompatActivity {
                     }
                 }
             });
+        }
+
+        boolean tabletConfigured = settings.getBoolean(getResources().getString(R.string.tablet_Configured), false);
+        if(!tabletConfigured) {
+            Log.d(TAG, HEADER + "tablet not configured");
+            startActivity(new Intent(Home.this, Settings.class));
         }
     }
 }

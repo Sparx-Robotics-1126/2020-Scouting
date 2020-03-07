@@ -1,15 +1,10 @@
-package com.sparx1126.a2020_scouting;
+package com.sparx1126.a2020_scouting.Utilities;
 
-import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceTeam;
 import com.sparx1126.a2020_scouting.BlueAllianceData.JsonData;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class OurRankingData extends JsonData {
     private static final String bottom_port_tele = "bottom_port_tele";

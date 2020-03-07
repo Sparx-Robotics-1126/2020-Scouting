@@ -1,7 +1,8 @@
-package com.sparx1126.a2020_scouting.ui.settings;
+package com.sparx1126.a2020_scouting.fragments.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,13 @@ import com.sparx1126.a2020_scouting.R;
 import com.sparx1126.a2020_scouting.Settings;
 
 public class SettingsFragment extends Fragment {
+    static String TAG = "Sparx: ";
+    static String HEADER = "SettingsFragment: ";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG, HEADER + "onCreateView");
+
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
 
         Intent intent = new Intent(getActivity(), Settings.class);

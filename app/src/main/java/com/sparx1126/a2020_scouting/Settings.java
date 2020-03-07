@@ -49,6 +49,7 @@ public class Settings extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        Log.d(TAG, HEADER + "onCreate");
 
         settings = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
         editor = settings.edit();

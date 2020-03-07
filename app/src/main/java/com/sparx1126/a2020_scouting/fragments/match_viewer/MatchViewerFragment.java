@@ -1,4 +1,4 @@
-package com.sparx1126.a2020_scouting.ui.match_viewer;
+package com.sparx1126.a2020_scouting.fragments.match_viewer;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -29,6 +29,7 @@ public class MatchViewerFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG, HEADER + "onCreateView");
 
         SharedPreferences settings = getActivity().getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
         String teamKey = "frc" + settings.getString(getString(R.string.TEAM), "");

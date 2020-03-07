@@ -33,6 +33,7 @@ public class Welcome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        Log.d(TAG, HEADER + "onCreate");
 
         // This has to be done once
         FileIO.getInstance().intializeStorage(Welcome.this);
@@ -63,6 +64,9 @@ public class Welcome extends AppCompatActivity {
     @Override
     public void onRestart(){
         super.onRestart();
+
+        Log.d(TAG, HEADER + "onRestart");
+
         emailInput.setText("");
         passwordInput.setText("");
         teamInput.setText("");

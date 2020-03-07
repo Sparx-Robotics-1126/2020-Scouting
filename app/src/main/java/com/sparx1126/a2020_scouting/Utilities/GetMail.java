@@ -38,26 +38,18 @@ public class GetMail extends AsyncTask<Void,Void,Void> {
 
     //Declaring Variables
     private static Context context;
-    private static GetMail instance;
     private String email;
     private String password;
     private Callback cb;
 
-    private static  Map<String, JSONObject> jsonMails = new HashMap<>();
+    private Map<String, JSONObject> jsonMails = new HashMap<>();
 
     //Progressdialog to show while sending email
     private ProgressDialog progressDialog;
 
-    public static synchronized GetMail getInstance(Context _context){
-        if (instance == null){
-            instance = new GetMail();
-        }
-        context = _context;
-        return instance;
-    }
-
     //Class Constructor
-    private GetMail(){
+    public GetMail(Context _context){
+        context = _context;
     }
 
     @Override
