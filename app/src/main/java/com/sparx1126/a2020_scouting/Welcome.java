@@ -18,8 +18,8 @@ import android.widget.Toast;
 import com.sparx1126.a2020_scouting.Utilities.*;
 
 public class Welcome extends AppCompatActivity {
-    static String TAG = "Sparx: ";
-    static String HEADER = "Welcome: ";
+    static private String TAG = "Sparx: ";
+    static private String HEADER = "Welcome: ";
 
     private SharedPreferences settings;
 

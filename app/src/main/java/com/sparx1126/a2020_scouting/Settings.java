@@ -29,8 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Settings extends AppCompatActivity {
-    static String TAG = "Sparx: ";
-    static String HEADER = "Settings: ";
+    static private String TAG = "Sparx: ";
+    static private String HEADER = "Settings: ";
 
     private SharedPreferences settings;
     private SharedPreferences.Editor editor;
