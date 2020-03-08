@@ -40,11 +40,12 @@
                         android:text="1"/>
                 </LinearLayout>
 
-                <TextView android:id="@+id/record"
+                <TextView
+                    android:id="@+id/record"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15dp"
-                    android:text="3-0-0"/>
+                    android:text="3-0-0"
+                    android:textSize="15dp" />
             </LinearLayout>
         </LinearLayout>
         <!-- column 2-->

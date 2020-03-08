@@ -111,9 +111,9 @@ public class Scouting extends AppCompatActivity {
             }
             @Override
             public void afterTextChanged(Editable s) {
-               if(findTeam()) {
-                   RestoreData(txtMatch.getText().toString());
-               }
+                if(findTeam()) {
+                    RestoreData(txtMatch.getText().toString());
+                }
             }
         });
 
@@ -338,44 +338,44 @@ public class Scouting extends AppCompatActivity {
     }
 
     public void RestoreData(final String matchNum){
-       Map<String, ScoutingData> data = ScoutingData.getData();
+        Map<String, ScoutingData> data = ScoutingData.getData();
 
-       if(data.get(matchNum).getStartingPos().equals("Closest to Power Port")){
-           RadioGroup startingGroup = findViewById(R.id.startingPosition);
-           startingGroup.check(R.id.closest);
-       }else if(data.get(matchNum).getStartingPos().equals("Middle")){
-           RadioGroup startingGroup = findViewById(R.id.startingPosition);
-           startingGroup.check(R.id.middle);
-       }else if(data.get(matchNum).getStartingPos().equals("Farthest to Power Port")){
-           RadioGroup startingGroup = findViewById(R.id.startingPosition);
-           startingGroup.check(R.id.farthest);
-       }else{
-           RadioGroup startingGroup = findViewById(R.id.startingPosition);
-           startingGroup.clearCheck();
-       }
+        if(data.get(matchNum).getStartingPos().equals("Closest to Power Port")){
+            RadioGroup startingGroup = findViewById(R.id.startingPosition);
+            startingGroup.check(R.id.closest);
+        }else if(data.get(matchNum).getStartingPos().equals("Middle")){
+            RadioGroup startingGroup = findViewById(R.id.startingPosition);
+            startingGroup.check(R.id.middle);
+        }else if(data.get(matchNum).getStartingPos().equals("Farthest to Power Port")){
+            RadioGroup startingGroup = findViewById(R.id.startingPosition);
+            startingGroup.check(R.id.farthest);
+        }else{
+            RadioGroup startingGroup = findViewById(R.id.startingPosition);
+            startingGroup.clearCheck();
+        }
 
-       if(data.get(matchNum).getPowerCellAtStart().equals("None")){
+        if(data.get(matchNum).getPowerCellAtStart().equals("None")){
             RadioGroup startingBalls = findViewById(R.id.startingBalls);
             startingBalls.check(R.id.none);
-       }else if(data.get(matchNum).getPowerCellAtStart().equals("One")){
-           RadioGroup startingBalls = findViewById(R.id.startingBalls);
-           startingBalls.check(R.id.one);
-       }else if(data.get(matchNum).getPowerCellAtStart().equals("Two")){
-           RadioGroup startingBalls = findViewById(R.id.startingBalls);
-           startingBalls.check(R.id.one);
-       }else if(data.get(matchNum).getPowerCellAtStart().equals("Three")){
-           RadioGroup startingBalls = findViewById(R.id.startingBalls);
-           startingBalls.check(R.id.one);
-       }else {
-           RadioGroup startingBalls = findViewById(R.id.startingBalls);
-           startingBalls.clearCheck();
-       }
+        }else if(data.get(matchNum).getPowerCellAtStart().equals("One")){
+            RadioGroup startingBalls = findViewById(R.id.startingBalls);
+            startingBalls.check(R.id.one);
+        }else if(data.get(matchNum).getPowerCellAtStart().equals("Two")){
+            RadioGroup startingBalls = findViewById(R.id.startingBalls);
+            startingBalls.check(R.id.one);
+        }else if(data.get(matchNum).getPowerCellAtStart().equals("Three")){
+            RadioGroup startingBalls = findViewById(R.id.startingBalls);
+            startingBalls.check(R.id.one);
+        }else {
+            RadioGroup startingBalls = findViewById(R.id.startingBalls);
+            startingBalls.clearCheck();
+        }
 
-       txtBallsBottomAuto.setText(String.valueOf(data.get(matchNum).getBallsScoredOnBottomAuto()));
-       txtBallsOuterAuto.setText(String.valueOf(data.get(matchNum).getBallsScoredOnOuterAuto()));
-       txtBallsInnerAuto.setText(String.valueOf(data.get(matchNum).getBallsScoredOnInnerAuto()));
+        txtBallsBottomAuto.setText(String.valueOf(data.get(matchNum).getBallsScoredOnBottomAuto()));
+        txtBallsOuterAuto.setText(String.valueOf(data.get(matchNum).getBallsScoredOnOuterAuto()));
+        txtBallsInnerAuto.setText(String.valueOf(data.get(matchNum).getBallsScoredOnInnerAuto()));
 
-       txtBallsFloorAuto.setText(String.valueOf(data.get(matchNum).getBallsAcquiredFloorAuto()));
+        txtBallsFloorAuto.setText(String.valueOf(data.get(matchNum).getBallsAcquiredFloorAuto()));
 
         CheckBox crossesLine = findViewById(R.id.crossesLineCheckBox);
         crossesLine.setChecked(Boolean.valueOf(String.valueOf(data.get(matchNum).isCrossesInitiatoinLine())));
@@ -910,4 +910,3 @@ public class Scouting extends AppCompatActivity {
         return found;
     }
 }
-

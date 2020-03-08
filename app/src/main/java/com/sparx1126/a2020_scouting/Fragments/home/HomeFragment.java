@@ -16,8 +16,8 @@ import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceEvent;
 import com.sparx1126.a2020_scouting.R;
 
 public class HomeFragment extends Fragment {
-    static String TAG = "Sparx: ";
-    static String HEADER = "HomeFragment: ";
+    static private String TAG = "Sparx: ";
+    static private String HEADER = "HomeFragment: ";
 
     private SharedPreferences settings;
     private BlueAllianceEvent event;

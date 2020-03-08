@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceRank;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceTeam;
+import com.sparx1126.a2020_scouting.Data.OurRankingData;
 import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
 import com.sparx1126.a2020_scouting.Utilities.GetMail;
 import com.sparx1126.a2020_scouting.Data.ScoutingData;
@@ -24,8 +26,8 @@ import org.json.JSONObject;
 import java.util.Map;
 
 public class Home extends AppCompatActivity {
-    static String TAG = "Sparx: ";
-    static String HEADER = "Home: ";
+    static private String TAG = "Sparx: ";
+    static private String HEADER = "Home: ";
 
     private SharedPreferences settings;
     private static BlueAllianceNetwork blueAlliance;
@@ -43,11 +45,16 @@ public class Home extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_rankings,R.id.navigation_match, R.id.navigation_settings, R.id.navigation_scoutings)
+                R.id.navigation_home, R.id.navigation_our_rankings,R.id.navigation_match, R.id.navigation_settings, R.id.navigation_scoutings)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(Home.this, "Reconfigure in Settings to go back to logging screen...", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -122,7 +129,11 @@ public class Home extends AppCompatActivity {
                         int endIndex = subject.indexOf(".", subject.indexOf(".")+1);
                         String team =  subject.substring(indexStart, endIndex);
                         Log.e(TAG, HEADER + "Hiram: " + team);
+                        Log.e(TAG, HEADER + "Sohail" + mail.getValue().toString());
+                        OurRankingData.parseJson(team, mail.getValue().toString());
+                        Log.e(TAG, HEADER + "Sohail2 " + OurRankingData.getBallsScoredOnBottomTele().size());
                     }
+                    OurRankingData.calculate();
                 }
             });
         }
