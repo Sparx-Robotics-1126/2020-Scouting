@@ -10,6 +10,8 @@ import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceRank;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceTeam;
 import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
+import com.sparx1126.a2020_scouting.Utilities.GetMail;
+import com.sparx1126.a2020_scouting.Data.ScoutingData;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -17,16 +19,22 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import org.json.JSONObject;
+
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class Home extends AppCompatActivity {
+    static String TAG = "Sparx: ";
+    static String HEADER = "Home: ";
+
     private SharedPreferences settings;
     private static BlueAllianceNetwork blueAlliance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
+        Log.d(TAG, HEADER + "onCreate");
 
         settings = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
         blueAlliance = BlueAllianceNetwork.getInstance();
@@ -40,19 +48,14 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-
-        boolean tabletConfigured = settings.getBoolean(getResources().getString(R.string.tablet_Configured), false);
-        if(!tabletConfigured) {
-            Log.d("MainActivity: ", "tablet not configured");
-            startActivity(new Intent(MainActivity.this, SettingsScreen.class));
-        }
     }
 
     @Override
     public void onRestart(){
         super.onRestart();
+        Log.d(TAG, HEADER + "onRestart");
         if(!settings.getBoolean(getResources().getString(R.string.tablet_Configured), false)) {
-            Log.d("MainActivity: ", "going back to welcome screen");
+            Log.d(TAG, HEADER + "going back to welcome screen");
             finish();
         }
     }
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart(){
         super.onStart();
+        Log.d(TAG, HEADER + "onStart");
         String selectedEvent = settings.getString(getResources().getString(R.string.pref_SelectedEvent), "");
         if(!selectedEvent.isEmpty()) {
             blueAlliance.downloadEventRanks(selectedEvent, new BlueAllianceNetwork.Callback() {
@@ -94,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
                         public void run() {
                             BlueAllianceMatch.parseDataToBAMMap(_data);
                             if(ScoutingData.getData().isEmpty()){
-                                Map<String, BlueAllianceMatch> matchs = BlueAllianceMatch.getMatches();
-                                for(BlueAllianceMatch data : matchs.values()){
+                                Map<String, BlueAllianceMatch> matches = BlueAllianceMatch.getMatches();
+                                for(BlueAllianceMatch data : matches.values()){
                                     ScoutingData emptyData = new ScoutingData(data.getMatchNum());
                                     ScoutingData.getData().put(data.getMatchNum(), emptyData);
                                 }
@@ -104,7 +108,29 @@ public class MainActivity extends AppCompatActivity {
                     });
                 }
             });
+
+            GetMail email = new GetMail(Home.this);
+            email.downloadMail(
+                    settings.getString(getString(R.string.EMAIL), ""),
+                    settings.getString(getString(R.string.PASSWORD), ""),
+                    new GetMail.Callback() {
+                @Override
+                public void handleFinishDownload(Map<String, JSONObject> mails) {
+                    for(Map.Entry<String, JSONObject> mail :  mails.entrySet()){
+                        String subject = mail.getKey();
+                        int indexStart= subject.indexOf("frc");
+                        int endIndex = subject.indexOf(".", subject.indexOf(".")+1);
+                        String team =  subject.substring(indexStart, endIndex);
+                        Log.e(TAG, HEADER + "Hiram: " + team);
+                    }
+                }
+            });
+        }
+
+        boolean tabletConfigured = settings.getBoolean(getResources().getString(R.string.tablet_Configured), false);
+        if(!tabletConfigured) {
+            Log.d(TAG, HEADER + "tablet not configured");
+            startActivity(new Intent(Home.this, Settings.class));
         }
     }
-
 }

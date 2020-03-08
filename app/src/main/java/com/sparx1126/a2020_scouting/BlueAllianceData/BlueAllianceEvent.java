@@ -1,20 +1,13 @@
 package com.sparx1126.a2020_scouting.BlueAllianceData;
 
-import android.util.Log;
-
 import com.sparx1126.a2020_scouting.Utilities.FileIO;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.Key;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.jar.JarEntry;
-
-//Old class from 2019
-//Must be updated to new 2020 data format (Static maps in each Data class)
 
 public class BlueAllianceEvent extends JsonData {
     // keys from thebluealliance.com API
@@ -58,8 +51,8 @@ public class BlueAllianceEvent extends JsonData {
 
                events.put(k ,new BlueAllianceEvent(k, n, w, l ,s ,e));
            }
-           FileIO fileIO = FileIO.getInstance();
-           fileIO.storeTeamEvents(_data, _team);
+            FileIO fileIO = FileIO.getInstance();
+            fileIO.storeTeamEvents(_data, _team);
         }catch(JSONException e) {
             e.printStackTrace();
         }
@@ -79,7 +72,6 @@ public class BlueAllianceEvent extends JsonData {
                 parseJson(data, _team);
             }
         }
-
         return events;
     }
 

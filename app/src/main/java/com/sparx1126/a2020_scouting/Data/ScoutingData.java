@@ -1,17 +1,10 @@
-package com.sparx1126.a2020_scouting;
-
-import android.service.autofill.FieldClassification;
-import android.util.Log;
-
+package com.sparx1126.a2020_scouting.Data;
 
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
 import com.sparx1126.a2020_scouting.BlueAllianceData.JsonData;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.util.HashMap;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 

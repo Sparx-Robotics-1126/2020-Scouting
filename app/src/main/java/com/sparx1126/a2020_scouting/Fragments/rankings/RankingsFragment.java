@@ -1,4 +1,4 @@
-package com.sparx1126.a2020_scouting.ui.rankings;
+package com.sparx1126.a2020_scouting.Fragments.rankings;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,45 +7,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
-import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceRank;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceTeam;
-import com.sparx1126.a2020_scouting.MainActivity;
 import com.sparx1126.a2020_scouting.R;
-import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.Map;
 
 public class RankingsFragment extends Fragment {
+    static String TAG = "Sparx: ";
+    static String HEADER = "RankingsFragment: ";
 
     private SharedPreferences settings;
-    //private ListView listView;
-    //private RankArrayAdapter adapter;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG, HEADER + "onCreateView");
 
         View root = inflater.inflate(R.layout.fragment_rankings, container, false);
         View linearlayout = root.findViewById(R.id.linearLayout);
@@ -106,6 +89,5 @@ public class RankingsFragment extends Fragment {
         }
 
         return root;
-
     }
 }
