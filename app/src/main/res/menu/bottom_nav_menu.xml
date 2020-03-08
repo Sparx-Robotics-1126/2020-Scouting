@@ -7,9 +7,9 @@
         android:title="@string/title_home" />
 
     <item
-        android:id="@+id/navigation_rankings"
+        android:id="@+id/navigation_our_rankings"
         android:icon="@drawable/ic_low_priority_black_24dp"
-        android:title="@string/title_rankings" />
+        android:title="@string/title_ourRankings" />
     <item
         android:id="@+id/navigation_match"
         android:icon="@drawable/ic_content_paste_black_24dp"
