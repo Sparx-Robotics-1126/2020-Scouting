@@ -4,6 +4,7 @@
     <string name="title_rankings">Rankings</string>
     <string name="title_settings">Settings</string>
     <string name="title_scoutings">Scoutings</string>
+    <string name="title_match_viewer">MatchViewer</string>
     <string name="title_ourRankings">Our Rankings</string>
     <string name="selectEvent">Select Event</string>
     <string name="scouter">scouter</string>
@@ -16,6 +17,10 @@
     <string name="PASSWORD">password</string>
     <string name="TEAM">team</string>
     <string name="SCOUT">scout</string>
-    <string name="blue_alliance">BLUE ALLIANCE</string>
-    <string name="red_alliance">RED ALLIANCE</string>
+    <string name="blue_alliance">BlueAlliance</string>
+    <string name="red_alliance">RedAlliance</string>
+    <string name="position_1">Position1</string>
+    <string name="position_2">Position2</string>
+    <string name="position_3">Position3</string>
+    <string name="last_match_scouted">last_match_scouted</string>
 </resources>

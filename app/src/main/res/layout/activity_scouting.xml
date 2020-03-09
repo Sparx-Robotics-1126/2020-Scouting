@@ -3,14 +3,14 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/background">
+    android:id="@+id/backgroundScrollView">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/assignment"
+            android:id="@+id/assignmentTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Assignment:"
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:id="@+id/txtname"
+                android:id="@+id/scouterNameTextView"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="Scouter:"
@@ -29,7 +29,7 @@
                 android:textSize="22dp">
             </TextView>
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/scouterNameInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="22dp"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:id="@+id/matchNum"
+                android:id="@+id/matchNumTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Match Number:"
@@ -54,14 +54,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="right">
-
                 <Button
                     android:id="@+id/plusMatch"
                     style="@style/t019_plusMinusButton"
                     android:text="+" />
-
                 <TextView
-                    android:id="@+id/txtMatch"
+                    android:id="@+id/matchNumInput"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
@@ -80,7 +78,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <Button
-                android:id="@+id/logOut"
+                android:id="@+id/logOutButton"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:shadowColor="#673AB7"
@@ -100,7 +98,7 @@
                 android:orientation="horizontal"
                 android:layout_weight=".5">
                 <TextView
-                    android:id="@+id/team"
+                    android:id="@+id/teamNumTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Team "
@@ -108,7 +106,7 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Large">
                 </TextView>
                 <TextView
-                    android:id="@+id/scoutingTeam"
+                    android:id="@+id/teamNumInput"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="22dp"
@@ -121,7 +119,7 @@
                 android:orientation="horizontal"
                 android:layout_weight=".5">
                 <TextView
-                    android:id="@+id/alliance"
+                    android:id="@+id/allianceTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingRight="10dp"
@@ -130,15 +128,14 @@
                     android:textSize="22dp">
                 </TextView>
                 <TextView
-                    android:id="@+id/allianceColor"
+                    android:id="@+id/allianceInput"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                 </TextView>
             </LinearLayout>
         </LinearLayout>
-
         <TextView
-            android:id="@+id/autonomous"
+            android:id="@+id/autonomousTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="40dp"
@@ -149,7 +146,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/startingPos"
+                android:id="@+id/startingPosTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Starting Position:"
@@ -157,11 +154,11 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large">
             </TextView>
             <RadioGroup
-                android:id="@+id/startingPosition"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/startingPositionRadioGroup">
                 <RadioButton
-                    android:id="@+id/closest"
+                    android:id="@+id/closestRadioButton"
                     style="@style/t019_radioButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -169,7 +166,7 @@
                     android:textSize="20dp">
                 </RadioButton>
                 <RadioButton
-                    android:id="@+id/middle"
+                    android:id="@+id/middleRadioButton"
                     style="@style/t019_radioButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -177,7 +174,7 @@
                     android:textSize="20dp">
                 </RadioButton>
                 <RadioButton
-                    android:id="@+id/farthest"
+                    android:id="@+id/farthestRadioButton"
                     android:layout_width="match_parent"
                     style="@style/t019_radioButton"
                     android:layout_height="wrap_content"
@@ -190,18 +187,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/startBalls"
+                    android:id="@+id/startBallsTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Power Cells in robot at start:"
                     android:textSize ="25dp">
                 </TextView>
                 <RadioGroup
-                    android:id="@+id/startingBalls"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:id="@+id/startingBallsRadioGroup">
                     <RadioButton
-                        android:id="@+id/none"
+                        android:id="@+id/noneRadioButton"
                         style="@style/t019_radioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -209,7 +206,7 @@
                         android:textSize="20dp">
                     </RadioButton>
                     <RadioButton
-                        android:id="@+id/one"
+                        android:id="@+id/oneRadioButton"
                         style="@style/t019_radioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -217,7 +214,7 @@
                         android:textSize="20dp">
                     </RadioButton>
                     <RadioButton
-                        android:id="@+id/two"
+                        android:id="@+id/twoRadioButton"
                         style="@style/t019_radioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -225,7 +222,7 @@
                         android:textSize="20dp">
                     </RadioButton>
                     <RadioButton
-                        android:id="@+id/three"
+                        android:id="@+id/threeRadioButton"
                         style="@style/t019_radioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -239,7 +236,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/ballsScoredAuto"
+                    android:id="@+id/ballsScoredAutoTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Power Cells Scored:"
@@ -250,7 +247,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
-                        android:id="@+id/bottomPortAuto"
+                        android:id="@+id/bottomPortAutoTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Bottom port"
@@ -263,18 +260,17 @@
                         android:orientation="horizontal"
                         android:gravity="right">
                     <Button
-                        android:id="@+id/plusBallsBottemAuto"
+                        android:id="@+id/plusBallsBottomAuto"
                         style="@style/t019_plusMinusButton"
                         android:text="+" />
                     <TextView
-                        android:id="@+id/txtBallsBottomAuto"
+                        android:id="@+id/ballsBottomAutoInput"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:textStyle="bold" />
-
                     <Button
-                        android:id="@+id/minusBallsBottemAuto"
+                        android:id="@+id/minusBallsBottomAuto"
                         style="@style/t019_plusMinusButton"
                         android:layout_weight="0"
                         android:text="-" />
@@ -286,7 +282,7 @@
                     android:layout_marginTop="5dp"
                     android:orientation="horizontal">
                     <TextView
-                        android:id="@+id/outerPortAuto"
+                        android:id="@+id/outerPortAutoTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Outer port"
@@ -303,7 +299,7 @@
                         style="@style/t019_plusMinusButton"
                         android:text="+" />
                     <TextView
-                        android:id="@+id/txtBallsOuterAuto"
+                        android:id="@+id/ballsOuterAutoInput"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -322,7 +318,7 @@
                     android:layout_marginTop="5dp"
                     android:orientation="horizontal">
                     <TextView
-                        android:id="@+id/innerPortAuto"
+                        android:id="@+id/innerPortAutoTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Inner port"
@@ -339,7 +335,7 @@
                         style="@style/t019_plusMinusButton"
                         android:text="+" />
                     <TextView
-                        android:id="@+id/txtBallsInnerAuto"
+                        android:id="@+id/ballsInnerAutoInput"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -358,7 +354,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/ballsAcquiredAuto"
+                    android:id="@+id/ballsAcquiredAutoTextView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Power Cells Acquired:"
@@ -370,7 +366,7 @@
                     android:layout_marginTop="5dp"
                     android:orientation="horizontal">
                     <TextView
-                        android:id="@+id/floorAuto"
+                        android:id="@+id/floorAutoTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Floor"
@@ -387,7 +383,7 @@
                         style="@style/t019_plusMinusButton"
                         android:text="+" />
                     <TextView
-                        android:id="@+id/txtBallsFloorAuto"
+                        android:id="@+id/ballsFloorAutoInput"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -406,7 +402,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/crossesLine"
+                    android:id="@+id/crossesLineTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Cross Initiation Line:"
@@ -417,7 +413,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
-                        android:id="@+id/txtCrossesLine"
+                        android:id="@+id/crossedLineTextView"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -426,13 +422,13 @@
                     </TextView>
 
                     <CheckBox
-                        android:id="@+id/crossesLineCheckBox"
+                        android:id="@+id/crossedLineCheckBox"
                         style="@style/t019_checkBox"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
         <TextView
-            android:id="@+id/teleoperated"
+            android:id="@+id/teleoperatedTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Teleoperated:"
@@ -443,7 +439,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/ballsScoredTele"
+                android:id="@+id/ballsScoredTeleTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Power Cells Scored:"
@@ -454,7 +450,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/bottomPortTele"
+                    android:id="@+id/bottomPortTeleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Bottom port"
@@ -467,64 +463,62 @@
                     android:orientation="horizontal"
                     android:gravity="right">
                 <Button
-                    android:id="@+id/plusBallsBottemTele"
+                    android:id="@+id/plusBallsBottomTele"
                     style="@style/t019_plusMinusButton"
                     android:text="+" />
                 <TextView
-                    android:id="@+id/txtBallsBottemTele"
+                    android:id="@+id/ballsBottomTeleInput"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
                     android:textStyle="bold" />
-
                 <Button
-                    android:id="@+id/minusBallsBottemTele"
+                    android:id="@+id/minusBallsBottomTele"
                     style="@style/t019_plusMinusButton"
                     android:layout_weight="0"
                     android:text="-" />
             </LinearLayout>
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/outerPortTele"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Outer port"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textSize="22dp">
-                </TextView>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="right">
-                <Button
-                    android:id="@+id/plusBallsOuterTele"
-                    style="@style/t019_plusMinusButton"
-                    android:text="+" />
-                <TextView
-                    android:id="@+id/txtBallsOuterTele"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/minusBallsOuterTele"
-                    style="@style/t019_plusMinusButton"
-                    android:layout_weight="0"
-                    android:text="-" />
-            </LinearLayout>
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/outerPortTeleTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Outer port"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textSize="22dp">
+                    </TextView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="right">
+                    <Button
+                        android:id="@+id/plusBallsOuterTele"
+                        style="@style/t019_plusMinusButton"
+                        android:text="+" />
+                    <TextView
+                        android:id="@+id/ballsOuterTeleInput"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textStyle="bold" />
+                    <Button
+                        android:id="@+id/minusBallsOuterTele"
+                        style="@style/t019_plusMinusButton"
+                        android:layout_weight="0"
+                        android:text="-" />
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/innerPortTele"
+                    android:id="@+id/innerPortTeleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Inner port"
@@ -536,26 +530,26 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="right">
-                <Button
-                    android:id="@+id/plusBallsInnerTele"
-                    style="@style/t019_plusMinusButton"
-                    android:text="+" />
-                <TextView
-                    android:id="@+id/txtBallsInnerTele"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textStyle="bold" />
+                    <Button
+                        android:id="@+id/plusBallsInnerTele"
+                        style="@style/t019_plusMinusButton"
+                        android:text="+" />
+                    <TextView
+                        android:id="@+id/ballsInnerTeleInput"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/minusBallsInnerTele"
-                    style="@style/t019_plusMinusButton"
-                    android:layout_weight="0"
-                    android:text="-" />
-            </LinearLayout>
+                    <Button
+                        android:id="@+id/minusBallsInnerTele"
+                        style="@style/t019_plusMinusButton"
+                        android:layout_weight="0"
+                        android:text="-" />
+                </LinearLayout>
             </LinearLayout>
             <TextView
-                android:id="@+id/ballsAcquiredTele"
+                android:id="@+id/ballsAcquiredTeleTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Power Cells Acquired:"
@@ -566,7 +560,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/floorTele"
+                    android:id="@+id/floorTeleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Floor"
@@ -578,30 +572,29 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="right">
-                <Button
-                    android:id="@+id/plusBallsFloorTele"
-                    style="@style/t019_plusMinusButton"
-                    android:text="+" />
-                <TextView
-                    android:id="@+id/txtFloorTele"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/minusBallsFloorTele"
-                    style="@style/t019_plusMinusButton"
-                    android:layout_weight="0"
-                    android:text="-" />
-            </LinearLayout>
+                    <Button
+                        android:id="@+id/plusBallsFloorTele"
+                        style="@style/t019_plusMinusButton"
+                        android:text="+" />
+                    <TextView
+                        android:id="@+id/floorTeleInput"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textStyle="bold" />
+                    <Button
+                        android:id="@+id/minusBallsFloorTele"
+                        style="@style/t019_plusMinusButton"
+                        android:layout_weight="0"
+                        android:text="-" />
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/lowChuteTele"
+                    android:id="@+id/lowChuteTeleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Low Chute"
@@ -613,30 +606,29 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="right">
-                <Button
-                    android:id="@+id/plusBallsLowChuteTele"
-                    style="@style/t019_plusMinusButton"
-                    android:text="+" />
-                <TextView
-                    android:id="@+id/txtBallsLowChuteTele"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/minusBallsLowChuteTele"
-                    style="@style/t019_plusMinusButton"
-                    android:layout_weight="0"
-                    android:text="-" />
-            </LinearLayout>
+                    <Button
+                        android:id="@+id/plusBallsLowChuteTele"
+                        style="@style/t019_plusMinusButton"
+                        android:text="+" />
+                    <TextView
+                        android:id="@+id/ballsLowChuteTeleInput"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textStyle="bold" />
+                    <Button
+                        android:id="@+id/minusBallsLowChuteTele"
+                        style="@style/t019_plusMinusButton"
+                        android:layout_weight="0"
+                        android:text="-" />
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/highChuteTele"
+                    android:id="@+id/highChuteTeleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="High Chute"
@@ -648,26 +640,25 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="right">
-                <Button
-                    android:id="@+id/plusBallsHighChuteTele"
-                    style="@style/t019_plusMinusButton"
-                    android:text="+" />
-                <TextView
-                    android:id="@+id/txtBallsHighChuteTele"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/minusBallsHighChuteTele"
-                    style="@style/t019_plusMinusButton"
-                    android:layout_weight="0"
-                    android:text="-" />
-            </LinearLayout>
+                    <Button
+                        android:id="@+id/plusBallsHighChuteTele"
+                        style="@style/t019_plusMinusButton"
+                        android:text="+" />
+                    <TextView
+                        android:id="@+id/ballsHighChuteTeleInput"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textStyle="bold" />
+                    <Button
+                        android:id="@+id/minusBallsHighChuteTele"
+                        style="@style/t019_plusMinusButton"
+                        android:layout_weight="0"
+                        android:text="-" />
+                </LinearLayout>
             </LinearLayout>
             <TextView
-                android:id="@+id/controlPanelInteraction"
+                android:id="@+id/controlPanelInteractionTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Control Panel Interaction:"
@@ -678,7 +669,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/performedRotationControl"
+                    android:id="@+id/performedRotationControlTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Performed Rotation Control"
@@ -698,7 +689,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/performedPositoinControl"
+                    android:id="@+id/performedPositionControlTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -715,7 +706,7 @@
             </LinearLayout>
         </LinearLayout>
         <TextView
-            android:id="@+id/endGame"
+            android:id="@+id/endGameTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="40dp"
@@ -726,54 +717,43 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/rendezuous"
+                android:id="@+id/rendezuousTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Rendezvous:"
                 android:textSize="25dp">
             </TextView>
-            <LinearLayout
+            <RadioGroup
+                android:id="@+id/rendezuousRadioGroup"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/hanging"
-                    android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <RadioButton
+                    android:id="@+id/noparkRadioButton"
+                    style="@style/t019_radioButton"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Hanging"
-                    android:textSize="22dp"></TextView>
-                <CheckBox
-                    style="@style/t019_checkBox"
-                    android:id="@+id/hangingCheckBox"
-                    android:layout_width="wrap_content"
+                    android:text="No Parking"
+                    android:textSize="20dp">
+                </RadioButton>
+                <RadioButton
+                    android:id="@+id/parkedRadioButton"
+                    style="@style/t019_radioButton"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="250dp">
-                </CheckBox>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/parked"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="Parked"
-                    android:textSize="22dp">
-                </TextView>
-                <CheckBox
-                    android:id="@+id/parkedCheckBox"
-                    style="@style/t019_checkBox"
-                    android:layout_width="wrap_content"
+                    android:textSize="20dp">
+                </RadioButton>
+                <RadioButton
+                    android:id="@+id/hangedRadioButton"
+                    style="@style/t019_radioButton"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="250dp">
-                </CheckBox>
-            </LinearLayout>
+                    android:text="Hanged"
+                    android:textSize="20dp">
+                </RadioButton>
+            </RadioGroup>
             <TextView
-                android:id="@+id/leveling"
+                android:id="@+id/levelingTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Leveling:"
@@ -781,11 +761,11 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large">
             </TextView>
             <RadioGroup
-                android:id="@+id/level"
+                android:id="@+id/activeLevelingRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <RadioButton
-                    android:id="@+id/noLeveling"
+                    android:id="@+id/noLevelingRadioButton"
                     style="@style/t019_radioButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -793,7 +773,7 @@
                     android:textSize="20dp">
                 </RadioButton>
                 <RadioButton
-                    android:id="@+id/triedToLevel"
+                    android:id="@+id/triedToLevelRadioButton"
                     style="@style/t019_radioButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -801,7 +781,7 @@
                     android:textSize="20dp">
                 </RadioButton>
                 <RadioButton
-                    android:id="@+id/successfullyLeveled"
+                    android:id="@+id/successfullyLeveledRadioButton"
                     style="@style/t019_radioButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -810,9 +790,104 @@
                 </RadioButton>
             </RadioGroup>
         </LinearLayout>
+        <TextView
+            android:id="@+id/otherTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="40dp"
+            android:text="Other:">
+        </TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/defenseTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Defense:"
+                    android:textSize="25dp">
+                </TextView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/excellecentDefenseTextView"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Played Excellent Defense"
+                        android:textSize="22dp">
+                    </TextView>
 
+                    <CheckBox android:id="@+id/excellecentDefenseCheckBox"
+                        style="@style/t019_checkBox"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/foulTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Foul:"
+                    android:textSize="25dp">
+                </TextView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/causedFouldTextView"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Caused a foul"
+                        android:textSize="22dp">
+                    </TextView>
+
+                    <CheckBox android:id="@+id/causedFouldCheckBox"
+                        style="@style/t019_checkBox"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/robotStateTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Robot State:"
+                    android:textSize="25dp">
+                </TextView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/brokeDisabledTextView"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Broke or got Disabled"
+                        android:textSize="22dp">
+                    </TextView>
+
+                    <CheckBox android:id="@+id/brokeDisabledCheckBox"
+                        style="@style/t019_checkBox"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
         <Button
-            android:id="@+id/Save"
+            android:id="@+id/saveButton"
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:layout_marginTop="275dp"

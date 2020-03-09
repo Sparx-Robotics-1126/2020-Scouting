@@ -1,119 +1,99 @@
 package com.sparx1126.a2020_scouting.Data;
 
 import android.util.Log;
-import android.util.Pair;
 
-import com.sparx1126.a2020_scouting.BlueAllianceData.JsonData;
+import com.sparx1126.a2020_scouting.Utilities.JsonData;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class OurRankingData extends JsonData {
+    private static final String TAG = "Sparx: ";
+    private static final String HEADER = "OurRankingData: ";
 
-    private static final String bottom_port_tele = "bottom_port_tele";
-    private static final String outer_port_tele = "outer_port_tele";
-    private static final String inner_port_tele = "inner_port_tele";
+    private static Map<Integer, Float> ballsScoredOnBottomAve = new HashMap<>();
+    private static Map<Integer, Float> ballsScoredOnOuterAve = new HashMap<>();
+    private static Map<Integer, Float> ballsScoredOnInnerAve= new HashMap<>();
 
-
-    static private String TAG = "Sparx: ";
-    static private String HEADER = "OurRankingData: ";
-    private static Map<String, ArrayList<Integer>> ballsScoredOnBottomTele = new HashMap<>();
-    private static Map<String, ArrayList<Integer>> ballsScoredOnOuterTele = new HashMap<>();
-    private static Map<String, ArrayList<Integer>> ballsScoredOnInnerTele = new HashMap<>();
-
-    private static  Map<String,Float > ballsScoredOnBottomTeleAve = new HashMap<>();
-    private static Map<String, Float > ballsScoredOnOuterTeleAve = new HashMap<>();
-    private static Map<String, Float > ballsScoredOnInnerTeleAve= new HashMap<>();
-
-    public static Map<String, ArrayList<Integer>> getBallsScoredOnBottomTele() {
-        return ballsScoredOnBottomTele;
+    public static Map<Integer, Float> getBallsScoredOnBottomAve() {
+        return ballsScoredOnBottomAve;
+    }
+    public static Map<Integer, Float> getBallsScoredOnOuterAve() {
+        return ballsScoredOnOuterAve;
+    }
+    public static Map<Integer, Float> getBallsScoredOnInnerAve() {
+        return ballsScoredOnInnerAve;
     }
 
-    public static Map<String, ArrayList<Integer>> getBallsScoredOnOuterTele() {
-        return ballsScoredOnOuterTele;
-    }
-
-    public static Map<String, ArrayList<Integer>> getBallsScoredOnInnerTele() {
-        return ballsScoredOnInnerTele;
-    }
-
-    public static Map<String, Float> getBallsScoredOnBottomTeleAve() {
-        return ballsScoredOnBottomTeleAve;
-    }
-
-    public static Map<String, Float> getBallsScoredOnOuterTeleAve() {
-        return ballsScoredOnOuterTeleAve;
-    }
-
-    public static Map<String, Float> getBallsScoredOnInnerTeleAve() {
-        return ballsScoredOnInnerTeleAve;
-    }
-
-    public static  void calculate(){
-        for(Map.Entry<String, ArrayList<Integer>> arr : ballsScoredOnBottomTele.entrySet()){
-            float average = 0f;
-            for(Integer ar: arr.getValue()){
-                average += ar;
-            }
-            average = average/arr.getValue().size();
-            ballsScoredOnBottomTeleAve.put(arr.getKey(), average);
-        }
-        for(Map.Entry<String, ArrayList<Integer>> arr : ballsScoredOnOuterTele.entrySet()){
-            float average = 0f;
-            for(Integer ar: arr.getValue()){
-                average += ar;
-            }
-            average = average/arr.getValue().size();
-            ballsScoredOnOuterTeleAve.put(arr.getKey(), average);
-        }
-        for(Map.Entry<String, ArrayList<Integer>> arr : ballsScoredOnInnerTele.entrySet()){
-            float average = 0f;
-            for(Integer ar: arr.getValue()){
-                average += ar;
-            }
-            average = average/arr.getValue().size();
-            ballsScoredOnInnerTeleAve.put(arr.getKey(), average);
-        }
-    }
-    public static void parseJson(String team, String str) {
+    public static void parseJsons(Map<String, JSONObject> _data) {
+        ballsScoredOnBottomAve.clear();
+        ballsScoredOnOuterAve.clear();
+        ballsScoredOnInnerAve.clear();
+        Map<Integer, ArrayList<Integer>> ballsScoredOnBottom = new HashMap<>();
+        Map<Integer, ArrayList<Integer>> ballsScoredOnInner = new HashMap<>();
+        Map<Integer, ArrayList<Integer>> ballsScoredOnOuter = new HashMap<>();
         try {
-            JSONObject obj = new JSONObject(str);
-            JSONObject tele = getJsonObject(obj, "Teleop");
-            JSONObject ballsScored = getJsonObject(tele, "power_cells_scored_tele");
-            int ballsScoredOnouterTele = Integer.valueOf(getString(ballsScored, outer_port_tele));
-            if(ballsScoredOnOuterTele.containsKey(team)){
-                ballsScoredOnOuterTele.get(team).add(ballsScoredOnouterTele);
-            }else{
-                ArrayList<Integer> arr = new ArrayList<>();
-                arr.add(ballsScoredOnouterTele);
-                ballsScoredOnOuterTele.put(team,arr);
+            for(Map.Entry<String, JSONObject> mail :  _data.entrySet()){
+                String subject = mail.getKey();
+                int indexStart= subject.indexOf("frc");
+                String team = subject.substring(indexStart);
+                team = team.substring(0,team.indexOf("."));
+                parseJson(Integer.parseInt(team), ballsScoredOnBottom,
+                        ballsScoredOnInner, ballsScoredOnOuter, mail.getValue());
+                Log.d(TAG, HEADER + "parseJson " + team);
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        calculate(ballsScoredOnBottom.entrySet(), ballsScoredOnBottomAve);
+        calculate(ballsScoredOnOuter.entrySet(), ballsScoredOnOuterAve);
+        calculate(ballsScoredOnInner.entrySet(), ballsScoredOnInnerAve);
+    }
 
+    private static void calculate(Set<Map.Entry<Integer, ArrayList<Integer>>> _entrySet,
+                           Map<Integer, Float> _container) {
+        for(Map.Entry<Integer, ArrayList<Integer>> entry : _entrySet){
+            float average = 0f;
+            for(Integer ar: entry.getValue()){
+                average += ar;
+            }
+            average = average/entry.getValue().size();
+            _container.put(entry.getKey(), average);
+        }
+    }
 
-            int ballsScoredInnerTele = Integer.valueOf(getString(ballsScored, inner_port_tele));
-            if(ballsScoredOnInnerTele.containsKey(team)){
-                ballsScoredOnInnerTele.get(team).add(ballsScoredInnerTele);
-            }else{
-                ArrayList<Integer> arr = new ArrayList<>();
-                arr.add(ballsScoredInnerTele);
-                ballsScoredOnInnerTele.put(team,arr);
-            }
-            int ballsScoredBottomTele = Integer.valueOf(getString(ballsScored, bottom_port_tele));
-            if(ballsScoredOnBottomTele.containsKey(team)){
-                ballsScoredOnBottomTele.get(team).add(ballsScoredBottomTele);
-            }else{
-                ArrayList<Integer> arr = new ArrayList<>();
-                arr.add(ballsScoredBottomTele);
-                ballsScoredOnBottomTele.put(team,arr);
-            }
+    private static void parseJson(Integer _team, Map<Integer, ArrayList<Integer>> _ballsScoredOnBottom,
+                           Map<Integer, ArrayList<Integer>> _ballsScoredOnInner,
+                           Map<Integer, ArrayList<Integer>> _ballsScoredOnOuter,
+                           JSONObject _data) {
+        try {
+            JSONObject auto = getJsonObject(_data, ScoutingData.AUTO);
+            JSONObject autoScored = getJsonObject(auto, ScoutingData.POWER_CELLS_SCORED);
+            addValue(_ballsScoredOnBottom, _team, getInt(autoScored,  ScoutingData.BOTTOM_PORT));
+            addValue(_ballsScoredOnInner, _team, getInt(autoScored,  ScoutingData.INNER_PORT));
+            addValue(_ballsScoredOnOuter, _team, getInt(autoScored,  ScoutingData.OUTER_PORT));
+            JSONObject tele = getJsonObject(_data, ScoutingData.TELE);
+            JSONObject teleScored = getJsonObject(tele, ScoutingData.POWER_CELLS_SCORED);
+            addValue(_ballsScoredOnBottom, _team, getInt(teleScored,  ScoutingData.BOTTOM_PORT));
+            addValue(_ballsScoredOnInner, _team, getInt(teleScored,  ScoutingData.INNER_PORT));
+            addValue(_ballsScoredOnOuter, _team, getInt(teleScored,  ScoutingData.OUTER_PORT));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-//    public static Map<Integer,>
+    private static void addValue(Map<Integer, ArrayList<Integer>> _map, Integer _team, int _value) {
+        if(_map.containsKey(_team)){
+            _map.get(_team).add(_value);
+        } else {
+            ArrayList<Integer> values = new ArrayList<>();
+            values.add(_value);
+            _map.put(_team, values);
+        }
+    }
 }

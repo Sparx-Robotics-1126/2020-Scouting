@@ -7,32 +7,31 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.sparx1126.a2020_scouting.Fragments.home.HomeFragment"
+        android:name="com.sparx1126.a2020_scouting.Fragments.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_our_rankings"
-        android:name="com.sparx1126.a2020_scouting.Fragments.ourRanking.OurRankingsFragment"
+        android:name="com.sparx1126.a2020_scouting.Fragments.OurRankingsFragment"
         android:label="@string/title_rankings"
         tools:layout="@layout/fragment_our_rankings" />
 
     <fragment
         android:id="@+id/navigation_match"
-        android:name="com.sparx1126.a2020_scouting.Fragments.match_viewer.MatchViewerFragment"
-        android:label="MatchViewer"
+        android:name="com.sparx1126.a2020_scouting.Fragments.MatchViewerFragment"
+        android:label="@string/title_match_viewer"
         tools:layout="@layout/fragment_match" />
-
-
-    <fragment
-        android:id="@+id/navigation_settings"
-        android:name="com.sparx1126.a2020_scouting.Fragments.settings.SettingsFragment"
-        android:label="@string/title_settings"
-        tools:layout="@layout/fragment_settings" />
 
     <fragment
         android:id="@+id/navigation_scoutings"
-        android:name="com.sparx1126.a2020_scouting.Fragments.scouting.ScoutingFragment"
+        android:name="com.sparx1126.a2020_scouting.Fragments.ScoutingFragment"
         android:label="@string/title_scoutings"
         tools:layout="@layout/fragment_scoutings" />
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.sparx1126.a2020_scouting.Fragments.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

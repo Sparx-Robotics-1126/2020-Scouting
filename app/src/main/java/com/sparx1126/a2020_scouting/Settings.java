@@ -3,6 +3,7 @@ package com.sparx1126.a2020_scouting;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sparx1126.a2020_scouting.BlueAllianceData.*;
+import com.sparx1126.a2020_scouting.Data.ScoutingData;
 import com.sparx1126.a2020_scouting.Utilities.*;
 
 import android.app.AlertDialog;
@@ -84,15 +85,15 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        allianceButton = findViewById(R.id.aliiance);
+        allianceButton = findViewById(R.id.alliance);
         allianceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(allianceButton.getText().toString().equals("RED ALLIANCE")){ // use to be red changing to blue
+                if(allianceButton.getText().toString().equals(getString(R.string.red_alliance))){ // use to be red changing to blue
                     Log.d(TAG, HEADER + "Blue Alliance Chosen");
                     blueAllianceChosen = true;
                     changeUi();
-                }else if(allianceButton.getText().toString().equals("BLUE ALLIANCE")){ // use to be blue changing to red
+                }else if(allianceButton.getText().toString().equals(getString(R.string.blue_alliance))){ // use to be blue changing to red
                     Log.d(TAG, HEADER + "Red Alliance Chosen");
                     blueAllianceChosen = false;
                     changeUi();
@@ -116,7 +117,9 @@ public class Settings extends AppCompatActivity {
         eventSpinner = findViewById(R.id.eventSpinner);
 
         emailInput = findViewById(R.id.emailInput);
+        emailInput.setText(settings.getString(getString(R.string.EMAIL), ""));
         teamNumInput = findViewById(R.id.teamInput);
+        teamNumInput.setText(settings.getString(getString(R.string.TEAM), ""));
         emailTextView = findViewById(R.id.email);
         teamNumTextView = findViewById(R.id.team);
 
@@ -139,7 +142,7 @@ public class Settings extends AppCompatActivity {
     private void reconfigure() {
         AlertDialog.Builder builder = new AlertDialog.Builder(Settings.this);
         builder.setTitle("Reconfigure");
-        builder.setMessage("Please enter the Password to continue");
+        builder.setMessage("Please enter the Password to continue. ALL DATA WILL BE LOST!");
         // Set an EditText view to get user input
         final EditText input = new EditText(this);
         builder.setView(input);
@@ -152,6 +155,8 @@ public class Settings extends AppCompatActivity {
                     Toast.makeText(Settings.this, "Wrong Password", Toast.LENGTH_LONG).show();
                     input.setText("");
                 } else {
+                    // The collected Scouting Data needs to be reset because the configuration changed
+                    ScoutingData.getData().clear();
                     editor.putBoolean(getString(R.string.tablet_Configured), false);
                     editor.putString(getString(R.string.EMAIL), "");
                     editor.putString(getString(R.string.PASSWORD), "");
@@ -175,7 +180,7 @@ public class Settings extends AppCompatActivity {
     private void configure() {
         AlertDialog.Builder builder = new AlertDialog.Builder(Settings.this);
         builder.setTitle("Configure");
-        builder.setMessage("Please enter the Password to continue");
+        builder.setMessage("Please enter the Password to continue. ALL DATA WILL BE LOST!");
         // Set an EditText view to get user input
         final EditText input = new EditText(this);
         builder.setView(input);
@@ -188,8 +193,7 @@ public class Settings extends AppCompatActivity {
                     Toast.makeText(Settings.this, "Wrong Password", Toast.LENGTH_LONG).show();
                     input.setText("");
                 } else {
-                    boolean buttonChecked = team1RadioButton.isChecked() || team2RadioButton.isChecked() || team3RadioButton.isChecked();
-                    if(!(eventSpinner.getSelectedItem().toString().equals("Select Event")) && buttonChecked) {
+                    if(!(eventSpinner.getSelectedItem().toString().equals("Select Event")) && (teamsRadioGroup.getCheckedRadioButtonId() != -1)) {
                         String selectedEvent = eventSpinner.getSelectedItem().toString();
                         int chosenTeam = 0;
                         if (team1RadioButton.isChecked()) {
@@ -200,6 +204,8 @@ public class Settings extends AppCompatActivity {
                             chosenTeam = 3;
                         }
 
+                        // The collected Scouting Data needs to be reset because the configuration changed
+                        ScoutingData.getData().clear();
                         editor.putBoolean(getResources().getString(R.string.tablet_Configured), true);
                         editor.putBoolean(getResources().getString(R.string.pref_BlueAlliance), blueAllianceChosen);
                         editor.putInt(getResources().getString(R.string.pref_TeamPosition), chosenTeam);

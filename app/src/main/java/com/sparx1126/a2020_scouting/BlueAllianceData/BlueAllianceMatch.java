@@ -1,5 +1,11 @@
 package com.sparx1126.a2020_scouting.BlueAllianceData;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.sparx1126.a2020_scouting.Utilities.JsonData;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,6 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BlueAllianceMatch extends JsonData {
+    private static final String TAG = "Sparx: ";
+    private static final String HEADER = "BlueAllianceMatch: ";
+
     //keys to access the JSON Object
     private static final String EPOCH_TIME = "predicted_time";
     private static final String MATCH_NUMBER = "match_number";
@@ -19,30 +28,28 @@ public class BlueAllianceMatch extends JsonData {
     private static final String COMP_LEVEL ="comp_level";
 
     //Static Maps to hold all the BAM Objects
-    private static HashMap<String,BlueAllianceMatch> matches = new HashMap<>();
-    private static Map<String, JSONObject> jsonMathes = new HashMap<>();
-    private static Map<String, JSONObject> jsonteamMathes = new HashMap<>();
-    private static Map<String, BlueAllianceMatch> teamMatches = new HashMap<>();
+    private static HashMap<String, BlueAllianceMatch> matches = new HashMap<>();
+
     //Getters
-    public static  HashMap<String,BlueAllianceMatch> getMatches(){return matches;}
+    public static  HashMap<String, BlueAllianceMatch> getMatches(){return matches;}
     public ArrayList<String> getBlueTeamKeys() { return blueTeamKeys; }
     public ArrayList<String> getRedTeamKeys() { return redTeamKeys; }
     public String getEpochTime() { return epochTime; }
     public String getMatchNum() { return matchNum; }
 
     //Actual non-static object data
-    private ArrayList<String> blueTeamKeys;
-    private ArrayList<String> redTeamKeys;
+    private ArrayList<String> blueTeamKeys = new ArrayList<>();
+    private ArrayList<String> redTeamKeys = new ArrayList<>();
     //Predicted start time of the match(epochTime
     private String epochTime;
     private String matchNum;
 
     //Initialize
-    private BlueAllianceMatch(ArrayList<String> blueKeys,ArrayList<String> redKeys,String time, String matchNum){
-        blueTeamKeys=blueKeys;
-        redTeamKeys=redKeys;
-        epochTime=time;
-        this.matchNum=matchNum;
+    private BlueAllianceMatch(ArrayList<String> _blueKeys,ArrayList<String> _redKeys,String _time, String _matchNum){
+        blueTeamKeys = _blueKeys;
+        redTeamKeys = _redKeys;
+        epochTime = _time;
+        matchNum = _matchNum;
     }
 
     //Parses all the matches in the JSON Object in String form(_data), to populate the static map(matches)
@@ -50,51 +57,46 @@ public class BlueAllianceMatch extends JsonData {
         matches.clear();
         try{
             JSONArray array = new JSONArray(_data);
-            for(int j=0; j<array.length();j++){
+            for(int j=0; j<array.length(); j++){
                 JSONObject obj = array.getJSONObject(j);
-               // Log.e("BAM OBJ", obj.toString());
-                String epoch =  getString(obj,EPOCH_TIME);
+                // We onluy scout during qualifying matches...
                 String compLevel = getString(obj,COMP_LEVEL);
-                String matchNum = getString(obj,MATCH_NUMBER);
-                ArrayList<String> redKeys = new ArrayList<>();
-                ArrayList<String>  blueKeys = new ArrayList<>();
-                JSONObject allianceObj = getJsonObject(obj, ALLIANCES);
-                JSONObject redObj = getJsonObject(allianceObj,RED);
-                JSONArray redKeyArray = getJsonArray(redObj,TEAM_KEYS);
-                JSONObject blueObj = getJsonObject(allianceObj,BLUE);
-                JSONArray blueKeyArray = getJsonArray(blueObj,TEAM_KEYS);
-                for( int i=0;i<redKeyArray.length();i++){
-                    //Log.e("BAM", redKeyArray.getString(i));
-                    redKeys.add(redKeyArray.getString(i));
+                if(compLevel.equals("qm")) {
+                    String epoch = getString(obj, EPOCH_TIME);
+                    String matchNum = getString(obj, MATCH_NUMBER);
+                    ArrayList<String> redKeys = new ArrayList<>();
+                    ArrayList<String> blueKeys = new ArrayList<>();
+                    JSONObject allianceObj = getJsonObject(obj, ALLIANCES);
+                    JSONObject redObj = getJsonObject(allianceObj, RED);
+                    JSONArray redKeyArray = getJsonArray(redObj, TEAM_KEYS);
+                    JSONObject blueObj = getJsonObject(allianceObj, BLUE);
+                    JSONArray blueKeyArray = getJsonArray(blueObj, TEAM_KEYS);
+                    for (int i = 0; i < redKeyArray.length(); i++) {
+                        redKeys.add(redKeyArray.getString(i));
+                    }
+                    for (int i = 0; i < blueKeyArray.length(); i++) {
+                        blueKeys.add(blueKeyArray.getString(i));
+                    }
+                    Log.d(TAG, HEADER + "parseDataToBAMMap " + matchNum);
+                    matches.put(matchNum, new BlueAllianceMatch(blueKeys, redKeys, epoch, matchNum));
                 }
-                for( int i=0;i<blueKeyArray.length();i++){
-                    blueKeys.add(blueKeyArray.getString(i));
-                }
-                if(compLevel.equals("qm")){
-                    matches.put(matchNum,new BlueAllianceMatch(blueKeys,redKeys,epoch,matchNum));
-                }
-             //  Log.e("BAM2", matches.get("1").getEpochTime());
             }
         }
         catch(JSONException e) {
             e.printStackTrace();
         }
-
     }
     public static HashMap<String,BlueAllianceMatch> getTeamMatches(String _teamkey) {
         HashMap<String, BlueAllianceMatch> rtrn = new HashMap<>();
-        for (int i = 1; i < matches.size(); i++) {
-            BlueAllianceMatch match = BlueAllianceMatch.getMatches().get(String.valueOf(i));
-
-            if (match.getBlueTeamKeys().contains(_teamkey) || match.getRedTeamKeys().contains(_teamkey)) {
-                rtrn.put(String.valueOf(i), match);
+        for(Map.Entry<String,BlueAllianceMatch> matchEntry : matches.entrySet()) {
+            if(matchEntry.getValue().getBlueTeamKeys().contains(_teamkey) || matchEntry.getValue().getRedTeamKeys().contains(_teamkey)) {
+                rtrn.put(String.valueOf(matchEntry.getKey()), matchEntry.getValue());
             }
         }
         return rtrn;
     }
 
-
-    @Override
+    @Override @NonNull
     //Print out the state of the BAM OBJect
     public String toString(){
       return  "\n"+"MATCH NUMBER: " + matchNum +"\n"+ "TIME: "+ epochTime + "\n" + "RED KEYS: " + redTeamKeys.toString() + "\n" + "BLUE KEYS: " + blueTeamKeys.toString();

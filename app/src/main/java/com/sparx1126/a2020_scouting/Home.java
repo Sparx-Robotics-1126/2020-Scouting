@@ -105,11 +105,20 @@ public class Home extends AppCompatActivity {
                         public void run() {
                             BlueAllianceMatch.parseDataToBAMMap(_data);
                             if(ScoutingData.getData().isEmpty()){
-                                Map<String, BlueAllianceMatch> matches = BlueAllianceMatch.getMatches();
-                                for(BlueAllianceMatch data : matches.values()){
-                                    ScoutingData emptyData = new ScoutingData(data.getMatchNum());
-                                    ScoutingData.getData().put(data.getMatchNum(), emptyData);
+                                String prefColor = getResources().getString(R.string.red_alliance);
+                                if(settings.getBoolean(getResources().getString(R.string.pref_BlueAlliance), false)){
+                                    prefColor = getResources().getString(R.string.blue_alliance);
                                 }
+
+                                String prefPosition = getResources().getString(R.string.position_1);
+                                if(settings.getInt(getResources().getString(R.string.pref_TeamPosition), 0) == 2){
+                                    prefPosition = getResources().getString(R.string.position_2);
+                                }
+                                else if(settings.getInt(getResources().getString(R.string.pref_TeamPosition), 0) == 3){
+                                    prefPosition = getResources().getString(R.string.position_3);
+                                }
+                                ScoutingData.initializeData(prefColor,
+                                        prefPosition);
                             }
                         }
                     });
@@ -117,23 +126,14 @@ public class Home extends AppCompatActivity {
             });
 
             GetMail email = new GetMail(Home.this);
-            email.downloadMail(
-                    settings.getString(getString(R.string.EMAIL), ""),
+            email.downloadMail(settings.getString(getString(R.string.EMAIL), ""),
                     settings.getString(getString(R.string.PASSWORD), ""),
                     new GetMail.Callback() {
                 @Override
                 public void handleFinishDownload(Map<String, JSONObject> mails) {
-                    for(Map.Entry<String, JSONObject> mail :  mails.entrySet()){
-                        String subject = mail.getKey();
-                        int indexStart= subject.indexOf("frc");
-                        int endIndex = subject.indexOf(".", subject.indexOf(".")+1);
-                        String team =  subject.substring(indexStart, endIndex);
-                        Log.e(TAG, HEADER + "Hiram: " + team);
-                        Log.e(TAG, HEADER + "Sohail" + mail.getValue().toString());
-                        OurRankingData.parseJson(team, mail.getValue().toString());
-                        Log.e(TAG, HEADER + "Sohail2 " + OurRankingData.getBallsScoredOnBottomTele().size());
-                    }
-                    OurRankingData.calculate();
+                    Log.d(TAG, HEADER + "email handleFinishDownload");
+                    ScoutingData.parseJsons(mails);
+                    OurRankingData.parseJsons(mails);
                 }
             });
         }

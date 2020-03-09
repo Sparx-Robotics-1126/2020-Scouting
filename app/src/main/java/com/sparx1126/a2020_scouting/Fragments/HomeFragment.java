@@ -1,4 +1,4 @@
-package com.sparx1126.a2020_scouting.Fragments.home;
+package com.sparx1126.a2020_scouting.Fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,8 +16,8 @@ import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceEvent;
 import com.sparx1126.a2020_scouting.R;
 
 public class HomeFragment extends Fragment {
-    static private String TAG = "Sparx: ";
-    static private String HEADER = "HomeFragment: ";
+    private static String TAG = "Sparx: ";
+    private static String HEADER = "HomeFragment: ";
 
     private SharedPreferences settings;
     private BlueAllianceEvent event;
@@ -35,13 +35,12 @@ public class HomeFragment extends Fragment {
     private TextView posInput;
     private TextView allianceColorTextView;
     private TextView allianceColorInput;
-    private View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, HEADER + "onCreateView");
 
-        root = inflater.inflate(R.layout.fragment_home, container, false);
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
         settings = getActivity().getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
 
         backgroundLayout = root.findViewById(R.id.background);
@@ -75,7 +74,8 @@ public class HomeFragment extends Fragment {
         if(event != null) {
             regionalNameInput.setText(event.getName());
             regionLocationInput.setText(event.getLocation());
-            datesTextInput.setText(event.getStartDate() + " to " + event.getEndDate());
+            String dateRange = event.getStartDate() + " to " + event.getEndDate();
+            datesTextInput.setText(dateRange);
         }
         teamInput.setText(settings.getString(getString(R.string.TEAM), ""));
         if(settings.getBoolean(getString(R.string.SCOUT), false)){

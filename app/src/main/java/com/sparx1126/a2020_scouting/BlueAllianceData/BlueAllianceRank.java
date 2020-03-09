@@ -2,6 +2,8 @@ package com.sparx1126.a2020_scouting.BlueAllianceData;
 
 import android.util.Log;
 
+import com.sparx1126.a2020_scouting.Utilities.JsonData;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,6 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BlueAllianceRank extends JsonData {
+    private static final String TAG = "Sparx: ";
+    private static final String HEADER = "BlueAllianceRank: ";
+
     // keys from thebluealliance.com API
     private static final String RANK_ARRAY = "rankings";
     private static final String RANK = "rank";
@@ -52,12 +57,12 @@ public class BlueAllianceRank extends JsonData {
 
     private static Map<Integer, BlueAllianceRank> ranks = new HashMap<>();
 
-    public BlueAllianceRank(String teamNum, String rank, String record, String teamName, String details) {
-        this.teamNum = teamNum;
-        this.rank = rank;
-        this.record = record;
-        this.teamName = teamName;
-        this.details = details;
+    private BlueAllianceRank(String _teamNum, String _rank, String _record, String _teamName, String _details) {
+        teamNum = _teamNum;
+        rank = _rank;
+        record = _record;
+        teamName = _teamName;
+        details = _details;
     }
 
     public static void parseJson(String _data){
@@ -79,6 +84,7 @@ public class BlueAllianceRank extends JsonData {
                 details += "Teleop Cell + CPanel: " + detailsArr.getString(TELEOP_CELL_CPANEL_POS);
                 String teamNum = getString(currentObj, TEAM_KEY).substring(3);
                 String teamName = getString(currentObj, TEAM_KEY); // broken for now
+                Log.d(TAG, HEADER + "parseJson " + rank);
                 ranks.put(Integer.parseInt(rank), new BlueAllianceRank(teamNum, rank, record, teamName, details));
             }
         }catch(JSONException e) {

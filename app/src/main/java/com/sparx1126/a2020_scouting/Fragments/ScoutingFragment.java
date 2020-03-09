@@ -1,4 +1,4 @@
-package com.sparx1126.a2020_scouting.Fragments.scouting;
+package com.sparx1126.a2020_scouting.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;

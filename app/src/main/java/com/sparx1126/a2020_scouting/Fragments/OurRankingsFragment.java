@@ -1,4 +1,4 @@
-package com.sparx1126.a2020_scouting.Fragments.ourRanking;
+package com.sparx1126.a2020_scouting.Fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.sparx1126.a2020_scouting.Data.OurRankingData;
 import com.sparx1126.a2020_scouting.R;
 
 public class OurRankingsFragment extends Fragment {
