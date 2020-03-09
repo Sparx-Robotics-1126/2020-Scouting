@@ -21,6 +21,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
@@ -45,7 +47,7 @@ public class Home extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_our_rankings,R.id.navigation_match, R.id.navigation_settings, R.id.navigation_scoutings)
+                R.id.navigation_home, R.id.navigation_view, R.id.navigation_scoutings, R.id.navigation_settings)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -54,6 +56,7 @@ public class Home extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        Log.e(TAG, HEADER + "Reconfigure in Settings to go back to logging screen...");
         Toast.makeText(Home.this, "Reconfigure in Settings to go back to logging screen...", Toast.LENGTH_LONG).show();
     }
 
@@ -79,7 +82,13 @@ public class Home extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                        if (isValidJsonObject(_data)) {
+                            Log.d(TAG, HEADER + "downLoaded event ranks");
                             BlueAllianceRank.parseJson(_data);
+                        } else {
+                            Log.e(TAG, HEADER + "Internet returned BAD DATA for EventRanks, try another wifi!");
+                            Toast.makeText(Home.this, "Internet returned BAD DATA for EventRanks, try another wifi!", Toast.LENGTH_LONG).show();
+                        }
                         }
                     });
                 }
@@ -91,7 +100,13 @@ public class Home extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                        if (isValidJsonArray(_data)) {
+                            Log.d(TAG, HEADER + "downLoaded event teams");
                             BlueAllianceTeam.parseJson(_data);
+                        } else {
+                            Log.e(TAG, HEADER + "Internet returned BAD DATA for EventTeams, try another wifi!");
+                            Toast.makeText(Home.this, "Internet returned BAD DATA for EventTeams, try another wifi!", Toast.LENGTH_LONG).show();
+                        }
                         }
                     });
                 }
@@ -103,39 +118,48 @@ public class Home extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                        if (isValidJsonArray(_data)) {
+                            Log.d(TAG, HEADER + "downLoaded event matches");
                             BlueAllianceMatch.parseDataToBAMMap(_data);
                             if(ScoutingData.getData().isEmpty()){
-                                String prefColor = getResources().getString(R.string.red_alliance);
-                                if(settings.getBoolean(getResources().getString(R.string.pref_BlueAlliance), false)){
-                                    prefColor = getResources().getString(R.string.blue_alliance);
+                                String prefColorStr = getResources().getString(R.string.red_alliance);
+                                boolean blueAllianceChosen = settings.getBoolean(getResources().getString(R.string.pref_BlueAlliance), false);
+                                if(blueAllianceChosen){
+                                    prefColorStr = getResources().getString(R.string.blue_alliance);
                                 }
 
-                                String prefPosition = getResources().getString(R.string.position_1);
-                                if(settings.getInt(getResources().getString(R.string.pref_TeamPosition), 0) == 2){
-                                    prefPosition = getResources().getString(R.string.position_2);
+                                String prefPositionStr = getResources().getString(R.string.position_1);
+                                int position = settings.getInt(getResources().getString(R.string.pref_TeamPosition), 0);
+                                if(position == 2){
+                                    prefPositionStr = getResources().getString(R.string.position_2);
                                 }
-                                else if(settings.getInt(getResources().getString(R.string.pref_TeamPosition), 0) == 3){
-                                    prefPosition = getResources().getString(R.string.position_3);
+                                else if(position == 3){
+                                    prefPositionStr = getResources().getString(R.string.position_3);
                                 }
-                                ScoutingData.initializeData(prefColor,
-                                        prefPosition);
+                                String pref_SelectedEvent = settings.getString(getResources().getString(R.string.pref_SelectedEvent), "");
+                                ScoutingData.initializeData(blueAllianceChosen, position, pref_SelectedEvent, prefColorStr,
+                                        prefPositionStr);
                             }
+                        } else {
+                            Log.e(TAG, HEADER + "Internet returned BAD DATA for EventMatches, try another wifi!");
+                            Toast.makeText(Home.this, "Internet returned BAD DATA for EventMatches, try another wifi!", Toast.LENGTH_LONG).show();
+                        }
                         }
                     });
                 }
             });
 
-            GetMail email = new GetMail(Home.this);
-            email.downloadMail(settings.getString(getString(R.string.EMAIL), ""),
+            GetMail email = new GetMail(Home.this, settings.getString(getString(R.string.EMAIL), ""),
                     settings.getString(getString(R.string.PASSWORD), ""),
                     new GetMail.Callback() {
-                @Override
-                public void handleFinishDownload(Map<String, JSONObject> mails) {
-                    Log.d(TAG, HEADER + "email handleFinishDownload");
-                    ScoutingData.parseJsons(mails);
-                    OurRankingData.parseJsons(mails);
-                }
-            });
+                        @Override
+                        public void handleFinishDownload(Map<String, JSONObject> mails) {
+                            Log.d(TAG, HEADER + "email handleFinishDownload");
+                            ScoutingData.parseJsons(mails);
+                            String pref_SelectedEvent = settings.getString(getResources().getString(R.string.pref_SelectedEvent), "");
+                            OurRankingData.parseJsons(pref_SelectedEvent, mails);
+                        }
+                    });
         }
 
         boolean tabletConfigured = settings.getBoolean(getResources().getString(R.string.tablet_Configured), false);
@@ -143,5 +167,23 @@ public class Home extends AppCompatActivity {
             Log.d(TAG, HEADER + "tablet not configured");
             startActivity(new Intent(Home.this, Settings.class));
         }
+    }
+
+    private boolean isValidJsonArray(String _data) {
+        try {
+            new JSONArray(_data);
+        } catch (JSONException jsExcp) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isValidJsonObject(String _data) {
+        try {
+            new JSONObject(_data);
+        } catch (JSONException jsExcp) {
+            return false;
+        }
+        return true;
     }
 }

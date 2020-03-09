@@ -4,12 +4,13 @@ import android.util.Log;
 import java.io.IOException;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Request;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 public class BlueAllianceNetwork {
+    private static final String TAG = "Sparx: ";
+    private static final String HEADER = "BlueAllianceNetwork: ";
 
     public interface Callback {
         void handleFinishDownload(String _data);
@@ -18,9 +19,8 @@ public class BlueAllianceNetwork {
     private static BlueAllianceNetwork instance;
     private static OkHttpClient client;
     //The basic url to be, on which will be appened the correct tails in each method
-    private final String BASE_URL="https://www.thebluealliance.com/api/v3/";
-    private final String TAG = "BlueAllianceNetwork";
-    private final String AUTH_TAG="X-TBA-Auth-Key";
+    private static final String BASE_URL="https://www.thebluealliance.com/api/v3/";
+    private static final String AUTH_TAG="X-TBA-Auth-Key";
     private static final String BLUE_ALLIANCE_KEY = "4EFyOEdszrGNcCJuibGSr6W92SjET2cfhx2QU9Agxv3LNASra77KcsCEv5GnoSIq";
     private static final String YEAR = "2020";
     //Not set as final as it is intened to be changed at will in settings menu
@@ -30,7 +30,6 @@ public class BlueAllianceNetwork {
     private static String EVENT_RANKS_URL_TAIL = "event/{event_key}/rankings";
     // intention is for {team_key} to be substituted in the url handed to the okhttp client
     private static String TEAM_EVENTS_URL_TAIL = "team/{team_key}/events/" + YEAR;
-    private static String TEAM_SPECIFIC_EVENT_MATCHES="team/{team_key}/event/{event_key}/matches/simple";
     private static String EVENT_MATCHES_URL_TAIL = "event/{event_key}/matches/simple";
     //Private constructor> only one instance per app instance
     private BlueAllianceNetwork(){client=new OkHttpClient();}
@@ -41,11 +40,11 @@ public class BlueAllianceNetwork {
         }
         return instance;
     }
-    public  String geteamKey() {
+    public static String geteamKey() {
         return teamKey;
     }
-    public void seteamKey(String key) {
-        teamKey=key;
+    public static void seteamKey(String key) {
+        teamKey = key;
     }
 
     public void downloadEvents( final Callback callback){
@@ -53,25 +52,25 @@ public class BlueAllianceNetwork {
         fetchBlueAllianceData(url, new okhttp3.Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                Log.e(TAG, HEADER + "downloadEvents onFailure");
                 callback.handleFinishDownload("");
-
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                String rtrn = "";
                 if(response.isSuccessful()){
-                    String rtrn = response.body().string();
-                    //Log.e("YEE", rtrn);
-                    assert rtrn != null;
-                    callback.handleFinishDownload(rtrn);
-
-                } else{ throw new AssertionError(response.message()+this);
-
+                    rtrn = response.body().string();
+                    if(rtrn == null) {
+                        Log.e(TAG, HEADER + "downloadEvents response.body().string() is null");
+                        rtrn = "";
+                    }
+                } else{
+                    Log.e(TAG, HEADER + "downloadEvents response not successful");
                 }
-
+                callback.handleFinishDownload(rtrn);
             }
         });
-
     }
 
     public void downloadEventTeams(String eventKey, final Callback callback){
@@ -79,71 +78,50 @@ public class BlueAllianceNetwork {
         fetchBlueAllianceData(url, new okhttp3.Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                Log.e(TAG, HEADER + "downloadEventTeams onFailure");
                 callback.handleFinishDownload("");
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                String rtrn = "";
                 if(response.isSuccessful()){
-                    String rtrn = response.body().string();
-                    assert rtrn != null;
-                    callback.handleFinishDownload(rtrn);
-
-                } else{ throw new AssertionError(response.message()+this);
-
+                    rtrn = response.body().string();
+                    if(rtrn == null) {
+                        Log.e(TAG, HEADER + "downloadEventTeams response.body().string() is null");
+                        rtrn = "";
+                    }
+                } else{
+                    Log.e(TAG, HEADER + "downloadEventTeams response not successful");
                 }
-
+                callback.handleFinishDownload(rtrn);
             }
         });
 
     }
-//    TRASH, MAYBE USEFUL?
-//    //Downloads only the mathes in event that the teamkey team is in
-//    public void downloadTeamEventMatches(String eventKey,String teamKey,final Callback callback){
-//        String url = BASE_URL+TEAM_SPECIFIC_EVENT_MATCHES.replace("{team_key}", teamKey);
-//        url=url.replace("{event_key}",eventKey);
-//        Log.e("EVENT MATCHES URL", url);
-//        fetchBlueAllianceData(url, new okhttp3.Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                callback.handleFinishDownload("");            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                if(response.isSuccessful()){
-//                    String rtrn = response.body().string();
-//                    assert rtrn != null;
-//                    callback.handleFinishDownload(rtrn);
-//
-//                } else{ throw new AssertionError(response.message()+this);
-//
-//                }
-//
-//            }
-//        });
-//
-//    }
-
 
     public void downloadEventMatches(String eventKey,final Callback callback){
         String url = BASE_URL+EVENT_MATCHES_URL_TAIL.replace("{event_key}", eventKey);
-        Log.e("EVENT MATCHES URL", url);
         fetchBlueAllianceData(url, new okhttp3.Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                callback.handleFinishDownload("");            }
+                Log.e(TAG, HEADER + "downloadEventMatches onFailure");
+                callback.handleFinishDownload("");
+            }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                String rtrn = "";
                 if(response.isSuccessful()){
-                    String rtrn = response.body().string();
-                    assert rtrn != null;
-                    callback.handleFinishDownload(rtrn);
-
-                } else{ throw new AssertionError(response.message()+this);
-
+                    rtrn = response.body().string();
+                    if(rtrn == null) {
+                        Log.e(TAG, HEADER + "downloadEventMatches response.body().string() is null");
+                        rtrn = "";
+                    }
+                } else{
+                    Log.e(TAG, HEADER + "downloadEventMatches response not successful");
                 }
-
+                callback.handleFinishDownload(rtrn);
             }
         });
 
@@ -154,36 +132,33 @@ public class BlueAllianceNetwork {
         fetchBlueAllianceData(url, new okhttp3.Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                Log.e(TAG, HEADER + "downloadEventRanks onFailure");
                 callback.handleFinishDownload("");
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException { if(response.isSuccessful()){
-                String rtrn = response.body().string();
-                assert rtrn != null;
+            public void onResponse(Call call, Response response) throws IOException {
+                String rtrn = "";
+                if(response.isSuccessful()){
+                    rtrn = response.body().string();
+                    if(rtrn == null) {
+                        Log.e(TAG, HEADER + "downloadEventRanks response.body().string() is null");
+                        rtrn = "";
+                    }
+                } else{
+                    Log.e(TAG, HEADER + "downloadEventRanks response not successful");
+                }
                 callback.handleFinishDownload(rtrn);
-
-            } else{ throw new AssertionError(response.message()+this);
-
-            }
-
             }
         });
 
     }
-
 
     private void fetchBlueAllianceData(String _url, okhttp3.Callback _callback) {
         Request requestEvents = new Request.Builder()
                 .addHeader(AUTH_TAG, BLUE_ALLIANCE_KEY)
                 .url(_url)
                 .build();
-        Log.e("JT",_url);
-        Log.e("JT",AUTH_TAG);
-        Log.e("JT",BLUE_ALLIANCE_KEY);
-
-
-
         client.newCall(requestEvents).enqueue(_callback);
     }
 

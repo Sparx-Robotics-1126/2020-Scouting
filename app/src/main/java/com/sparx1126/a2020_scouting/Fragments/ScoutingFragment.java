@@ -16,8 +16,8 @@ import com.sparx1126.a2020_scouting.R;
 import com.sparx1126.a2020_scouting.Scouting;
 
 public class ScoutingFragment extends Fragment {
-    static String TAG = "Sparx: ";
-    static String HEADER = "ScoutingFragment: ";
+    private static final String TAG = "Sparx: ";
+    private static final String HEADER = "ScoutingFragment: ";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -27,6 +27,7 @@ public class ScoutingFragment extends Fragment {
 
 
         if(BlueAllianceMatch.getMatches().size() == 0){
+            Log.e(TAG, HEADER + "No Matches to Scout");
             Toast.makeText(getActivity(), "No Matches to Scout", Toast.LENGTH_LONG).show();
             getFragmentManager().popBackStack();
         }else{

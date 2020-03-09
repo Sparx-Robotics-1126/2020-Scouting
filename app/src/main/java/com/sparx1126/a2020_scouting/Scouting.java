@@ -24,10 +24,6 @@ import com.sparx1126.a2020_scouting.Utilities.SendMail;
 import android.view.View;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 public class Scouting extends AppCompatActivity {
     private static String TAG = "Sparx: ";
     private static String HEADER = "Scouting: ";
@@ -125,16 +121,14 @@ public class Scouting extends AppCompatActivity {
     private RadioButton triedToLevelRadioButton;
     private RadioButton successfullyLeveledRadioButton;
     private TextView otherTextView;
-    private TextView defenseTextView;
     private TextView excellecentDefenseTextView;
     private CheckBox excellecentDefenseCheckBox;
-    private TextView foulTextView;
     private TextView causedFouldTextView;
     private CheckBox causedFouldCheckBox;
-    private TextView robotStateTextView;
     private TextView brokeDisabledTextView;
     private CheckBox brokeDisabledCheckBox;
     private Button saveButton;
+    private Button exitButton;
 
     private SendMail mail;
     private boolean blueAllianceChosen;
@@ -166,9 +160,7 @@ public class Scouting extends AppCompatActivity {
             }
             @Override
             public void afterTextChanged(Editable s) {
-                if(findTeam()) {
-                    restoreData(Integer.parseInt(matchNumInput.getText().toString()));
-                }
+                restoreData(Integer.parseInt(matchNumInput.getText().toString()));
             }
         });
         plusMatch = findViewById(R.id.plusMatch);
@@ -179,6 +171,7 @@ public class Scouting extends AppCompatActivity {
                 int newValue = currentValue + 1;
                 int numberOfMatches = BlueAllianceMatch.getMatches().size();
                 if(newValue > numberOfMatches) {
+                    Log.e(TAG, HEADER + "Cannot exceed number of matches " + numberOfMatches);
                     Toast.makeText(Scouting.this, "Cannot exceed number of matches " + numberOfMatches, Toast.LENGTH_LONG).show();
                 }
                 else {
@@ -193,6 +186,7 @@ public class Scouting extends AppCompatActivity {
                 int currentValue = Integer.parseInt(matchNumInput.getText().toString());
                 int newValue = currentValue - 1;
                 if(newValue < 1) {
+                    Log.e(TAG, HEADER + "Value cannot be less than 1");
                     Toast.makeText(Scouting.this, "Value cannot be less than 1" , Toast.LENGTH_LONG).show();
                 }
                 else {
@@ -426,20 +420,25 @@ public class Scouting extends AppCompatActivity {
         triedToLevelRadioButton = findViewById(R.id.triedToLevelRadioButton);
         successfullyLeveledRadioButton = findViewById(R.id.successfullyLeveledRadioButton);
         otherTextView = findViewById(R.id.otherTextView);
-        defenseTextView = findViewById(R.id.defenseTextView);
         excellecentDefenseTextView = findViewById(R.id.excellecentDefenseTextView);
         excellecentDefenseCheckBox = findViewById(R.id.excellecentDefenseCheckBox);
-        foulTextView = findViewById(R.id.foulTextView);
         causedFouldTextView = findViewById(R.id.causedFouldTextView);
         causedFouldCheckBox = findViewById(R.id.causedFouldCheckBox);
-        robotStateTextView = findViewById(R.id.robotStateTextView);
         brokeDisabledTextView = findViewById(R.id.brokeDisabledTextView);
         brokeDisabledCheckBox = findViewById(R.id.brokeDisabledCheckBox);
         saveButton = findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Save();
+                save();
+            }
+        });
+        exitButton = findViewById(R.id.exit);
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, HEADER + "exited");
+                finish();
             }
         });
 
@@ -452,6 +451,12 @@ public class Scouting extends AppCompatActivity {
             scouterNameInput.setText(scouter);
         }
         matchNumInput.setText(String.valueOf(lastMatchScouted));
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.e(TAG, HEADER + "Press Exit to return with no changes...");
+        Toast.makeText(Scouting.this, "Press Exit to return with no changes...", Toast.LENGTH_LONG).show();
     }
 
     public void restoreData(Integer matchNum){
@@ -519,7 +524,7 @@ public class Scouting extends AppCompatActivity {
         brokeDisabledCheckBox.setChecked(data.isOtherBrokeOrGotDisabled());
     }
 
-    public void Save(){
+    public void save(){
         ScoutingData data = ScoutingData.getData().get(Integer.parseInt(matchNumInput.getText().toString()));
 
         String missing = "";
@@ -613,15 +618,21 @@ public class Scouting extends AppCompatActivity {
 
         if(missing.isEmpty()) {
             String email = settings.getString(getString(R.string.EMAIL), "");
+            String password = settings.getString(getString(R.string.PASSWORD), "");
             String subject = settings.getString("pref_SelectedEvent","") + ".";
             subject += "frc" + teamNumInput.getText().toString() + ".";
             subject += ScoutingData.getPrefAllianceColor() + ".";
             subject += ScoutingData.getPrefTeamPosition() + ".";
             subject += matchNumInput.getText().toString() + ".json";
-            mail = new SendMail(Scouting.this, email, subject, data.toJson().toString());
-            mail.execute();
-            lastMatchScouted = Integer.parseInt(matchNumInput.getText().toString());
-            Toast.makeText(this, "Data was saved on device", Toast.LENGTH_LONG).show();
+            mail = new SendMail(Scouting.this, email, password, subject, data.toJson().toString(),
+                new SendMail.Callback() {
+                    @Override
+                    public void handleFinishDownload() {
+                        lastMatchScouted = Integer.parseInt(matchNumInput.getText().toString());
+                        Log.d(TAG, HEADER + "Data was sent over email");
+                        Toast.makeText(Scouting.this, "Data was sent over email", Toast.LENGTH_LONG).show();
+                    }
+                });
         }
         else {
             AlertDialog.Builder builder = new AlertDialog.Builder(Scouting.this);
@@ -649,6 +660,7 @@ public class Scouting extends AppCompatActivity {
         int currentValue = Integer.parseInt(view.getText().toString());
         int newValue = currentValue - 1;
         if(newValue < 0) {
+            Log.e(TAG, HEADER + "Value cannot be negative");
             Toast.makeText(this, "Value cannot be negative", Toast.LENGTH_LONG).show();
         }
         else {
@@ -778,14 +790,13 @@ public class Scouting extends AppCompatActivity {
         triedToLevelRadioButton.setTextColor(textColor);
         successfullyLeveledRadioButton.setTextColor(textColor);
         otherTextView.setTextColor(textColor);
-        defenseTextView.setTextColor(textColor);
         excellecentDefenseTextView.setTextColor(textColor);
-        foulTextView.setTextColor(textColor);
         causedFouldTextView.setTextColor(textColor);
-        robotStateTextView.setTextColor(textColor);
         brokeDisabledTextView.setTextColor(textColor);
         saveButton.setBackgroundColor(buttonColor);
         saveButton.setTextColor(textColor);
+        exitButton.setBackgroundColor(buttonColor);
+        exitButton.setTextColor(textColor);
     }
 
     private void login(){
@@ -811,30 +822,5 @@ public class Scouting extends AppCompatActivity {
             }
         });
         builder.create().show();
-    }
-
-    private boolean findTeam(){
-        boolean found = false;
-        String matchnum = matchNumInput.getText().toString();
-        HashMap<String, BlueAllianceMatch> matches = BlueAllianceMatch.getMatches();
-
-        if(matches.containsKey(matchnum)) {
-            BlueAllianceMatch matchObj = matches.get(matchnum);
-            ArrayList<String> allainceKeySet;
-            if(blueAllianceChosen){
-                allainceKeySet = matchObj.getBlueTeamKeys();
-            }
-            else {
-                allainceKeySet = matchObj.getRedTeamKeys();
-            }
-            int teamPosition = settings.getInt(getResources().getString(R.string.pref_TeamPosition),0);
-            String teamText = (allainceKeySet.get(teamPosition-1)).replace("frc","");
-            teamNumInput.setText(teamText);
-            found = true;
-        }
-        else {
-            Toast.makeText(Scouting.this, "Match Not Found " + matchnum,Toast.LENGTH_LONG).show();
-        }
-        return found;
     }
 }

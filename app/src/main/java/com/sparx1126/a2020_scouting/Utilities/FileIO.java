@@ -1,6 +1,7 @@
 package com.sparx1126.a2020_scouting.Utilities;
 import android.content.Context;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -12,6 +13,9 @@ import java.io.IOException;
 
 //Singleton design, one instance per instance of the app
 public class FileIO {
+    private static final String TAG = "Sparx: ";
+    private static final String HEADER = "FileIO: ";
+
     //Strings for file Path names
     private static final String FOLDER_NAME = "infiniteRecharge";
     //{key} is intended to be replaced when creating the file path with the event
@@ -46,17 +50,19 @@ public class FileIO {
         Toast.makeText(_context, "Storage Path:" + directory.getPath(), Toast.LENGTH_LONG).show();
     }
 
-    public void storeTeamEvents(String _input, String team) { storeData(TEAM_EVENTS_FILE_NAME, _input, team); }
+    public void storeTeamEvents(String _input, String team) {
+        Log.d(TAG, HEADER + "storeTeamEvents " + team);
+        storeData(TEAM_EVENTS_FILE_NAME, _input, team);
+    }
     public String fetchTeamEvents(String team) {
         return fetchData(TEAM_EVENTS_FILE_NAME, team);
     }
 
-
-    public void storeEventMatches(String _data, String eventKey){ storeData(EVENT_MATCHES_FILE_PATH, _data, eventKey); }
+    public void storeEventMatches(String _data, String eventKey){
+        Log.e(TAG, HEADER + "storeTeamEvents " + eventKey);
+        storeData(EVENT_MATCHES_FILE_PATH, _data, eventKey);
+    }
     public String fetchEventMatches(String eventKey){ return fetchData(EVENT_MATCHES_FILE_PATH,eventKey); }
-
-
-
 
     //Less specific method for storing general data when handed a json String
     private void storeData(String _path, String _data, String key){
@@ -70,8 +76,6 @@ public class FileIO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
     //key will be respective extra key of each of the fetch methods, for example for fetchEventKeys, the key is the evnt key
     private String fetchData(String _path, String key){

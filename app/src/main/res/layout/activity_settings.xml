@@ -1,120 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:id="@+id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/background">
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
             android:id="@id/email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="Email:"
-            android:textSize="30sp" />
+            style="@style/item_text_view"
+            android:text="Email:" />
 
         <TextView
             android:id="@+id/emailInput"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textSize="30sp" />
+            style="@style/item_text_view"
+            android:text="No email" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
             android:id="@+id/team"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Team #:"
-            android:layout_weight="0"
-            android:textSize="30sp"/>
+            style="@style/item_text_view"
+            android:text="Team #:" />
 
         <TextView
             android:id="@+id/teamInput"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textSize="30sp" />
+            style="@style/item_text_view"
+            android:text="0" />
     </LinearLayout>
 
     <Spinner
         android:id="@+id/eventSpinner"
-        style="@style/J_spinner"
-        android:layout_height="49dp"/>
+        style="@style/J_spinner" />
 
     <LinearLayout
+        android:id="@+id/scoutingTabletLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/scoutingTabletLayout">
-        <Button
-            android:id="@+id/alliance"
+        android:orientation="vertical">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:background="@color/RButtonBackground"
-            android:shadowColor="#673AB7"
-            android:text="RED ALLIANCE"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/RText"></Button>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <Button
+                android:id="@+id/alliance"
+                style="@style/regularButton"
+                android:text="@string/red_alliance"/>
+        </LinearLayout>
 
         <RadioGroup
             android:id="@+id/teams"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:orientation="vertical">
+            style="@style/radioGroup">
 
-        <RadioButton
-            android:id="@+id/team1"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="Team 1" />
+            <RadioButton
+                android:id="@+id/team1"
+                style="@style/radioButton"
+                android:text="Team 1" />
 
             <RadioButton
                 android:id="@+id/team2"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
+                style="@style/radioButton"
                 android:text="Team 2" />
 
             <RadioButton
                 android:id="@+id/team3"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
+                style="@style/radioButton"
                 android:text="Team 3" />
 
         </RadioGroup>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/reconfigure"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:layout_marginTop="75dp"
-        android:shadowColor="#673AB7"
-        android:text="Reconfigure"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#2196F3" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
 
-    <Button
-        android:id="@+id/configure"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:layout_marginTop="25dp"
-        android:text="Save Configuration"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#2196F3"/>
-
-    <Button
-        android:id="@+id/exit"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:layout_marginTop="25dp"
-        android:text="Exit (without saving)"/>
-
+        <Button
+            android:id="@+id/reconfigure"
+            style="@style/regularButton"
+            android:text="Reconfigure (will erase all data)"/>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
+        <Button
+            android:id="@+id/configure"
+            style="@style/regularButton"
+            android:text="Save Configuration (will erase all data)"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
+        <Button
+            android:id="@+id/exit"
+            style="@style/regularButton"
+            android:text="Exit (without saving)"/>
+    </LinearLayout>
+
+</LinearLayout>

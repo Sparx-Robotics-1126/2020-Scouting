@@ -21,8 +21,8 @@ import com.sparx1126.a2020_scouting.R;
 import java.util.Map;
 
 public class RankingsFragment extends Fragment {
-    static String TAG = "Sparx: ";
-    static String HEADER = "RankingsFragment: ";
+    private static final String TAG = "Sparx: ";
+    private static final String HEADER = "RankingsFragment: ";
 
     private SharedPreferences settings;
 
@@ -37,6 +37,7 @@ public class RankingsFragment extends Fragment {
         Map<String, BlueAllianceTeam> teams = BlueAllianceTeam.getTeams();
 
         if(ranks.size() == 0){
+            Log.e(TAG, HEADER + "No Rankings Data");
             Toast.makeText(getActivity(), "No Rankings Data", Toast.LENGTH_LONG).show();
             getFragmentManager().popBackStack();
         }else {
@@ -81,8 +82,6 @@ public class RankingsFragment extends Fragment {
                         background1.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
                         background2.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
                     }
-                } else {
-                    //This is padding for the last item that ends up under the navigation bar
                 }
                 ((LinearLayout) linearlayout).addView(segment);
             }

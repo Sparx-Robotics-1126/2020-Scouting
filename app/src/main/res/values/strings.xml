@@ -5,7 +5,8 @@
     <string name="title_settings">Settings</string>
     <string name="title_scoutings">Scoutings</string>
     <string name="title_match_viewer">MatchViewer</string>
-    <string name="title_ourRankings">Our Rankings</string>
+    <string name="title_our_rankings">Our Rankings</string>
+    <string name="title_view">View</string>
     <string name="selectEvent">Select Event</string>
     <string name="scouter">scouter</string>
     <string name="pref_SelectedEvent">pref_SelectedEvent</string>

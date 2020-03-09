@@ -6,13 +6,9 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_home" />
     <item
-        android:id="@+id/navigation_our_rankings"
-        android:icon="@drawable/ic_low_priority_black_24dp"
-        android:title="@string/title_ourRankings" />
-    <item
-        android:id="@+id/navigation_match"
-        android:icon="@drawable/ic_content_paste_black_24dp"
-        android:title="MatchViewer"/>
+        android:id="@+id/navigation_view"
+        android:icon="@drawable/ic_remove_red_eye_black_24dp"
+        android:title="@string/title_view" />
     <item
         android:id="@+id/navigation_scoutings"
         android:icon="@drawable/binoculars"
