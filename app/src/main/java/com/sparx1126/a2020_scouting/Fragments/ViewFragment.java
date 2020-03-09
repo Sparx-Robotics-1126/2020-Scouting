@@ -1,6 +1,6 @@
 package com.sparx1126.a2020_scouting.Fragments;
 
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,19 +11,21 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.sparx1126.a2020_scouting.R;
+import com.sparx1126.a2020_scouting.Settings;
 
-public class OurRankingsFragment extends Fragment {
+public class ViewFragment extends Fragment {
     private static final String TAG = "Sparx: ";
-    private static final String HEADER = "OurRankingsFragment: ";
-
-    private SharedPreferences settings;
-
+    private static final String HEADER = "ViewFragment: ";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, HEADER + "onCreateView");
-        View root = inflater.inflate(R.layout.fragment_settings, container, false);
-        settings = getActivity().getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
+
+        View root = inflater.inflate(R.layout.fragment_view, container, false);
+
+        Intent intent = new Intent(getActivity(), View.class);
+        startActivity(intent);
+        getFragmentManager().popBackStack();
 
         return root;
     }

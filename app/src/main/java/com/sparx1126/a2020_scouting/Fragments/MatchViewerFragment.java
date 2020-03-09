@@ -24,8 +24,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class MatchViewerFragment extends Fragment {
-    static String TAG = "Sparx: ";
-    static String HEADER = "MatchViewerFragment: ";
+    private static final String TAG = "Sparx: ";
+    private static final String HEADER = "MatchViewerFragment: ";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

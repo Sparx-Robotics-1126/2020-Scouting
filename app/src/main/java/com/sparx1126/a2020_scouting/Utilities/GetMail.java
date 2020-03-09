@@ -20,24 +20,24 @@ import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.Folder;
-import javax.mail.NoSuchProviderException;
 import javax.mail.internet.MimeMultipart;
 
 //Class is extending AsyncTask because this class is going to perform a networking operation
 public class GetMail extends AsyncTask<Void,Void,Void> {
-    static String TAG = "Sparx: ";
-    static String HEADER = "GetMail: ";
-    static final String PROTOCOL = "imap"; // It did not work with pop, it read only new emails
-    static final String HOST = PROTOCOL + ".gmail.com";
-    static final String PORT = "993"; // Imap port for gmail
-    static final String EMAIL_STORE = PROTOCOL + "s";
+    private static final String TAG = "Sparx: ";
+    private static final String HEADER = "GetMail: ";
+
+    private static final String PROTOCOL = "imap"; // It did not work with pop, it read only new emails
+    private static final String HOST = PROTOCOL + ".gmail.com";
+    private static final String PORT = "993"; // Imap port for gmail
+    private static final String EMAIL_STORE = PROTOCOL + "s";
 
     public interface Callback {
         void handleFinishDownload(Map<String, JSONObject> mails);
     }
 
     //Declaring Variables
-    private static Context context;
+    private Context context;
     private String email;
     private String password;
     private Callback cb;
@@ -48,8 +48,12 @@ public class GetMail extends AsyncTask<Void,Void,Void> {
     private ProgressDialog progressDialog;
 
     //Class Constructor
-    public GetMail(Context _context){
+    public GetMail(Context _context, String _email, String _password, GetMail.Callback _callback){
         context = _context;
+        email = _email;
+        password = _password;
+        cb = _callback;
+        execute();
     }
 
     @Override
@@ -90,11 +94,10 @@ public class GetMail extends AsyncTask<Void,Void,Void> {
             Message[] messageobjs = emailFolderObj.getMessages();
             Log.d(TAG, HEADER + "Number of emails received " + messageobjs.length);
 
-            for (int i = 0, n = messageobjs.length; i < n; i++) {
-                Message indvidualmsg = messageobjs[i];
+            for (Message indvidualmsg : messageobjs) {
                 String body = getTextFromMessage(indvidualmsg);
                 String key = indvidualmsg.getSubject();
-                if(isValidJsonArray(body)) {
+                if (isValidJsonArray(body)) {
                     Log.d(TAG, HEADER + "Adding json " + key);
                     jsonMails.put(key, new JSONObject(body));
                 }
@@ -102,21 +105,10 @@ public class GetMail extends AsyncTask<Void,Void,Void> {
             //Now close all the objects
             emailFolderObj.close(false);
             storeObj.close();
-        } catch (NoSuchProviderException exp) {
-            exp.printStackTrace();
-        } catch (MessagingException exp) {
-            exp.printStackTrace();
         } catch (Exception exp) {
             exp.printStackTrace();
         }
         return null;
-    }
-
-    public void downloadMail(String _email, String _password, GetMail.Callback _callback){
-        email = _email;
-        password = _password;
-        cb = _callback;
-        this.execute();
     }
 
     private boolean isValidJsonArray(String _data) {
@@ -150,13 +142,12 @@ public class GetMail extends AsyncTask<Void,Void,Void> {
         for (int i = 0; i < count; i++) {
             BodyPart bodyPart = mimeMultipart.getBodyPart(i);
             if (bodyPart.isMimeType("text/plain")) {
-                result = result + "\n" + bodyPart.getContent();
+                result += "\n" + bodyPart.getContent();
                 break; // without break same text appears twice in my tests
             } else if (bodyPart.getContent() instanceof MimeMultipart){
-                result = result + getTextFromMimeMultipart((MimeMultipart)bodyPart.getContent());
+                result += getTextFromMimeMultipart((MimeMultipart)bodyPart.getContent());
             }
         }
         return result;
     }
-
 }

@@ -112,10 +112,13 @@ public class Welcome extends AppCompatActivity {
         // If anything has ever been entered
         if(!email.isEmpty() || !password.isEmpty() || !team.isEmpty()) {
             if (password.isEmpty()) {
+                Log.e("Welcome: ", "checkPreferences: No password found");
                 Toast.makeText(Welcome.this, "checkPreferences: No password found", Toast.LENGTH_LONG).show();
             } else if (team.isEmpty()) { // team can only be a number based on xml
+                Log.e("Welcome: ", "checkPreferences: No team found");
                 Toast.makeText(Welcome.this, "checkPreferences: No team found", Toast.LENGTH_LONG).show();
             } else if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                Log.e("Welcome: ", "checkPreferences: No email or bad email found (" + email + ")");
                 Toast.makeText(Welcome.this, "checkPreferences: No email or bad email found (" + email + ")", Toast.LENGTH_LONG).show();
             } else {
                 Log.d("Welcome: ", "switching to main");

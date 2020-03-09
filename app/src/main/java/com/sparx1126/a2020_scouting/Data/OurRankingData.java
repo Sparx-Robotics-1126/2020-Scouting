@@ -29,7 +29,7 @@ public class OurRankingData extends JsonData {
         return ballsScoredOnInnerAve;
     }
 
-    public static void parseJsons(Map<String, JSONObject> _data) {
+    public static void parseJsons(String _prefEvent, Map<String, JSONObject> _data) {
         ballsScoredOnBottomAve.clear();
         ballsScoredOnOuterAve.clear();
         ballsScoredOnInnerAve.clear();
@@ -38,13 +38,16 @@ public class OurRankingData extends JsonData {
         Map<Integer, ArrayList<Integer>> ballsScoredOnOuter = new HashMap<>();
         try {
             for(Map.Entry<String, JSONObject> mail :  _data.entrySet()){
+                // example 2020ndgf.frc3871.BlueAlliance.Position3.2.json
                 String subject = mail.getKey();
-                int indexStart= subject.indexOf("frc");
-                String team = subject.substring(indexStart);
-                team = team.substring(0,team.indexOf("."));
-                parseJson(Integer.parseInt(team), ballsScoredOnBottom,
-                        ballsScoredOnInner, ballsScoredOnOuter, mail.getValue());
-                Log.d(TAG, HEADER + "parseJson " + team);
+                if(subject.contains(_prefEvent)) {
+                    int indexStart = subject.indexOf("frc") + 3; // find string start of "frc", add string lenght.
+                    String team = subject.substring(indexStart);
+                    team = team.substring(0, team.indexOf("."));
+                    Log.d(TAG, HEADER + "parseJson " + team);
+                    parseJson(Integer.parseInt(team), ballsScoredOnBottom,
+                            ballsScoredOnInner, ballsScoredOnOuter, mail.getValue());
+                }
             }
 
         } catch (Exception e) {

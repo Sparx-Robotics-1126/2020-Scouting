@@ -14,8 +14,8 @@ import com.sparx1126.a2020_scouting.R;
 import com.sparx1126.a2020_scouting.Settings;
 
 public class SettingsFragment extends Fragment {
-    static String TAG = "Sparx: ";
-    static String HEADER = "SettingsFragment: ";
+    private static final String TAG = "Sparx: ";
+    private static final String HEADER = "SettingsFragment: ";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -25,7 +25,6 @@ public class SettingsFragment extends Fragment {
 
         Intent intent = new Intent(getActivity(), Settings.class);
         startActivity(intent);
-
         getFragmentManager().popBackStack();
 
         return root;

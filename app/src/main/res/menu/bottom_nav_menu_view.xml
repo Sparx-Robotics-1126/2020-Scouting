@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_view"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_view" />
+    <item
+        android:id="@+id/navigation_our_rankings"
+        android:icon="@drawable/ic_low_priority_black_24dp"
+        android:title="@string/title_our_rankings" />
+    <item
+        android:id="@+id/navigation_match"
+        android:icon="@drawable/ic_content_paste_black_24dp"
+        android:title="MatchViewer"/>
+
+</menu>

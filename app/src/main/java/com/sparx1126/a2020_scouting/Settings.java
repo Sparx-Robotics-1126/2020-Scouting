@@ -80,6 +80,7 @@ public class Settings extends AppCompatActivity {
                     Log.d(TAG, HEADER + "exited");
                     finish();
                 }else{
+                    Log.e(TAG, HEADER + "You have not configured the tablet, please do so before you leave");
                     Toast.makeText(Settings.this, "You have not configured the tablet, please do so before you leave", Toast.LENGTH_LONG).show();
                 }
             }
@@ -131,12 +132,8 @@ public class Settings extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(!settings.getBoolean(getResources().getString(R.string.tablet_Configured), false)) {
-            Toast.makeText(Settings.this, "You can't leave until you have configured", Toast.LENGTH_LONG).show();
-        }
-        else {
-            Toast.makeText(Settings.this, "Press Exit to return with no changes...", Toast.LENGTH_LONG).show();
-        }
+        Log.e(TAG, HEADER + "Press Exit to return with no changes...");
+        Toast.makeText(Settings.this, "Press Exit to return with no changes...", Toast.LENGTH_LONG).show();
     }
 
     private void reconfigure() {
@@ -152,6 +149,7 @@ public class Settings extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
                 if (!value.equals(settings.getString(getString(R.string.PASSWORD), ""))) {
+                    Log.e(TAG, HEADER + "Wrong Password");
                     Toast.makeText(Settings.this, "Wrong Password", Toast.LENGTH_LONG).show();
                     input.setText("");
                 } else {
@@ -190,6 +188,7 @@ public class Settings extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
                 if (!value.equals(settings.getString(getString(R.string.PASSWORD), ""))) {
+                    Log.e(TAG, HEADER + "Wrong Password");
                     Toast.makeText(Settings.this, "Wrong Password", Toast.LENGTH_LONG).show();
                     input.setText("");
                 } else {
@@ -214,6 +213,7 @@ public class Settings extends AppCompatActivity {
                         Log.d(TAG, HEADER + "configured");
                         finish();
                     }else{
+                        Log.e(TAG, HEADER + "You didn't change anything");
                         Toast.makeText(Settings.this, "You didn't change anything",Toast.LENGTH_LONG).show();
                     }
                 }
@@ -288,6 +288,7 @@ public class Settings extends AppCompatActivity {
                             BlueAllianceEvent.parseJson(_data, settings.getString(getString(R.string.TEAM), ""));
                             setSpinner();
                         } else {
+                            Log.e(TAG, HEADER + "Internet returned BAD DATA for Events, try another wifi!");
                             Toast.makeText(Settings.this, "Internet returned BAD DATA for Events, try another wifi!", Toast.LENGTH_LONG).show();
                         }
                     }
@@ -331,7 +332,7 @@ public class Settings extends AppCompatActivity {
         if(scoutingTablet){
             boolean blueAllianceToggled = settings.getBoolean(getResources().getString(R.string.pref_BlueAlliance), false);
             Log.d(TAG, HEADER + "restorePreferences scoutingTablet " + blueAllianceToggled);
-            if (blueAllianceToggled && !allianceButton.getText().equals("BLUE ALLIANCE")) {
+            if (blueAllianceToggled && !allianceButton.getText().equals(getString(R.string.blue_alliance))) {
                 allianceButton.performClick();
             }
             int teamPositionNum = settings.getInt(getResources().getString(R.string.pref_TeamPosition), 0);

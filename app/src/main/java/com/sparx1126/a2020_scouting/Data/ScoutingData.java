@@ -4,9 +4,12 @@ import android.util.Log;
 
 import com.google.gson.JsonObject;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
+import com.sparx1126.a2020_scouting.R;
 import com.sparx1126.a2020_scouting.Utilities.JsonData;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,8 +62,12 @@ public class ScoutingData extends JsonData {
         return data;
     }
 
+    private static String prefEvent;
     private static String prefAllianceColor;
     private static String prefTeamPosition;
+    public static String getprefEvent() {
+        return prefEvent;
+    }
     public static String getPrefAllianceColor() {
         return prefAllianceColor;
     }
@@ -74,7 +81,7 @@ public class ScoutingData extends JsonData {
     private int teamNumber;
     private String allianceColor = "";
     private String autoStartingPosition = "";
-    private int autoPowerCellsInRobot;
+    private int autoPowerCellsInRobot = -1; //starts at -1 one because 0 is valid
     private int autoPowerCellsScoredBottomPort;
     private int autoPowerCellsScoredInnerPort;
     private int autoPowerCellsScoredOuterPort;
@@ -282,18 +289,26 @@ public class ScoutingData extends JsonData {
         return otherBrokeOrGotDisabled;
     }
 
-    public static void initializeData(String _prefAllianceColor, String _prefTeamPosition) {
+    public static void initializeData(boolean blueAllianceChosen, int position,  String _prefEvent, String _prefAllianceColor, String _prefTeamPosition) {
+        prefEvent = _prefEvent;
         prefAllianceColor = _prefAllianceColor;
         prefTeamPosition = _prefTeamPosition;
         Map<String, BlueAllianceMatch> matches = BlueAllianceMatch.getMatches();
         for(BlueAllianceMatch entry : matches.values()){
+            ArrayList<String> allainceKeySet = entry.getRedTeamKeys();
+            if(blueAllianceChosen){
+                allainceKeySet = entry.getBlueTeamKeys();
+            }
+            String teamText = (allainceKeySet.get(position-1)).replace("frc","");
             int matchNum = Integer.parseInt(entry.getMatchNum());
-            data.put(matchNum, new ScoutingData(matchNum));
+            int teamNumber = Integer.parseInt(teamText);
+            data.put(matchNum, new ScoutingData(matchNum, teamNumber));
         }
     }
 
-    private ScoutingData(int _matchNumber) {
+    private ScoutingData(int _matchNumber, int _teamNumber) {
         matchNumber = _matchNumber;
+        teamNumber = _teamNumber;
     }
 
     public JsonObject toJson(){
@@ -419,12 +434,13 @@ public class ScoutingData extends JsonData {
         try {
             for(Map.Entry<String, JSONObject> mail :  _data.entrySet()){
                 String subject = mail.getKey();
-                if(subject.contains(prefAllianceColor) && subject.contains(prefTeamPosition)) {
-                    int indexStart= subject.indexOf("frc");
-                    String team = subject.substring(indexStart);
-                    team = team.substring(0,team.indexOf("."));
-                    data.get(Integer.parseInt(team)).parseJson(mail.getValue());
-                    Log.d(TAG, HEADER + "parseJson " + team);
+                if(subject.contains(prefEvent) && subject.contains(prefAllianceColor) && subject.contains(prefTeamPosition)) {
+                    // example 2020ndgf.frc3871.BlueAlliance.Position3.2.json
+                    int indexStart = subject.indexOf(prefTeamPosition) + prefTeamPosition.length() + 1; // find string start, add string lenght and one more for the .
+                    String match = subject.substring(indexStart);
+                    match = match.substring(0, match.indexOf("."));
+                    Log.d(TAG, HEADER + "parseJsons " + match);
+                    data.get(Integer.parseInt(match)).parseJson(mail.getValue());
                 }
             }
         } catch (Exception e) {
