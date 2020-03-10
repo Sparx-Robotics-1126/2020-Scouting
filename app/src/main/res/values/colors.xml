@@ -24,4 +24,11 @@
     <color name="BToggleButton">#0000FF</color>
     <color name="BButtonBackground">#000080</color>
     <color name="BBackground">#00023A</color>
+
+    <!--jcas-->
+    <color name="background">#00AA00</color>
+    <color name="backgroundSupplement">#118844</color>
+    <color name="complement">#004466</color>
+    <color name="textColor">#000000</color>
+    <color name="textColorComplement">#AAAAAA</color>
 </resources>

@@ -11,22 +11,23 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.sparx1126.a2020_scouting.R;
-import com.sparx1126.a2020_scouting.Settings;
+import com.sparx1126.a2020_scouting.Benchmarking;
 
-public class ViewFragment extends Fragment {
+public class BenchmarkingFragment extends Fragment {
     private static final String TAG = "Sparx: ";
-    private static final String HEADER = "ViewFragment: ";
+    private static final String HEADER = "BenchmarkingFragment: ";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, HEADER + "onCreateView");
 
-        View root = inflater.inflate(R.layout.fragment_view, container, false);
+        View root = inflater.inflate(R.layout.fragment_empty, container, false);
 
-        Intent intent = new Intent(getActivity(), View.class);
+        Intent intent = new Intent(getActivity(), Benchmarking.class);
         startActivity(intent);
         getFragmentManager().popBackStack();
 
         return root;
     }
+
 }

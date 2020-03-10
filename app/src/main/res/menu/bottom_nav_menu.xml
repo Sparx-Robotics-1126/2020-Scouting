@@ -6,17 +6,17 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_home" />
     <item
-        android:id="@+id/navigation_our_rankings"
-        android:icon="@drawable/ic_low_priority_black_24dp"
-        android:title="@string/title_our_rankings" />
+        android:id="@+id/navigation_view_data"
+        android:icon="@drawable/ic_remove_red_eye_black_24dp"
+        android:title="@string/title_view_data" />
     <item
-        android:id="@+id/navigation_match"
-        android:icon="@drawable/ic_content_paste_black_24dp"
-        android:title="MatchViewer"/>
-    <item
-        android:id="@+id/navigation_scoutings"
+        android:id="@+id/navigation_scouting"
         android:icon="@drawable/binoculars"
-        android:title="@string/title_scoutings"/>
+        android:title="@string/title_scouting"/>
+    <item
+        android:id="@+id/navigation_benchmarking"
+        android:icon="@drawable/ic_compare_arrows_black_24dp"
+        android:title="@string/title_benchmarking"/>
     <item
         android:id="@+id/navigation_settings"
         android:icon="@drawable/ic_settings_black_24dp"

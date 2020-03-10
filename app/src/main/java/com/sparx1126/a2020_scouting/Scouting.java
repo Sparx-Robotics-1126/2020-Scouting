@@ -427,6 +427,7 @@ public class Scouting extends AppCompatActivity {
         brokeDisabledTextView = findViewById(R.id.brokeDisabledTextView);
         brokeDisabledCheckBox = findViewById(R.id.brokeDisabledCheckBox);
         saveButton = findViewById(R.id.saveButton);
+        saveButton.setEnabled(settings.getBoolean(getString(R.string.SCOUT), false));
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

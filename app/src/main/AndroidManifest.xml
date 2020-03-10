@@ -11,10 +11,11 @@
         android:roundIcon="@drawable/avatar_icon4"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Settings"/>
+        <activity android:name=".Benchmarking"/>
         <activity android:name=".Home"/>
         <activity android:name=".Scouting"/>
-        <activity android:name=".View"/>
+        <activity android:name=".Settings"/>
+        <activity android:name=".ViewData"/>
         <activity android:name=".Welcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

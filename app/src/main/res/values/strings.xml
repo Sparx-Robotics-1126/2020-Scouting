@@ -3,10 +3,11 @@
     <string name="title_home">Home</string>
     <string name="title_rankings">Rankings</string>
     <string name="title_settings">Settings</string>
-    <string name="title_scoutings">Scoutings</string>
+    <string name="title_scouting">Scouting</string>
+    <string name="title_benchmarking">Benchmarking</string>
     <string name="title_match_viewer">MatchViewer</string>
     <string name="title_our_rankings">Our Rankings</string>
-    <string name="title_view">View</string>
+    <string name="title_view_data">View Data</string>
     <string name="selectEvent">Select Event</string>
     <string name="scouter">scouter</string>
     <string name="pref_SelectedEvent">pref_SelectedEvent</string>
@@ -24,4 +25,34 @@
     <string name="position_2">Position2</string>
     <string name="position_3">Position3</string>
     <string name="last_match_scouted">last_match_scouted</string>
+    <string-array name="driveTypes">
+        <item>Select Type of Drive</item>
+        <item>Tank</item>
+        <item>Mecanum</item>
+        <item>Swerve</item>
+        <item>H-Drive / Slide</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="wheelTypes">
+        <item>Select Type of Wheels</item>
+        <item>Traction Narrow</item>
+        <item>Traction Wide</item>
+        <item>Omni</item>
+        <item>Tank Treads</item>
+        <item>Combination Traction And Omni</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="visionTypes">
+        <item>Select Vision Type</item>
+        <item>Auto Detect Goal</item>
+        <item>Driver Vision</item>
+        <item>Both</item>
+    </string-array>
+    <string-array name="startPos">
+        <item>Select Start Position</item>
+        <item>Power Port Side</item>
+        <item>Middle</item>
+        <item>Loading Bay Side</item>
+    </string-array>
+    <string name="benchmark_exit">Exit (Save?)</string>
 </resources>

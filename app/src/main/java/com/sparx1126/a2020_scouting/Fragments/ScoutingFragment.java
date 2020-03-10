@@ -23,7 +23,7 @@ public class ScoutingFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, HEADER + "onCreateView");
 
-        View root = inflater.inflate(R.layout.fragment_settings, container, false);
+        View root = inflater.inflate(R.layout.fragment_empty, container, false);
 
 
         if(BlueAllianceMatch.getMatches().size() == 0){
