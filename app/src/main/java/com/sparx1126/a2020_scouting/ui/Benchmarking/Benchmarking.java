@@ -18,13 +18,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.sparx1126.a2020_scouting.R;
 
 public class Benchmarking extends AppCompatActivity {
+
     private EditText teamNumber;
     //General
     private Spinner driveType;
     private Spinner wheelType;
     private EditText numWheels;
     private EditText maxSpeed;
-    private EditText normalHeight;
+    private EditText height;
     private EditText weight;
     private Spinner visionType;
     //Auto
@@ -60,7 +61,7 @@ public class Benchmarking extends AppCompatActivity {
 
         numWheels = findViewById(R.id.numWheels);
         maxSpeed = findViewById(R.id.maxSpeed);
-        normalHeight = findViewById(R.id.normalHeight);
+        height = findViewById(R.id.height);
         weight = findViewById(R.id.weight);
         startingCells = findViewById(R.id.startingCells);
         autoScoreBottom = findViewById(R.id.autoScoreBottom);
@@ -149,7 +150,7 @@ public class Benchmarking extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                saveData(teamNumber.getText().toString());
+                saveData(Integer.parseInt(teamNumber.getText().toString()));
             }
         });
 
@@ -163,8 +164,8 @@ public class Benchmarking extends AppCompatActivity {
         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
-    private void saveData(String teamNumber){
-        BenchmarkingData benchData = new BenchmarkingData();
+    private void saveData(int teamNumber){
+        BenchmarkingData benchData = new BenchmarkingData(teamNumber);
 
         
         /*
@@ -173,7 +174,7 @@ public class Benchmarking extends AppCompatActivity {
         private Spinner wheelType;
         private EditText numWheels;
         private EditText maxSpeed;
-        private EditText normalHeight;
+        private EditText height;
         private EditText weight;
         private Spinner visionType;
         //Auto

@@ -75,7 +75,7 @@
                     style="@style/jcas_textView"
                     android:text="Normal Height(ft):"/>
                 <EditText
-                    android:id="@+id/normalHeight"
+                    android:id="@+id/height"
                     style="@style/jcas_editText"
                     android:inputType="numberDecimal"/>
 
