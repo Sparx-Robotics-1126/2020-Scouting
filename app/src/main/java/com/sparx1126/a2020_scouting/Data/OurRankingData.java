@@ -1,7 +1,9 @@
 package com.sparx1126.a2020_scouting.Data;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.sparx1126.a2020_scouting.R;
 import com.sparx1126.a2020_scouting.Utilities.JsonData;
 
 import org.json.JSONObject;
@@ -68,6 +70,16 @@ public class OurRankingData extends JsonData {
             average = average/entry.getValue().size();
             _container.put(entry.getKey(), average);
         }
+    }
+
+    private static int ourRank(SharedPreferences settings){
+        Integer teamWithOfLargest = 1126;
+        for(Map.Entry<Integer, Float> r : ballsScoredOnInnerAve.entrySet()){
+            if(r.getValue() > ballsScoredOnInnerAve.get(teamWithOfLargest)){
+                teamWithOfLargest = r.getKey();
+            }
+        }
+        return teamWithOfLargest;
     }
 
     private static void parseJson(Integer _team, Map<Integer, ArrayList<Integer>> _ballsScoredOnBottom,
