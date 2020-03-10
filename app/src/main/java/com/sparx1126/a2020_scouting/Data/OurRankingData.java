@@ -1,9 +1,11 @@
 package com.sparx1126.a2020_scouting.Data;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.util.Pair;
 
 import com.sparx1126.a2020_scouting.BlueAllianceData.JsonData;
+import com.sparx1126.a2020_scouting.R;
 
 import org.json.JSONObject;
 
@@ -12,18 +14,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OurRankingData extends JsonData {
+    private SharedPreferences settings;
 
+    //Keys
     private static final String bottom_port_tele = "bottom_port_tele";
     private static final String outer_port_tele = "outer_port_tele";
     private static final String inner_port_tele = "inner_port_tele";
-
-
+    //Log
     static private String TAG = "Sparx: ";
     static private String HEADER = "OurRankingData: ";
+    //just have dont use
     private static Map<String, ArrayList<Integer>> ballsScoredOnBottomTele = new HashMap<>();
     private static Map<String, ArrayList<Integer>> ballsScoredOnOuterTele = new HashMap<>();
     private static Map<String, ArrayList<Integer>> ballsScoredOnInnerTele = new HashMap<>();
-
+    // use these they are the averaged ones
     private static  Map<String,Float > ballsScoredOnBottomTeleAve = new HashMap<>();
     private static Map<String, Float > ballsScoredOnOuterTeleAve = new HashMap<>();
     private static Map<String, Float > ballsScoredOnInnerTeleAve= new HashMap<>();
@@ -115,5 +119,11 @@ public class OurRankingData extends JsonData {
         }
     }
 
-//    public static Map<Integer,>
+    public static Map<String, Integer> ourRank(){
+        Map<String, Integer> ourRankng = new HashMap<>();
+        for(Map.Entry<String, Float> i : ballsScoredOnInnerTeleAve.entrySet()){
+
+        }
+        return null;
+    }
 }

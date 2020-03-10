@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
 import com.sparx1126.a2020_scouting.R;
-import com.sparx1126.a2020_scouting.Scouting;
 
 public class ScoutingFragment extends Fragment {
     static String TAG = "Sparx: ";
