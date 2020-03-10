@@ -12,10 +12,16 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_view"
-        android:name="com.sparx1126.a2020_scouting.Fragments.ViewFragment"
-        android:label="@string/title_view"
-        tools:layout="@layout/fragment_view" />
+        android:id="@+id/navigation_our_rankings"
+        android:name="com.sparx1126.a2020_scouting.Fragments.OurRankingsFragment"
+        android:label="@string/title_rankings"
+        tools:layout="@layout/fragment_our_rankings" />
+
+    <fragment
+        android:id="@+id/navigation_match"
+        android:name="com.sparx1126.a2020_scouting.Fragments.MatchViewerFragment"
+        android:label="@string/title_match_viewer"
+        tools:layout="@layout/fragment_match" />
 
     <fragment
         android:id="@+id/navigation_scoutings"

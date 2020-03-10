@@ -41,7 +41,7 @@ public class RankingsFragment extends Fragment {
             Toast.makeText(getActivity(), "No Rankings Data", Toast.LENGTH_LONG).show();
             getFragmentManager().popBackStack();
         }else {
-            for (int i = 1; i <= ranks.size() + 1; i++) {
+            for (int i = 1; i <= ranks.size(); i++) {
                 View segment = inflater.inflate(R.layout.rank_item_layout, container, false);
                 TextView team = segment.findViewById(R.id.teamNumber);
                 TextView rank = segment.findViewById(R.id.rank);
@@ -49,7 +49,6 @@ public class RankingsFragment extends Fragment {
                 TextView details = segment.findViewById(R.id.details);
                 TextView teamName = segment.findViewById(R.id.teamName);
 
-                if (i <= ranks.size()) {
                     team.setText(String.valueOf(ranks.get(i).getTeamNum()));
                     rank.setText(String.valueOf(ranks.get(i).getRank()));
                     record.setText(String.valueOf(ranks.get(i).getRecord()));
@@ -82,7 +81,6 @@ public class RankingsFragment extends Fragment {
                         background1.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
                         background2.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
                     }
-                }
                 ((LinearLayout) linearlayout).addView(segment);
             }
         }
