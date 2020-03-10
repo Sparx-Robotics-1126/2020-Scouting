@@ -3,6 +3,7 @@ package com.sparx1126.a2020_scouting;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sparx1126.a2020_scouting.BlueAllianceData.*;
+import com.sparx1126.a2020_scouting.Data.OurRankingData;
 import com.sparx1126.a2020_scouting.Data.ScoutingData;
 import com.sparx1126.a2020_scouting.Utilities.*;
 
@@ -23,11 +24,11 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Settings extends AppCompatActivity {
     static private String TAG = "Sparx: ";
@@ -57,7 +58,7 @@ public class Settings extends AppCompatActivity {
         blueAlliance = BlueAllianceNetwork.getInstance();
 
         reconfigureButton = findViewById(R.id.reconfigure);
-        reconfigureButton.setOnClickListener(new View.OnClickListener(){
+        reconfigureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 reconfigure();
@@ -76,10 +77,10 @@ public class Settings extends AppCompatActivity {
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(settings.getBoolean(getString(R.string.tablet_Configured), false)){
+                if (settings.getBoolean(getString(R.string.tablet_Configured), false)) {
                     Log.d(TAG, HEADER + "exited");
                     finish();
-                }else{
+                } else {
                     Log.e(TAG, HEADER + "You have not configured the tablet, please do so before you leave");
                     Toast.makeText(Settings.this, "You have not configured the tablet, please do so before you leave", Toast.LENGTH_LONG).show();
                 }
@@ -90,11 +91,11 @@ public class Settings extends AppCompatActivity {
         allianceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(allianceButton.getText().toString().equals(getString(R.string.red_alliance))){ // use to be red changing to blue
+                if (allianceButton.getText().toString().equals(getString(R.string.red_alliance))) { // use to be red changing to blue
                     Log.d(TAG, HEADER + "Blue Alliance Chosen");
                     blueAllianceChosen = true;
                     changeUi();
-                }else if(allianceButton.getText().toString().equals(getString(R.string.blue_alliance))){ // use to be blue changing to red
+                } else if (allianceButton.getText().toString().equals(getString(R.string.blue_alliance))) { // use to be blue changing to red
                     Log.d(TAG, HEADER + "Red Alliance Chosen");
                     blueAllianceChosen = false;
                     changeUi();
@@ -103,8 +104,8 @@ public class Settings extends AppCompatActivity {
         });
 
         LinearLayout scoutingTabletLayout = findViewById(R.id.scoutingTabletLayout);
-        if(!settings.getBoolean(getString(R.string.SCOUT), false)) {
-            Log.d(TAG, HEADER + "not scouting tablet");
+        if (!settings.getBoolean(getString(R.string.SCOUT), false)) {
+            Log.d(TAG, HEADER + "not a scouting tablet");
             scoutingTabletLayout.setVisibility(View.INVISIBLE);
         }
 
@@ -126,7 +127,9 @@ public class Settings extends AppCompatActivity {
 
         blueAllianceChosen = settings.getBoolean(getString(R.string.pref_BlueAlliance), false);
         changeUi();
-        downLoadEvents();
+        if(!settings.getBoolean(getResources().getString(R.string.tablet_Configured), false)) {
+            downloadEvents();
+        }
         restorePreferences();
     }
 
@@ -160,6 +163,8 @@ public class Settings extends AppCompatActivity {
                     editor.putString(getString(R.string.PASSWORD), "");
                     editor.putString(getString(R.string.TEAM), "");
                     editor.putBoolean(getString(R.string.SCOUT), false);
+                    editor.putString(getString(R.string.pref_SelectedEvent), "");
+                    editor.putInt(getString(R.string.pref_TeamPosition), 0);
                     editor.apply();
                     Log.d(TAG, HEADER + "reconfigured");
                     finish();
@@ -192,29 +197,14 @@ public class Settings extends AppCompatActivity {
                     Toast.makeText(Settings.this, "Wrong Password", Toast.LENGTH_LONG).show();
                     input.setText("");
                 } else {
-                    if(!(eventSpinner.getSelectedItem().toString().equals("Select Event")) && (teamsRadioGroup.getCheckedRadioButtonId() != -1)) {
-                        String selectedEvent = eventSpinner.getSelectedItem().toString();
-                        int chosenTeam = 0;
-                        if (team1RadioButton.isChecked()) {
-                            chosenTeam = 1;
-                        } else if (team2RadioButton.isChecked()) {
-                            chosenTeam = 2;
-                        } else if (team3RadioButton.isChecked()) {
-                            chosenTeam = 3;
-                        }
-
-                        // The collected Scouting Data needs to be reset because the configuration changed
-                        ScoutingData.getData().clear();
-                        editor.putBoolean(getResources().getString(R.string.tablet_Configured), true);
-                        editor.putBoolean(getResources().getString(R.string.pref_BlueAlliance), blueAllianceChosen);
-                        editor.putInt(getResources().getString(R.string.pref_TeamPosition), chosenTeam);
-                        editor.putString(getResources().getString(R.string.pref_SelectedEvent), selectedEvent);
-                        editor.apply();
-                        Log.d(TAG, HEADER + "configured");
-                        finish();
-                    }else{
+                    String selectedEvent = eventSpinner.getSelectedItem().toString();
+                    boolean scoutingTablet = settings.getBoolean(getResources().getString(R.string.SCOUT), false);
+                    if (!(selectedEvent.equals("Select Event")) && (teamsRadioGroup.getCheckedRadioButtonId() != -1 || !scoutingTablet)) {
+                        dialog.dismiss();
+                        downloadAllEventData(selectedEvent);
+                    } else {
                         Log.e(TAG, HEADER + "You didn't change anything");
-                        Toast.makeText(Settings.this, "You didn't change anything",Toast.LENGTH_LONG).show();
+                        Toast.makeText(Settings.this, "You didn't change anything", Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -228,9 +218,9 @@ public class Settings extends AppCompatActivity {
         builder.create().show();
     }
 
-    public  void changeUi(){
+    public void changeUi() {
         Log.d(TAG, HEADER + "changeUi " + blueAllianceChosen);
-        if(blueAllianceChosen){
+        if (blueAllianceChosen) {
             backgroundLayout.setBackgroundColor(getResources().getColor(R.color.BBackground));
             reconfigureButton.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
             reconfigureButton.setTextColor(getResources().getColor(R.color.BText));
@@ -251,7 +241,7 @@ public class Settings extends AppCompatActivity {
             allianceButton.setTextColor(getResources().getColor(R.color.BText));
             exitButton.setTextColor(getResources().getColor(R.color.BText));
             exitButton.setBackgroundColor(getResources().getColor(R.color.BButtonBackground));
-        }else{
+        } else {
             backgroundLayout.setBackgroundColor(getResources().getColor(R.color.RBackground));
             reconfigureButton.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
             reconfigureButton.setTextColor(getResources().getColor(R.color.RText));
@@ -275,21 +265,110 @@ public class Settings extends AppCompatActivity {
         }
     }
 
-    private void downLoadEvents() {
-        blueAlliance.downloadEvents(new BlueAllianceNetwork.Callback() {
-                @Override
-                public void handleFinishDownload(final String _data) {
+    private void downloadEvents() {
+        Log.d(TAG, HEADER + "download events");
+        blueAlliance.downloadEvents(this, new BlueAllianceNetwork.Callback() {
+            @Override
+            public void handleFinishDownload(final String _data) {
                 // this needs to run on the ui thread because of ui components in it
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (isValidJsonArray(_data)) {
-                            Log.d(TAG, HEADER + "downLoaded events");
+                        if (JsonData.isValidJsonArray(_data)) {
+                            Log.d(TAG, HEADER + "events downloaded");
                             BlueAllianceEvent.parseJson(_data, settings.getString(getString(R.string.TEAM), ""));
                             setSpinner();
                         } else {
                             Log.e(TAG, HEADER + "Internet returned BAD DATA for Events, try another wifi!");
                             Toast.makeText(Settings.this, "Internet returned BAD DATA for Events, try another wifi!", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    private void downloadAllEventData(final String _selectedEvent) {
+        Log.d(TAG, HEADER + "download All Event Data");
+        blueAlliance.downloadEventTeams(Settings.this, _selectedEvent, new BlueAllianceNetwork.Callback() {
+            @Override
+            public void handleFinishDownload(final String _data) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (JsonData.isValidJsonArray(_data)) {
+                            Log.d(TAG, HEADER + "event teams downloaded");
+                            BlueAllianceTeam.parseJson(_data, _selectedEvent);
+                            blueAlliance.downloadEventMatches(Settings.this, _selectedEvent, new BlueAllianceNetwork.Callback() {
+                                @Override
+                                public void handleFinishDownload(final String _data) {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (JsonData.isValidJsonArray(_data)) {
+                                                Log.d(TAG, HEADER + "downLoaded event matches");
+                                                BlueAllianceMatch.parseDataToBAMMap(_data, _selectedEvent);
+                                                final boolean scoutingTablet = settings.getBoolean(getString(R.string.SCOUT), false);
+                                                if(scoutingTablet) {
+                                                    String prefColorStr = getResources().getString(R.string.red_alliance);
+                                                    if (blueAllianceChosen) {
+                                                        prefColorStr = getResources().getString(R.string.blue_alliance);
+                                                    }
+                                                    int chosenTeam = 0;
+                                                    if (team1RadioButton.isChecked()) {
+                                                        chosenTeam = 1;
+                                                    } else if (team2RadioButton.isChecked()) {
+                                                        chosenTeam = 2;
+                                                    } else if (team3RadioButton.isChecked()) {
+                                                        chosenTeam = 3;
+                                                    }
+                                                    String prefPositionStr = getResources().getString(R.string.position_1);
+                                                    if (chosenTeam == 2) {
+                                                        prefPositionStr = getResources().getString(R.string.position_2);
+                                                    } else if (chosenTeam == 3) {
+                                                        prefPositionStr = getResources().getString(R.string.position_3);
+                                                    }
+                                                    ScoutingData.initializeData(blueAllianceChosen, chosenTeam, _selectedEvent, prefColorStr,
+                                                            prefPositionStr, BlueAllianceMatch.getMatches(_selectedEvent));
+                                                    Log.d(TAG, HEADER + "intialized scouting data " + ScoutingData.getData().size());
+                                                }
+                                                new GetMail(Settings.this, settings.getString(getString(R.string.EMAIL), ""),
+                                                        settings.getString(getString(R.string.PASSWORD), ""),
+                                                        new GetMail.Callback() {
+                                                            @Override
+                                                            public void handleFinishDownload(Map<String, JSONObject> mails) {
+                                                                Log.d(TAG, HEADER + "downloaded emails");
+                                                                ScoutingData.parseJsons(mails);
+                                                                OurRankingData.parseJsons(_selectedEvent, mails);
+                                                                int chosenTeam = 0;
+                                                                if (team1RadioButton.isChecked()) {
+                                                                    chosenTeam = 1;
+                                                                } else if (team2RadioButton.isChecked()) {
+                                                                    chosenTeam = 2;
+                                                                } else if (team3RadioButton.isChecked()) {
+                                                                    chosenTeam = 3;
+                                                                }
+
+                                                                editor.putBoolean(getResources().getString(R.string.tablet_Configured), true);
+                                                                editor.putBoolean(getResources().getString(R.string.pref_BlueAlliance), blueAllianceChosen);
+                                                                editor.putInt(getResources().getString(R.string.pref_TeamPosition), chosenTeam);
+                                                                editor.putString(getResources().getString(R.string.pref_SelectedEvent), _selectedEvent);
+                                                                editor.apply();
+                                                                Log.d(TAG, HEADER + "configured");
+                                                                finish();
+                                                            }
+                                                        });
+                                            } else {
+                                                Log.e(TAG, HEADER + "Internet returned BAD DATA for EventMatches, try another wifi!");
+                                                Toast.makeText(Settings.this, "Internet returned BAD DATA for EventMatches, try another wifi!", Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        } else {
+                            Log.e(TAG, HEADER + "Internet returned BAD DATA for EventTeams, try another wifi!");
+                            Toast.makeText(Settings.this, "Internet returned BAD DATA for EventTeams, try another wifi!", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -318,21 +397,12 @@ public class Settings extends AppCompatActivity {
         eventSpinner.setAdapter(eventAdapter);
     }
 
-    private boolean isValidJsonArray(String _data) {
-        try {
-            new JSONArray(_data);
-        } catch (JSONException jsExcp) {
-            return false;
-        }
-        return true;
-    }
-
     private void restorePreferences() {
         boolean scoutingTablet = settings.getBoolean(getResources().getString(R.string.SCOUT), false);
-        if(scoutingTablet){
-            boolean blueAllianceToggled = settings.getBoolean(getResources().getString(R.string.pref_BlueAlliance), false);
-            Log.d(TAG, HEADER + "restorePreferences scoutingTablet " + blueAllianceToggled);
-            if (blueAllianceToggled && !allianceButton.getText().equals(getString(R.string.blue_alliance))) {
+        if (scoutingTablet) {
+            boolean pref_BlueAlliance = settings.getBoolean(getResources().getString(R.string.pref_BlueAlliance), false);
+            Log.d(TAG, HEADER + "restorePreferences scoutingTablet - BLUE = " + pref_BlueAlliance);
+            if (pref_BlueAlliance && !allianceButton.getText().equals(getString(R.string.blue_alliance))) {
                 allianceButton.performClick();
             }
             int teamPositionNum = settings.getInt(getResources().getString(R.string.pref_TeamPosition), 0);

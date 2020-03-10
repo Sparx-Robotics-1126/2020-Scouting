@@ -46,7 +46,7 @@ public class Benchmarking extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(Benchmarking.this, "To exit press the \" "+ getResources().getString(R.string.benchmark_exit) + "\" button", Toast.LENGTH_LONG).show();
+        Toast.makeText(Benchmarking.this, "To exit press the \" " + getResources().getString(R.string.benchmark_exit) + "\" button", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -136,7 +136,7 @@ public class Benchmarking extends AppCompatActivity {
         });
         Button exitButton;
         exitButton = findViewById(R.id.exitButton);
-        exitButton.setOnClickListener(new View.OnClickListener(){
+        exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -144,14 +144,12 @@ public class Benchmarking extends AppCompatActivity {
         });
         Button saveButton;
         saveButton = findViewById(R.id.saveButton);
-        saveButton.setOnClickListener(new View.OnClickListener(){
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 saveData(Integer.parseInt(teamNumber.getText().toString()));
             }
         });
-
-
 
 
     }
@@ -161,7 +159,7 @@ public class Benchmarking extends AppCompatActivity {
         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
-    private void saveData(int teamNumber){
+    private void saveData(int teamNumber) {
         BenchmarkingData benchData = new BenchmarkingData(teamNumber);
 
 
@@ -194,7 +192,7 @@ public class Benchmarking extends AppCompatActivity {
 
     }
 
-    private void restoreData(int teamNumber){
+    private void restoreData(int teamNumber) {
 
     }
 }

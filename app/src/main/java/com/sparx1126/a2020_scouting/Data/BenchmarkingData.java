@@ -52,12 +52,12 @@ public class BenchmarkingData {
 
     private final static String COMMENTS = "Comments: ";
 
-    public BenchmarkingData(int teamNumber){
+    public BenchmarkingData(int teamNumber) {
         this.teamNumber = teamNumber;
     }
 
 
-    public String getData(){
+    public String getData() {
         String data = "";
 
         data += TEAM_NUMBER + teamNumber + END_TAG;
@@ -88,7 +88,7 @@ public class BenchmarkingData {
         return data;
     }
 
-    public void setData(String data){
+    public void setData(String data) {
         teamNumber = Integer.parseInt(restoreData(data, TEAM_NUMBER));
 
         driveType = restoreData(data, DRIVE_TYPE);
@@ -97,13 +97,13 @@ public class BenchmarkingData {
         maxSpeed = Double.parseDouble(restoreData(data, MAX_SPEED));
         height = Double.parseDouble(restoreData(data, HEIGHT));
         weight = Double.parseDouble(restoreData(data, WEIGHT));
-        visionType = restoreData(data,VISION_TYPE);
+        visionType = restoreData(data, VISION_TYPE);
 
         startPos = restoreData(data, START_POS);
         startingCells = Integer.parseInt(restoreData(data, STARTING_CELLS));
         autoScoreBottom = Boolean.parseBoolean(restoreData(data, AUTO_SCORE_BOTTOM));
         autoScoreTop = Boolean.parseBoolean(restoreData(data, AUTO_SCORE_TOP));
-        autoAcquireFloor =  Boolean.parseBoolean(restoreData(data, AUTO_ACQUIRE_FLOOR));
+        autoAcquireFloor = Boolean.parseBoolean(restoreData(data, AUTO_ACQUIRE_FLOOR));
 
         teleScoreBottom = Boolean.parseBoolean(restoreData(data, TELE_SCORE_BOTTOM));
         teleScoreTop = Boolean.parseBoolean(restoreData(data, TELE_SCORE_TOP));
@@ -116,7 +116,7 @@ public class BenchmarkingData {
     }
 
 
-    private static String restoreData(String data, String key){
+    private static String restoreData(String data, String key) {
         int begin = data.indexOf(key) + key.length();
         int end = data.indexOf(END_TAG, begin);
         return data.substring(begin, end);

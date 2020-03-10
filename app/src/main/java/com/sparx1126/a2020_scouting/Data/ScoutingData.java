@@ -18,7 +18,7 @@ public class ScoutingData extends JsonData {
     private static final String HEADER = "ScoutingData: ";
 
     //KEYS for the JSON
-    public static final String SCOUTER_NAME =  "scouter_name";
+    public static final String SCOUTER_NAME = "scouter_name";
     public static final String MATCH_NUMBER = "match_number";
     public static final String TEAM_NUMBER = "team_number";
     public static final String ALLIANCE_COLOR = "alliance_color";
@@ -58,6 +58,7 @@ public class ScoutingData extends JsonData {
     public static final String ACTIVE_LEVELING_LEVELED = "Leveled";
 
     private static Map<Integer, ScoutingData> data = new HashMap<>();
+
     public static Map<Integer, ScoutingData> getData() {
         return data;
     }
@@ -65,12 +66,15 @@ public class ScoutingData extends JsonData {
     private static String prefEvent;
     private static String prefAllianceColor;
     private static String prefTeamPosition;
+
     public static String getprefEvent() {
         return prefEvent;
     }
+
     public static String getPrefAllianceColor() {
         return prefAllianceColor;
     }
+
     public static String getPrefTeamPosition() {
         return prefTeamPosition;
     }
@@ -289,17 +293,18 @@ public class ScoutingData extends JsonData {
         return otherBrokeOrGotDisabled;
     }
 
-    public static void initializeData(boolean blueAllianceChosen, int position,  String _prefEvent, String _prefAllianceColor, String _prefTeamPosition) {
+    public static void initializeData(boolean blueAllianceChosen, int position, String _prefEvent, String _prefAllianceColor, String _prefTeamPosition,
+                                      Map<String, BlueAllianceMatch> _matches) {
+        data.clear();
         prefEvent = _prefEvent;
         prefAllianceColor = _prefAllianceColor;
         prefTeamPosition = _prefTeamPosition;
-        Map<String, BlueAllianceMatch> matches = BlueAllianceMatch.getMatches();
-        for(BlueAllianceMatch entry : matches.values()){
+        for (BlueAllianceMatch entry : _matches.values()) {
             ArrayList<String> allainceKeySet = entry.getRedTeamKeys();
-            if(blueAllianceChosen){
+            if (blueAllianceChosen) {
                 allainceKeySet = entry.getBlueTeamKeys();
             }
-            String teamText = (allainceKeySet.get(position-1)).replace("frc","");
+            String teamText = (allainceKeySet.get(position - 1)).replace("frc", "");
             int matchNum = Integer.parseInt(entry.getMatchNum());
             int teamNumber = Integer.parseInt(teamText);
             data.put(matchNum, new ScoutingData(matchNum, teamNumber));
@@ -311,7 +316,7 @@ public class ScoutingData extends JsonData {
         teamNumber = _teamNumber;
     }
 
-    public JsonObject toJson(){
+    public JsonObject toJson() {
         /**
          * {
          *   scouter_name:
@@ -363,7 +368,7 @@ public class ScoutingData extends JsonData {
         object.addProperty(MATCH_NUMBER, matchNumber);
         object.addProperty(TEAM_NUMBER, teamNumber);
         object.addProperty(ALLIANCE_COLOR, allianceColor);
-        
+
         JsonObject autoObject = new JsonObject();
         {
             autoObject.addProperty(STARTING_POSITION, autoStartingPosition);
@@ -393,7 +398,7 @@ public class ScoutingData extends JsonData {
                 teleScoredObject.addProperty(OUTER_PORT, telePowerCellsScoredOuterPort);
             }
             teleObject.add(POWER_CELLS_SCORED, teleScoredObject);
-            
+
             JsonObject teleAcquiredObject = new JsonObject();
             {
                 teleAcquiredObject.addProperty(FLOOR, telePowerCellsAcquiredFloor);
@@ -401,14 +406,14 @@ public class ScoutingData extends JsonData {
                 teleAcquiredObject.addProperty(LOW_CHUTE, telePowerCellsAcquiredLowChute);
             }
             teleObject.add(POWER_CELLS_ACQUIRED, teleAcquiredObject);
-            
+
             JsonObject teleControlPanelObject = new JsonObject();
             {
                 teleControlPanelObject.addProperty(PERFORMED_POSITION_CONTROL, telePerformedPositionControl);
                 teleControlPanelObject.addProperty(PERFORMED_ROTATION_CONTROL, telePerformedRotationControl);
             }
             teleObject.add(CONTROL_PANEL, teleControlPanelObject);
-            
+
         }
         object.add(TELE, teleObject);
 
@@ -432,14 +437,14 @@ public class ScoutingData extends JsonData {
 
     public static void parseJsons(Map<String, JSONObject> _data) {
         try {
-            for(Map.Entry<String, JSONObject> mail :  _data.entrySet()){
+            Log.d(TAG, HEADER + "parseJsons for number matches " + _data.size());
+            for (Map.Entry<String, JSONObject> mail : _data.entrySet()) {
                 String subject = mail.getKey();
-                if(subject.contains(prefEvent) && subject.contains(prefAllianceColor) && subject.contains(prefTeamPosition)) {
+                if (subject.contains(prefEvent) && subject.contains(prefAllianceColor) && subject.contains(prefTeamPosition)) {
                     // example 2020ndgf.frc3871.BlueAlliance.Position3.2.json
                     int indexStart = subject.indexOf(prefTeamPosition) + prefTeamPosition.length() + 1; // find string start, add string lenght and one more for the .
                     String match = subject.substring(indexStart);
                     match = match.substring(0, match.indexOf("."));
-                    Log.d(TAG, HEADER + "parseJsons " + match);
                     data.get(Integer.parseInt(match)).parseJson(mail.getValue());
                 }
             }

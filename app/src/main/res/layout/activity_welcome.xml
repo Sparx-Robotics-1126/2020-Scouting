@@ -62,7 +62,7 @@
             android:maxLength="4"/>
     </LinearLayout>
 
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -75,7 +75,7 @@
         <CheckBox
             android:id="@+id/scoutingCheckBox"
             style="@style/t019_checkBox"/>
-    </LinearLayout>
+    </LinearLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"

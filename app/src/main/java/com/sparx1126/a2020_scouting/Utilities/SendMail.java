@@ -16,7 +16,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 //Class is extending AsyncTask because this class is going to perform a networking operation
-public class SendMail extends AsyncTask<Void,Void,Void> {
+public class SendMail extends AsyncTask<Void, Void, Void> {
     private static final String TAG = "Sparx: ";
     private static final String HEADER = "SendMail: ";
 
@@ -42,7 +42,7 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
     private ProgressDialog progressDialog;
 
     //Class Constructor
-    public SendMail(Context _context, String _email, String _password, String _subject, String _message, SendMail.Callback _callback){
+    public SendMail(Context _context, String _email, String _password, String _subject, String _message, SendMail.Callback _callback) {
         //Initializing variables
         context = _context;
         email = _email;
@@ -57,7 +57,7 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
     protected void onPreExecute() {
         super.onPreExecute();
         //Showing progress dialog while sending email
-        progressDialog = ProgressDialog.show(context,"Sending message","Please wait...",false,false);
+        progressDialog = ProgressDialog.show(context, "Sending message", "Please wait...", false, false);
     }
 
     @Override

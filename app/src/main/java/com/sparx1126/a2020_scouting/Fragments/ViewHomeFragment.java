@@ -15,9 +15,9 @@ import androidx.fragment.app.Fragment;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceEvent;
 import com.sparx1126.a2020_scouting.R;
 
-public class HomeFragment extends Fragment {
+public class ViewHomeFragment extends Fragment {
     private static final String TAG = "Sparx: ";
-    private static final String HEADER = "HomeFragment: ";
+    private static final String HEADER = "ViewFragment: ";
 
     private SharedPreferences settings;
     private BlueAllianceEvent event;

@@ -65,12 +65,12 @@ public class BlueAllianceRank extends JsonData {
         details = _details;
     }
 
-    public static void parseJson(String _data){
+    public static void parseJson(String _data) {
         ranks.clear();
-        try{
+        try {
             JSONObject entireObj = new JSONObject(_data);
             JSONArray rankingsArr = entireObj.getJSONArray(RANK_ARRAY);
-            for(int i = 0; i < rankingsArr.length(); i++) {
+            for (int i = 0; i < rankingsArr.length(); i++) {
                 JSONObject currentObj = rankingsArr.getJSONObject(i);
                 String rank = getString(currentObj, RANK);
                 JSONObject recordObj = getJsonObject(currentObj, RECORD_OBJ);
@@ -84,10 +84,10 @@ public class BlueAllianceRank extends JsonData {
                 details += "Teleop Cell + CPanel: " + detailsArr.getString(TELEOP_CELL_CPANEL_POS);
                 String teamNum = getString(currentObj, TEAM_KEY).substring(3);
                 String teamName = getString(currentObj, TEAM_KEY); // broken for now
-                Log.d(TAG, HEADER + "parseJson " + rank);
                 ranks.put(Integer.parseInt(rank), new BlueAllianceRank(teamNum, rank, record, teamName, details));
             }
-        }catch(JSONException e) {
+            Log.d(TAG, HEADER + "parseJson for ranks " + ranks.size());
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }

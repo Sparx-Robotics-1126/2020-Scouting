@@ -133,6 +133,7 @@ public class Scouting extends AppCompatActivity {
     private SendMail mail;
     private boolean blueAllianceChosen;
     private int lastMatchScouted;
+    private String selectedEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +145,7 @@ public class Scouting extends AppCompatActivity {
         editor = settings.edit();
         blueAllianceChosen = settings.getBoolean(getResources().getString(R.string.pref_BlueAlliance), false);
         lastMatchScouted = settings.getInt(getResources().getString(R.string.last_match_scouted), 1);
+        selectedEvent = settings.getString(getString(R.string.pref_SelectedEvent), "");
 
         backgroundScrollView = findViewById(R.id.backgroundScrollView);
         assignmentTextView = findViewById(R.id.assignmentTextView);
@@ -155,9 +157,11 @@ public class Scouting extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
+
             @Override
             public void afterTextChanged(Editable s) {
                 restoreData(Integer.parseInt(matchNumInput.getText().toString()));
@@ -169,12 +173,11 @@ public class Scouting extends AppCompatActivity {
             public void onClick(View v) {
                 int currentValue = Integer.parseInt(matchNumInput.getText().toString());
                 int newValue = currentValue + 1;
-                int numberOfMatches = BlueAllianceMatch.getMatches().size();
-                if(newValue > numberOfMatches) {
+                int numberOfMatches = BlueAllianceMatch.getMatches(selectedEvent).size();
+                if (newValue > numberOfMatches) {
                     Log.e(TAG, HEADER + "Cannot exceed number of matches " + numberOfMatches);
                     Toast.makeText(Scouting.this, "Cannot exceed number of matches " + numberOfMatches, Toast.LENGTH_LONG).show();
-                }
-                else {
+                } else {
                     matchNumInput.setText(String.valueOf(newValue));
                 }
             }
@@ -185,18 +188,16 @@ public class Scouting extends AppCompatActivity {
             public void onClick(View v) {
                 int currentValue = Integer.parseInt(matchNumInput.getText().toString());
                 int newValue = currentValue - 1;
-                if(newValue < 1) {
+                if (newValue < 1) {
                     Log.e(TAG, HEADER + "Value cannot be less than 1");
-                    Toast.makeText(Scouting.this, "Value cannot be less than 1" , Toast.LENGTH_LONG).show();
-                }
-                else {
+                    Toast.makeText(Scouting.this, "Value cannot be less than 1", Toast.LENGTH_LONG).show();
+                } else {
                     matchNumInput.setText(String.valueOf(newValue));
                 }
             }
         });
         logOutButton = findViewById(R.id.logOutButton);
-        logOutButton.setOnClickListener(new View.OnClickListener()
-        {
+        logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(Scouting.this);
@@ -262,7 +263,7 @@ public class Scouting extends AppCompatActivity {
             }
         });
         minusBallsOuterAuto = findViewById(R.id.minusBallsOuterAuto);
-        minusBallsOuterAuto.setOnClickListener(new View.OnClickListener(){
+        minusBallsOuterAuto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 minusBalls(ballsOuterAutoInput);
@@ -278,7 +279,7 @@ public class Scouting extends AppCompatActivity {
             }
         });
         minusBallsInnerAuto = findViewById(R.id.minusBallsInnerAuto);
-        minusBallsInnerAuto.setOnClickListener(new View.OnClickListener(){
+        minusBallsInnerAuto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 minusBalls(ballsInnerAutoInput);
@@ -445,10 +446,9 @@ public class Scouting extends AppCompatActivity {
 
         changeUi();
         String scouter = settings.getString(getString(R.string.scouter), "");
-        if(scouter.isEmpty()) {
+        if (scouter.isEmpty()) {
             login();
-        }
-        else {
+        } else {
             scouterNameInput.setText(scouter);
         }
         matchNumInput.setText(String.valueOf(lastMatchScouted));
@@ -460,29 +460,29 @@ public class Scouting extends AppCompatActivity {
         Toast.makeText(Scouting.this, "Press Exit to return with no changes...", Toast.LENGTH_LONG).show();
     }
 
-    public void restoreData(Integer matchNum){
+    public void restoreData(Integer matchNum) {
         ScoutingData data = ScoutingData.getData().get(matchNum);
 
         teamNumInput.setText(String.valueOf(data.getTeamNumber()));
-        if(data.getAutoStartingPosition().equals(ScoutingData.STARTING_POSITION_CLOSEST)){
+        if (data.getAutoStartingPosition().equals(ScoutingData.STARTING_POSITION_CLOSEST)) {
             startingPositionRadioGroup.check(R.id.closestRadioButton);
-        }else if(data.getAutoStartingPosition().equals(ScoutingData.STARTING_POSITION_MIDDLE)){
+        } else if (data.getAutoStartingPosition().equals(ScoutingData.STARTING_POSITION_MIDDLE)) {
             startingPositionRadioGroup.check(R.id.middleRadioButton);
-        }else if(data.getAutoStartingPosition().equals(ScoutingData.STARTING_POSITION_FARTHEST)){
+        } else if (data.getAutoStartingPosition().equals(ScoutingData.STARTING_POSITION_FARTHEST)) {
             startingPositionRadioGroup.check(R.id.farthestRadioButton);
-        }else{
+        } else {
             startingPositionRadioGroup.clearCheck();
         }
 
-        if(data.getAutoPowerCellsInRobot() == 0){
+        if (data.getAutoPowerCellsInRobot() == 0) {
             startingBallsRadioGroup.check(R.id.noneRadioButton);
-        }else if(data.getAutoPowerCellsInRobot() == 1){
+        } else if (data.getAutoPowerCellsInRobot() == 1) {
             startingBallsRadioGroup.check(R.id.oneRadioButton);
-        }else if(data.getAutoPowerCellsInRobot() == 2){
+        } else if (data.getAutoPowerCellsInRobot() == 2) {
             startingBallsRadioGroup.check(R.id.twoRadioButton);
-        }else if(data.getAutoPowerCellsInRobot() == 3){
+        } else if (data.getAutoPowerCellsInRobot() == 3) {
             startingBallsRadioGroup.check(R.id.threeRadioButton);
-        }else {
+        } else {
             startingBallsRadioGroup.clearCheck();
         }
 
@@ -500,23 +500,23 @@ public class Scouting extends AppCompatActivity {
         performedRotationControlCheckBox.setChecked(data.isTelePerformedRotationControl());
         performedPositionControlCheckBox.setChecked(data.isTelePerformedPositionControl());
 
-        if(data.getEndRendezvous().equals(ScoutingData.RENDEZVOUS_NO_PARK)){
+        if (data.getEndRendezvous().equals(ScoutingData.RENDEZVOUS_NO_PARK)) {
             rendezuousRadioGroup.check(R.id.noparkRadioButton);
-        }else if(data.getEndRendezvous().equals(ScoutingData.RENDEZVOUS_PARKED)){
+        } else if (data.getEndRendezvous().equals(ScoutingData.RENDEZVOUS_PARKED)) {
             rendezuousRadioGroup.check(R.id.middleRadioButton);
-        }else if(data.getEndRendezvous().equals(ScoutingData.RENDEZVOUS_HANGED)){
+        } else if (data.getEndRendezvous().equals(ScoutingData.RENDEZVOUS_HANGED)) {
             rendezuousRadioGroup.check(R.id.farthestRadioButton);
-        }else{
+        } else {
             rendezuousRadioGroup.clearCheck();
         }
 
-        if(data.getEndActiveLeveling().equals(ScoutingData.ACTIVE_LEVELING_NO_LEVEL)){
+        if (data.getEndActiveLeveling().equals(ScoutingData.ACTIVE_LEVELING_NO_LEVEL)) {
             activeLevelingRadioGroup.check(R.id.noLevelingRadioButton);
-        }else if(data.getEndActiveLeveling().equals(ScoutingData.ACTIVE_LEVELING_TRIED_TO_LEVEL)){
+        } else if (data.getEndActiveLeveling().equals(ScoutingData.ACTIVE_LEVELING_TRIED_TO_LEVEL)) {
             activeLevelingRadioGroup.check(R.id.triedToLevelRadioButton);
-        }else if(data.getEndActiveLeveling().equals(ScoutingData.ACTIVE_LEVELING_LEVELED)){
+        } else if (data.getEndActiveLeveling().equals(ScoutingData.ACTIVE_LEVELING_LEVELED)) {
             activeLevelingRadioGroup.check(R.id.successfullyLeveledRadioButton);
-        }else{
+        } else {
             activeLevelingRadioGroup.clearCheck();
         }
 
@@ -525,24 +525,22 @@ public class Scouting extends AppCompatActivity {
         brokeDisabledCheckBox.setChecked(data.isOtherBrokeOrGotDisabled());
     }
 
-    public void save(){
+    public void save() {
         ScoutingData data = ScoutingData.getData().get(Integer.parseInt(matchNumInput.getText().toString()));
 
         String missing = "";
         data.setScouterName(scouterNameInput.getText().toString());
         data.setTeamNumber(Integer.parseInt(teamNumInput.getText().toString()));
-        if(blueAllianceChosen) {
+        if (blueAllianceChosen) {
             data.setAllianceColor(getResources().getString(R.string.blue_alliance));
-        }
-        else {
+        } else {
             data.setAllianceColor(getResources().getString(R.string.red_alliance));
         }
 
-        if(startingPositionRadioGroup.getCheckedRadioButtonId() == -1) {
+        if (startingPositionRadioGroup.getCheckedRadioButtonId() == -1) {
             data.setAutoStartingPosition("");
             missing += " startingPositionRadioGroup";
-        }
-        else {
+        } else {
             if (closestRadioButton.isChecked()) {
                 data.setAutoStartingPosition(ScoutingData.STARTING_POSITION_CLOSEST);
             } else if (middleRadioButton.isChecked()) {
@@ -552,21 +550,17 @@ public class Scouting extends AppCompatActivity {
             }
         }
 
-        if(startingBallsRadioGroup.getCheckedRadioButtonId() == -1) {
+        if (startingBallsRadioGroup.getCheckedRadioButtonId() == -1) {
             data.setAutoPowerCellsInRobot(-1);
             missing += " startingBallsRadioGroup";
-        }
-        else {
-            if(noneRadioButton.isChecked()){
-            data.setAutoPowerCellsInRobot(0);
-            }
-            else if(oneRadioButton.isChecked()) {
+        } else {
+            if (noneRadioButton.isChecked()) {
+                data.setAutoPowerCellsInRobot(0);
+            } else if (oneRadioButton.isChecked()) {
                 data.setAutoPowerCellsInRobot(1);
-            }
-            else if(twoRadioButton.isChecked()) {
+            } else if (twoRadioButton.isChecked()) {
                 data.setAutoPowerCellsInRobot(2);
-            }
-            else if(threeRadioButton.isChecked()) {
+            } else if (threeRadioButton.isChecked()) {
                 data.setAutoPowerCellsInRobot(3);
             }
         }
@@ -585,11 +579,10 @@ public class Scouting extends AppCompatActivity {
         data.setTelePerformedPositionControl(performedPositionControlCheckBox.isChecked());
         data.setTelePerformedRotationControl(performedRotationControlCheckBox.isChecked());
 
-        if(rendezuousRadioGroup.getCheckedRadioButtonId() == -1) {
+        if (rendezuousRadioGroup.getCheckedRadioButtonId() == -1) {
             data.setEndRendezvous("");
             missing += " rendezuousRadioGroup";
-        }
-        else {
+        } else {
             if (noparkRadioButton.isChecked()) {
                 data.setEndRendezvous(ScoutingData.RENDEZVOUS_NO_PARK);
             } else if (parkedRadioButton.isChecked()) {
@@ -599,11 +592,10 @@ public class Scouting extends AppCompatActivity {
             }
         }
 
-        if(activeLevelingRadioGroup.getCheckedRadioButtonId() == -1) {
+        if (activeLevelingRadioGroup.getCheckedRadioButtonId() == -1) {
             data.setEndActiveLeveling("");
             missing += " activeLevelingRadioGroup";
-        }
-        else {
+        } else {
             if (noLevelingRadioButton.isChecked()) {
                 data.setEndActiveLeveling(ScoutingData.ACTIVE_LEVELING_NO_LEVEL);
             } else if (triedToLevelRadioButton.isChecked()) {
@@ -617,25 +609,24 @@ public class Scouting extends AppCompatActivity {
         data.setOtherCausedFoul(causedFouldCheckBox.isChecked());
         data.setOtherBrokeOrGotDisabled(brokeDisabledCheckBox.isChecked());
 
-        if(missing.isEmpty()) {
+        if (missing.isEmpty()) {
             String email = settings.getString(getString(R.string.EMAIL), "");
             String password = settings.getString(getString(R.string.PASSWORD), "");
-            String subject = settings.getString("pref_SelectedEvent","") + ".";
+            String subject = settings.getString("pref_SelectedEvent", "") + ".";
             subject += "frc" + teamNumInput.getText().toString() + ".";
             subject += ScoutingData.getPrefAllianceColor() + ".";
             subject += ScoutingData.getPrefTeamPosition() + ".";
             subject += matchNumInput.getText().toString() + ".json";
             mail = new SendMail(Scouting.this, email, password, subject, data.toJson().toString(),
-                new SendMail.Callback() {
-                    @Override
-                    public void handleFinishDownload() {
-                        lastMatchScouted = Integer.parseInt(matchNumInput.getText().toString());
-                        Log.d(TAG, HEADER + "Data was sent over email");
-                        Toast.makeText(Scouting.this, "Data was sent over email", Toast.LENGTH_LONG).show();
-                    }
-                });
-        }
-        else {
+                    new SendMail.Callback() {
+                        @Override
+                        public void handleFinishDownload() {
+                            lastMatchScouted = Integer.parseInt(matchNumInput.getText().toString());
+                            Log.d(TAG, HEADER + "Data was sent over email");
+                            Toast.makeText(Scouting.this, "Data was sent over email", Toast.LENGTH_LONG).show();
+                        }
+                    });
+        } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(Scouting.this);
             builder.setTitle("Error");
             builder.setMessage("Please select choices for the following:" + missing + ". And Save Again!");
@@ -653,28 +644,28 @@ public class Scouting extends AppCompatActivity {
         }
     }
 
-    public void plusBalls(TextView view){
+    public void plusBalls(TextView view) {
         int value = Integer.parseInt(view.getText().toString());
         view.setText(String.valueOf(value + 1));
     }
-    public void minusBalls(TextView view){
+
+    public void minusBalls(TextView view) {
         int currentValue = Integer.parseInt(view.getText().toString());
         int newValue = currentValue - 1;
-        if(newValue < 0) {
+        if (newValue < 0) {
             Log.e(TAG, HEADER + "Value cannot be negative");
             Toast.makeText(this, "Value cannot be negative", Toast.LENGTH_LONG).show();
-        }
-        else {
+        } else {
             view.setText(String.valueOf(newValue));
         }
     }
 
-    public  void changeUi(){
+    public void changeUi() {
         int backgroundColor = getResources().getColor(R.color.RBackground);
         int textColor = getResources().getColor(R.color.RText);
         int buttonColor = getResources().getColor(R.color.RButtonBackground);
         allianceInput.setBackgroundColor(getResources().getColor(R.color.RED));
-        if(blueAllianceChosen) {
+        if (blueAllianceChosen) {
             backgroundColor = getResources().getColor(R.color.BBackground);
             textColor = getResources().getColor(R.color.BText);
             buttonColor = getResources().getColor(R.color.BButtonBackground);
@@ -800,7 +791,7 @@ public class Scouting extends AppCompatActivity {
         exitButton.setTextColor(textColor);
     }
 
-    private void login(){
+    private void login() {
         AlertDialog.Builder builder = new AlertDialog.Builder(Scouting.this);
         builder.setTitle("Login");
         builder.setMessage("Please log in to continue");
@@ -817,7 +808,7 @@ public class Scouting extends AppCompatActivity {
                 scouterNameInput.setText(value);
             }
         });
-        builder.setNegativeButton("Cancel" ,new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 finish();
             }

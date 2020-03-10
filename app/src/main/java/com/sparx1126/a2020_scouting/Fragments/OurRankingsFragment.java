@@ -35,16 +35,15 @@ public class OurRankingsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_our_rankings, container, false);
         settings = getActivity().getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
         Map<Integer, Float> data = OurRankingData.getBallsScoredOnInnerAve();
-        Map<String, BlueAllianceTeam> teams = BlueAllianceTeam.getTeams();
+        String selectedEvent = settings.getString(getString(R.string.pref_SelectedEvent), "");
+        Map<String, BlueAllianceTeam> teams = BlueAllianceTeam.getTeams(selectedEvent);
         View linearlayout = root.findViewById(R.id.linearLayout);
 
-
-
-        if(data.size() == 0){
+        if (data.size() == 0) {
             Log.e(TAG, HEADER + "No Rankings Data");
             Toast.makeText(getActivity(), "No Rankings Data", Toast.LENGTH_LONG).show();
             getFragmentManager().popBackStack();
-        }else {
+        } else {
             Map<Integer, Float> tmpdata = new HashMap<>();
             tmpdata.putAll(data);
             Log.d(TAG, HEADER + "DATA SIZE " + data.size());
@@ -59,9 +58,9 @@ public class OurRankingsFragment extends Fragment {
                 TextView details = segment.findViewById(R.id.details);
                 TextView teamName = segment.findViewById(R.id.teamName);
 
-                    team.setText(String.valueOf(highest.first));
-                    rank.setText(String.valueOf(i + 1));
-                    record.setText(String.valueOf(highest.second));
+                team.setText(String.valueOf(highest.first));
+                rank.setText(String.valueOf(i + 1));
+                record.setText(String.valueOf(highest.second));
 //                    details.setText(String.valueOf(data.get(i).getDetails()));
                 teamName.setText(String.valueOf(teams.get(String.valueOf(highest.first)).getTeam_name()));
                 if (settings.getBoolean(getString(R.string.pref_BlueAlliance), false)) {
@@ -91,18 +90,18 @@ public class OurRankingsFragment extends Fragment {
                     background1.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
                     background2.setBackgroundColor(getResources().getColor(R.color.RButtonBackground));
                 }
-                    ((LinearLayout) linearlayout).addView(segment);
+                ((LinearLayout) linearlayout).addView(segment);
             }
         }
         return root;
     }
 
-    private Pair<Integer, Float> getHighest(Map<Integer, Float> tmpdata){
-        Pair<Integer,Float> rtn = new Pair<>(-1,-1f);
-        for(Map.Entry<Integer, Float> tmp : tmpdata.entrySet()){
+    private Pair<Integer, Float> getHighest(Map<Integer, Float> tmpdata) {
+        Pair<Integer, Float> rtn = new Pair<>(-1, -1f);
+        for (Map.Entry<Integer, Float> tmp : tmpdata.entrySet()) {
             Log.d(TAG, HEADER + "hightes  " + tmp.getKey());
-            if(rtn.second < tmp.getValue()){
-                Pair<Integer,Float> tmprtn = new Pair<>(tmp.getKey(),tmp.getValue());
+            if (rtn.second < tmp.getValue()) {
+                Pair<Integer, Float> tmprtn = new Pair<>(tmp.getKey(), tmp.getValue());
                 rtn = tmprtn;
             }
         }

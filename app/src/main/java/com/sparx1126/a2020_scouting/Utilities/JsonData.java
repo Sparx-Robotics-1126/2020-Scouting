@@ -20,7 +20,7 @@ public class JsonData {
     }
 
     protected static float getFloat(JSONObject _jsonObj, String _key) {
-        float rtnData = (float)0.0;
+        float rtnData = (float) 0.0;
 
         try {
             //https://ourcodeworld.com/articles/read/367/how-to-get-a-float-value-from-a-json-object-in-java
@@ -78,5 +78,36 @@ public class JsonData {
         }
 
         return rtnData;
+    }
+
+    public static boolean isValidJsonArray(String _data) {
+        try {
+            new JSONArray(_data);
+        } catch (JSONException jsExcp) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isValidJsonObject(String _data) {
+        try {
+            new JSONObject(_data);
+        } catch (JSONException jsExcp) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isValidJsonObjectOrArray(String _data) {
+        try {
+            new JSONObject(_data);
+        } catch (JSONException ex) {
+            try {
+                new JSONArray(_data);
+            } catch (JSONException ex1) {
+                return false;
+            }
+        }
+        return true;
     }
 }

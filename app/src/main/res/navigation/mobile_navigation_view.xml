@@ -2,14 +2,14 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
+    android:id="@+id/mobile_navigation_view"
     app:startDestination="@+id/navigation_view_data_home">
 
     <fragment
         android:id="@+id/navigation_view_data_home"
-        android:name="com.sparx1126.a2020_scouting.Fragments.HomeFragment"
+        android:name="com.sparx1126.a2020_scouting.Fragments.ViewHomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_view_home" />
 
     <fragment
         android:id="@+id/navigation_rankings"

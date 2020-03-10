@@ -34,61 +34,78 @@ public class BlueAllianceEvent extends JsonData {
     private String endDate;
 
     private static Map<String, BlueAllianceEvent> events = new HashMap<>();
+    private static FileIO fileIO = FileIO.getInstance();
 
     private BlueAllianceEvent(String _key, String _name, String _week, String _location, String _startDate, String _endDate) {
-       key = _key;
-       name = _name;
-       week = _week;
-       location = _location;
-       startDate = _startDate;
-       endDate = _endDate;
+        key = _key;
+        name = _name;
+        week = _week;
+        location = _location;
+        startDate = _startDate;
+        endDate = _endDate;
     }
 
-    public static void parseJson(String _data, String _team){
+    public static void parseJson(String _data, String _team) {
         events.clear();
-        try{
-           JSONArray arr = new JSONArray(_data);
-           for(int i = 0; i < arr.length(); i++){
-               JSONObject obj = arr.getJSONObject(i);
-               String k = getString(obj, KEY);
-               String n = getString(obj,NAME);
-               String w = getString(obj,WEEK);
-               String l = getString(obj,LOCATION);
-               String s = getString(obj, START_DATE);
-               String e = getString(obj, END_DATE);
+        try {
+            JSONArray arr = new JSONArray(_data);
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject obj = arr.getJSONObject(i);
+                String k = getString(obj, KEY);
+                String n = getString(obj, NAME);
+                String w = getString(obj, WEEK);
+                String l = getString(obj, LOCATION);
+                String s = getString(obj, START_DATE);
+                String e = getString(obj, END_DATE);
 
-               Log.d(TAG, HEADER + "parseJson " + k);
-
-               events.put(k ,new BlueAllianceEvent(k, n, w, l ,s ,e));
-           }
-            FileIO fileIO = FileIO.getInstance();
+                Log.d(TAG, HEADER + "parseJson for event " + k);
+                events.put(k, new BlueAllianceEvent(k, n, w, l, s, e));
+            }
             fileIO.storeTeamEvents(_data, _team);
-        }catch(JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    public String getKey() {return key;}
-    public String getName() {return name;}
-    public String getWeek() {return week;}
-    public String getLocation() {return location;}
-    public String getStartDate() {return startDate;}
-    public String getEndDate() {return endDate;}
+    public String getKey() {
+        return key;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getWeek() {
+        return week;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
     public static Map<String, BlueAllianceEvent> getEvents(String _team) {
-        if(events.isEmpty()) {
-            FileIO fileIO = FileIO.getInstance();
+        if (events.isEmpty()) {
             String data = fileIO.fetchTeamEvents(_team);
-            if(!data.isEmpty()) {
+            if (!data.isEmpty()) {
                 parseJson(data, _team);
             }
         }
         return events;
     }
 
-    @Override @NonNull
-    public String toString(){
-        return ("\n" + "Event Name: " + name + "\n" + "Event Week: " + week + "\n" + "Event Location: " + location + "\n" +  "Event Start Date " + startDate + "\n"
-        + "Event End Date " + endDate);
+    @Override
+    @NonNull
+    public String toString() {
+        return ("\n" + "Event Name: " + name + "\n" + "Event Week: " + week + "\n" + "Event Location: " + location + "\n" + "Event Start Date " + startDate + "\n"
+                + "Event End Date " + endDate);
     }
 }
 

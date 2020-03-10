@@ -40,7 +40,8 @@ public class MatchViewerFragment extends Fragment {
         HashMap teamMatchObjs = BlueAllianceMatch.getTeamMatches(teamKey);
         Set<String> keys = BlueAllianceMatch.getTeamMatches(teamKey).keySet();
         Log.d(TAG, HEADER + "keys " + keys.toString());
-        Map<String, BlueAllianceMatch> matches =  BlueAllianceMatch.getMatches();
+        String selectedEvent = settings.getString(getString(R.string.pref_SelectedEvent), "");
+        Map<String, BlueAllianceMatch> matches = BlueAllianceMatch.getMatches(selectedEvent);
         for (int i = 1; i <= matches.size(); i++) {
             if (keys.contains(String.valueOf(i))) {
                 boolean isBlue = false;
@@ -113,7 +114,7 @@ public class MatchViewerFragment extends Fragment {
 
         }
         TextView rowDivider = new TextView(getActivity());
-        rowDivider.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,6));
+        rowDivider.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 6));
         rowDivider.setBackgroundColor(Color.DKGRAY);
         masterTable.addView(rowDivider);
 

@@ -21,11 +21,11 @@ public class ViewDataFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, HEADER + "onCreateView");
 
-        View root = inflater.inflate(R.layout.fragment_view_data, container, false);
+        View root = inflater.inflate(R.layout.fragment_empty, container, false);
 
+        getFragmentManager().popBackStack();
         Intent intent = new Intent(getActivity(), ViewData.class);
         startActivity(intent);
-        getFragmentManager().popBackStack();
 
         return root;
     }
