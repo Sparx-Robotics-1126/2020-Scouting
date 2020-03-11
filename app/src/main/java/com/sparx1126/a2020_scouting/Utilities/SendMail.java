@@ -3,7 +3,7 @@ package com.sparx1126.a2020_scouting.Utilities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
+import android.util.Log;
 
 import java.util.Properties;
 
@@ -16,34 +16,48 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 //Class is extending AsyncTask because this class is going to perform a networking operation
-public class SendMail extends AsyncTask<Void,Void,Void> {
+public class SendMail extends AsyncTask<Void, Void, Void> {
+    private static final String TAG = "Sparx: ";
+    private static final String HEADER = "SendMail: ";
+
+    private static final String PROTOCOL = "smtp";
+    private static final String HOST = PROTOCOL + ".gmail.com";
+    private static final String PORT = "465"; // smtp port for gmail
+
+    public interface Callback {
+        void handleFinishDownload();
+    }
 
     //Declaring Variables
     private Context context;
-    private Session session;
 
     //Information to send email
     private String email;
+    private String password;
     private String subject;
     private String message;
+    private Callback cb;
 
     //Progressdialog to show while sending email
     private ProgressDialog progressDialog;
 
     //Class Constructor
-    public SendMail(Context context, String email, String subject, String message){
+    public SendMail(Context _context, String _email, String _password, String _subject, String _message, SendMail.Callback _callback) {
         //Initializing variables
-        this.context = context;
-        this.email = email;
-        this.subject = subject;
-        this.message = message;
+        context = _context;
+        email = _email;
+        password = _password;
+        subject = _subject;
+        message = _message;
+        cb = _callback;
+        execute();
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
         //Showing progress dialog while sending email
-        progressDialog = ProgressDialog.show(context,"Sending message","Please wait...",false,false);
+        progressDialog = ProgressDialog.show(context, "Sending message", "Please wait...", false, false);
     }
 
     @Override
@@ -52,7 +66,7 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
         //Dismissing the progress dialog
         progressDialog.dismiss();
         //Showing a success message
-        Toast.makeText(context,"Message Sent",Toast.LENGTH_LONG).show();
+        cb.handleFinishDownload();
     }
 
     @Override
@@ -62,18 +76,18 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
 
         //Configuring properties for gmail
         //If you are not using gmail you may need to change the values
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.host", HOST);
+        props.put("mail.smtp.socketFactory.port", PORT);
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.port", "465");
+        props.put("mail.smtp.port", PORT);
 
         //Creating a new session
-        session = Session.getInstance(props,
+        Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     //Authenticating the password
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("sparx1126scouts@gmail.com", "gosparx!");
+                        return new PasswordAuthentication(email, password);
                     }
                 });
 
@@ -82,13 +96,15 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
             MimeMessage mm = new MimeMessage(session);
 
             //Setting sender address
-            mm.setFrom(new InternetAddress("sparx1126scouts@gmail.com"));
+            mm.setFrom(new InternetAddress(email));
             //Adding receiver
             mm.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
             //Adding subject
             mm.setSubject(subject);
             //Adding message
             mm.setText(message);
+
+            Log.d(TAG, HEADER + "sent " + subject);
 
             //Sending email
             Transport.send(mm);

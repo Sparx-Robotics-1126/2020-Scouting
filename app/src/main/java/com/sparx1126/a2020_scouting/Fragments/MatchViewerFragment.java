@@ -1,4 +1,4 @@
-package com.sparx1126.a2020_scouting.Fragments.match_viewer;
+package com.sparx1126.a2020_scouting.Fragments;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -24,8 +24,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class MatchViewerFragment extends Fragment {
-    static String TAG = "Sparx: ";
-    static String HEADER = "MatchViewerFragment: ";
+    private static final String TAG = "Sparx: ";
+    private static final String HEADER = "MatchViewerFragment: ";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -38,15 +38,15 @@ public class MatchViewerFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_match, container, false);
         TableLayout masterTable = root.findViewById(R.id.masterTable);
         HashMap teamMatchObjs = BlueAllianceMatch.getTeamMatches(teamKey);
-        BlueAllianceMatch matchObj = null;
         Set<String> keys = BlueAllianceMatch.getTeamMatches(teamKey).keySet();
         Log.d(TAG, HEADER + "keys " + keys.toString());
-        Map<String, BlueAllianceMatch> matches =  BlueAllianceMatch.getMatches();
+        String selectedEvent = settings.getString(getString(R.string.pref_SelectedEvent), "");
+        Map<String, BlueAllianceMatch> matches = BlueAllianceMatch.getMatches(selectedEvent);
         for (int i = 1; i <= matches.size(); i++) {
             if (keys.contains(String.valueOf(i))) {
                 boolean isBlue = false;
                 Log.d(TAG, HEADER + "MATCHVIEWER_FRAGMENT_UI - ADDING MATCH #" + i);
-                matchObj = (BlueAllianceMatch) teamMatchObjs.get((String.valueOf(i)));
+                BlueAllianceMatch matchObj = (BlueAllianceMatch) teamMatchObjs.get((String.valueOf(i)));
                 TableRow matchRow = new TableRow(getActivity());
 
                 LinearLayout teamData = new LinearLayout(getActivity());
@@ -62,7 +62,8 @@ public class MatchViewerFragment extends Fragment {
                 for (int b = 0; b < 3; b++) {
                     TextView blueTeamText = new TextView(getActivity());
                     blueTeamText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                    blueTeamText.setText(" " + matchObj.getBlueTeamKeys().get(b).replace("frc", "") + " ");
+                    String team = " " + matchObj.getBlueTeamKeys().get(b).replace("frc", "") + " ";
+                    blueTeamText.setText(team);
                     blueTeamText.setTextColor(Color.BLACK);
                     blueTeamText.setTextSize(30);
                     if (matchObj.getBlueTeamKeys().get(b).equals(teamKey)) {
@@ -82,7 +83,8 @@ public class MatchViewerFragment extends Fragment {
                     redTeamText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
                     redTeamText.setTextColor(Color.BLACK);
                     redTeamText.setTextSize(30);
-                    redTeamText.setText(" " + matchObj.getRedTeamKeys().get(r).replace("frc", "") + " ");
+                    String team = " " + matchObj.getRedTeamKeys().get(r).replace("frc", "") + " ";
+                    redTeamText.setText(team);
                     if (matchObj.getRedTeamKeys().get(r).equals(teamKey)) {
                         redTeamText.setTextColor(Color.YELLOW);
                     }
@@ -95,7 +97,8 @@ public class MatchViewerFragment extends Fragment {
                 matchNum.setLayoutParams(new TableRow.LayoutParams(200, TableRow.LayoutParams.MATCH_PARENT));
                 matchNum.setGravity(Gravity.CENTER);
                 matchNum.setTextSize(30);
-                matchNum.setText("MATCH " + matchObj.getMatchNum());
+                String match = "MATCH " + matchObj.getMatchNum();
+                matchNum.setText(match);
                 matchNum.setTextColor(Color.RED);
                 if (isBlue) {
                     matchNum.setTextColor(Color.BLUE);
@@ -111,7 +114,7 @@ public class MatchViewerFragment extends Fragment {
 
         }
         TextView rowDivider = new TextView(getActivity());
-        rowDivider.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,6));
+        rowDivider.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 6));
         rowDivider.setBackgroundColor(Color.DKGRAY);
         masterTable.addView(rowDivider);
 

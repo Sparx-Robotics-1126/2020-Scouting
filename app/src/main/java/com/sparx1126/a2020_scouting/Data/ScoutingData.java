@@ -1,451 +1,495 @@
 package com.sparx1126.a2020_scouting.Data;
 
-import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
-import com.sparx1126.a2020_scouting.BlueAllianceData.JsonData;
+import android.util.Log;
 
-import org.json.JSONException;
+import com.google.gson.JsonObject;
+import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
+import com.sparx1126.a2020_scouting.R;
+import com.sparx1126.a2020_scouting.Utilities.JsonData;
+
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ScoutingData extends JsonData {
+    private static final String TAG = "Sparx: ";
+    private static final String HEADER = "ScoutingData: ";
+
     //KEYS for the JSON
-    private static final String  scouter_name =  "scouter_name";
-    private static final String match_num = "match_num";
-    private static final String team_scouted = "team_num";
-    private static final String starting_pos = "starting_pos";
-    private static final String bottom_port = "bottom_port";
-    private static final String outer_port = "outer_port";
-    private static final String inner_port = "inner_port";
-    private static final String Power_Cells_Scored = "Power_Cells_Scored";
-    private static final String Auto = "Auto";
-    private static final String power_cell_start = "power_cell_start";
-    private static final String power_cells_acq_floor = "power_cells_acq_floor";
-    private static final String crosses_initiation_line = "crosses_initiation_line";
-    private static final String bottom_port_tele = "bottom_port_tele";
-    private static final String outer_port_tele = "outer_port_tele";
-    private static final String inner_port_tele = "inner_port_tele";
-    private static final String power_cells_scored_tele = "power_cells_scored_tele";
-    private static final String acq_floor = "acq_floor";
-    private static final String low_chute = "low_chute";
-    private static final String high_chute = "high_chute";
-    private static final String power_cell_acq = "power_cell_acq";
-    private static final String performed_rotation_control = "performed_rotation_control";
-    private static final String performed_position_control = "performed_position_control";
-    private static final String control_panel = "control_panel";
-    private static final String hangingEnd = "hanging";
-    private static final String parkedEnd = "parked";
-    private static final String  rendzoas = "rendzoas";
-    private static final String levelingEnd = "leveling";
+    public static final String SCOUTER_NAME = "scouter_name";
+    public static final String MATCH_NUMBER = "match_number";
+    public static final String TEAM_NUMBER = "team_number";
+    public static final String ALLIANCE_COLOR = "alliance_color";
+    public static final String AUTO = "auto";
+    public static final String TELE = "tele";
+    public static final String END = "end";
+    public static final String OTHER = "other";
+    public static final String POWER_CELLS_SCORED = "power_cells_scored";
+    public static final String POWER_CELLS_ACQUIRED = "power_cells_acquired";
+    public static final String STARTING_POSITION = "starting_position";
+    public static final String POWER_CELLS_IN_ROBOT = "power_cells_in_robot";
+    public static final String BOTTOM_PORT = "bottom_port";
+    public static final String INNER_PORT = "inner_port";
+    public static final String OUTER_PORT = "outer_port";
+    public static final String FLOOR = "floor";
+    public static final String HIGH_CHUTE = "high_chute";
+    public static final String LOW_CHUTE = "low_chute";
+    public static final String CROSSED_INITIATION_LINE = "crossed_initiation_line";
+    public static final String CONTROL_PANEL = "control_panel";
+    public static final String PERFORMED_POSITION_CONTROL = "performed_position_control";
+    public static final String PERFORMED_ROTATION_CONTROL = "performed_rotation_control";
+    public static final String RENDEZVOUS = "rendezvous";
+    public static final String ACTIVE_LEVELING = "active_leveling";
+    public static final String PLAYED_EXCELLENT_DEFENSE = "played_excellent_defense";
+    public static final String CAUSED_FOUL = "caused_foul";
+    public static final String BROKE_OR_GOT_DISABLED = "broke_or_got_disabled";
 
-    //class variables
-    private String scouterName;
-    private String MatchNumber;
-    private String TeamScouted;
-    private String startingPos;
-    private String PowerCellAtStart;
-    private String ballsScoredOnBottomAuto;
-    private String ballsScoredOnOuterAuto;
-    private String ballsScoredOnInnerAuto;
-    private String ballsAcquiredFloorAuto;
-    private String crossesInitiatoinLine;
-    private String ballsScoredOnBottomTele;
-    private String ballsScoredOnOuterTele;
-    private String ballsScoredOnInnerTele;
-    private String ballsAcquiredFloorTele;
-    private String ballsAcquiredLowChuteTele;
-    private String ballsAcquiredHighChuteTele;
-    private String preformedRotationControl;
-    private String performedPositionControl;
-    private String hanging;
-    private String parked;
-    private String leveling;
+    // STARTING_POSITION valid values
+    public static final String STARTING_POSITION_CLOSEST = "Closest to Power Port";
+    public static final String STARTING_POSITION_MIDDLE = "Middle";
+    public static final String STARTING_POSITION_FARTHEST = "Farthest to Power Port";
+    public static final String RENDEZVOUS_NO_PARK = "No Park";
+    public static final String RENDEZVOUS_PARKED = "Parked";
+    public static final String RENDEZVOUS_HANGED = "Hanged";
+    public static final String ACTIVE_LEVELING_NO_LEVEL = "No Leveling";
+    public static final String ACTIVE_LEVELING_TRIED_TO_LEVEL = "Tried Leveling";
+    public static final String ACTIVE_LEVELING_LEVELED = "Leveled";
 
-    private static Map<String, ScoutingData> data = new HashMap<>();
+    private static Map<Integer, ScoutingData> data = new HashMap<>();
 
-    public ScoutingData(String match_num){
-        this.scouterName = "NO SCOUTER";
-        this.MatchNumber = match_num;
-        this.TeamScouted = "0000";
-        this.startingPos = "-1";
-        this.PowerCellAtStart = "-1";
-        this.ballsScoredOnBottomAuto = "0";
-        this.ballsScoredOnOuterAuto = "0";
-        this.ballsScoredOnInnerAuto = "0";
-        this.ballsAcquiredFloorAuto = "0";
-        this.crossesInitiatoinLine = "false";
-        this.ballsScoredOnBottomTele = "0";
-        this.ballsScoredOnOuterTele = "0";
-        this.ballsScoredOnInnerTele = "0";
-        this.ballsAcquiredFloorTele = "0";
-        this.ballsAcquiredLowChuteTele = "0";
-        this.ballsAcquiredHighChuteTele = "0";
-        this.preformedRotationControl = "";
-        this.performedPositionControl = "";
-        this.hanging = "";
-        this.parked = "";
-        this.leveling = "";
-    }
-
-    public ScoutingData(String scouterName,
-             String MatchNumber,
-             String TeamScouted,
-             String startingPos,
-             String PowerCellAtStart,
-             String ballsScoredOnBottomAuto,
-             String ballsScoredOnOuterAuto,
-             String ballsScoredOnInnerAuto,
-             String ballsAcquiredFloorAuto,
-             String crossesInitiatoinLine,
-             String ballsScoredOnBottomTele,
-             String ballsScoredOnOuterTele,
-             String ballsScoredOnInnerTele,
-             String ballsAcquiredFloorTele,
-             String ballsAcquiredLowChuteTele,
-             String ballsAcquiredHighChuteTele,
-             String preformedRotationControl,
-             String performedPositionControl,
-             String hanging,
-             String parked,
-             String leveling) {
-
-        this.scouterName = scouterName;
-        this.MatchNumber = MatchNumber;
-        this.TeamScouted = TeamScouted;
-        this.startingPos = startingPos;
-        this.PowerCellAtStart = PowerCellAtStart;
-        this.ballsScoredOnBottomAuto = ballsScoredOnBottomAuto;
-        this.ballsScoredOnOuterAuto = ballsScoredOnOuterAuto;
-        this.ballsScoredOnInnerAuto = ballsScoredOnInnerAuto;
-        this.ballsAcquiredFloorAuto = ballsAcquiredFloorAuto;
-        this.crossesInitiatoinLine = crossesInitiatoinLine;
-        this.ballsScoredOnBottomTele = ballsScoredOnBottomTele;
-        this.ballsScoredOnOuterTele = ballsScoredOnOuterTele;
-        this.ballsScoredOnInnerTele = ballsScoredOnInnerTele;
-        this.ballsAcquiredFloorTele = ballsAcquiredFloorTele;
-        this.ballsAcquiredLowChuteTele = ballsAcquiredLowChuteTele;
-        this.ballsAcquiredHighChuteTele = ballsAcquiredHighChuteTele;
-        this.preformedRotationControl = preformedRotationControl;
-        this.performedPositionControl = performedPositionControl;
-        this.hanging = hanging;
-        this.parked = parked;
-        this.leveling = leveling;
-
-    }
-
-
-
-    public String toJson(){
-        /**
-         * {
-         * Scouter Name:
-         * Match Num:
-         * Team Num:
-         * Alliance color
-         * Auto{
-         * Starting Position
-         * powercells scored
-         * {
-         * Bottem Port,
-         * Inner Port,
-         * Outer Port
-         * },
-         * Power cells at start
-         * power cells acquierd
-         * Crossed initiation line
-         * },
-         * Teleop{
-         * powercellsScored{
-         * Bottom Port,
-         * Inner Port,
-         * Outer Port
-         * }
-         * power Chells Acq{
-         * floor,
-         * low Chute,
-         * high Chute
-         * }
-         * ControlPannel{
-         * performed Rotation control,
-         * peroment Position control
-         * }
-         * },
-         * End Game{
-         * Redeuoas{
-         * hanging,
-         * parked
-         * }
-         * Leveling{
-         * No leveling,
-         * Tried,
-         * Saccessful
-         * }
-         * }
-         * }
-         */
-        String ScouterName = "\"scouter_name\":" +"\""+ scouterName+ "\"";
-        String MatchNum = "\"match_num\":"+ "\""+MatchNumber +"\"";
-        String teamNum = "\"team_num\":" + "\""+TeamScouted+"\"";
-        String startingPos = "\"starting_pos\":"+ "\""+this.startingPos+"\"";
-        String bottomPort =  "\"bottom_port\":" + "\""+ballsScoredOnBottomAuto + "\""+ ",";
-        String OuterPort = "\"outer_port\":" + "\""+ballsScoredOnOuterAuto + "\""+ ",";
-        String InnerPort = "\"inner_port\":" + "\""+ballsScoredOnBottomAuto+ "\"";
-        String PowerCellsScored =  "\"Power_Cells_Scored\":{" + bottomPort + OuterPort + InnerPort+ "},";
-        String powerCellsStart = "\"power_cell_start\":" + "\""+PowerCellAtStart+ "\"";
-        String PowerCellsAcqFloor =  "\"power_cells_acq_floor\":" +"\""+ ballsAcquiredFloorAuto+ "\"";
-        String crosses = "\"crosses_initiation_line\":"+ "\""+crossesInitiatoinLine+ "\"";
-        String bottomPortTele = "\"bottom_port_tele\":"+"\""+ ballsScoredOnBottomTele+ "\"" + ",";
-        String outerPortTele = "\"outer_port_tele\":" + "\""+ballsScoredOnOuterTele+ "\"" + ",";
-        String innerPortTele = "\"inner_port_tele\":" + "\""+ballsScoredOnInnerTele+ "\"";
-        String PowerCellsScoredTele = "\"power_cells_scored_tele\":{" + bottomPortTele + outerPortTele + innerPortTele + "},";
-        String floorTele = "\"acq_floor\":" +"\""+ ballsAcquiredFloorTele+ "\""+ ",";
-        String lowChuteTele = "\"low_chute\":" + "\""+ballsAcquiredLowChuteTele+ "\""+ ",";
-        String highChuteTele = "\"high_chute\":" + "\""+ballsAcquiredHighChuteTele+ "\"";
-        String PowerCellsAcqTele = "\"power_cell_acq\":{" +floorTele + lowChuteTele + highChuteTele + "},";
-        String performedRot = "\"performed_rotation_control\":" + "\""+ preformedRotationControl + "\""+ ",";
-        String performtPos = "\"performed_position_control\":" + "\""+ performedPositionControl+ "\"";
-        String ControlPanel = "\"control_panel\":{"+ performedRot + performtPos + "}";
-        String hanging = "\"hanging\":" + "\""+ isHanging()+ "\""+",";
-        String parked = "\"parked\":" + "\""+isParked()+ "\"";
-        String rendezoas = "\"rendzoas\":{" + hanging + parked + "},";
-        String leveling = "\"leveling\":" +"\""+ this.leveling+ "\"";
-
-        return ("{" + ScouterName +","+ MatchNum + ","+ teamNum + "," + "\"Auto\":{"+ startingPos + ","+
-                PowerCellsScored + powerCellsStart + "," + PowerCellsAcqFloor + "," + crosses + "},"
-                + "\"Teleop\":{" +  PowerCellsScoredTele + PowerCellsAcqTele + ControlPanel + "}," +
-                "\"EndGame\":{" + rendezoas + leveling+ "}" + "}");
-    }
-
-    public static void setJson(Map<String, BlueAllianceMatch> bam){
-
-    }
-
-    public static void parseJson(String str){
-        data.clear();
-        try{
-            JSONObject obj = new JSONObject(str);
-                String name = getString(obj, scouter_name);
-                String matchNum = getString(obj, match_num);
-                String teamNum = getString(obj, team_scouted);
-                String startingPos = getString(obj, starting_pos);
-                String bottomPort = getString(obj, bottom_port);
-                String outerPort = getString(obj, outer_port);
-                String innerPort = getString(obj, inner_port);
-                String ballsStart = getString(obj, power_cell_start);
-                String ballsAcq = getString(obj, power_cells_acq_floor);
-                String crosses = getString(obj, crosses_initiation_line);
-                String bottomPortTele = getString(obj, bottom_port_tele);
-                String outerPortTele = getString(obj, outer_port_tele);
-                String innerPortTele = getString(obj, inner_port_tele);
-                String acqFloor = getString(obj, acq_floor);
-                String bottomChute = getString(obj, low_chute);
-                String highChute = getString(obj, high_chute);
-                String performedRot = getString(obj, performed_rotation_control);
-                String performedPos = getString(obj, performed_position_control);
-                String hagingEnd = getString(obj, hangingEnd);
-                String parkedend = getString(obj, parkedEnd);
-                String leveling = getString(obj, levelingEnd);
-
-                data.put(matchNum, new ScoutingData(name, matchNum, teamNum, startingPos,bottomPort, outerPort, innerPort, ballsStart, ballsAcq, crosses,
-                        bottomPortTele, outerPortTele, innerPortTele, acqFloor, bottomChute, highChute,performedRot, performedPos, hangingEnd ,parkedend,leveling));
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "ScoutingData{" +
-                "scouterName='" + scouterName + '\'' +
-                ", MatchNumber='" + MatchNumber + '\'' +
-                ", TeamScouted='" + TeamScouted + '\'' +
-                ", startingPos='" + startingPos + '\'' +
-                ", PowerCellAtStart='" + PowerCellAtStart + '\'' +
-                ", ballsScoredOnBottomAuto='" + ballsScoredOnBottomAuto + '\'' +
-                ", ballsScoredOnOuterAuto='" + ballsScoredOnOuterAuto + '\'' +
-                ", ballsScoredOnInnerAuto='" + ballsScoredOnInnerAuto + '\'' +
-                ", ballsAcquiredFloorAuto='" + ballsAcquiredFloorAuto + '\'' +
-                ", crossesInitiatoinLine='" + crossesInitiatoinLine + '\'' +
-                ", ballsScoredOnBottomTele='" + ballsScoredOnBottomTele + '\'' +
-                ", ballsScoredOnOuterTele='" + ballsScoredOnOuterTele + '\'' +
-                ", ballsScoredOnInnerTele='" + ballsScoredOnInnerTele + '\'' +
-                ", ballsAcquiredFloorTele='" + ballsAcquiredFloorTele + '\'' +
-                ", ballsAcquiredLowChuteTele='" + ballsAcquiredLowChuteTele + '\'' +
-                ", ballsAcquiredHighChuteTele='" + ballsAcquiredHighChuteTele + '\'' +
-                ", preformedRotationControl='" + preformedRotationControl + '\'' +
-                ", performedPositionControl='" + performedPositionControl + '\'' +
-                ", hanging='" + hanging + '\'' +
-                ", parked='" + parked + '\'' +
-                ", leveling='" + leveling + '\'' +
-                '}';
-    }
-
-    public static Map<String, ScoutingData> getData(){
+    public static Map<Integer, ScoutingData> getData() {
         return data;
     }
+
+    private static String prefEvent;
+    private static String prefAllianceColor;
+    private static String prefTeamPosition;
+
+    public static String getprefEvent() {
+        return prefEvent;
+    }
+
+    public static String getPrefAllianceColor() {
+        return prefAllianceColor;
+    }
+
+    public static String getPrefTeamPosition() {
+        return prefTeamPosition;
+    }
+
+
+    private String scouterName = "";
+    private int matchNumber;
+    private int teamNumber;
+    private String allianceColor = "";
+    private String autoStartingPosition = "";
+    private int autoPowerCellsInRobot = -1; //starts at -1 one because 0 is valid
+    private int autoPowerCellsScoredBottomPort;
+    private int autoPowerCellsScoredInnerPort;
+    private int autoPowerCellsScoredOuterPort;
+    private int autoPowerCellsAcquiredFloor;
+    private boolean autoCrossedInitiationLine;
+    private int telePowerCellsScoredBottomPort;
+    private int telePowerCellsScoredInnerPort;
+    private int telePowerCellsScoredOuterPort;
+    private int telePowerCellsAcquiredFloor;
+    private int telePowerCellsAcquiredHighChute;
+    private int telePowerCellsAcquiredLowChute;
+    private boolean telePerformedPositionControl;
+    private boolean telePerformedRotationControl;
+    private String endRendezvous = "";
+    private String endActiveLeveling = "";
+    private boolean otherPlayedExcellentDefense;
+    private boolean otherCausedFoul;
+    private boolean otherBrokeOrGotDisabled;
 
     public void setScouterName(String scouterName) {
         this.scouterName = scouterName;
     }
 
-    public void setMatchNumber(String matchNumber) {
-        MatchNumber = matchNumber;
+    public void setTeamNumber(int teamNumber) {
+        this.teamNumber = teamNumber;
     }
 
-    public void setTeamScouted(String teamScouted) {
-        TeamScouted = teamScouted;
+    public void setAllianceColor(String allianceColor) {
+        this.allianceColor = allianceColor;
     }
 
-    public void setStartingPos(String startingPos) {
-        this.startingPos = startingPos;
+    public void setAutoStartingPosition(String autoStartingPosition) {
+        this.autoStartingPosition = autoStartingPosition;
     }
 
-    public void setPowerCellAtStart(String powerCellAtStart) {
-        PowerCellAtStart = powerCellAtStart;
+    public void setAutoPowerCellsInRobot(int autoPowerCellsInRobot) {
+        this.autoPowerCellsInRobot = autoPowerCellsInRobot;
     }
 
-    public void setBallsScoredOnBottomAuto(String ballsScoredOnBottomAuto) {
-        this.ballsScoredOnBottomAuto = ballsScoredOnBottomAuto;
+    public void setAutoPowerCellsScoredBottomPort(int autoPowerCellsScoredBottomPort) {
+        this.autoPowerCellsScoredBottomPort = autoPowerCellsScoredBottomPort;
     }
 
-    public void setBallsScoredOnOuterAuto(String ballsScoredOnOuterAuto) {
-        this.ballsScoredOnOuterAuto = ballsScoredOnOuterAuto;
+    public void setAutoPowerCellsScoredInnerPort(int autoPowerCellsScoredInnerPort) {
+        this.autoPowerCellsScoredInnerPort = autoPowerCellsScoredInnerPort;
     }
 
-    public void setBallsScoredOnInnerAuto(String ballsScoredOnInnerAuto) {
-        this.ballsScoredOnInnerAuto = ballsScoredOnInnerAuto;
+    public void setAutoPowerCellsScoredOuterPort(int autoPowerCellsScoredOuterPort) {
+        this.autoPowerCellsScoredOuterPort = autoPowerCellsScoredOuterPort;
     }
 
-    public void setBallsAcquiredFloorAuto(String ballsAcquiredFloorAuto) {
-        this.ballsAcquiredFloorAuto = ballsAcquiredFloorAuto;
+    public void setAutoPowerCellsAcquiredFloor(int autoPowerCellsAcquiredFloor) {
+        this.autoPowerCellsAcquiredFloor = autoPowerCellsAcquiredFloor;
     }
 
-    public void setCrossesInitiatoinLine(String crossesInitiatoinLine) {
-        this.crossesInitiatoinLine = crossesInitiatoinLine;
+    public void setAutoCrossedInitiationLine(boolean autoCrossedInitiationLine) {
+        this.autoCrossedInitiationLine = autoCrossedInitiationLine;
     }
 
-    public void setBallsScoredOnBottomTele(String ballsScoredOnBottomTele) {
-        this.ballsScoredOnBottomTele = ballsScoredOnBottomTele;
+    public void setTelePowerCellsScoredBottomPort(int telePowerCellsScoredBottomPort) {
+        this.telePowerCellsScoredBottomPort = telePowerCellsScoredBottomPort;
     }
 
-    public void setBallsScoredOnOuterTele(String ballsScoredOnOuterTele) {
-        this.ballsScoredOnOuterTele = ballsScoredOnOuterTele;
+    public void setTelePowerCellsScoredInnerPort(int telePowerCellsScoredInnerPort) {
+        this.telePowerCellsScoredInnerPort = telePowerCellsScoredInnerPort;
     }
 
-    public void setBallsScoredOnInnerTele(String ballsScoredOnInnerTele) {
-        this.ballsScoredOnInnerTele = ballsScoredOnInnerTele;
+    public void setTelePowerCellsScoredOuterPort(int telePowerCellsScoredOuterPort) {
+        this.telePowerCellsScoredOuterPort = telePowerCellsScoredOuterPort;
     }
 
-    public void setBallsAcquiredFloorTele(String ballsAcquiredFloorTele) {
-        this.ballsAcquiredFloorTele = ballsAcquiredFloorTele;
+    public void setTelePowerCellsAcquiredFloor(int telePowerCellsAcquiredFloor) {
+        this.telePowerCellsAcquiredFloor = telePowerCellsAcquiredFloor;
     }
 
-    public void setBallsAcquiredLowChuteTele(String ballsAcquiredLowChuteTele) {
-        this.ballsAcquiredLowChuteTele = ballsAcquiredLowChuteTele;
+    public void setTelePowerCellsAcquiredHighChute(int telePowerCellsAcquiredHighChute) {
+        this.telePowerCellsAcquiredHighChute = telePowerCellsAcquiredHighChute;
     }
 
-    public void setBallsAcquiredHighChuteTele(String ballsAcquiredHighChuteTele) {
-        this.ballsAcquiredHighChuteTele = ballsAcquiredHighChuteTele;
+    public void setTelePowerCellsAcquiredLowChute(int telePowerCellsAcquiredLowChute) {
+        this.telePowerCellsAcquiredLowChute = telePowerCellsAcquiredLowChute;
     }
 
-    public void setPreformedRotationControl(String preformedRotationControl) {
-        this.preformedRotationControl = preformedRotationControl;
+    public void setTelePerformedPositionControl(boolean telePerformedPositionControl) {
+        this.telePerformedPositionControl = telePerformedPositionControl;
     }
 
-    public void setPerformedPositionControl(String performedPositionControl) {
-        this.performedPositionControl = performedPositionControl;
+    public void setTelePerformedRotationControl(boolean telePerformedRotationControl) {
+        this.telePerformedRotationControl = telePerformedRotationControl;
     }
 
-    public void setHanging(String hanging) {
-        this.hanging = hanging;
+    public void setEndRendezvous(String endRendezvous) {
+        this.endRendezvous = endRendezvous;
     }
 
-    public void setParked(String parked) {
-        this.parked = parked;
+    public void setEndActiveLeveling(String endActiveLeveling) {
+        this.endActiveLeveling = endActiveLeveling;
     }
 
-    public void setLeveling(String leveling) {
-        this.leveling = leveling;
+    public void setOtherPlayedExcellentDefense(boolean otherPlayedExcellentDefense) {
+        this.otherPlayedExcellentDefense = otherPlayedExcellentDefense;
     }
+
+    public void setOtherCausedFoul(boolean otherCausedFoul) {
+        this.otherCausedFoul = otherCausedFoul;
+    }
+
+    public void setOtherBrokeOrGotDisabled(boolean otherBrokeOrGotDisabled) {
+        this.otherBrokeOrGotDisabled = otherBrokeOrGotDisabled;
+    }
+
     public String getScouterName() {
         return scouterName;
     }
 
-    public String getMatchNumber() {
-        return MatchNumber;
+    public int getMatchNumber() {
+        return matchNumber;
     }
 
-    public String getTeamScouted() {
-        return TeamScouted;
+    public int getTeamNumber() {
+        return teamNumber;
     }
 
-    public String getStartingPos() {
-        return startingPos;
+    public String getAllianceColor() {
+        return allianceColor;
     }
 
-    public String getPowerCellAtStart() {return PowerCellAtStart; }
-
-    public String getBallsScoredOnBottomAuto() {
-        return ballsScoredOnBottomAuto;
+    public String getAutoStartingPosition() {
+        return autoStartingPosition;
     }
 
-    public String getBallsScoredOnOuterAuto() {
-        return ballsScoredOnOuterAuto;
+    public int getAutoPowerCellsInRobot() {
+        return autoPowerCellsInRobot;
     }
 
-    public String getBallsScoredOnInnerAuto() {
-        return ballsScoredOnInnerAuto;
+    public int getAutoPowerCellsScoredBottomPort() {
+        return autoPowerCellsScoredBottomPort;
     }
 
-    public String getBallsAcquiredFloorAuto() {
-        return ballsAcquiredFloorAuto;
+    public int getAutoPowerCellsScoredInnerPort() {
+        return autoPowerCellsScoredInnerPort;
     }
 
-    public String isCrossesInitiatoinLine() {
-        return crossesInitiatoinLine;
+    public int getAutoPowerCellsScoredOuterPort() {
+        return autoPowerCellsScoredOuterPort;
     }
 
-    public String getBallsScoredOnBottomTele() {
-        return ballsScoredOnBottomTele;
+    public int getAutoPowerCellsAcquiredFloor() {
+        return autoPowerCellsAcquiredFloor;
     }
 
-    public String getBallsScoredOnOuterTele() {
-        return ballsScoredOnOuterTele;
+    public boolean isAutoCrossedInitiationLine() {
+        return autoCrossedInitiationLine;
     }
 
-    public String getBallsScoredOnInnerTele() {
-        return ballsScoredOnInnerTele;
+    public int getTelePowerCellsScoredBottomPort() {
+        return telePowerCellsScoredBottomPort;
     }
 
-    public String getBallsAcquiredFloorTele() {
-        return ballsAcquiredFloorTele;
+    public int getTelePowerCellsScoredInnerPort() {
+        return telePowerCellsScoredInnerPort;
     }
 
-    public String getBallsAcquiredLowChuteTele() {
-        return ballsAcquiredLowChuteTele;
+    public int getTelePowerCellsScoredOuterPort() {
+        return telePowerCellsScoredOuterPort;
     }
 
-    public String getBallsAcquiredHighChuteTele() {
-        return ballsAcquiredHighChuteTele;
+    public int getTelePowerCellsAcquiredFloor() {
+        return telePowerCellsAcquiredFloor;
     }
 
-    public String isPreformedRotationControl() {
-        return preformedRotationControl;
+    public int getTelePowerCellsAcquiredHighChute() {
+        return telePowerCellsAcquiredHighChute;
     }
 
-    public String isPerformedPositionControl() {
-        return performedPositionControl;
+    public int getTelePowerCellsAcquiredLowChute() {
+        return telePowerCellsAcquiredLowChute;
     }
 
-    public String isHanging() {
-        return hanging;
+    public boolean isTelePerformedPositionControl() {
+        return telePerformedPositionControl;
     }
 
-    public String isParked() {
-        return parked;
+    public boolean isTelePerformedRotationControl() {
+        return telePerformedRotationControl;
     }
 
-    public String getLeveling() {
-        return leveling;
+    public String getEndRendezvous() {
+        return endRendezvous;
+    }
+
+    public String getEndActiveLeveling() {
+        return endActiveLeveling;
+    }
+
+    public boolean isOtherPlayedExcellentDefense() {
+        return otherPlayedExcellentDefense;
+    }
+
+    public boolean isOtherCausedFoul() {
+        return otherCausedFoul;
+    }
+
+    public boolean isOtherBrokeOrGotDisabled() {
+        return otherBrokeOrGotDisabled;
+    }
+
+    public static void initializeData(boolean blueAllianceChosen, int position, String _prefEvent, String _prefAllianceColor, String _prefTeamPosition,
+                                      Map<String, BlueAllianceMatch> _matches) {
+        data.clear();
+        prefEvent = _prefEvent;
+        prefAllianceColor = _prefAllianceColor;
+        prefTeamPosition = _prefTeamPosition;
+        for (BlueAllianceMatch entry : _matches.values()) {
+            ArrayList<String> allainceKeySet = entry.getRedTeamKeys();
+            if (blueAllianceChosen) {
+                allainceKeySet = entry.getBlueTeamKeys();
+            }
+            String teamText = (allainceKeySet.get(position - 1)).replace("frc", "");
+            int matchNum = Integer.parseInt(entry.getMatchNum());
+            int teamNumber = Integer.parseInt(teamText);
+            data.put(matchNum, new ScoutingData(matchNum, teamNumber));
+        }
+    }
+
+    private ScoutingData(int _matchNumber, int _teamNumber) {
+        matchNumber = _matchNumber;
+        teamNumber = _teamNumber;
+    }
+
+    public JsonObject toJson() {
+        /**
+         * {
+         *   scouter_name:
+         *   match_num:
+         *   team_num:
+         *   alliance_color:
+         *   auto:{
+         *     starting_pos:
+         *     power_cells_in_robot:
+         *     power_cells_scored:{
+         *       bottom_port:
+         *       inner_port:
+         *       outer_port:
+         *     }
+         *     power_cells_acquired:{
+         *       floor:
+         *     }
+         *     crossed_initiation_line:
+         *   }
+         *   tele:{
+         *     power_cells_scored:{
+         *       bottom_port:
+         *       inner_port:
+         *       outer_port:
+         *     }
+         *     power_cells_acquired:{
+         *       floor:
+         *       high_chute:
+         *       low_chute:
+         *     }
+         *     control_panel:{
+         *       performed_position_control:
+         *       performed_rotation_control:
+         *     }
+         *   }
+         *   end{
+         *     rendezvous:
+         *     active_leveling:
+         *   }
+         *   other{
+         *     played_excellent_defense:
+         *     caused_foul:
+         *     broke_or_got_disabled:
+         *   }
+         * }
+         **/
+        JsonObject object = new JsonObject();
+        object.addProperty(SCOUTER_NAME, scouterName);
+        object.addProperty(MATCH_NUMBER, matchNumber);
+        object.addProperty(TEAM_NUMBER, teamNumber);
+        object.addProperty(ALLIANCE_COLOR, allianceColor);
+
+        JsonObject autoObject = new JsonObject();
+        {
+            autoObject.addProperty(STARTING_POSITION, autoStartingPosition);
+            autoObject.addProperty(POWER_CELLS_IN_ROBOT, autoPowerCellsInRobot);
+            JsonObject autoScoredObject = new JsonObject();
+            {
+                autoScoredObject.addProperty(BOTTOM_PORT, autoPowerCellsScoredBottomPort);
+                autoScoredObject.addProperty(INNER_PORT, autoPowerCellsScoredInnerPort);
+                autoScoredObject.addProperty(OUTER_PORT, autoPowerCellsScoredOuterPort);
+            }
+            autoObject.add(POWER_CELLS_SCORED, autoScoredObject);
+            JsonObject autoAcquiredObject = new JsonObject();
+            {
+                autoAcquiredObject.addProperty(FLOOR, autoPowerCellsAcquiredFloor);
+            }
+            autoObject.add(POWER_CELLS_ACQUIRED, autoAcquiredObject);
+            autoObject.addProperty(CROSSED_INITIATION_LINE, autoCrossedInitiationLine);
+        }
+        object.add(AUTO, autoObject);
+
+        JsonObject teleObject = new JsonObject();
+        {
+            JsonObject teleScoredObject = new JsonObject();
+            {
+                teleScoredObject.addProperty(BOTTOM_PORT, telePowerCellsScoredBottomPort);
+                teleScoredObject.addProperty(INNER_PORT, telePowerCellsScoredInnerPort);
+                teleScoredObject.addProperty(OUTER_PORT, telePowerCellsScoredOuterPort);
+            }
+            teleObject.add(POWER_CELLS_SCORED, teleScoredObject);
+
+            JsonObject teleAcquiredObject = new JsonObject();
+            {
+                teleAcquiredObject.addProperty(FLOOR, telePowerCellsAcquiredFloor);
+                teleAcquiredObject.addProperty(HIGH_CHUTE, telePowerCellsAcquiredHighChute);
+                teleAcquiredObject.addProperty(LOW_CHUTE, telePowerCellsAcquiredLowChute);
+            }
+            teleObject.add(POWER_CELLS_ACQUIRED, teleAcquiredObject);
+
+            JsonObject teleControlPanelObject = new JsonObject();
+            {
+                teleControlPanelObject.addProperty(PERFORMED_POSITION_CONTROL, telePerformedPositionControl);
+                teleControlPanelObject.addProperty(PERFORMED_ROTATION_CONTROL, telePerformedRotationControl);
+            }
+            teleObject.add(CONTROL_PANEL, teleControlPanelObject);
+
+        }
+        object.add(TELE, teleObject);
+
+        JsonObject endObject = new JsonObject();
+        {
+            endObject.addProperty(RENDEZVOUS, endRendezvous);
+            endObject.addProperty(ACTIVE_LEVELING, endActiveLeveling);
+        }
+        object.add(END, endObject);
+
+        JsonObject otherObject = new JsonObject();
+        {
+            otherObject.addProperty(PLAYED_EXCELLENT_DEFENSE, otherPlayedExcellentDefense);
+            otherObject.addProperty(CAUSED_FOUL, otherCausedFoul);
+            otherObject.addProperty(BROKE_OR_GOT_DISABLED, otherBrokeOrGotDisabled);
+        }
+        object.add(OTHER, otherObject);
+
+        return object;
+    }
+
+    public static void parseJsons(Map<String, JSONObject> _data) {
+        try {
+            Log.d(TAG, HEADER + "parseJsons for number matches " + _data.size());
+            for (Map.Entry<String, JSONObject> mail : _data.entrySet()) {
+                String subject = mail.getKey();
+                if (subject.contains(prefEvent) && subject.contains(prefAllianceColor) && subject.contains(prefTeamPosition)) {
+                    // example 2020ndgf.frc3871.BlueAlliance.Position3.2.json
+                    int indexStart = subject.indexOf(prefTeamPosition) + prefTeamPosition.length() + 1; // find string start, add string lenght and one more for the .
+                    String match = subject.substring(indexStart);
+                    match = match.substring(0, match.indexOf("."));
+                    data.get(Integer.parseInt(match)).parseJson(mail.getValue());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void parseJson(JSONObject _data) {
+        try {
+            scouterName = getString(_data, SCOUTER_NAME);
+            matchNumber = getInt(_data, MATCH_NUMBER);
+            teamNumber = getInt(_data, TEAM_NUMBER);
+            allianceColor = getString(_data, ALLIANCE_COLOR);
+            JSONObject auto = getJsonObject(_data, AUTO);
+            autoStartingPosition = getString(auto, STARTING_POSITION);
+            autoPowerCellsInRobot = getInt(auto, POWER_CELLS_IN_ROBOT);
+            JSONObject autoScored = getJsonObject(auto, POWER_CELLS_SCORED);
+            autoPowerCellsScoredBottomPort = getInt(autoScored, BOTTOM_PORT);
+            autoPowerCellsScoredInnerPort = getInt(autoScored, INNER_PORT);
+            autoPowerCellsScoredOuterPort = getInt(autoScored, OUTER_PORT);
+            JSONObject autoAcquired = getJsonObject(auto, POWER_CELLS_ACQUIRED);
+            autoPowerCellsAcquiredFloor = getInt(autoAcquired, FLOOR);
+            autoCrossedInitiationLine = getBoolean(auto, CROSSED_INITIATION_LINE);
+            JSONObject tele = getJsonObject(_data, TELE);
+            JSONObject teleScored = getJsonObject(tele, POWER_CELLS_SCORED);
+            telePowerCellsScoredBottomPort = getInt(teleScored, BOTTOM_PORT);
+            telePowerCellsScoredInnerPort = getInt(teleScored, INNER_PORT);
+            telePowerCellsScoredOuterPort = getInt(teleScored, OUTER_PORT);
+            JSONObject teleAcquired = getJsonObject(tele, POWER_CELLS_ACQUIRED);
+            telePowerCellsAcquiredFloor = getInt(teleAcquired, FLOOR);
+            telePowerCellsAcquiredHighChute = getInt(teleAcquired, HIGH_CHUTE);
+            telePowerCellsAcquiredLowChute = getInt(teleAcquired, LOW_CHUTE);
+            JSONObject teleControlPanel = getJsonObject(tele, CONTROL_PANEL);
+            telePerformedPositionControl = getBoolean(teleControlPanel, PERFORMED_POSITION_CONTROL);
+            telePerformedRotationControl = getBoolean(teleControlPanel, PERFORMED_ROTATION_CONTROL);
+            JSONObject end = getJsonObject(_data, END);
+            endRendezvous = getString(end, RENDEZVOUS);
+            endActiveLeveling = getString(end, ACTIVE_LEVELING);
+            JSONObject other = getJsonObject(_data, OTHER);
+            otherPlayedExcellentDefense = getBoolean(other, PLAYED_EXCELLENT_DEFENSE);
+            otherCausedFoul = getBoolean(other, CAUSED_FOUL);
+            otherBrokeOrGotDisabled = getBoolean(other, BROKE_OR_GOT_DISABLED);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

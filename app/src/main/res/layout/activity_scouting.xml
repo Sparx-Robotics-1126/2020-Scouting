@@ -1,59 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:id="@+id/backgroundScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/background">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <TextView
-            android:id="@+id/assignment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Assignment:"
-            android:textSize="40dp">
-        </TextView>
+            android:id="@+id/assignmentTextView"
+            style="@style/title_text_view"
+            android:text="Assignment:" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
-                android:id="@+id/txtname"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="Scouter:"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="22dp">
-            </TextView>
+                android:id="@+id/scouterNameTextView"
+                style="@style/item_text_view"
+                android:text="Scouter:" />
+
             <TextView
-                android:id="@+id/name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="22dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large">
-            </TextView>
+                android:id="@+id/scouterNameInput"
+                style="@style/item_text_view"
+                android:text="No name" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
-                android:id="@+id/matchNum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Match Number:"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="22dp">
-            </TextView>
+                android:id="@+id/matchNumTextView"
+                style="@style/item_text_view"
+                android:text="Match Number:" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="right">
+                android:gravity="right"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/plusMatch"
@@ -61,16 +53,13 @@
                     android:text="+" />
 
                 <TextView
-                    android:id="@+id/txtMatch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textStyle="bold" />
+                    android:id="@+id/matchNumInput"
+                    style="@style/item_text_view"
+                    android:text="0" />
 
                 <Button
                     android:id="@+id/minusMatch"
                     style="@style/t019_plusMinusButton"
-                    android:layout_weight="0"
                     android:text="-" />
             </LinearLayout>
         </LinearLayout>
@@ -78,747 +67,711 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
             <Button
-                android:id="@+id/logOut"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:shadowColor="#673AB7"
-                android:text="Log Out"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="#2196F3" >
-            </Button>
+                android:id="@+id/logOutButton"
+                style="@style/regularButton"
+                android:text="Log Out"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_weight=".5">
+                android:layout_weight=".5"
+                android:orientation="horizontal">
+
                 <TextView
-                    android:id="@+id/team"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Team "
-                    android:textSize="22dp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large">
-                </TextView>
+                    android:id="@+id/teamNumTextView"
+                    style="@style/item_text_view"
+                    android:text="Team: " />
+
                 <TextView
-                    android:id="@+id/scoutingTeam"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="22dp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large">
-                </TextView>
+                    android:id="@+id/teamNumInput"
+                    style="@style/item_text_view"
+                    android:text="0" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_weight=".5">
+                android:layout_weight=".5"
+                android:orientation="horizontal">
+
                 <TextView
-                    android:id="@+id/alliance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="10dp"
-                    android:text="Alliance Color"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textSize="22dp">
-                </TextView>
+                    android:id="@+id/allianceTextView"
+                    style="@style/item_text_view"
+                    android:text="Alliance Color: " />
+
                 <TextView
-                    android:id="@+id/allianceColor"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                </TextView>
+                    android:id="@+id/allianceInput"
+                    style="@style/item_text_view"
+                    android:layout_width="match_parent" />
             </LinearLayout>
         </LinearLayout>
 
         <TextView
-            android:id="@+id/autonomous"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="40dp"
-            android:text="Autonomous:">
-        </TextView>
+            android:id="@+id/autonomousTextView"
+            style="@style/title_text_view"
+            android:text="Autonomous:" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
-                android:id="@+id/startingPos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Starting Position:"
-                android:textSize="25dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large">
-            </TextView>
+                android:id="@+id/startingPosTextView"
+                style="@style/sub_title_text_view"
+                android:text="Starting Position:" />
+
             <RadioGroup
-                android:id="@+id/startingPosition"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:id="@+id/startingPositionRadioGroup"
+                style="@style/radioGroup">
+
                 <RadioButton
-                    android:id="@+id/closest"
-                    style="@style/t019_radioButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Closest to Power Port"
-                    android:textSize="20dp">
-                </RadioButton>
+                    android:id="@+id/closestRadioButton"
+                    style="@style/radioButton"
+                    android:text="Closest to Power Port" />
+
                 <RadioButton
-                    android:id="@+id/middle"
-                    style="@style/t019_radioButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Middle"
-                    android:textSize="20dp">
-                </RadioButton>
+                    android:id="@+id/middleRadioButton"
+                    style="@style/radioButton"
+                    android:text="Middle" />
+
                 <RadioButton
-                    android:id="@+id/farthest"
-                    android:layout_width="match_parent"
-                    style="@style/t019_radioButton"
-                    android:layout_height="wrap_content"
-                    android:text="Farthest to Power Port"
-                    android:textSize="20dp">
-                </RadioButton>
+                    android:id="@+id/farthestRadioButton"
+                    style="@style/radioButton"
+                    android:text="Farthest to Power Port" />
             </RadioGroup>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
-                    android:id="@+id/startBalls"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Power Cells in robot at start:"
-                    android:textSize ="25dp">
-                </TextView>
+                    android:id="@+id/startBallsTextView"
+                    style="@style/sub_title_text_view"
+                    android:text="Power Cells in robot at start:" />
+
                 <RadioGroup
-                    android:id="@+id/startingBalls"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:id="@+id/startingBallsRadioGroup"
+                    style="@style/radioGroup">
+
                     <RadioButton
-                        android:id="@+id/none"
-                        style="@style/t019_radioButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="None"
-                        android:textSize="20dp">
-                    </RadioButton>
+                        android:id="@+id/noneRadioButton"
+                        style="@style/radioButton"
+                        android:text="None" />
+
                     <RadioButton
-                        android:id="@+id/one"
-                        style="@style/t019_radioButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="One"
-                        android:textSize="20dp">
-                    </RadioButton>
+                        android:id="@+id/oneRadioButton"
+                        style="@style/radioButton"
+                        android:text="One" />
+
                     <RadioButton
-                        android:id="@+id/two"
-                        style="@style/t019_radioButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Two"
-                        android:textSize="20dp">
-                    </RadioButton>
+                        android:id="@+id/twoRadioButton"
+                        style="@style/radioButton"
+                        android:text="Two" />
+
                     <RadioButton
-                        android:id="@+id/three"
-                        style="@style/t019_radioButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Three"
-                        android:textSize="20dp">
-                    </RadioButton>
+                        android:id="@+id/threeRadioButton"
+                        style="@style/radioButton"
+                        android:text="Three" />
                 </RadioGroup>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
-                    android:id="@+id/ballsScoredAuto"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Power Cells Scored:"
-                    android:textSize="25dp">
-                </TextView>
+                    android:id="@+id/ballsScoredAutoTextView"
+                    style="@style/sub_title_text_view"
+                    android:text="Power Cells Scored:" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <TextView
-                        android:id="@+id/bottomPortAuto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Bottom port"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        android:textSize="22dp">
-                    </TextView>
+                        android:id="@+id/bottomPortAutoTextView"
+                        style="@style/item_text_view"
+                        android:text="Bottom port" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="right">
-                    <Button
-                        android:id="@+id/plusBallsBottemAuto"
-                        style="@style/t019_plusMinusButton"
-                        android:text="+" />
-                    <TextView
-                        android:id="@+id/txtBallsBottomAuto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textStyle="bold" />
+                        android:gravity="right"
+                        android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/minusBallsBottemAuto"
-                        style="@style/t019_plusMinusButton"
-                        android:layout_weight="0"
-                        android:text="-" />
+                        <Button
+                            android:id="@+id/plusBallsBottomAuto"
+                            style="@style/t019_plusMinusButton"
+                            android:text="+" />
+
+                        <TextView
+                            android:id="@+id/ballsBottomAutoInput"
+                            style="@style/item_text_view"
+                            android:text="0" />
+
+                        <Button
+                            android:id="@+id/minusBallsBottomAuto"
+                            style="@style/t019_plusMinusButton"
+                            android:text="-" />
+                    </LinearLayout>
                 </LinearLayout>
-                </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
+
                     <TextView
-                        android:id="@+id/outerPortAuto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Outer port"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        android:textSize="22dp">
-                    </TextView>
+                        android:id="@+id/outerPortAutoTextView"
+                        style="@style/item_text_view"
+                        android:text="Outer port" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="right">
-                    <Button
-                        android:id="@+id/plusBallsOuterAuto"
-                        style="@style/t019_plusMinusButton"
-                        android:text="+" />
-                    <TextView
-                        android:id="@+id/txtBallsOuterAuto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textStyle="bold" />
+                        android:gravity="right"
+                        android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/minusBallsOuterAuto"
-                        style="@style/t019_plusMinusButton"
-                        android:layout_weight="0"
-                        android:text="-" />
+                        <Button
+                            android:id="@+id/plusBallsOuterAuto"
+                            style="@style/t019_plusMinusButton"
+                            android:text="+" />
+
+                        <TextView
+                            android:id="@+id/ballsOuterAutoInput"
+                            style="@style/item_text_view"
+                            android:text="0" />
+
+                        <Button
+                            android:id="@+id/minusBallsOuterAuto"
+                            style="@style/t019_plusMinusButton"
+                            android:text="-" />
+                    </LinearLayout>
                 </LinearLayout>
-                </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
+
                     <TextView
-                        android:id="@+id/innerPortAuto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Inner port"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        android:textSize="22dp">
-                    </TextView>
+                        android:id="@+id/innerPortAutoTextView"
+                        style="@style/item_text_view"
+                        android:text="Inner port"/>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="right">
-                    <Button
-                        android:id="@+id/plusBallsInnerAuto"
-                        style="@style/t019_plusMinusButton"
-                        android:text="+" />
-                    <TextView
-                        android:id="@+id/txtBallsInnerAuto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textStyle="bold" />
+                        android:gravity="right"
+                        android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/minusBallsInnerAuto"
-                        style="@style/t019_plusMinusButton"
-                        android:layout_weight="0"
-                        android:text="-" />
-                </LinearLayout>
+                        <Button
+                            android:id="@+id/plusBallsInnerAuto"
+                            style="@style/t019_plusMinusButton"
+                            android:text="+" />
+
+                        <TextView
+                            android:id="@+id/ballsInnerAutoInput"
+                            style="@style/item_text_view"
+                            android:text="0"/>
+
+                        <Button
+                            android:id="@+id/minusBallsInnerAuto"
+                            style="@style/t019_plusMinusButton"
+                            android:layout_weight="0"
+                            android:text="-" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
-                    android:id="@+id/ballsAcquiredAuto"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Power Cells Acquired:"
-                    android:textSize="25dp">
-                </TextView>
+                    android:id="@+id/ballsAcquiredAutoTextView"
+                    style="@style/sub_title_text_view"
+                    android:text="Power Cells Acquired:"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
+
                     <TextView
-                        android:id="@+id/floorAuto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Floor"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        android:textSize="22dp">
-                    </TextView>
+                        android:id="@+id/floorAutoTextView"
+                        style="@style/item_text_view"
+                        android:text="Floor"/>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="right">
-                    <Button
-                        android:id="@+id/plusBallsFloorAuto"
-                        style="@style/t019_plusMinusButton"
-                        android:text="+" />
-                    <TextView
-                        android:id="@+id/txtBallsFloorAuto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textStyle="bold" />
+                        android:gravity="right"
+                        android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/minusBallsFloorAuto"
-                        style="@style/t019_plusMinusButton"
-                        android:layout_weight="0"
-                        android:text="-" />
-                </LinearLayout>
+                        <Button
+                            android:id="@+id/plusBallsFloorAuto"
+                            style="@style/t019_plusMinusButton"
+                            android:text="+" />
+
+                        <TextView
+                            android:id="@+id/ballsFloorAutoInput"
+                            style="@style/item_text_view"
+                            android:text="0"/>
+
+                        <Button
+                            android:id="@+id/minusBallsFloorAuto"
+                            style="@style/t019_plusMinusButton"
+                            android:text="-" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
-                    android:id="@+id/crossesLine"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cross Initiation Line:"
-                    android:textSize="25dp">
-                </TextView>
+                    android:id="@+id/crossesLineTextView"
+                    style="@style/sub_title_text_view"
+                    android:text="Cross Initiation Line:"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <TextView
-                        android:id="@+id/txtCrossesLine"
+                        android:id="@+id/crossedLineTextView"
+                        style="@style/item_text_view"
                         android:layout_weight="1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Left Line at some point"
-                        android:textSize="22dp">
-                    </TextView>
+                        android:text="Left Line at some point"/>
 
                     <CheckBox
-                        android:id="@+id/crossesLineCheckBox"
+                        android:id="@+id/crossedLineCheckBox"
                         style="@style/t019_checkBox"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
         <TextView
-            android:id="@+id/teleoperated"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Teleoperated:"
-            android:textSize="40dp">
-        </TextView>
+            android:id="@+id/teleoperatedTextView"
+            style="@style/title_text_view"
+            android:text="Teleoperated:"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
-                android:id="@+id/ballsScoredTele"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Power Cells Scored:"
-                android:textSize="25dp">
-            </TextView>
+                android:id="@+id/ballsScoredTeleTextView"
+                style="@style/sub_title_text_view"
+                android:text="Power Cells Scored:"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
-                    android:id="@+id/bottomPortTele"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Bottom port"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textSize="22dp">
-                </TextView>
+                    android:id="@+id/bottomPortTeleTextView"
+                    style="@style/item_text_view"
+                    android:text="Bottom port"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="right">
-                <Button
-                    android:id="@+id/plusBallsBottemTele"
-                    style="@style/t019_plusMinusButton"
-                    android:text="+" />
-                <TextView
-                    android:id="@+id/txtBallsBottemTele"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textStyle="bold" />
+                    android:gravity="right"
+                    android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/minusBallsBottemTele"
-                    style="@style/t019_plusMinusButton"
-                    android:layout_weight="0"
-                    android:text="-" />
+                    <Button
+                        android:id="@+id/plusBallsBottomTele"
+                        style="@style/t019_plusMinusButton"
+                        android:text="+" />
+
+                    <TextView
+                        android:id="@+id/ballsBottomTeleInput"
+                        style="@style/item_text_view"
+                        android:text="0"/>
+
+                    <Button
+                        android:id="@+id/minusBallsBottomTele"
+                        style="@style/t019_plusMinusButton"
+                        android:text="-" />
+                </LinearLayout>
             </LinearLayout>
-            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
-                    android:id="@+id/outerPortTele"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Outer port"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textSize="22dp">
-                </TextView>
+                    android:id="@+id/outerPortTeleTextView"
+                    style="@style/item_text_view"
+                    android:text="Outer port"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="right">
-                <Button
-                    android:id="@+id/plusBallsOuterTele"
-                    style="@style/t019_plusMinusButton"
-                    android:text="+" />
-                <TextView
-                    android:id="@+id/txtBallsOuterTele"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textStyle="bold" />
+                    android:gravity="right"
+                    android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/minusBallsOuterTele"
-                    style="@style/t019_plusMinusButton"
-                    android:layout_weight="0"
-                    android:text="-" />
+                    <Button
+                        android:id="@+id/plusBallsOuterTele"
+                        style="@style/t019_plusMinusButton"
+                        android:text="+" />
+
+                    <TextView
+                        android:id="@+id/ballsOuterTeleInput"
+                        style="@style/item_text_view"
+                        android:text="0"/>
+
+                    <Button
+                        android:id="@+id/minusBallsOuterTele"
+                        style="@style/t019_plusMinusButton"
+                        android:text="-" />
+                </LinearLayout>
             </LinearLayout>
-            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
-                    android:id="@+id/innerPortTele"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Inner port"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textSize="22dp">
-                </TextView>
+                    android:id="@+id/innerPortTeleTextView"
+                    style="@style/item_text_view"
+                    android:text="Inner port"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="right">
-                <Button
-                    android:id="@+id/plusBallsInnerTele"
-                    style="@style/t019_plusMinusButton"
-                    android:text="+" />
-                <TextView
-                    android:id="@+id/txtBallsInnerTele"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textStyle="bold" />
+                    android:gravity="right"
+                    android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/minusBallsInnerTele"
-                    style="@style/t019_plusMinusButton"
-                    android:layout_weight="0"
-                    android:text="-" />
+                    <Button
+                        android:id="@+id/plusBallsInnerTele"
+                        style="@style/t019_plusMinusButton"
+                        android:text="+" />
+
+                    <TextView
+                        android:id="@+id/ballsInnerTeleInput"
+                        style="@style/item_text_view"
+                        android:text="0"/>
+
+                    <Button
+                        android:id="@+id/minusBallsInnerTele"
+                        style="@style/t019_plusMinusButton"
+                        android:text="-" />
+                </LinearLayout>
             </LinearLayout>
-            </LinearLayout>
+
             <TextView
-                android:id="@+id/ballsAcquiredTele"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Power Cells Acquired:"
-                android:textSize="25dp">
-            </TextView>
+                android:id="@+id/ballsAcquiredTeleTextView"
+                style="@style/sub_title_text_view"
+                android:text="Power Cells Acquired:"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
-                    android:id="@+id/floorTele"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Floor"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textSize="22dp">
-                </TextView>
+                    android:id="@+id/floorTeleTextView"
+                    style="@style/item_text_view"
+                    android:text="Floor"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="right">
-                <Button
-                    android:id="@+id/plusBallsFloorTele"
-                    style="@style/t019_plusMinusButton"
-                    android:text="+" />
-                <TextView
-                    android:id="@+id/txtFloorTele"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textStyle="bold" />
+                    android:gravity="right"
+                    android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/minusBallsFloorTele"
-                    style="@style/t019_plusMinusButton"
-                    android:layout_weight="0"
-                    android:text="-" />
+                    <Button
+                        android:id="@+id/plusBallsFloorTele"
+                        style="@style/t019_plusMinusButton"
+                        android:text="+" />
+
+                    <TextView
+                        android:id="@+id/floorTeleInput"
+                        style="@style/item_text_view"
+                        android:text="0"/>
+
+                    <Button
+                        android:id="@+id/minusBallsFloorTele"
+                        style="@style/t019_plusMinusButton"
+                        android:text="-" />
+                </LinearLayout>
             </LinearLayout>
-            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
-                    android:id="@+id/lowChuteTele"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Low Chute"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textSize="22dp">
-                </TextView>
+                    android:id="@+id/lowChuteTeleTextView"
+                    style="@style/item_text_view"
+                    android:text="Low Chute"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="right">
-                <Button
-                    android:id="@+id/plusBallsLowChuteTele"
-                    style="@style/t019_plusMinusButton"
-                    android:text="+" />
-                <TextView
-                    android:id="@+id/txtBallsLowChuteTele"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textStyle="bold" />
+                    android:gravity="right"
+                    android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/minusBallsLowChuteTele"
-                    style="@style/t019_plusMinusButton"
-                    android:layout_weight="0"
-                    android:text="-" />
+                    <Button
+                        android:id="@+id/plusBallsLowChuteTele"
+                        style="@style/t019_plusMinusButton"
+                        android:text="+" />
+
+                    <TextView
+                        android:id="@+id/ballsLowChuteTeleInput"
+                        style="@style/item_text_view"
+                        android:text="0"/>
+
+                    <Button
+                        android:id="@+id/minusBallsLowChuteTele"
+                        style="@style/t019_plusMinusButton"
+                        android:text="-" />
+                </LinearLayout>
             </LinearLayout>
-            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
-                    android:id="@+id/highChuteTele"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="High Chute"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textSize="22dp">
-                </TextView>
+                    android:id="@+id/highChuteTeleTextView"
+                    style="@style/item_text_view"
+                    android:text="High Chute"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="right">
-                <Button
-                    android:id="@+id/plusBallsHighChuteTele"
-                    style="@style/t019_plusMinusButton"
-                    android:text="+" />
-                <TextView
-                    android:id="@+id/txtBallsHighChuteTele"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textStyle="bold" />
+                    android:gravity="right"
+                    android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/minusBallsHighChuteTele"
-                    style="@style/t019_plusMinusButton"
-                    android:layout_weight="0"
-                    android:text="-" />
+                    <Button
+                        android:id="@+id/plusBallsHighChuteTele"
+                        style="@style/t019_plusMinusButton"
+                        android:text="+" />
+
+                    <TextView
+                        android:id="@+id/ballsHighChuteTeleInput"
+                        style="@style/item_text_view"
+                        android:text="0"/>
+
+                    <Button
+                        android:id="@+id/minusBallsHighChuteTele"
+                        style="@style/t019_plusMinusButton"
+                        android:text="-" />
+                </LinearLayout>
             </LinearLayout>
-            </LinearLayout>
+
             <TextView
-                android:id="@+id/controlPanelInteraction"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Control Panel Interaction:"
-                android:textSize="25dp">
-            </TextView>
+                android:id="@+id/controlPanelInteractionTextView"
+                style="@style/sub_title_text_view"
+                android:text="Control Panel Interaction:"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
-                    android:id="@+id/performedRotationControl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Performed Rotation Control"
+                    android:id="@+id/performedRotationControlTextView"
+                    style="@style/item_text_view"
                     android:layout_weight="1"
-                    android:textSize="22dp">
-                </TextView>
+                    android:text="Performed Rotation Control"/>
+
                 <CheckBox
                     android:id="@+id/performedRotationControlCheckBox"
-                    style="@style/t019_checkBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="108dp">
-                </CheckBox>
+                    style="@style/t019_checkBox"/>
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/performedPositoinControl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Performed Position Control"
-                    android:textSize="22dp">
-                </TextView>
-                <CheckBox
-                    android:id="@+id/performedPositionControlCheckBox"
-                    style="@style/t019_checkBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="110dp">
-                </CheckBox>
-            </LinearLayout>
-        </LinearLayout>
-        <TextView
-            android:id="@+id/endGame"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="40dp"
-            android:text="End Game:">
-        </TextView>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/rendezuous"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Rendezvous:"
-                android:textSize="25dp">
-            </TextView>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/hanging"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/performedPositionControlTextView"
+                    style="@style/item_text_view"
                     android:layout_weight="1"
-                    android:text="Hanging"
-                    android:textSize="22dp"></TextView>
+                    android:text="Performed Position Control"/>
+
                 <CheckBox
-                    style="@style/t019_checkBox"
-                    android:id="@+id/hangingCheckBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="250dp">
-                </CheckBox>
+                    android:id="@+id/performedPositionControlCheckBox"
+                    style="@style/t019_checkBox"/>
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/parked"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Parked"
-                    android:textSize="22dp">
-                </TextView>
-                <CheckBox
-                    android:id="@+id/parkedCheckBox"
-                    style="@style/t019_checkBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="250dp">
-                </CheckBox>
-            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/endGameTextView"
+            style="@style/title_text_view"
+            android:text="End Game:"></TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <TextView
-                android:id="@+id/leveling"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Leveling:"
-                android:textSize="25dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large">
-            </TextView>
+                android:id="@+id/rendezuousTextView"
+                style="@style/sub_title_text_view"
+                android:text="Rendezvous:"/>
+
             <RadioGroup
-                android:id="@+id/level"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:id="@+id/rendezuousRadioGroup"
+                style="@style/radioGroup">
+
                 <RadioButton
-                    android:id="@+id/noLeveling"
-                    style="@style/t019_radioButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="No leveling"
-                    android:textSize="20dp">
-                </RadioButton>
+                    android:id="@+id/noparkRadioButton"
+                    style="@style/radioButton"
+                    android:text="No Parking"/>
+
                 <RadioButton
-                    android:id="@+id/triedToLevel"
-                    style="@style/t019_radioButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Tried to level"
-                    android:textSize="20dp">
-                </RadioButton>
+                    android:id="@+id/parkedRadioButton"
+                    style="@style/radioButton"
+                    android:text="Parked"/>
+
                 <RadioButton
-                    android:id="@+id/successfullyLeveled"
-                    style="@style/t019_radioButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Successfully leveled"
-                    android:textSize="20dp">
-                </RadioButton>
+                    android:id="@+id/hangedRadioButton"
+                    style="@style/radioButton"
+                    android:text="Hanged"/>
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/levelingTextView"
+                style="@style/sub_title_text_view"
+                android:text="Leveling:"/>
+
+            <RadioGroup
+                android:id="@+id/activeLevelingRadioGroup"
+                style="@style/radioGroup">
+
+                <RadioButton
+                    android:id="@+id/noLevelingRadioButton"
+                    style="@style/radioButton"
+                    android:text="No leveling"/>
+
+                <RadioButton
+                    android:id="@+id/triedToLevelRadioButton"
+                    style="@style/radioButton"
+                    android:text="Tried to level"/>
+
+                <RadioButton
+                    android:id="@+id/successfullyLeveledRadioButton"
+                    style="@style/radioButton"
+                    android:text="Successfully leveled"/>
             </RadioGroup>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/Save"
+        <TextView
+            android:id="@+id/otherTextView"
+            style="@style/title_text_view"
+            android:text="Other:"></TextView>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:layout_marginTop="275dp"
-            android:shadowColor="#673AB7"
-            android:text="Save"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="#2196F3"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/excellecentDefenseTextView"
+                    style="@style/item_text_view"
+                    android:layout_weight="1"
+                    android:text="Played Excellent Defense"/>
+
+                <CheckBox
+                    android:id="@+id/excellecentDefenseCheckBox"
+                    style="@style/t019_checkBox"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/causedFouldTextView"
+                    style="@style/item_text_view"
+
+                    android:layout_weight="1"
+                    android:text="Caused a foul"/>
+
+                <CheckBox
+                    android:id="@+id/causedFouldCheckBox"
+                    style="@style/t019_checkBox" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/brokeDisabledTextView"
+                    style="@style/item_text_view"
+                    android:layout_weight="1"
+                    android:text="Broke or got Disabled"/>
+
+                <CheckBox
+                    android:id="@+id/brokeDisabledCheckBox"
+                    style="@style/t019_checkBox" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <Button
+                android:id="@+id/saveButton"
+                style="@style/regularButton"
+                android:text="Save"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <Button
+                android:id="@+id/exit"
+                style="@style/regularButton"
+                android:text="Exit (without saving)"/>
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

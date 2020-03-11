@@ -1,4 +1,4 @@
-package com.sparx1126.a2020_scouting.Fragments.settings;
+package com.sparx1126.a2020_scouting.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,23 +11,23 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.sparx1126.a2020_scouting.R;
-import com.sparx1126.a2020_scouting.Settings;
+import com.sparx1126.a2020_scouting.Benchmarking;
 
-public class SettingsFragment extends Fragment {
-    static String TAG = "Sparx: ";
-    static String HEADER = "SettingsFragment: ";
+public class BenchmarkingFragment extends Fragment {
+    private static final String TAG = "Sparx: ";
+    private static final String HEADER = "BenchmarkingFragment: ";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, HEADER + "onCreateView");
 
-        View root = inflater.inflate(R.layout.fragment_settings, container, false);
+        View root = inflater.inflate(R.layout.fragment_empty, container, false);
 
-        Intent intent = new Intent(getActivity(), Settings.class);
+        Intent intent = new Intent(getActivity(), Benchmarking.class);
         startActivity(intent);
-
         getFragmentManager().popBackStack();
 
         return root;
     }
+
 }

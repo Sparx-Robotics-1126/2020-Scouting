@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
+    android:id="@+id/mobile_navigation_no_scout"
     app:startDestination="@+id/navigation_home">
 
     <fragment
@@ -15,18 +15,6 @@
         android:id="@+id/navigation_view_data"
         android:name="com.sparx1126.a2020_scouting.Fragments.ViewDataFragment"
         android:label="@string/title_view_data"
-        tools:layout="@layout/fragment_empty" />
-
-    <fragment
-        android:id="@+id/navigation_scouting"
-        android:name="com.sparx1126.a2020_scouting.Fragments.ScoutingFragment"
-        android:label="@string/title_scouting"
-        tools:layout="@layout/fragment_empty" />
-
-    <fragment
-        android:id="@+id/navigation_benchmarking"
-        android:name="com.sparx1126.a2020_scouting.Fragments.BenchmarkingFragment"
-        android:label="@string/title_benchmarking"
         tools:layout="@layout/fragment_empty" />
 
     <fragment

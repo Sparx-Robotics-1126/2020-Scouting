@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation_view"
+    app:startDestination="@+id/navigation_view_data_home">
+
+    <fragment
+        android:id="@+id/navigation_view_data_home"
+        android:name="com.sparx1126.a2020_scouting.Fragments.ViewHomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_view_home" />
+
+    <fragment
+        android:id="@+id/navigation_rankings"
+        android:name="com.sparx1126.a2020_scouting.Fragments.RankingsFragment"
+        android:label="@string/title_rankings"
+        tools:layout="@layout/fragment_rankings" />
+
+    <fragment
+        android:id="@+id/navigation_our_rankings"
+        android:name="com.sparx1126.a2020_scouting.Fragments.OurRankingsFragment"
+        android:label="@string/title_our_rankings"
+        tools:layout="@layout/fragment_our_rankings" />
+
+    <fragment
+        android:id="@+id/navigation_match"
+        android:name="com.sparx1126.a2020_scouting.Fragments.MatchViewerFragment"
+        android:label="@string/title_match_viewer"
+        tools:layout="@layout/fragment_match" />
+</navigation>
