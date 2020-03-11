@@ -17,7 +17,7 @@
                     style="@style/jcas_textView"
                     android:text="Team Number" />
 
-                <EditText
+                <AutoCompleteTextView
                     android:id="@+id/teamNumber"
                     style="@style/jcas_editText"
                     android:inputType="number" />
@@ -52,7 +52,8 @@
                 <EditText
                     android:id="@+id/numWheels"
                     style="@style/jcas_editText"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:maxLength="2"/>
 
             </LinearLayout>
 
@@ -65,7 +66,8 @@
                 <EditText
                     android:id="@+id/maxSpeed"
                     style="@style/jcas_editText"
-                    android:inputType="numberDecimal" />
+                    android:inputType="numberDecimal"
+                    android:maxLength="4"/>
 
             </LinearLayout>
 
@@ -73,12 +75,13 @@
 
                 <TextView
                     style="@style/jcas_textView"
-                    android:text="Normal Height(ft):" />
+                    android:text="Starting Height(ft):" />
 
                 <EditText
                     android:id="@+id/height"
                     style="@style/jcas_editText"
-                    android:inputType="numberDecimal" />
+                    android:inputType="numberDecimal"
+                    android:maxLength="4"/>
 
             </LinearLayout>
 
@@ -91,7 +94,8 @@
                 <EditText
                     android:id="@+id/weight"
                     style="@style/jcas_editText"
-                    android:inputType="numberDecimal" />
+                    android:inputType="number"
+                    android:maxLength="3" />
 
             </LinearLayout>
 
@@ -111,26 +115,20 @@
                 android:id="@+id/startPos"
                 style="@style/jcas_spinner" />
 
-            <LinearLayout style="@style/jcas_horizontalBlock">
-
-                <TextView
-                    style="@style/jcas_textView"
-                    android:text="Starting Power Cells" />
-
-                <EditText
-                    android:id="@+id/startingCells"
-                    style="@style/jcas_editText"
-                    android:inputType="number" />
-            </LinearLayout>
+            <Spinner
+                android:id="@+id/maxStartingCells"
+                style="@style/jcas_spinner" />
 
             <LinearLayout style="@style/jcas_horizontalBlock">
 
                 <TextView
                     style="@style/jcas_textView"
+                    android:layout_weight="1"
                     android:text="Can Score Bottom Port" />
 
                 <CheckBox
                     android:id="@+id/autoScoreBottom"
+                    android:layout_weight="0"
                     style="@style/jcas_checkBox" />
             </LinearLayout>
 
@@ -138,10 +136,12 @@
 
                 <TextView
                     style="@style/jcas_textView"
+                    android:layout_weight="1"
                     android:text="Can Score Inner/Outer Port" />
 
                 <CheckBox
                     android:id="@+id/autoScoreTop"
+                    android:layout_weight="0"
                     style="@style/jcas_checkBox" />
             </LinearLayout>
 
@@ -149,10 +149,12 @@
 
                 <TextView
                     style="@style/jcas_textView"
+                    android:layout_weight="1"
                     android:text="Can Acquire From Floor" />
 
                 <CheckBox
                     android:id="@+id/autoAcquireFloor"
+                    android:layout_weight="0"
                     style="@style/jcas_checkBox" />
             </LinearLayout>
 
@@ -168,10 +170,12 @@
 
                 <TextView
                     style="@style/jcas_textView"
+                    android:layout_weight="1"
                     android:text="Can Score Bottom Port" />
 
                 <CheckBox
                     android:id="@+id/teleScoreBottom"
+                    android:layout_weight="0"
                     style="@style/jcas_checkBox" />
             </LinearLayout>
 
@@ -179,10 +183,12 @@
 
                 <TextView
                     style="@style/jcas_textView"
+                    android:layout_weight="1"
                     android:text="Can Score Inner/Outer Port" />
 
                 <CheckBox
                     android:id="@+id/teleScoreTop"
+                    android:layout_weight="0"
                     style="@style/jcas_checkBox" />
             </LinearLayout>
 
@@ -190,10 +196,12 @@
 
                 <TextView
                     style="@style/jcas_textView"
+                    android:layout_weight="1"
                     android:text="Can Acquire From Floor" />
 
                 <CheckBox
                     android:id="@+id/teleAcquireFloor"
+                    android:layout_weight="0"
                     style="@style/jcas_checkBox" />
             </LinearLayout>
 
@@ -209,10 +217,12 @@
 
                 <TextView
                     style="@style/jcas_textView"
+                    android:layout_weight="1"
                     android:text="Can Climb" />
 
                 <CheckBox
                     android:id="@+id/canClimb"
+                    android:layout_weight="0"
                     style="@style/jcas_checkBox" />
             </LinearLayout>
 
@@ -220,10 +230,12 @@
 
                 <TextView
                     style="@style/jcas_textView"
+                    android:layout_weight="1"
                     android:text="Can Actively Level" />
 
                 <CheckBox
                     android:id="@+id/canLevel"
+                    android:layout_weight="0"
                     style="@style/jcas_checkBox" />
             </LinearLayout>
 
@@ -233,18 +245,19 @@
             <!--Header-->
             <TextView
                 style="@style/jcas_headerTextView"
-                android:text="Comments" />
+                android:text="Critical Comments" />
 
             <EditText
                 android:id="@+id/comments"
                 style="@style/jcas_editText"
                 android:layout_width="match_parent"
-                android:inputType="text" />
+                android:inputType="text"
+                android:maxLength="50"/>
 
             <Button
                 android:id="@+id/saveButton"
                 style="@style/jcas_bigOlButton"
-                android:text="Save (Submit?)" />
+                android:text="Save" />
         </LinearLayout>
 
     </LinearLayout>

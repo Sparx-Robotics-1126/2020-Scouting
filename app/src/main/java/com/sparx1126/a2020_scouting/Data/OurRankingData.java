@@ -1,5 +1,7 @@
 package com.sparx1126.a2020_scouting.Data;
 
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 
 import com.sparx1126.a2020_scouting.Utilities.JsonData;
@@ -158,6 +160,27 @@ public class OurRankingData extends JsonData {
         return totals;
     }
 
+    public static Spanned getDetails(int _team) {
+        String details = "";
+        if(totals.containsKey(_team)) {
+            details = "<b>Auto -</b>&ensp;Misc:" + (autoStartingPositionAve.get(_team) + autoPowerCellsInRobotAve.get(_team));
+            details += ",&ensp;Scored:" + (autoPowerCellsScoredBottomPortAve.get(_team) +  autoPowerCellsScoredInnerPortAve.get(_team)
+                + autoPowerCellsScoredOuterPortAve.get(_team));
+            details += ",&ensp;Acq:" + autoPowerCellsAcquiredFloorAve.get(_team);
+            details += ",&ensp;Init Line:" + autoCrossedInitiationLineAve.get(_team);
+            details += "<br /><b>Tele -</b>&ensp;Scored:" + (telePowerCellsScoredBottomPortAve.get(_team) + telePowerCellsScoredInnerPortAve.get(_team)
+                + telePowerCellsScoredOuterPortAve.get(_team));
+            details += ",&ensp;Acq:" + (telePowerCellsAcquiredFloorAve.get(_team) + telePowerCellsAcquiredHighChuteAve.get(_team)
+                + telePowerCellsAcquiredLowChuteAve.get(_team));
+            details += ",&ensp;Control:" + (telePerformedPositionControlAve.get(_team) + telePerformedRotationControlAve.get(_team));
+            details += "<br /><b>End -</b>&ensp;Rendezvous:" + endRendezvousAve.get(_team);
+            details += ",&ensp;Leveling:" + endActiveLevelingAve.get(_team);
+            details += "&emsp;&emsp;&emsp;&emsp;<b>Other -</b>&ensp;Misc:" + (otherPlayedExcellentDefenseAve.get(_team) + otherCausedFoulAve.get(_team)
+                + otherBrokeOrGotDisabledAve.get(_team));
+        }
+        return Html.fromHtml(details);
+    }
+
     public static void parseJsons(String _prefEvent, Map<String, JSONObject> _data) {
         teams.clear();
         totals.clear();
@@ -278,6 +301,7 @@ public class OurRankingData extends JsonData {
                 average += ar;
             }
             average = average / entry.getValue().size();
+            //Log.d(TAG, HEADER + "calculate team " + entry.getKey() + ", ave " + average);
             _container.put(entry.getKey(), average);
         }
     }
@@ -346,9 +370,9 @@ public class OurRankingData extends JsonData {
             addValue(telePowerCellsAcquiredFloor, _team,
                     getInt(teleAcquired, ScoutingData.FLOOR) * telePowerCellsAcquiredFloorWeight);
             addValue(telePowerCellsAcquiredHighChute, _team,
-                    getInt(teleAcquired, ScoutingData.FLOOR) * telePowerCellsAcquiredHighChuteWeight);
+                    getInt(teleAcquired, ScoutingData.HIGH_CHUTE) * telePowerCellsAcquiredHighChuteWeight);
             addValue(telePowerCellsAcquiredLowChute, _team,
-                    getInt(teleAcquired, ScoutingData.FLOOR) * telePowerCellsAcquiredLowChuteWeight);
+                    getInt(teleAcquired, ScoutingData.LOW_CHUTE) * telePowerCellsAcquiredLowChuteWeight);
             JSONObject teleControlPanel = getJsonObject(tele, ScoutingData.CONTROL_PANEL);
             if (getBoolean(teleControlPanel, ScoutingData.PERFORMED_POSITION_CONTROL)) {
                 addValue(telePerformedPositionControl, _team, telePerformedPositionControlWeightCompleted);

@@ -56,6 +56,18 @@ public class JsonData {
         return rtnData;
     }
 
+    protected static double getDouble(JSONObject _jsonObj, String _key) {
+        double rtnData = 0;
+
+        try {
+            rtnData = _jsonObj.getDouble(_key);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return rtnData;
+    }
+
     protected static JSONObject getJsonObject(JSONObject _jsonObj, String _key) {
         JSONObject rtnData = null;
 

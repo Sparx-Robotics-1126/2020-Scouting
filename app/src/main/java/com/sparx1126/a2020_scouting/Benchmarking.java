@@ -1,11 +1,16 @@
 package com.sparx1126.a2020_scouting;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -15,11 +20,20 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceTeam;
 import com.sparx1126.a2020_scouting.Data.BenchmarkingData;
 
-public class Benchmarking extends AppCompatActivity {
+import java.util.Map;
 
-    private EditText teamNumber;
+public class Benchmarking extends AppCompatActivity {
+    private static String TAG = "Sparx: ";
+    private static String HEADER = "Benchmarking: ";
+
+    private SharedPreferences settings;
+
+    private AutoCompleteTextView teamNumber;
+    private Button exitButton;
+
     //General
     private Spinner driveType;
     private Spinner wheelType;
@@ -28,21 +42,26 @@ public class Benchmarking extends AppCompatActivity {
     private EditText height;
     private EditText weight;
     private Spinner visionType;
+
     //Auto
     private Spinner startPos;
-    private EditText startingCells;
+    private Spinner maxStartingCells;
     private CheckBox autoScoreBottom;
     private CheckBox autoScoreTop;
     private CheckBox autoAcquireFloor;
+
     //Teleop
     private CheckBox teleScoreBottom;
     private CheckBox teleScoreTop;
     private CheckBox teleAcquireFloor;
+
     //End Game
     private CheckBox canClimb;
     private CheckBox canLevel;
+
     //Comments
     private EditText comments;
+    private Button saveButton;
 
     @Override
     public void onBackPressed() {
@@ -54,13 +73,64 @@ public class Benchmarking extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_benchmarking);
 
+        Log.d(TAG, HEADER + "onCreate");
+
+        settings = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
+
         teamNumber = findViewById(R.id.teamNumber);
+        teamNumber.setTransformationMethod(null);
+        String selectedEvent = settings.getString(getString(R.string.pref_SelectedEvent), "");;
+        Map<String, BlueAllianceTeam> teamsMap = BlueAllianceTeam.getTeams(selectedEvent);
+        String[] teams = new String[teamsMap.size()];
+        teamsMap.keySet().toArray(teams);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.custom_list_item, teams);
+        teamNumber.setAdapter(adapter);
+        teamNumber.setThreshold(1);
+        teamNumber.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
+                    String teamNumberString = teamNumber.getText().toString();
+                    String teamNum = String.valueOf(teamNumberString);
+                    boolean teamNumberFound = teamsInEvent.contains(teamNum);
+                    if (teamNumberFound) {
+                        Log.d(TAG, teamNumberStringg);
+                        BenchmarkingInformation dataCollect = data.getBenchmarkingInformation(teamNum);
+                        if (dataCollect != null) {
+                            String msg = "Found Benchmark for " + teamNum;
+                            Log.d(TAG, msg);
+                            Toast.makeText(Benchmarking.this, TAG + msg, Toast.LENGTH_LONG).show();
+                        }
+                        dismissKeyboard();
+                        restorePreferences(teamNum);
+                        benchmark_main_layout.setVisibility(View.VISIBLE);
+                    } else {
+                        benchmark_main_layout.setVisibility(View.INVISIBLE);
+                    }
+
+                } catch (Exception e) {
+                    Log.e("Problem w/ team # txt", e.toString());
+                }
+
+            }
+        });
 
         numWheels = findViewById(R.id.numWheels);
         maxSpeed = findViewById(R.id.maxSpeed);
         height = findViewById(R.id.height);
         weight = findViewById(R.id.weight);
-        startingCells = findViewById(R.id.startingCells);
+        maxStartingCells = findViewById(R.id.maxStartingCells);
         autoScoreBottom = findViewById(R.id.autoScoreBottom);
         autoScoreTop = findViewById(R.id.autoScoreTop);
         autoAcquireFloor = findViewById(R.id.autoAcquireFloor);

@@ -54,5 +54,12 @@
         <item>Middle</item>
         <item>Loading Bay Side</item>
     </string-array>
-    <string name="benchmark_exit">Exit (Save?)</string>
+    <string-array name="numStartingCells">
+        <item>Select Max Number of Starting Cells</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string name="benchmark_exit">Exit with no save</string>
 </resources>

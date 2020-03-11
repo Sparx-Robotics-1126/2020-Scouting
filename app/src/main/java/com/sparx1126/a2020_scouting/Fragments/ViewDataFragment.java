@@ -23,7 +23,9 @@ public class ViewDataFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_empty, container, false);
 
+        Log.d(TAG, HEADER + "popping this fragment out");
         getFragmentManager().popBackStack();
+        Log.d(TAG, HEADER + "restoring default fragment");
         Intent intent = new Intent(getActivity(), ViewData.class);
         startActivity(intent);
 
