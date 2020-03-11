@@ -34,7 +34,7 @@ public class OurRankingsFragment extends Fragment {
         Log.d(TAG, HEADER + "onCreateView");
         View root = inflater.inflate(R.layout.fragment_our_rankings, container, false);
         settings = getActivity().getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
-        Map<Integer, Float> data = OurRankingData.getBallsScoredOnInnerAve();
+        Map<Integer, Double> data = OurRankingData.getTotals();
         String selectedEvent = settings.getString(getString(R.string.pref_SelectedEvent), "");
         Map<String, BlueAllianceTeam> teams = BlueAllianceTeam.getTeams(selectedEvent);
         View linearlayout = root.findViewById(R.id.linearLayout);
@@ -44,11 +44,11 @@ public class OurRankingsFragment extends Fragment {
             Toast.makeText(getActivity(), "No Rankings Data", Toast.LENGTH_LONG).show();
             getFragmentManager().popBackStack();
         } else {
-            Map<Integer, Float> tmpdata = new HashMap<>();
+            Map<Integer, Double> tmpdata = new HashMap<>();
             tmpdata.putAll(data);
             Log.d(TAG, HEADER + "DATA SIZE " + data.size());
             for (int i = 0; i < data.size(); i++) {
-                Pair<Integer, Float> highest = getHighest(tmpdata);
+                Pair<Integer, Double> highest = getHighest(tmpdata);
                 tmpdata.remove(highest.first);
                 Log.d(TAG, HEADER + "for loop " + highest.first);
                 View segment = inflater.inflate(R.layout.rank_item_layout, container, false);
@@ -96,12 +96,12 @@ public class OurRankingsFragment extends Fragment {
         return root;
     }
 
-    private Pair<Integer, Float> getHighest(Map<Integer, Float> tmpdata) {
-        Pair<Integer, Float> rtn = new Pair<>(-1, -1f);
-        for (Map.Entry<Integer, Float> tmp : tmpdata.entrySet()) {
-            Log.d(TAG, HEADER + "hightes  " + tmp.getKey());
+    private Pair<Integer, Double> getHighest(Map<Integer, Double> tmpdata) {
+        Pair<Integer, Double> rtn = new Pair<>(-1, -1.0);
+        for (Map.Entry<Integer, Double> tmp : tmpdata.entrySet()) {
+            Log.d(TAG, HEADER + "hightest  " + tmp.getKey());
             if (rtn.second < tmp.getValue()) {
-                Pair<Integer, Float> tmprtn = new Pair<>(tmp.getKey(), tmp.getValue());
+                Pair<Integer, Double> tmprtn = new Pair<>(tmp.getKey(), tmp.getValue());
                 rtn = tmprtn;
             }
         }

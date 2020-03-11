@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/navigation_view_data_home"
         android:name="com.sparx1126.a2020_scouting.Fragments.ViewHomeFragment"
-        android:label="@string/title_home"
+        android:label="@string/title_view_data"
         tools:layout="@layout/fragment_view_home" />
 
     <fragment

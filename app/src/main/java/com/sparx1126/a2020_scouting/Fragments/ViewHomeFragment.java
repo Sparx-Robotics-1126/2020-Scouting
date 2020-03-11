@@ -8,19 +8,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceEvent;
+import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceRank;
+import com.sparx1126.a2020_scouting.Data.OurRankingData;
 import com.sparx1126.a2020_scouting.R;
+import com.sparx1126.a2020_scouting.Utilities.BlueAllianceNetwork;
+import com.sparx1126.a2020_scouting.Utilities.GetMail;
+import com.sparx1126.a2020_scouting.Utilities.JsonData;
+import com.sparx1126.a2020_scouting.ViewData;
+
+import org.json.JSONObject;
+
+import java.util.Map;
 
 public class ViewHomeFragment extends Fragment {
     private static final String TAG = "Sparx: ";
-    private static final String HEADER = "ViewFragment: ";
+    private static final String HEADER = "ViewHomeFragment: ";
 
     private SharedPreferences settings;
     private BlueAllianceEvent event;
+    private static BlueAllianceNetwork blueAlliance;
+
     private LinearLayout backgroundLayout;
     private TextView regionalNameInput;
     private TextView regionLocationInput;
@@ -42,6 +55,7 @@ public class ViewHomeFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         settings = getActivity().getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
+        blueAlliance = BlueAllianceNetwork.getInstance();
 
         backgroundLayout = root.findViewById(R.id.background);
         regionalNameInput = root.findViewById(R.id.regionalName);
@@ -120,6 +134,33 @@ public class ViewHomeFragment extends Fragment {
                     allianceColorInput.setBackgroundColor(getResources().getColor(R.color.RED));
                 }
             }
+            blueAlliance.downloadEventRanks(getActivity(), selectedEvent, new BlueAllianceNetwork.Callback() {
+                @Override
+                public void handleFinishDownload(final String _data) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (JsonData.isValidJsonObject(_data)) {
+                                Log.d(TAG, HEADER + "downLoaded event ranks");
+                                BlueAllianceRank.parseJson(_data);
+                                new GetMail(getActivity(), settings.getString(getString(R.string.EMAIL), ""),
+                                        settings.getString(getString(R.string.PASSWORD), ""),
+                                        new GetMail.Callback() {
+                                            @Override
+                                            public void handleFinishDownload(Map<String, JSONObject> mails) {
+                                                Log.d(TAG, HEADER + "email handleFinishDownload");
+                                                String pref_SelectedEvent = settings.getString(getResources().getString(R.string.pref_SelectedEvent), "");
+                                                OurRankingData.parseJsons(pref_SelectedEvent, mails);
+                                            }
+                                        });
+                            } else {
+                                Log.e(TAG, HEADER + "Internet returned BAD DATA for EventRanks, try another wifi!");
+                                Toast.makeText(getActivity(), "Internet returned BAD DATA for EventRanks, try another wifi!", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+                }
+            });
         }
     }
 }

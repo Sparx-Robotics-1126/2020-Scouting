@@ -32,7 +32,6 @@ public class Home extends AppCompatActivity {
     static private String HEADER = "Home: ";
 
     private SharedPreferences settings;
-    private static BlueAllianceNetwork blueAlliance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +39,6 @@ public class Home extends AppCompatActivity {
         Log.d(TAG, HEADER + "onCreate");
 
         settings = getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
-        blueAlliance = BlueAllianceNetwork.getInstance();
 
         if(settings.getBoolean(getString(R.string.SCOUT), false)) {
             setContentView(R.layout.activity_home);
