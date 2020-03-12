@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceMatch;
 import com.sparx1126.a2020_scouting.BlueAllianceData.BlueAllianceTeam;
+import com.sparx1126.a2020_scouting.Data.BenchmarkingData;
 import com.sparx1126.a2020_scouting.Data.OurRankingData;
 import com.sparx1126.a2020_scouting.Data.ScoutingData;
 import com.sparx1126.a2020_scouting.Utilities.*;
@@ -205,6 +206,8 @@ public class Welcome extends AppCompatActivity {
                         if (JsonData.isValidJsonArray(_data)) {
                             Log.d(TAG, HEADER + "event teams downloaded");
                             BlueAllianceTeam.parseJson(_data, _selectedEvent);
+                            BenchmarkingData.initializeData(_selectedEvent, BlueAllianceTeam.getTeams(_selectedEvent));
+                            Log.d(TAG, HEADER + "intialized becnhmarking data " + BenchmarkingData.getData().size());
                             blueAlliance.downloadEventMatches(Welcome.this, _selectedEvent, new BlueAllianceNetwork.Callback() {
                                 @Override
                                 public void handleFinishDownload(final String _data) {
@@ -242,6 +245,7 @@ public class Welcome extends AppCompatActivity {
                                                                 Log.d(TAG, HEADER + "downloaded emails");
                                                                 ScoutingData.parseJsons(mails);
                                                                 OurRankingData.parseJsons(_selectedEvent, mails);
+                                                                BenchmarkingData.parseJsons(mails);
                                                                 Log.d(TAG, HEADER + "switching to home");
                                                                 startActivity(new Intent(Welcome.this, Home.class));
                                                             }

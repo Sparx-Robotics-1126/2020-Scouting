@@ -28,14 +28,15 @@ public class ScoutingFragment extends Fragment {
 
         SharedPreferences settings = getActivity().getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
         String selectedEvent = settings.getString(getString(R.string.pref_SelectedEvent), "");
+        Log.d(TAG, HEADER + "popping this fragment out");
+        getFragmentManager().popBackStack();
+        Log.d(TAG, HEADER + "restoring default fragment");
         if (BlueAllianceMatch.getMatches(selectedEvent).size() == 0) {
             Log.e(TAG, HEADER + "No Matches to Scout");
             Toast.makeText(getActivity(), "No Matches to Scout", Toast.LENGTH_LONG).show();
-            getFragmentManager().popBackStack();
         } else {
             Intent intent = new Intent(getActivity(), Scouting.class);
             startActivity(intent);
-            getFragmentManager().popBackStack();
         }
         return root;
     }

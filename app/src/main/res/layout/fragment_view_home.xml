@@ -14,17 +14,17 @@
         <TextView
             android:id="@+id/regionalName"
             style="@style/title_text_view"
-            android:text="Name of place"/>
+            android:text="Name of place" />
 
         <TextView
             android:id="@+id/regionLocation"
             style="@style/sub_title_text_view"
-            android:text="Location"/>
+            android:text="Location" />
 
         <TextView
             android:id="@+id/dates"
             style="@style/item_text_view"
-            android:text="Dates"/>
+            android:text="Dates" />
     </LinearLayout>
 
     <LinearLayout
@@ -36,7 +36,7 @@
         <TextView
             android:id="@+id/configuration"
             style="@style/title_text_view"
-            android:text="Tablet Configuration:"/>
+            android:text="Tablet Configuration:" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,12 +46,12 @@
             <TextView
                 android:id="@+id/teamTxt"
                 style="@style/item_text_view"
-                android:text="Team:"/>
+                android:text="Team:" />
 
             <TextView
                 android:id="@+id/teamInput"
                 style="@style/item_text_view"
-                android:text="0"/>
+                android:text="0" />
         </LinearLayout>
 
         <LinearLayout
@@ -68,12 +68,12 @@
                 <TextView
                     android:id="@+id/scouterTxt"
                     style="@style/item_text_view"
-                    android:text="Current Scouter:"/>
+                    android:text="Current Scouter:" />
 
                 <TextView
                     android:id="@+id/scouterInput"
                     style="@style/item_text_view"
-                    android:text="No one"/>
+                    android:text="No one" />
             </LinearLayout>
 
             <LinearLayout
@@ -84,12 +84,12 @@
                 <TextView
                     android:id="@+id/posTxt"
                     style="@style/item_text_view"
-                    android:text="Scout Position:"/>
+                    android:text="Scout Position:" />
 
                 <TextView
                     android:id="@+id/posInput"
                     style="@style/item_text_view"
-                    android:text="0"/>
+                    android:text="0" />
             </LinearLayout>
 
             <LinearLayout
@@ -100,7 +100,7 @@
                 <TextView
                     android:id="@+id/allianceColorTxt"
                     style="@style/item_text_view"
-                    android:text="Scout Alliance Color :"/>
+                    android:text="Scout Alliance Color :" />
 
                 <TextView
                     android:id="@+id/allianceColorInput"
@@ -110,8 +110,18 @@
         </LinearLayout>
     </LinearLayout>
 
-    <ImageView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/infinite_recharge" />
+        android:layout_height="wrap_content"
+        android:paddingLeft="100dp"
+        android:paddingTop="110dp"
+        android:paddingRight="100dp"
+        android:paddingBottom="110dp">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tatooine3"
+            android:id="@+id/goBackHome"/>
+    </LinearLayout>
 </LinearLayout>

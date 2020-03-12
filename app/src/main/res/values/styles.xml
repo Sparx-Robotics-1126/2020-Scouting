@@ -105,7 +105,6 @@
 
     <style name="jcas_backgroundComplement" parent="jcas_background">
         <item name="android:background">@color/backgroundSupplement</item>
-        <item name="android:layout_margin">0dp</item>
     </style>
 
     <style name="jcas_editText">

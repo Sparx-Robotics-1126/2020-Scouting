@@ -1,7 +1,6 @@
 package com.sparx1126.a2020_scouting.Fragments;
 
 import android.content.SharedPreferences;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -45,13 +44,13 @@ public class OurRankingsFragment extends Fragment {
             getFragmentManager().popBackStack();
         } else {
             Map<Integer, Double> tmpdata = new HashMap<>();
-            tmpdata.putAll(data);
+            tmpdata.putAll(data); // deep copy of the data because we are going to modify this map
             Log.d(TAG, HEADER + "DATA SIZE " + data.size());
             for (int i = 0; i < data.size(); i++) {
                 Pair<Integer, Double> highest = getHighest(tmpdata);
                 tmpdata.remove(highest.first);
                 Log.d(TAG, HEADER + "for loop " + highest.first);
-                View segment = inflater.inflate(R.layout.rank_item_layout, container, false);
+                View segment = inflater.inflate(R.layout.our_rank_item_layout, container, false);
                 TextView team = segment.findViewById(R.id.teamNumber);
                 TextView rank = segment.findViewById(R.id.rank);
                 TextView record = segment.findViewById(R.id.record);
@@ -61,8 +60,8 @@ public class OurRankingsFragment extends Fragment {
                 team.setText(String.valueOf(highest.first));
                 rank.setText(String.valueOf(i + 1));
                 record.setText(String.valueOf(highest.second));
-//                    details.setText(String.valueOf(data.get(i).getDetails()));
-                teamName.setText(String.valueOf(teams.get(String.valueOf(highest.first)).getTeam_name()));
+                details.setText(OurRankingData.getDetails(highest.first));
+                teamName.setText(teams.get(String.valueOf(highest.first)).getTeam_name());
                 if (settings.getBoolean(getString(R.string.pref_BlueAlliance), false)) {
                     root.setBackgroundColor(getResources().getColor(R.color.BBackground));
                     team.setTextColor(getResources().getColor(R.color.BText));
@@ -97,9 +96,8 @@ public class OurRankingsFragment extends Fragment {
     }
 
     private Pair<Integer, Double> getHighest(Map<Integer, Double> tmpdata) {
-        Pair<Integer, Double> rtn = new Pair<>(-1, -1.0);
+        Pair<Integer, Double> rtn = new Pair<>(-1, -1.0); // invalid values
         for (Map.Entry<Integer, Double> tmp : tmpdata.entrySet()) {
-            Log.d(TAG, HEADER + "hightest  " + tmp.getKey());
             if (rtn.second < tmp.getValue()) {
                 Pair<Integer, Double> tmprtn = new Pair<>(tmp.getKey(), tmp.getValue());
                 rtn = tmprtn;

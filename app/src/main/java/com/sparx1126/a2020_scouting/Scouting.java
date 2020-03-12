@@ -130,7 +130,6 @@ public class Scouting extends AppCompatActivity {
     private Button saveButton;
     private Button exitButton;
 
-    private SendMail mail;
     private boolean blueAllianceChosen;
     private int lastMatchScouted;
     private String selectedEvent;
@@ -461,6 +460,8 @@ public class Scouting extends AppCompatActivity {
     }
 
     public void restoreData(Integer matchNum) {
+        Log.d(TAG, HEADER + "restoreData for match " + matchNum);
+
         ScoutingData data = ScoutingData.getData().get(matchNum);
 
         teamNumInput.setText(String.valueOf(data.getTeamNumber()));
@@ -503,9 +504,9 @@ public class Scouting extends AppCompatActivity {
         if (data.getEndRendezvous().equals(ScoutingData.RENDEZVOUS_NO_PARK)) {
             rendezuousRadioGroup.check(R.id.noparkRadioButton);
         } else if (data.getEndRendezvous().equals(ScoutingData.RENDEZVOUS_PARKED)) {
-            rendezuousRadioGroup.check(R.id.middleRadioButton);
+            rendezuousRadioGroup.check(R.id.parkedRadioButton);
         } else if (data.getEndRendezvous().equals(ScoutingData.RENDEZVOUS_HANGED)) {
-            rendezuousRadioGroup.check(R.id.farthestRadioButton);
+            rendezuousRadioGroup.check(R.id.hangedRadioButton);
         } else {
             rendezuousRadioGroup.clearCheck();
         }
@@ -526,7 +527,10 @@ public class Scouting extends AppCompatActivity {
     }
 
     public void save() {
-        ScoutingData data = ScoutingData.getData().get(Integer.parseInt(matchNumInput.getText().toString()));
+        int matchNum = Integer.parseInt(matchNumInput.getText().toString());
+        Log.d(TAG, HEADER + "save for match " + matchNum);
+
+        ScoutingData data = ScoutingData.getData().get(matchNum);
 
         String missing = "";
         data.setScouterName(scouterNameInput.getText().toString());
@@ -612,12 +616,14 @@ public class Scouting extends AppCompatActivity {
         if (missing.isEmpty()) {
             String email = settings.getString(getString(R.string.EMAIL), "");
             String password = settings.getString(getString(R.string.PASSWORD), "");
-            String subject = settings.getString("pref_SelectedEvent", "") + ".";
+            // example SD.2020ndgf.frc3871.BlueAlliance.Position3.2.json
+            String subject = "SD.";
+            subject += settings.getString("pref_SelectedEvent", "") + ".";
             subject += "frc" + teamNumInput.getText().toString() + ".";
             subject += ScoutingData.getPrefAllianceColor() + ".";
             subject += ScoutingData.getPrefTeamPosition() + ".";
             subject += matchNumInput.getText().toString() + ".json";
-            mail = new SendMail(Scouting.this, email, password, subject, data.toJson().toString(),
+            new SendMail(Scouting.this, email, password, subject, data.toJson().toString(),
                     new SendMail.Callback() {
                         @Override
                         public void handleFinishDownload() {

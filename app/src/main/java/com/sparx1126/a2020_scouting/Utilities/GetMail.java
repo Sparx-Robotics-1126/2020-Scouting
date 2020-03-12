@@ -97,7 +97,13 @@ public class GetMail extends AsyncTask<Void, Void, Void> {
                 String body = getTextFromMessage(indvidualmsg);
                 String key = indvidualmsg.getSubject();
                 if (JsonData.isValidJsonObjectOrArray(body)) {
+                    // only puts the last email with same subject for duplicates
+                    // we get the emails from older to newer
+                    //Log.d(TAG, HEADER + "Parsed " + key);
                     jsonMails.put(key, new JSONObject(body));
+                }
+                else {
+                    Log.e(TAG, HEADER + "Did not parse " + key);
                 }
             }
             Log.d(TAG, HEADER + "Number of josons received " + jsonMails.size());

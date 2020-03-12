@@ -15,236 +15,288 @@
 
                 <TextView
                     style="@style/jcas_textView"
+                    android:layout_height="wrap_content"
                     android:text="Team Number" />
 
-                <EditText
+                <AutoCompleteTextView
                     android:id="@+id/teamNumber"
-                    style="@style/jcas_editText"
-                    android:inputType="number" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:digits="1234567890"
+                    android:gravity="right"
+                    android:inputType="numberPassword"
+                    android:maxLength="4"
+                    android:textSize="20sp" />
             </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/afterTeamSelection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--General Kenobi-->
+            <LinearLayout style="@style/jcas_background">
+                <!--Header-->
+                <TextView
+                    style="@style/jcas_headerTextView"
+                    android:text="General" />
+
+                <Spinner
+                    android:id="@+id/driveType"
+                    style="@style/jcas_spinner" />
+
+                <Spinner
+                    android:id="@+id/wheelType"
+                    style="@style/jcas_spinner" />
+
+                <LinearLayout style="@style/jcas_horizontalBlock">
+
+                    <TextView
+                        style="@style/jcas_textView"
+                        android:layout_weight="1"
+                        android:text="Number Wheels:" />
+
+                    <EditText
+                        android:id="@+id/numWheels"
+                        style="@style/jcas_editText"
+                        android:layout_weight="0"
+                        android:inputType="number"
+                        android:maxLength="2" />
+
+                </LinearLayout>
+
+                <LinearLayout style="@style/jcas_horizontalBlock">
+
+                    <TextView
+                        style="@style/jcas_textView"
+                        android:layout_weight="1"
+                        android:text="Max Speed(ft/s):" />
+
+                    <EditText
+                        android:id="@+id/maxSpeed"
+                        style="@style/jcas_editText"
+                        android:layout_weight="0"
+                        android:inputType="numberDecimal"
+                        android:maxLength="4" />
+
+                </LinearLayout>
+
+                <LinearLayout style="@style/jcas_horizontalBlock">
+
+                    <TextView
+                        style="@style/jcas_textView"
+                        android:layout_weight="1"
+                        android:text="Starting Height(ft):" />
+
+                    <EditText
+                        android:id="@+id/height"
+                        style="@style/jcas_editText"
+                        android:layout_weight="0"
+                        android:inputType="numberDecimal"
+                        android:maxLength="4" />
+
+                </LinearLayout>
+
+                <LinearLayout style="@style/jcas_horizontalBlock">
+
+                    <TextView
+                        style="@style/jcas_textView"
+                        android:layout_weight="1"
+                        android:text="Weight(lbs):" />
+
+                    <EditText
+                        android:id="@+id/weight"
+                        style="@style/jcas_editText"
+                        android:layout_weight="0"
+                        android:inputType="number"
+                        android:maxLength="3" />
+
+                </LinearLayout>
+
+                <Spinner
+                    android:id="@+id/visionType"
+                    style="@style/jcas_spinner" />
+
+            </LinearLayout>
+            <!--Auto-->
+            <LinearLayout style="@style/jcas_backgroundComplement">
+                <!--Header-->
+                <TextView
+                    style="@style/jcas_headerTextView"
+                    android:text="Auto" />
+
+                <Spinner
+                    android:id="@+id/startPos"
+                    style="@style/jcas_spinner" />
+
+                <Spinner
+                    android:id="@+id/maxStartingCells"
+                    style="@style/jcas_spinner" />
+
+                <LinearLayout style="@style/jcas_horizontalBlock">
+
+                    <TextView
+                        style="@style/jcas_textView"
+                        android:layout_weight="1"
+                        android:text="Can Score Bottom Port" />
+
+                    <CheckBox
+                        android:id="@+id/autoScoreBottom"
+                        style="@style/jcas_checkBox"
+                        android:layout_weight="0" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/jcas_horizontalBlock">
+
+                    <TextView
+                        style="@style/jcas_textView"
+                        android:layout_weight="1"
+                        android:text="Can Score Inner/Outer Port" />
+
+                    <CheckBox
+                        android:id="@+id/autoScoreTop"
+                        style="@style/jcas_checkBox"
+                        android:layout_weight="0" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/jcas_horizontalBlock">
+
+                    <TextView
+                        style="@style/jcas_textView"
+                        android:layout_weight="1"
+                        android:text="Can Acquire From Floor" />
+
+                    <CheckBox
+                        android:id="@+id/autoAcquireFloor"
+                        style="@style/jcas_checkBox"
+                        android:layout_weight="0" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <!--Teleop-->
+            <LinearLayout style="@style/jcas_background">
+                <!--Header-->
+                <TextView
+                    style="@style/jcas_headerTextView"
+                    android:text="Teleop" />
+
+                <LinearLayout style="@style/jcas_horizontalBlock">
+
+                    <TextView
+                        style="@style/jcas_textView"
+                        android:layout_weight="1"
+                        android:text="Can Score Bottom Port" />
+
+                    <CheckBox
+                        android:id="@+id/teleScoreBottom"
+                        style="@style/jcas_checkBox"
+                        android:layout_weight="0" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/jcas_horizontalBlock">
+
+                    <TextView
+                        style="@style/jcas_textView"
+                        android:layout_weight="1"
+                        android:text="Can Score Inner/Outer Port" />
+
+                    <CheckBox
+                        android:id="@+id/teleScoreTop"
+                        style="@style/jcas_checkBox"
+                        android:layout_weight="0" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/jcas_horizontalBlock">
+
+                    <TextView
+                        style="@style/jcas_textView"
+                        android:layout_weight="1"
+                        android:text="Can Acquire From Floor" />
+
+                    <CheckBox
+                        android:id="@+id/teleAcquireFloor"
+                        style="@style/jcas_checkBox"
+                        android:layout_weight="0" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <!--Avengers: End Game-->
+            <LinearLayout style="@style/jcas_backgroundComplement">
+                <!--Header-->
+                <TextView
+                    style="@style/jcas_headerTextView"
+                    android:text="End Game" />
+
+                <LinearLayout style="@style/jcas_horizontalBlock">
+
+                    <TextView
+                        style="@style/jcas_textView"
+                        android:layout_weight="1"
+                        android:text="Can Climb" />
+
+                    <CheckBox
+                        android:id="@+id/canClimb"
+                        style="@style/jcas_checkBox"
+                        android:layout_weight="0" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/jcas_horizontalBlock">
+
+                    <TextView
+                        style="@style/jcas_textView"
+                        android:layout_weight="1"
+                        android:text="Can Actively Level" />
+
+                    <CheckBox
+                        android:id="@+id/canLevel"
+                        style="@style/jcas_checkBox"
+                        android:layout_weight="0" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <!--Comments-->
+            <LinearLayout style="@style/jcas_background">
+                <!--Header-->
+                <TextView
+                    style="@style/jcas_headerTextView"
+                    android:text="Critical Comments" />
+
+                <EditText
+                    android:id="@+id/comments"
+                    style="@style/jcas_editText"
+                    android:layout_width="match_parent"
+                    android:inputType="text"
+                    android:maxLength="50" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
+
+                    <Button
+                        android:id="@+id/saveButton"
+                        style="@style/jcas_bigOlButton"
+                        android:text="Save" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
 
             <Button
                 android:id="@+id/exitButton"
                 style="@style/jcas_bigOlButton"
                 android:text="@string/benchmark_exit" />
-        </LinearLayout>
-        <!--General Kenobi-->
-        <LinearLayout style="@style/jcas_background">
-            <!--Header-->
-            <TextView
-                style="@style/jcas_headerTextView"
-                android:text="General" />
-
-            <Spinner
-                android:id="@+id/driveType"
-                style="@style/jcas_spinner" />
-
-            <Spinner
-                android:id="@+id/wheelType"
-                style="@style/jcas_spinner" />
-
-            <LinearLayout style="@style/jcas_horizontalBlock">
-
-                <TextView
-                    style="@style/jcas_textView"
-                    android:text="Number Wheels:" />
-
-                <EditText
-                    android:id="@+id/numWheels"
-                    style="@style/jcas_editText"
-                    android:inputType="number" />
-
-            </LinearLayout>
-
-            <LinearLayout style="@style/jcas_horizontalBlock">
-
-                <TextView
-                    style="@style/jcas_textView"
-                    android:text="Max Speed(ft/s):" />
-
-                <EditText
-                    android:id="@+id/maxSpeed"
-                    style="@style/jcas_editText"
-                    android:inputType="numberDecimal" />
-
-            </LinearLayout>
-
-            <LinearLayout style="@style/jcas_horizontalBlock">
-
-                <TextView
-                    style="@style/jcas_textView"
-                    android:text="Normal Height(ft):" />
-
-                <EditText
-                    android:id="@+id/height"
-                    style="@style/jcas_editText"
-                    android:inputType="numberDecimal" />
-
-            </LinearLayout>
-
-            <LinearLayout style="@style/jcas_horizontalBlock">
-
-                <TextView
-                    style="@style/jcas_textView"
-                    android:text="Weight(lbs):" />
-
-                <EditText
-                    android:id="@+id/weight"
-                    style="@style/jcas_editText"
-                    android:inputType="numberDecimal" />
-
-            </LinearLayout>
-
-            <Spinner
-                android:id="@+id/visionType"
-                style="@style/jcas_spinner" />
-
-        </LinearLayout>
-        <!--Auto-->
-        <LinearLayout style="@style/jcas_backgroundComplement">
-            <!--Header-->
-            <TextView
-                style="@style/jcas_headerTextView"
-                android:text="Auto" />
-
-            <Spinner
-                android:id="@+id/startPos"
-                style="@style/jcas_spinner" />
-
-            <LinearLayout style="@style/jcas_horizontalBlock">
-
-                <TextView
-                    style="@style/jcas_textView"
-                    android:text="Starting Power Cells" />
-
-                <EditText
-                    android:id="@+id/startingCells"
-                    style="@style/jcas_editText"
-                    android:inputType="number" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/jcas_horizontalBlock">
-
-                <TextView
-                    style="@style/jcas_textView"
-                    android:text="Can Score Bottom Port" />
-
-                <CheckBox
-                    android:id="@+id/autoScoreBottom"
-                    style="@style/jcas_checkBox" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/jcas_horizontalBlock">
-
-                <TextView
-                    style="@style/jcas_textView"
-                    android:text="Can Score Inner/Outer Port" />
-
-                <CheckBox
-                    android:id="@+id/autoScoreTop"
-                    style="@style/jcas_checkBox" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/jcas_horizontalBlock">
-
-                <TextView
-                    style="@style/jcas_textView"
-                    android:text="Can Acquire From Floor" />
-
-                <CheckBox
-                    android:id="@+id/autoAcquireFloor"
-                    style="@style/jcas_checkBox" />
-            </LinearLayout>
-
-        </LinearLayout>
-        <!--Teleop-->
-        <LinearLayout style="@style/jcas_background">
-            <!--Header-->
-            <TextView
-                style="@style/jcas_headerTextView"
-                android:text="Teleop" />
-
-            <LinearLayout style="@style/jcas_horizontalBlock">
-
-                <TextView
-                    style="@style/jcas_textView"
-                    android:text="Can Score Bottom Port" />
-
-                <CheckBox
-                    android:id="@+id/teleScoreBottom"
-                    style="@style/jcas_checkBox" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/jcas_horizontalBlock">
-
-                <TextView
-                    style="@style/jcas_textView"
-                    android:text="Can Score Inner/Outer Port" />
-
-                <CheckBox
-                    android:id="@+id/teleScoreTop"
-                    style="@style/jcas_checkBox" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/jcas_horizontalBlock">
-
-                <TextView
-                    style="@style/jcas_textView"
-                    android:text="Can Acquire From Floor" />
-
-                <CheckBox
-                    android:id="@+id/teleAcquireFloor"
-                    style="@style/jcas_checkBox" />
-            </LinearLayout>
-
-        </LinearLayout>
-        <!--Avengers: End Game-->
-        <LinearLayout style="@style/jcas_backgroundComplement">
-            <!--Header-->
-            <TextView
-                style="@style/jcas_headerTextView"
-                android:text="End Game" />
-
-            <LinearLayout style="@style/jcas_horizontalBlock">
-
-                <TextView
-                    style="@style/jcas_textView"
-                    android:text="Can Climb" />
-
-                <CheckBox
-                    android:id="@+id/canClimb"
-                    style="@style/jcas_checkBox" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/jcas_horizontalBlock">
-
-                <TextView
-                    style="@style/jcas_textView"
-                    android:text="Can Actively Level" />
-
-                <CheckBox
-                    android:id="@+id/canLevel"
-                    style="@style/jcas_checkBox" />
-            </LinearLayout>
-
-        </LinearLayout>
-        <!--Comments-->
-        <LinearLayout style="@style/jcas_background">
-            <!--Header-->
-            <TextView
-                style="@style/jcas_headerTextView"
-                android:text="Comments" />
-
-            <EditText
-                android:id="@+id/comments"
-                style="@style/jcas_editText"
-                android:layout_width="match_parent"
-                android:inputType="text" />
-
-            <Button
-                android:id="@+id/saveButton"
-                style="@style/jcas_bigOlButton"
-                android:text="Save (Submit?)" />
         </LinearLayout>
 
     </LinearLayout>

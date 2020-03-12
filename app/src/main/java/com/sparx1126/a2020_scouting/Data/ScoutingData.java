@@ -440,8 +440,8 @@ public class ScoutingData extends JsonData {
             Log.d(TAG, HEADER + "parseJsons for number matches " + _data.size());
             for (Map.Entry<String, JSONObject> mail : _data.entrySet()) {
                 String subject = mail.getKey();
-                if (subject.contains(prefEvent) && subject.contains(prefAllianceColor) && subject.contains(prefTeamPosition)) {
-                    // example 2020ndgf.frc3871.BlueAlliance.Position3.2.json
+                if (subject.contains("SD") && subject.contains(prefEvent) && subject.contains(prefAllianceColor) && subject.contains(prefTeamPosition)) {
+                    // example SD.2020ndgf.frc3871.BlueAlliance.Position3.2.json
                     int indexStart = subject.indexOf(prefTeamPosition) + prefTeamPosition.length() + 1; // find string start, add string lenght and one more for the .
                     String match = subject.substring(indexStart);
                     match = match.substring(0, match.indexOf("."));

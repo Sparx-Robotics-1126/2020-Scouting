@@ -63,6 +63,7 @@
         <TextView
             android:id="@+id/details"
             style="@style/item_text_view"
+            android:textSize="16dp"
             android:text="Ranking Acore: 2.00, Auto: 15, End Game: 55, Teleop Cell + CPanel: 33"/>
 
     </LinearLayout>

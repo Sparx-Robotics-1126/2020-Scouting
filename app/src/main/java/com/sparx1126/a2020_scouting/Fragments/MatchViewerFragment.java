@@ -52,10 +52,10 @@ public class MatchViewerFragment extends Fragment {
                 LinearLayout teamData = new LinearLayout(getActivity());
                 teamData.setOrientation(LinearLayout.VERTICAL);
                 teamData.setGravity(Gravity.RIGHT);
-                teamData.setLayoutParams(new TableRow.LayoutParams(200, LinearLayout.LayoutParams.MATCH_PARENT));
+                teamData.setLayoutParams(new TableRow.LayoutParams(200, ViewGroup.LayoutParams.MATCH_PARENT));
 
                 LinearLayout blueRow = new LinearLayout(getActivity());
-                blueRow.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 40));
+                blueRow.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 blueRow.setOrientation(LinearLayout.HORIZONTAL);
                 blueRow.setBackgroundColor(Color.BLUE);
 
@@ -74,7 +74,7 @@ public class MatchViewerFragment extends Fragment {
 
                 }
                 LinearLayout redRow = new LinearLayout(getActivity());
-                redRow.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 40));
+                redRow.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 redRow.setOrientation(LinearLayout.HORIZONTAL);
                 redRow.setBackgroundColor(Color.RED);
 
@@ -94,7 +94,7 @@ public class MatchViewerFragment extends Fragment {
                 teamData.addView(blueRow);
                 matchRow.addView(teamData);
                 TextView matchNum = new TextView(getActivity());
-                matchNum.setLayoutParams(new TableRow.LayoutParams(200, TableRow.LayoutParams.MATCH_PARENT));
+                matchNum.setLayoutParams(new TableRow.LayoutParams(200, ViewGroup.LayoutParams.MATCH_PARENT));
                 matchNum.setGravity(Gravity.CENTER);
                 matchNum.setTextSize(30);
                 String match = "MATCH " + matchObj.getMatchNum();
@@ -105,7 +105,7 @@ public class MatchViewerFragment extends Fragment {
                 }
                 matchRow.addView(matchNum);
                 TextView rowDivider = new TextView(getActivity());
-                rowDivider.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 6));
+                rowDivider.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 6));
                 rowDivider.setBackgroundColor(Color.DKGRAY);
                 masterTable.addView(rowDivider);
 
@@ -114,7 +114,7 @@ public class MatchViewerFragment extends Fragment {
 
         }
         TextView rowDivider = new TextView(getActivity());
-        rowDivider.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 6));
+        rowDivider.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 6));
         rowDivider.setBackgroundColor(Color.DKGRAY);
         masterTable.addView(rowDivider);
 

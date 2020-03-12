@@ -3,6 +3,7 @@ package com.sparx1126.a2020_scouting;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sparx1126.a2020_scouting.BlueAllianceData.*;
+import com.sparx1126.a2020_scouting.Data.BenchmarkingData;
 import com.sparx1126.a2020_scouting.Data.OurRankingData;
 import com.sparx1126.a2020_scouting.Data.ScoutingData;
 import com.sparx1126.a2020_scouting.Utilities.*;
@@ -129,6 +130,9 @@ public class Settings extends AppCompatActivity {
         changeUi();
         if(!settings.getBoolean(getResources().getString(R.string.tablet_Configured), false)) {
             downloadEvents();
+        }
+        else {
+            setSpinner();
         }
         restorePreferences();
     }
@@ -299,6 +303,8 @@ public class Settings extends AppCompatActivity {
                         if (JsonData.isValidJsonArray(_data)) {
                             Log.d(TAG, HEADER + "event teams downloaded");
                             BlueAllianceTeam.parseJson(_data, _selectedEvent);
+                            BenchmarkingData.initializeData(_selectedEvent, BlueAllianceTeam.getTeams(_selectedEvent));
+                            Log.d(TAG, HEADER + "intialized becnhmarking data " + BenchmarkingData.getData().size());
                             blueAlliance.downloadEventMatches(Settings.this, _selectedEvent, new BlueAllianceNetwork.Callback() {
                                 @Override
                                 public void handleFinishDownload(final String _data) {
@@ -340,6 +346,7 @@ public class Settings extends AppCompatActivity {
                                                                 Log.d(TAG, HEADER + "downloaded emails");
                                                                 ScoutingData.parseJsons(mails);
                                                                 OurRankingData.parseJsons(_selectedEvent, mails);
+                                                                BenchmarkingData.parseJsons(mails);
                                                                 int chosenTeam = 0;
                                                                 if (team1RadioButton.isChecked()) {
                                                                     chosenTeam = 1;

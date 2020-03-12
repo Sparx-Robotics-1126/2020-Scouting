@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">2020-Scouting</string>
+    <string name="title_refresh">Refresh</string>
     <string name="title_home">Home</string>
     <string name="title_rankings">Rankings</string>
     <string name="title_settings">Settings</string>
@@ -47,6 +48,7 @@
         <item>Auto Detect Goal</item>
         <item>Driver Vision</item>
         <item>Both</item>
+        <item>None</item>
     </string-array>
     <string-array name="startPos">
         <item>Select Start Position</item>
@@ -54,5 +56,12 @@
         <item>Middle</item>
         <item>Loading Bay Side</item>
     </string-array>
-    <string name="benchmark_exit">Exit (Save?)</string>
+    <string-array name="numStartingCells">
+        <item>Select Max Number of Starting Cells</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string name="benchmark_exit">Exit with no save</string>
 </resources>
