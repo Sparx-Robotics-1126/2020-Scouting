@@ -1,11 +1,13 @@
 package com.sparx1126.a2020_scouting.Fragments;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,12 +50,13 @@ public class ViewHomeFragment extends Fragment {
     private TextView posInput;
     private TextView allianceColorTextView;
     private TextView allianceColorInput;
+    private ImageButton goBackHome;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, HEADER + "onCreateView");
 
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        View root = inflater.inflate(R.layout.fragment_view_home, container, false);
         settings = getActivity().getSharedPreferences(getString(R.string.SPARX_PREFS), 0);
         blueAlliance = BlueAllianceNetwork.getInstance();
 
@@ -74,6 +77,15 @@ public class ViewHomeFragment extends Fragment {
         posInput = root.findViewById(R.id.posInput);
         allianceColorTextView = root.findViewById(R.id.allianceColorTxt);
         allianceColorInput = root.findViewById(R.id.allianceColorInput);
+
+        goBackHome = root.findViewById(R.id.goBackHome);
+        goBackHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, HEADER + "going back Home");
+                getActivity().finish();
+            }
+        });
 
         return root;
     }

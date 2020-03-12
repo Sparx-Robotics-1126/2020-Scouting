@@ -48,16 +48,16 @@ public class BenchmarkingData extends JsonData {
 
     private int teamNumber;
     //General
-    private String driveType;
-    private String wheelType;
+    private String driveType = "";
+    private String wheelType = "";
     private int numWheels;
     private double maxSpeed;
     private double height;
     private double weight;
-    private String visionType;
+    private String visionType = "";
     //Auto
-    private String startPos;
-    private int startingCells;
+    private String startPos = "";
+    private String startingCells = "";
     private boolean autoScoreBottom;
     private boolean autoScoreTop;
     private boolean autoAcquireFloor;
@@ -69,7 +69,7 @@ public class BenchmarkingData extends JsonData {
     private boolean canClimb;
     private boolean canLevel;
     //Comments
-    private String comments;
+    private String comments = "";
 
     public void setTeamNumber(int teamNumber) {
         this.teamNumber = teamNumber;
@@ -107,7 +107,7 @@ public class BenchmarkingData extends JsonData {
         this.startPos = startPos;
     }
 
-    public void setStartingCells(int startingCells) {
+    public void setStartingCells(String startingCells) {
         this.startingCells = startingCells;
     }
 
@@ -183,7 +183,7 @@ public class BenchmarkingData extends JsonData {
         return startPos;
     }
 
-    public int getStartingCells() {
+    public String getStartingCells() {
         return startingCells;
     }
 
@@ -268,8 +268,8 @@ public class BenchmarkingData extends JsonData {
             Log.d(TAG, HEADER + "parseJsons for number teams " + _data.size());
             for (Map.Entry<String, JSONObject> mail : _data.entrySet()) {
                 String subject = mail.getKey();
-                if (subject.contains(prefEvent)) {
-                    // example 2020ndgf.frc3871.json
+                if (subject.contains("BD") && subject.contains(prefEvent)) {
+                    // example BD.2020ndgf.frc3871.json
                     int indexStart = subject.indexOf("frc") + 3; // find string start of "frc", add string lenght.
                     String team = subject.substring(indexStart);
                     team = team.substring(0, team.indexOf("."));
@@ -292,7 +292,7 @@ public class BenchmarkingData extends JsonData {
             weight = getDouble(_data, WEIGHT);
             visionType = getString(_data, VISION_TYPE);
             startPos = getString(_data, START_POS);
-            startingCells = getInt(_data, START_CELLS);
+            startingCells = getString(_data, START_CELLS);
             autoScoreBottom = getBoolean(_data, AUTO_SCORE_BOTTOM);
             autoScoreTop = getBoolean(_data, AUTO_SCORE_TOP);
             autoAcquireFloor = getBoolean(_data, AUTO_ACQUIRE_FLOOR);

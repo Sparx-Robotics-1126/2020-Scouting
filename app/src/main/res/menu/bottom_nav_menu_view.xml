@@ -3,8 +3,8 @@
 
     <item
         android:id="@+id/navigation_view_data_home"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_home" />
+        android:icon="@drawable/ic_refresh_black_24dp"
+        android:title="@string/title_refresh" />
     <item
         android:id="@+id/navigation_rankings"
         android:icon="@drawable/ic_low_priority_black_24dp"

@@ -227,9 +227,9 @@ public class OurRankingData extends JsonData {
         try {
             Log.d(TAG, HEADER + "parseJsons for number rank " + _data.size());
             for (Map.Entry<String, JSONObject> mail : _data.entrySet()) {
-                // example 2020ndgf.frc3871.BlueAlliance.Position3.2.json
+                // example SD.2020ndgf.frc3871.BlueAlliance.Position3.2.json
                 String subject = mail.getKey();
-                if (subject.contains(_prefEvent)) {
+                if (subject.contains("SD") && subject.contains(_prefEvent)) {
                     int indexStart = subject.indexOf("frc") + 3; // find string start of "frc", add string lenght.
                     String team = subject.substring(indexStart);
                     team = team.substring(0, team.indexOf("."));
